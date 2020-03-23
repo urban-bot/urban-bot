@@ -19,7 +19,6 @@ module.exports = {
                             [
                                 '@babel/plugin-transform-react-jsx',
                             ],
-                            '@babel/plugin-proposal-optional-chaining',
                         ],
                     },
                 },
