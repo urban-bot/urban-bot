@@ -2,9 +2,12 @@
   "name": "urban-bot",
   "version": "0.0.1",
   "description": "universal messenger bot creator",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "find node_modules -name \"*.mjs\" | xargs rm"
   },
   "keywords": [
     "bot",
@@ -12,6 +15,25 @@
     "messenger",
     "react"
   ],
-  "authors": ["ledamint", "oTkPoBeHuE"],
-  "license": "MIT"
+  "authors": [
+    "ledamint",
+    "oTkPoBeHuE"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "@babel/plugin-transform-react-jsx": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.8.3",
+    "prettier": "^1.19.1",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-telegram-bot-api": "^0.40.0",
+    "react": "^16.13.1",
+    "react-reconciler": "^0.25.1"
+  }
 }
