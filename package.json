@@ -24,11 +24,14 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
-    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "babel-loader": "^8.0.6",
     "@babel/core": "^7.8.3",
     "prettier": "^1.19.1",
     "nodemon": "^2.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:urban-bot/urban-bot.git"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
