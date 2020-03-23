@@ -1,16 +1,7 @@
 import React from 'react';
 import { bot } from './render';
 import { BotContext } from './context';
-
-export function useBotContext() {
-    return React.useContext(BotContext);
-}
-
-export function useInput(func, dependencies = []) {
-    React.useEffect(() => {
-        bot.on('message', func);
-    }, dependencies);
-}
+import { useInput } from './hooks';
 
 export function Router({ children }) {
     const [userId, setUserId] = React.useState();
