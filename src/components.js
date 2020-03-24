@@ -4,27 +4,31 @@ import { BotContext } from './context';
 import { useInput } from './hooks';
 
 export function Router({ children }) {
-    const [userId, setUserId] = React.useState();
+    const [userIds, setUserIds] = React.useState(new Set());
     const [activePath, setActivePath] = React.useState();
 
     useInput(({ text, from: { id } }) => {
-        setUserId(id);
+        if (!userIds.has(id)) {
+            setUserIds(new Set([...userIds, id]));
+        }
 
         if (text[0] === '/') {
             setActivePath(text);
         }
-    });
-
-    if (!userId) {
-        return null;
-    }
+    }, [userIds, setUserIds]);
 
     const child = (Array.isArray(children) ? children : [children]).find((child) => {
         return child.props.path === activePath;
     });
 
     // FIXME divide routes and userId context
-    return <BotContext.Provider value={{ userId, activePath, setActivePath }}>{child}</BotContext.Provider>;
+    return (
+        <>
+            {Array.from(userIds).map((userId) => {
+                return <BotContext.Provider key={userId} value={{ userId, activePath, setActivePath }}>{child}</BotContext.Provider>
+            })}
+        </>
+    );
 }
 
 export function Route({ path, children }) {
@@ -35,6 +39,7 @@ export function Button() {
     return null;
 }
 
+// TODO remove listeners after leave
 export function ButtonGroup({ children, title }) {
     const [messageData, setMessageData] = React.useState();
     const { userId } = React.useContext(BotContext);
@@ -49,7 +54,7 @@ export function ButtonGroup({ children, title }) {
 
     const ids = arrChildren.map((child, i) => {
         const id = String(Math.random());
-        // FIXME inline_keyboard should be matrix
+        // FIXME inline_keyboard can be matrix
         params.reply_markup.inline_keyboard[0].push({ text: child.props.children, callback_data: id });
 
         return id;
@@ -119,5 +124,28 @@ export function Image({ src, caption, inlineButtons }) {
         return null;
     } else {
         return null;
+    }
+}
+
+// TODO add later?
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+    }
+
+    static getDerivedStateFromError(error) {
+        console.error(error);
+        // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
+        return { hasError: true };
+    }
+
+    render() {
+        if (this.state.hasError) {
+            // Можно отрендерить запасной UI произвольного вида
+            return null;
+        }
+
+        return this.props.children;
     }
 }

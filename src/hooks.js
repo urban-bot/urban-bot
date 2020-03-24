@@ -6,7 +6,7 @@ export function useBotContext() {
     return React.useContext(BotContext);
 }
 
-export function useInput(func, dependencies = []) {
+export function useInput(func, dependencies) {
     React.useEffect(() => {
         bot.on('message', func);
     }, dependencies);
