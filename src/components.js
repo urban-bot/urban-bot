@@ -1,31 +1,48 @@
 import React from 'react';
 import { bot } from './render';
-import { BotContext } from './context';
+import { BotContext, RouterContext } from './context';
 import { useInput } from './hooks';
 
 export function Router({ children }) {
-    const [userIds, setUserIds] = React.useState(new Set());
     const [activePath, setActivePath] = React.useState();
 
-    useInput(({ text, from: { id } }) => {
-        if (!userIds.has(id)) {
-            setUserIds(new Set([...userIds, id]));
-        }
-
-        if (text[0] === '/') {
-            setActivePath(text);
-        }
-    }, [userIds, setUserIds]);
+    useInput(
+        ({ text }) => {
+            if (text[0] === '/') {
+                setActivePath(text);
+            }
+        },
+        [setActivePath],
+    );
 
     const child = (Array.isArray(children) ? children : [children]).find((child) => {
         return child.props.path === activePath;
     });
 
-    // FIXME divide routes and userId context
+    return <RouterContext.Provider value={{ activePath, setActivePath }}>{child}</RouterContext.Provider>;
+}
+
+export function Root({ children }) {
+    const [userIds, setUserIds] = React.useState(new Set());
+
+    // TODO remove userId after leave or timeout
+    useInput(
+        ({ from: { id } }) => {
+            if (!userIds.has(id)) {
+                setUserIds(new Set([...userIds, id]));
+            }
+        },
+        [userIds, setUserIds],
+    );
+
     return (
         <>
             {Array.from(userIds).map((userId) => {
-                return <BotContext.Provider key={userId} value={{ userId, activePath, setActivePath }}>{child}</BotContext.Provider>
+                return (
+                    <BotContext.Provider key={userId} value={{ userId }}>
+                        {children}
+                    </BotContext.Provider>
+                );
             })}
         </>
     );
@@ -38,6 +55,8 @@ export function Route({ path, children }) {
 export function Button() {
     return null;
 }
+
+let onCallbackQuery;
 
 // TODO remove listeners after leave
 export function ButtonGroup({ children, title }) {
@@ -60,7 +79,8 @@ export function ButtonGroup({ children, title }) {
         return id;
     });
 
-    bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+    onCallbackQuery && bot.removeListener('callback_query', onCallbackQuery);
+    onCallbackQuery = function onCallbackQuery(callbackQuery) {
         ids.forEach((id, i) => {
             const callbackQueryId = callbackQuery.data;
 
@@ -68,7 +88,9 @@ export function ButtonGroup({ children, title }) {
                 arrChildren[i].props.onClick(callbackQuery);
             }
         });
-    });
+    }
+
+    bot.on('callback_query', onCallbackQuery);
 
     const value = { text: title, ...params };
 
@@ -135,7 +157,7 @@ class ErrorBoundary extends React.Component {
     }
 
     static getDerivedStateFromError(error) {
-        console.error(error);
+        console.log('ErrorBoundary', error);
         // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
         return { hasError: true };
     }
