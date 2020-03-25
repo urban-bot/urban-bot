@@ -85,45 +85,50 @@ export function Button() {
     return null;
 }
 
-let onCallbackQuery;
-
 // TODO remove listeners after leave
 export function ButtonGroup({ children, title }) {
     const [messageData, setMessageData] = React.useState();
     const { userId } = React.useContext(BotContext);
 
-    const params = {
-        reply_markup: {
-            inline_keyboard: [[]],
-        },
-    };
+    React.useEffect(() => {
+        const params = {
+            reply_markup: {
+                inline_keyboard: [[]],
+            },
+        };
 
-    const arrChildren = Array.isArray(children) ? children : [children];
+        const arrChildren = Array.isArray(children) ? children : [children];
 
-    const ids = arrChildren.map((child, i) => {
-        const id = String(Math.random());
-        // FIXME inline_keyboard can be matrix
-        params.reply_markup.inline_keyboard[0].push({ text: child.props.children, callback_data: id });
+        const ids = arrChildren.map((child, i) => {
+            const id = String(Math.random());
+            // FIXME inline_keyboard can be matrix
+            params.reply_markup.inline_keyboard[0].push({ text: child.props.children, callback_data: id });
 
-        return id;
-    });
-
-    onCallbackQuery && bot.removeListener('callback_query', onCallbackQuery);
-    onCallbackQuery = function onCallbackQuery(callbackQuery) {
-        ids.forEach((id, i) => {
-            const callbackQueryId = callbackQuery.data;
-
-            if (callbackQueryId === id) {
-                arrChildren[i].props.onClick(callbackQuery);
-            }
+            return id;
         });
-    };
 
-    bot.on('callback_query', onCallbackQuery);
+        function onCallbackQuery(callbackQuery) {
+            ids.forEach((id, i) => {
+                const callbackQueryId = callbackQuery.data;
 
-    const value = { text: title, ...params };
+                if (callbackQueryId === id) {
+                    arrChildren[i].props.onClick(callbackQuery);
+                }
+            });
+        };
 
-    bot.sendMessage(userId, value.text, value);
+        bot.on('callback_query', onCallbackQuery);
+
+        const value = { text: title, ...params };
+
+        bot.sendMessage(userId, value.text, value);
+
+        return () => {
+            bot.removeListener('callback_query', onCallbackQuery);
+        }
+    }, [children, title, userId]);
+
+
 
     // if (messageData === undefined) {
     //     bot.sendMessage(userId, value.text, value).then((res) => {
@@ -177,7 +182,7 @@ export function Image({ src, caption, inlineButtons }) {
 }
 
 // TODO add later?
-class ErrorBoundary extends React.Component {
+export class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
         this.state = { hasError: false };

@@ -11,11 +11,21 @@ export function useRouter() {
 }
 
 export function useInput(func, dependencies) {
+    const { userId } = useBotContext();
+
+    const handler = function(ctx) {
+        const chatId = ctx.chat.id;
+
+        if (!userId || chatId === userId) {
+            func(ctx);
+        }
+    };
+
     React.useEffect(() => {
-        bot.on('message', func);
+        bot.on('message', handler);
 
         return () => {
-            bot.removeListener('message', func);
+            bot.removeListener('message', handler);
         };
     }, dependencies);
 }

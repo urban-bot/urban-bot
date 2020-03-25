@@ -11,7 +11,7 @@ import {
     Router,
     useRouter,
     useBotContext,
-    Root
+    Root,
 } from '../src';
 
 dotenv.config();
@@ -37,9 +37,13 @@ function Main() {
             {/*    // }*/}
             {/*/>*/}
             <ButtonGroup title={title}>
-                <Button onClick={() => {
-                    setTitle(title + 1);
-                }}>Change title</Button>
+                <Button
+                    onClick={() => {
+                        setTitle(title + 1);
+                    }}
+                >
+                    Change title
+                </Button>
                 <Button onClick={() => setActivePath('/help')}>Go to help</Button>
             </ButtonGroup>
         </>
