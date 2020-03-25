@@ -13,5 +13,9 @@ export function useRouter() {
 export function useInput(func, dependencies) {
     React.useEffect(() => {
         bot.on('message', func);
+
+        return () => {
+            bot.removeListener('message', func);
+        };
     }, dependencies);
 }

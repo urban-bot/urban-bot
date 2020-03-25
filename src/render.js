@@ -15,7 +15,7 @@ export function render(reactElement, token, callback) {
     const node = createNode('root');
 
     return reactReconciler.updateContainer(
-        <Root>{reactElement}</Root>,
+        reactElement,
         reactReconciler.createContainer(node, false, false),
         null,
         callback,
