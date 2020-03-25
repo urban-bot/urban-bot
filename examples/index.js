@@ -21,28 +21,38 @@ const token = isDevelopment ? process.env.TELEGRAM_TOKEN_DEV : process.env.TELEG
 
 function Main() {
     const { setActivePath } = useRouter();
-    const { userId } = useBotContext();
-    const [title, setTitle] = React.useState(0);
+    const [title, setTitle] = React.useState('0');
+    const [src, setSrc] = React.useState(true);
+
+    useInput(({ text }) => {
+        setTitle(text);
+    }, []);
 
     return (
         <>
-            {/*<Image*/}
-            {/*    src="https://www.cheatsheet.com/wp-content/uploads/2018/06/jennifer-aniston-leprechaun-640x488.jpg"*/}
-            {/*    caption={name}*/}
-            {/*    // inlineButtons={*/}
-            {/*    //     <ButtonGroup title="buttons">*/}
-            {/*    //         <Button onClick={() => console.log(1)}>1</Button>*/}
-            {/*    //         <Button onClick={() => console.log(2)}>2</Button>*/}
-            {/*    //     </ButtonGroup>*/}
-            {/*    // }*/}
-            {/*/>*/}
-            <ButtonGroup title={title}>
+            <Image
+                src={
+                    src
+                        ? 'https://www.cheatsheet.com/wp-content/uploads/2018/06/jennifer-aniston-leprechaun-640x488.jpg'
+                        : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'
+                }
+                caption={title}
+
+            />
+            <ButtonGroup title={'Actions'}>
                 <Button
                     onClick={() => {
                         setTitle(title + 1);
                     }}
                 >
                     Change title
+                </Button>
+                <Button
+                    onClick={() => {
+                        setSrc(!src);
+                    }}
+                >
+                    Toggle picture
                 </Button>
                 <Button onClick={() => setActivePath('/help')}>Go to help</Button>
             </ButtonGroup>

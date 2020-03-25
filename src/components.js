@@ -37,7 +37,7 @@ export function Root({ children }) {
     }, []);
 
     return (
-        <>
+        <ErrorBoundary>
             {Array.from(userIds).map((userId) => {
                 return (
                     <BotContext.Provider key={userId} value={{ userId }}>
@@ -45,7 +45,7 @@ export function Root({ children }) {
                     </BotContext.Provider>
                 );
             })}
-        </>
+        </ErrorBoundary>
     );
 }
 
@@ -66,7 +66,7 @@ export function Router({ children }) {
         console.log(userId, 'Router start');
 
         return () => {
-            console.log(userId,'Router leave');
+            console.log(userId, 'Router leave');
         };
     }, []);
 
@@ -88,7 +88,7 @@ export function Button() {
 // TODO remove listeners after leave
 export function ButtonGroup({ children, title }) {
     const [messageData, setMessageData] = React.useState();
-    const { userId } = React.useContext(BotContext);
+    const { userId } = useBotContext();
 
     React.useEffect(() => {
         const params = {
@@ -115,73 +115,92 @@ export function ButtonGroup({ children, title }) {
                     arrChildren[i].props.onClick(callbackQuery);
                 }
             });
-        };
+        }
 
         bot.on('callback_query', onCallbackQuery);
 
         const value = { text: title, ...params };
 
-        bot.sendMessage(userId, value.text, value);
+        if (messageData === undefined) {
+            bot.sendMessage(userId, value.text, value).then((res) => {
+                setMessageData(res);
+            });
+        } else {
+            const opts = {
+                chat_id: messageData.chat.id,
+                message_id: messageData.message_id,
+            };
+            bot.editMessageText(value.text, { ...params, ...opts });
+        }
 
         return () => {
             bot.removeListener('callback_query', onCallbackQuery);
-        }
-    }, [children, title, userId]);
-
-
-
-    // if (messageData === undefined) {
-    //     bot.sendMessage(userId, value.text, value).then((res) => {
-    //         // FIXME make excess second render
-    //         setMessageData(res);
-    //     });
-    // } else {
-    //     const opts = {
-    //         chat_id: messageData.chat.id,
-    //         message_id: messageData.message_id,
-    //     };
-    //     bot.editMessageText(value.text, { ...params, ...opts });
-    // }
+        };
+    }, [children, title, userId, messageData]);
 
     return null;
 }
 
 export function Text({ children }) {
-    const { userId } = React.useContext(BotContext);
+    const [messageData, setMessageData] = React.useState();
+    const { userId } = useBotContext();
 
-    if (userId) {
-        bot.sendMessage(userId, children);
+    React.useEffect(() => {
+        if (messageData === undefined) {
+            bot.sendMessage(userId, children).then((res) => {
+                setMessageData(res);
+            });
+        } else {
+            const opts = {
+                chat_id: messageData.chat.id,
+                message_id: messageData.message_id,
+            };
+            bot.editMessageText(children, opts);
+        }
+    }, [children, userId]);
 
-        return null;
-    } else {
-        return null;
-    }
+    return null;
 }
 
 export function Image({ src, caption, inlineButtons }) {
-    const { userId } = React.useContext(BotContext);
-    const params = {};
+    const [messageData, setMessageData] = React.useState();
+    const { userId } = useBotContext();
 
-    if (caption) {
-        params.caption = caption;
-    }
+    React.useEffect(() => {
+        const params = {};
 
-    // FIXME doesn't work
-    if (inlineButtons) {
-        const { reply_markup } = inlineButtons.type(inlineButtons.props);
-        params.reply_markup = reply_markup;
-    }
+        if (caption) {
+            params.caption = caption;
+        }
 
-    if (userId) {
-        bot.sendPhoto(userId, src, params);
+        // FIXME doesn't work
+        if (inlineButtons) {
+            const { reply_markup } = inlineButtons.type(inlineButtons.props);
+            params.reply_markup = reply_markup;
+        }
 
-        return null;
-    } else {
-        return null;
-    }
+        if (messageData === undefined) {
+            bot.sendPhoto(userId, src, params).then((res) => {
+                setMessageData(res);
+            });
+        } else {
+            const opts = {
+                chat_id: messageData.chat.id,
+                message_id: messageData.message_id,
+            };
+
+            const media = {
+                type: 'photo',
+                caption,
+                media: src,
+            };
+            bot.editMessageMedia(media, { ...params, ...opts });
+        }
+    }, [userId, inlineButtons, src, caption]);
+
+    return null;
 }
 
-// TODO add later?
 export class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
@@ -189,7 +208,7 @@ export class ErrorBoundary extends React.Component {
     }
 
     static getDerivedStateFromError(error) {
-        console.log('ErrorBoundary', error);
+        console.error(error);
         // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
         return { hasError: true };
     }
