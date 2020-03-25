@@ -1,26 +1,19 @@
 import React from 'react';
 import { bot } from './render';
 import { BotContext, RouterContext } from './context';
-import { useInput } from './hooks';
-
-export function Router({ children }) {
-    const [activePath, setActivePath] = React.useState();
-
-    useInput(
-        ({ text }) => {
-            if (text[0] === '/') {
-                setActivePath(text);
-            }
-        },
-        [setActivePath],
-    );
-
-    const child = (Array.isArray(children) ? children : [children]).find((child) => {
-        return child.props.path === activePath;
-    });
-
-    return <RouterContext.Provider value={{ activePath, setActivePath }}>{child}</RouterContext.Provider>;
-}
+import { useInput, useBotContext } from './hooks';
+//
+// function Pass({userId, children}) {
+//     React.useEffect(() => {
+//         console.log(userId, 'Pass start');
+//
+//         return () => {
+//             console.log(userId,'Pass leave');
+//         };
+//     }, []);
+//     return children;
+//     return <BotContext.Provider value={{ userId }}>{children}</BotContext.Provider>;
+// }
 
 export function Root({ children }) {
     const [userIds, setUserIds] = React.useState(new Set());
@@ -35,6 +28,14 @@ export function Root({ children }) {
         [userIds, setUserIds],
     );
 
+    React.useEffect(() => {
+        console.log('Root start');
+
+        return () => {
+            console.log('Root leave');
+        };
+    }, []);
+
     return (
         <>
             {Array.from(userIds).map((userId) => {
@@ -46,6 +47,34 @@ export function Root({ children }) {
             })}
         </>
     );
+}
+
+export function Router({ children }) {
+    const [activePath, setActivePath] = React.useState();
+    const { userId } = useBotContext();
+
+    useInput(
+        ({ text }) => {
+            if (text[0] === '/') {
+                setActivePath(text);
+            }
+        },
+        [setActivePath],
+    );
+
+    React.useEffect(() => {
+        console.log(userId, 'Router start');
+
+        return () => {
+            console.log(userId,'Router leave');
+        };
+    }, []);
+
+    const child = (Array.isArray(children) ? children : [children]).find((child) => {
+        return child.props.path === activePath;
+    });
+
+    return <RouterContext.Provider value={{ activePath, setActivePath }}>{child}</RouterContext.Provider>;
 }
 
 export function Route({ path, children }) {
@@ -88,30 +117,28 @@ export function ButtonGroup({ children, title }) {
                 arrChildren[i].props.onClick(callbackQuery);
             }
         });
-    }
+    };
 
     bot.on('callback_query', onCallbackQuery);
 
     const value = { text: title, ...params };
 
-    if (userId) {
-        if (messageData === undefined) {
-            bot.sendMessage(userId, value.text, value).then((res) => {
-                // FIXME make excess second render
-                setMessageData(res);
-            });
-        } else {
-            const opts = {
-                chat_id: messageData.chat.id,
-                message_id: messageData.message_id,
-            };
-            bot.editMessageText(value.text, { ...params, ...opts });
-        }
+    bot.sendMessage(userId, value.text, value);
 
-        return null;
-    } else {
-        return null;
-    }
+    // if (messageData === undefined) {
+    //     bot.sendMessage(userId, value.text, value).then((res) => {
+    //         // FIXME make excess second render
+    //         setMessageData(res);
+    //     });
+    // } else {
+    //     const opts = {
+    //         chat_id: messageData.chat.id,
+    //         message_id: messageData.message_id,
+    //     };
+    //     bot.editMessageText(value.text, { ...params, ...opts });
+    // }
+
+    return null;
 }
 
 export function Text({ children }) {

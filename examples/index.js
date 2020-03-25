@@ -1,6 +1,18 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Image, Text, useInput, Button, ButtonGroup, Router, useRouter, useBotContext } from '../src';
+import {
+    render,
+    Route,
+    Image,
+    Text,
+    useInput,
+    Button,
+    ButtonGroup,
+    Router,
+    useRouter,
+    useBotContext,
+    Root
+} from '../src';
 
 dotenv.config();
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -27,8 +39,6 @@ function Main() {
             <ButtonGroup title={title}>
                 <Button onClick={() => {
                     setTitle(title + 1);
-                    console.log('userId', userId);
-                    console.log('title', title);
                 }}>Change title</Button>
                 <Button onClick={() => setActivePath('/help')}>Go to help</Button>
             </ButtonGroup>
@@ -50,14 +60,16 @@ function Help() {
 
 function App() {
     return (
-        <Router>
-            <Route path="/start">
-                <Main />
-            </Route>
-            <Route path="/help">
-                <Help />
-            </Route>
-        </Router>
+        <Root>
+            <Router>
+                <Route path="/start">
+                    <Main />
+                </Route>
+                <Route path="/help">
+                    <Help />
+                </Route>
+            </Router>
+        </Root>
     );
 }
 
