@@ -25,15 +25,17 @@ export function Root({ children }) {
     }, []);
 
     return (
-        <ErrorBoundary>
+        <>
             {Array.from(userIds).map((userId) => {
                 return (
                     <BotContext.Provider key={userId} value={{ userId }}>
-                        {children}
+                        <ErrorBoundary>
+                            {children}
+                        </ErrorBoundary>
                     </BotContext.Provider>
                 );
             })}
-        </ErrorBoundary>
+        </>
     );
 }
 
@@ -197,13 +199,11 @@ export class ErrorBoundary extends React.Component {
 
     static getDerivedStateFromError(error) {
         console.error(error);
-        // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
         return { hasError: true };
     }
 
     render() {
         if (this.state.hasError) {
-            // Можно отрендерить запасной UI произвольного вида
             return null;
         }
 
