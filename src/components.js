@@ -35,6 +35,7 @@ export function Root({ children, timeToClearUserSession = 1000 * 60 * 10 }) {
             {Array.from(userIds).map((userId) => {
                 return (
                     // FIXME pass all user data
+                    // FIXME first message doesn't process by application, have to do send two message to start
                     <BotContext.Provider key={userId} value={{ userId }}>
                         <ErrorBoundary>{children}</ErrorBoundary>
                     </BotContext.Provider>
@@ -132,6 +133,7 @@ export function ButtonGroup({ children, title }) {
         };
     }, [children, title, userId, messageData]);
 
+    // TODO add MODE with deletion or not
     React.useEffect(() => {
         return () => {
             if (messageData) {
