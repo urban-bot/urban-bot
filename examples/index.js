@@ -5,7 +5,7 @@ import {
     Route,
     Image,
     Text,
-    useInput,
+    useMessage,
     Button,
     ButtonGroup,
     Router,
@@ -24,7 +24,7 @@ function Main() {
     const [title, setTitle] = React.useState('0');
     const [src, setSrc] = React.useState(true);
 
-    useInput(({ text }) => {
+    useMessage(({ text }) => {
         setTitle(text);
     }, []);
 

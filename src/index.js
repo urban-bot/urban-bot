@@ -1,5 +1,5 @@
 import { render } from './render';
 import { Router, Route, Button, Text, Image, ButtonGroup, Root } from './components';
-import { useBotContext, useInput, useRouter } from './hooks';
+import { useBotContext, useMessage, useRouter } from './hooks';
 
-export { render, Router, Route, Button, useInput, Text, Image, ButtonGroup, useBotContext, useRouter, Root };
+export { render, Router, Route, Button, useMessage, Text, Image, ButtonGroup, useBotContext, useRouter, Root };
