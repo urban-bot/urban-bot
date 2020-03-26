@@ -10,7 +10,7 @@ export function useRouter() {
     return React.useContext(RouterContext);
 }
 
-export function useInput(func, dependencies) {
+export function useMessage(func, dependencies = []) {
     const { userId } = useBotContext();
 
     const handler = function(ctx) {

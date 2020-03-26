@@ -1,20 +1,26 @@
 import React from 'react';
 import { bot } from './render';
 import { BotContext, RouterContext } from './context';
-import { useInput, useBotContext } from './hooks';
+import { useMessage, useBotContext } from './hooks';
 
-export function Root({ children }) {
+export function Root({ children, timeToClearUserSession = 1000 * 60 * 10 }) {
     const [userIds, setUserIds] = React.useState(new Set());
+    const timeoutIdsRef = React.useRef({});
+    const userIdsIdRef = React.useRef(userIds);
+    userIdsIdRef.current = userIds;
 
-    // TODO remove userId after leave or timeout
-    useInput(
-        ({ from: { id } }) => {
-            if (!userIds.has(id)) {
-                setUserIds(new Set([...userIds, id]));
-            }
-        },
-        [userIds, setUserIds],
-    );
+    // TODO update session not only for new message. For example it could be inlineQuery or edit message
+    useMessage(({ from: { id } }) => {
+        if (!userIdsIdRef.current.has(id)) {
+            setUserIds(new Set([...userIdsIdRef.current, id]));
+        }
+
+        clearTimeout(timeoutIdsRef.current[id]);
+        timeoutIdsRef.current[id] = setTimeout(() => {
+            userIdsIdRef.current.delete(id);
+            setUserIds(new Set(userIdsIdRef.current));
+        }, timeToClearUserSession);
+    }, []);
 
     React.useEffect(() => {
         console.log('Root start');
@@ -28,10 +34,9 @@ export function Root({ children }) {
         <>
             {Array.from(userIds).map((userId) => {
                 return (
+                    // FIXME pass all user data
                     <BotContext.Provider key={userId} value={{ userId }}>
-                        <ErrorBoundary>
-                            {children}
-                        </ErrorBoundary>
+                        <ErrorBoundary>{children}</ErrorBoundary>
                     </BotContext.Provider>
                 );
             })}
@@ -43,7 +48,7 @@ export function Router({ children }) {
     const [activePath, setActivePath] = React.useState();
     const { userId } = useBotContext();
 
-    useInput(
+    useMessage(
         ({ text }) => {
             if (text[0] === '/') {
                 setActivePath(text);
