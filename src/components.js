@@ -2,18 +2,6 @@ import React from 'react';
 import { bot } from './render';
 import { BotContext, RouterContext } from './context';
 import { useInput, useBotContext } from './hooks';
-//
-// function Pass({userId, children}) {
-//     React.useEffect(() => {
-//         console.log(userId, 'Pass start');
-//
-//         return () => {
-//             console.log(userId,'Pass leave');
-//         };
-//     }, []);
-//     return children;
-//     return <BotContext.Provider value={{ userId }}>{children}</BotContext.Provider>;
-// }
 
 export function Root({ children }) {
     const [userIds, setUserIds] = React.useState(new Set());
