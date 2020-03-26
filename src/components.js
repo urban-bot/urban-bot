@@ -80,7 +80,6 @@ export function Button() {
     return null;
 }
 
-// TODO remove listeners after leave
 export function ButtonGroup({ children, title }) {
     const [messageData, setMessageData] = React.useState();
     const { userId } = useBotContext();
