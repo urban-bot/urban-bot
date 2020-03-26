@@ -120,11 +120,11 @@ export function ButtonGroup({ children, title }) {
                 setMessageData(res);
             });
         } else {
-            const opts = {
+            const options = {
                 chat_id: messageData.chat.id,
                 message_id: messageData.message_id,
             };
-            bot.editMessageText(value.text, { ...params, ...opts });
+            bot.editMessageText(value.text, { ...params, ...options });
         }
 
         return () => {
@@ -153,11 +153,11 @@ export function Text({ children }) {
                 setMessageData(res);
             });
         } else {
-            const opts = {
+            const options = {
                 chat_id: messageData.chat.id,
                 message_id: messageData.message_id,
             };
-            bot.editMessageText(children, opts);
+            bot.editMessageText(children, options);
         }
     }, [children, userId]);
 
