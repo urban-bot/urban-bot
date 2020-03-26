@@ -132,6 +132,14 @@ export function ButtonGroup({ children, title }) {
         };
     }, [children, title, userId, messageData]);
 
+    React.useEffect(() => {
+        return () => {
+            if (messageData) {
+                bot.deleteMessage(messageData.chat.id, messageData.message_id)
+            }
+        }
+    }, [messageData]);
+
     return null;
 }
 
@@ -152,6 +160,14 @@ export function Text({ children }) {
             bot.editMessageText(children, opts);
         }
     }, [children, userId]);
+
+    React.useEffect(() => {
+        return () => {
+            if (messageData) {
+                bot.deleteMessage(messageData.chat.id, messageData.message_id)
+            }
+        }
+    }, [messageData]);
 
     return null;
 }
@@ -191,6 +207,14 @@ export function Image({ src, caption, inlineButtons }) {
             bot.editMessageMedia(media, { ...params, ...opts });
         }
     }, [userId, inlineButtons, src, caption]);
+
+    React.useEffect(() => {
+        return () => {
+            if (messageData) {
+                bot.deleteMessage(messageData.chat.id, messageData.message_id)
+            }
+        }
+    }, [messageData]);
 
     return null;
 }
