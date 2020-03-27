@@ -29,6 +29,7 @@ function Main() {
     }, []);
 
     return (
+        // FIXME make right order to send message
         <>
             <Image
                 src={
