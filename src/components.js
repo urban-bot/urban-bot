@@ -1,18 +1,27 @@
 import React from 'react';
-import { bot } from './render';
 import { BotContext, RouterContext } from './context';
 import { useMessage, useBotContext } from './hooks';
+import TelegramBot from 'node-telegram-bot-api';
+import { AbstractBot } from './AbstractBot';
 
-export function Root({ children, timeToClearUserSession = 1000 * 60 * 10 }) {
+export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 }) {
     const [userIds, setUserIds] = React.useState(new Set());
     const timeoutIdsRef = React.useRef({});
     const userIdsIdRef = React.useRef(userIds);
+    const [firstMessage, setFirstMessage] = React.useState();
     userIdsIdRef.current = userIds;
+    const options = {
+        polling: true,
+    };
+    const telegramBotRef = React.useRef(new TelegramBot(token, options));
+    const abstractBotRef = React.useRef(new AbstractBot(telegramBotRef.current));
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
-    useMessage(({ from: { id } }) => {
+    useMessage((message) => {
+        const { from: { id } } = message;
         if (!userIdsIdRef.current.has(id)) {
             setUserIds(new Set([...userIdsIdRef.current, id]));
+            setFirstMessage(message);
         }
 
         clearTimeout(timeoutIdsRef.current[id]);
@@ -20,7 +29,13 @@ export function Root({ children, timeToClearUserSession = 1000 * 60 * 10 }) {
             userIdsIdRef.current.delete(id);
             setUserIds(new Set(userIdsIdRef.current));
         }, timeToClearUserSession);
-    }, []);
+    }, [], abstractBotRef.current);
+
+    React.useEffect(() => {
+        if (firstMessage !== undefined) {
+            abstractBotRef.current.emit('message', firstMessage);
+        }
+    }, [firstMessage]);
 
     React.useEffect(() => {
         console.log('Root start');
@@ -36,7 +51,7 @@ export function Root({ children, timeToClearUserSession = 1000 * 60 * 10 }) {
                 return (
                     // FIXME pass all user data
                     // FIXME first message doesn't process by application, have to do send two message to start
-                    <BotContext.Provider key={userId} value={{ userId }}>
+                    <BotContext.Provider key={userId} value={{ userId, bot: abstractBotRef.current }}>
                         <ErrorBoundary>{children}</ErrorBoundary>
                     </BotContext.Provider>
                 );
@@ -47,7 +62,7 @@ export function Root({ children, timeToClearUserSession = 1000 * 60 * 10 }) {
 
 export function Router({ children }) {
     const [activePath, setActivePath] = React.useState();
-    const { userId } = useBotContext();
+    const { userId, bot } = useBotContext();
 
     useMessage(
         ({ text }) => {
@@ -83,7 +98,7 @@ export function Button() {
 
 export function ButtonGroup({ children, title }) {
     const [messageData, setMessageData] = React.useState();
-    const { userId } = useBotContext();
+    const { userId, bot } = useBotContext();
 
     React.useEffect(() => {
         const params = {
@@ -137,9 +152,9 @@ export function ButtonGroup({ children, title }) {
     React.useEffect(() => {
         return () => {
             if (messageData) {
-                bot.deleteMessage(messageData.chat.id, messageData.message_id)
+                bot.deleteMessage(messageData.chat.id, messageData.message_id);
             }
-        }
+        };
     }, [messageData]);
 
     return null;
@@ -147,7 +162,7 @@ export function ButtonGroup({ children, title }) {
 
 export function Text({ children }) {
     const [messageData, setMessageData] = React.useState();
-    const { userId } = useBotContext();
+    const { userId, bot } = useBotContext();
 
     React.useEffect(() => {
         if (messageData === undefined) {
@@ -166,9 +181,9 @@ export function Text({ children }) {
     React.useEffect(() => {
         return () => {
             if (messageData) {
-                bot.deleteMessage(messageData.chat.id, messageData.message_id)
+                bot.deleteMessage(messageData.chat.id, messageData.message_id);
             }
-        }
+        };
     }, [messageData]);
 
     return null;
@@ -176,7 +191,7 @@ export function Text({ children }) {
 
 export function Image({ src, caption, inlineButtons }) {
     const [messageData, setMessageData] = React.useState();
-    const { userId } = useBotContext();
+    const { userId, bot } = useBotContext();
 
     React.useEffect(() => {
         const params = {};
@@ -213,9 +228,9 @@ export function Image({ src, caption, inlineButtons }) {
     React.useEffect(() => {
         return () => {
             if (messageData) {
-                bot.deleteMessage(messageData.chat.id, messageData.message_id)
+                bot.deleteMessage(messageData.chat.id, messageData.message_id);
             }
-        }
+        };
     }, [messageData]);
 
     return null;

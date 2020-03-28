@@ -38,7 +38,6 @@ function Main() {
                         : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'
                 }
                 caption={title}
-
             />
             <ButtonGroup title={'Actions'}>
                 <Button
@@ -75,7 +74,7 @@ function Help() {
 
 function App() {
     return (
-        <Root>
+        <Root token={token}>
             <Router>
                 <Route path="/start">
                     <Main />
@@ -89,7 +88,7 @@ function App() {
 }
 
 if (isDevelopment) {
-    render(<App />, token);
+    render(<App />);
 } else {
     bot.startWebhook('/', null, 3000);
 }

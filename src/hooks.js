@@ -1,6 +1,5 @@
 import React from 'react';
 import { BotContext, RouterContext } from './context';
-import { bot } from './render';
 
 export function useBotContext() {
     return React.useContext(BotContext);
@@ -10,8 +9,10 @@ export function useRouter() {
     return React.useContext(RouterContext);
 }
 
-export function useMessage(func, dependencies = []) {
-    const { userId } = useBotContext();
+export function useMessage(func, dependencies = [], bot) {
+    const { userId, bot: botFromContext } = useBotContext();
+
+    const neededBot = bot || botFromContext;
 
     const handler = function(ctx) {
         const chatId = ctx.chat.id;
@@ -22,10 +23,10 @@ export function useMessage(func, dependencies = []) {
     };
 
     React.useEffect(() => {
-        bot.on('message', handler);
+        neededBot.on('message', handler);
 
         return () => {
-            bot.removeListener('message', handler);
+            neededBot.removeListener('message', handler);
         };
     }, dependencies);
 }
