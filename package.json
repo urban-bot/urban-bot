@@ -8,6 +8,7 @@
     "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint '**/*.{js,jsx}'",
+    "lint:fix": "eslint '**/*.{js,jsx}' --fix",
     "postinstall": "find node_modules -name \"*.mjs\" | xargs rm"
   },
   "keywords": [
