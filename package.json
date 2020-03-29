@@ -21,22 +21,23 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "@babel/plugin-transform-react-jsx": "^7.8.3",
-    "babel-loader": "^8.0.6",
-    "@babel/core": "^7.8.3",
-    "prettier": "^1.19.1",
-    "nodemon": "^2.0.2"
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10",
+    "@babel/plugin-transform-react-jsx": "7.8.3",
+    "babel-loader": "8.0.6",
+    "@babel/core": "7.8.3",
+    "prettier": "1.19.1",
+    "nodemon": "2.0.2",
+    "eslint": "6.8.0"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:urban-bot/urban-bot.git"
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "node-telegram-bot-api": "^0.40.0",
-    "react": "^16.13.1",
-    "react-reconciler": "^0.25.1"
+    "dotenv": "8.2.0",
+    "node-telegram-bot-api": "0.40.0",
+    "react": "16.13.1",
+    "react-reconciler": "0.25.1"
   }
 }
