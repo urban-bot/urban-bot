@@ -1,8 +1,5 @@
-// import EventEmitter from 'events';
-
 export class AbstractBot {
     constructor(bot) {
-        // will be array bots
         this.bot = bot;
     }
 

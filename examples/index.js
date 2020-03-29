@@ -87,8 +87,4 @@ function App() {
     );
 }
 
-if (isDevelopment) {
-    render(<App />);
-} else {
-    bot.startWebhook('/', null, 3000);
-}
+render(<App />);

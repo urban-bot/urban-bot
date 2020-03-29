@@ -15,25 +15,35 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 
     };
     const telegramBotRef = React.useRef(new TelegramBot(token, options));
     const abstractBotRef = React.useRef(new AbstractBot(telegramBotRef.current));
+    const bot = abstractBotRef.current;
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
-    useMessage((message) => {
-        const { from: { id } } = message;
-        if (!userIdsIdRef.current.has(id)) {
-            setUserIds(new Set([...userIdsIdRef.current, id]));
-            setFirstMessage(message);
+    React.useEffect(() => {
+        function handler(message) {
+            const { from: { id } } = message;
+            if (!userIdsIdRef.current.has(id)) {
+                setUserIds(new Set([...userIdsIdRef.current, id]));
+                setFirstMessage(message);
+            }
+
+            clearTimeout(timeoutIdsRef.current[id]);
+            timeoutIdsRef.current[id] = setTimeout(() => {
+                userIdsIdRef.current.delete(id);
+                setUserIds(new Set(userIdsIdRef.current));
+            }, timeToClearUserSession);
         }
 
-        clearTimeout(timeoutIdsRef.current[id]);
-        timeoutIdsRef.current[id] = setTimeout(() => {
-            userIdsIdRef.current.delete(id);
-            setUserIds(new Set(userIdsIdRef.current));
-        }, timeToClearUserSession);
-    }, [], abstractBotRef.current);
+        bot.on('message', handler);
+
+        return () => {
+            bot.removeListener('message', handler);
+        };
+    });
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
-            abstractBotRef.current.emit('message', firstMessage);
+            // First message is needed to register user and initialize react children for him. After initializing we repeat this message that react children can process it
+            bot.emit('message', firstMessage);
         }
     }, [firstMessage]);
 
@@ -50,8 +60,7 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 
             {Array.from(userIds).map((userId) => {
                 return (
                     // FIXME pass all user data
-                    // FIXME first message doesn't process by application, have to do send two message to start
-                    <BotContext.Provider key={userId} value={{ userId, bot: abstractBotRef.current }}>
+                    <BotContext.Provider key={userId} value={{ userId, bot }}>
                         <ErrorBoundary>{children}</ErrorBoundary>
                     </BotContext.Provider>
                 );
