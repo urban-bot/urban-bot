@@ -13,9 +13,8 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 
     const options = {
         polling: true,
     };
-    const telegramBotRef = React.useRef(new TelegramBot(token, options));
-    const abstractBotRef = React.useRef(new AbstractBot(telegramBotRef.current));
-    const bot = abstractBotRef.current;
+    const telegramBot = React.useMemo(() => new TelegramBot(token, options), []);
+    const bot = React.useMemo(() => new AbstractBot(telegramBot), []);
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {
@@ -42,7 +41,8 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
-            // First message is needed to register user and initialize react children for him. After initializing we repeat this message that react children can process it
+            // First message is needed to register user and initialize react children for him.
+            // After initializing we repeat this message that react children can process it.
             bot.emit('message', firstMessage);
         }
     }, [firstMessage]);
