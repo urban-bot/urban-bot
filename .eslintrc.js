@@ -13,4 +13,7 @@ module.exports = {
         node: true,
         es6: true,
     },
+    rules: {
+        'react/prop-types': 0,
+    },
 };

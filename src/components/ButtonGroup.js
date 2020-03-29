@@ -14,7 +14,7 @@ export function ButtonGroup({ children, title }) {
 
         const arrChildren = Array.isArray(children) ? children : [children];
 
-        const ids = arrChildren.map((child, i) => {
+        const ids = arrChildren.map((child) => {
             const id = String(Math.random());
             // FIXME inline_keyboard can be matrix
             params.reply_markup.inline_keyboard[0].push({ text: child.props.children, callback_data: id });
@@ -51,7 +51,7 @@ export function ButtonGroup({ children, title }) {
         return () => {
             bot.removeListener('callback_query', onCallbackQuery);
         };
-    }, [children, title, userId, messageData]);
+    }, [children, title, userId, messageData, bot]);
 
     // TODO add MODE with deletion or not
     React.useEffect(() => {
@@ -60,7 +60,7 @@ export function ButtonGroup({ children, title }) {
                 bot.deleteMessage(messageData.chat.id, messageData.message_id);
             }
         };
-    }, [messageData]);
+    }, [messageData, bot]);
 
     return null;
 }

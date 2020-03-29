@@ -4,16 +4,13 @@ import { RouterContext } from '../context';
 
 export function Router({ children }) {
     const [activePath, setActivePath] = React.useState();
-    const { userId, bot } = useBotContext();
+    const { userId } = useBotContext();
 
-    useMessage(
-        ({ text }) => {
-            if (text[0] === '/') {
-                setActivePath(text);
-            }
-        },
-        [setActivePath],
-    );
+    useMessage(({ text }) => {
+        if (text[0] === '/') {
+            setActivePath(text);
+        }
+    });
 
     React.useEffect(() => {
         console.log(userId, 'Router start');
@@ -21,6 +18,7 @@ export function Router({ children }) {
         return () => {
             console.log(userId, 'Router leave');
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const child = (Array.isArray(children) ? children : [children]).find((child) => {
@@ -30,6 +28,6 @@ export function Router({ children }) {
     return <RouterContext.Provider value={{ activePath, setActivePath }}>{child}</RouterContext.Provider>;
 }
 
-export function Route({ path, children }) {
+export function Route({ children }) {
     return <>{children}</>;
 }
