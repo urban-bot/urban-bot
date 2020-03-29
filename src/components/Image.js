@@ -35,7 +35,7 @@ export function Image({ src, caption, inlineButtons }) {
             };
             bot.editMessageMedia(media, { ...params, ...opts });
         }
-    }, [userId, inlineButtons, src, caption]);
+    }, [userId, inlineButtons, src, caption, bot, messageData]);
 
     React.useEffect(() => {
         return () => {
@@ -43,7 +43,7 @@ export function Image({ src, caption, inlineButtons }) {
                 bot.deleteMessage(messageData.chat.id, messageData.message_id);
             }
         };
-    }, [messageData]);
+    }, [messageData, bot]);
 
     return null;
 }
