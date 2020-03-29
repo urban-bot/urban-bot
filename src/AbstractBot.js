@@ -1,40 +1,81 @@
 // import EventEmitter from 'events';
 
+
+
 export class AbstractBot {
     constructor(bot) {
+      //  console.log('Initial Bot ');
         // will be array bots
         this.bot = bot;
+
+        this.listaners = new Map();
     }
 
-    on(...args) {
-        return this.bot.on(...args);
+    on(messageType, callback) {
+       // console.log('on ', messageType);
+        if(!this.listaners.has(messageType)) {
+            this.listaners.set(messageType, new Set());
+        }
+
+        this.listaners.get(messageType).add((...props) => {
+           // console.log(`call ${messageType}`, props)
+            callback(...props);
+        });
+       // return this.bot.on(...args);
     }
 
-    emit(...args) {
-        return this.bot.emit(...args);
+    emit(messageType, props) {
+
+        if(this.listaners.has(messageType)) {
+            this.listaners.get(messageType).forEach((callback) => {
+                callback(props);
+            });
+        }
+       // return this.bot.emit(...args);
     }
 
-    removeListener(...args) {
-        return this.bot.removeListener(...args);
+    removeListener(messageType, callback) {
+     //   console.log('removeListener ', messageType);
+        if(this.listaners.has(messageType)) {
+            this.listaners.get(messageType).delete(callback);
+        }
+      // return this.bot.removeListener(messageType, callback);
     }
 
-    sendMessage(...args) {
-        return this.bot.sendMessage(...args);
+    sendMessage(userId, text, value) {
+        // return this.bot.sendMessage(userId, text, value);
+        // console.log('sendMessage ', {userId, text});
+        return Promise.resolve({
+            chat: {
+                id: userId
+            },
+            message_id: '22222',
+        })
     }
 
-    editMessageText(...args) {
-        return this.bot.editMessageText(...args);
+    editMessageText(text, options) {
+      //  console.log('editMessageText ', {text, options});
+      //  return this.bot.editMessageText(text, options);
     }
 
-    deleteMessage(...args) {
-        return this.bot.deleteMessage(...args);
+    deleteMessage(chat_id, message_id) {
+       // console.log('deleteMessage ', {chat_id, message_id});
+       // return this.bot.deleteMessagechat_id, message_id);
     }
 
-    sendPhoto(...args) {
-        return this.bot.sendPhoto(...args);
+    async sendPhoto(userId, src, params) {
+      //  console.log('sendPhoto ', {userId});
+        // return this.bot.sendPhoto(...args);
+        return Promise.resolve({
+            chat: {
+                id: userId
+            },
+            message_id: '22222',
+        })
     }
 
-    editMessageMedia(...args) {
-        return this.bot.editMessageMedia(...args);
+    editMessageMedia(media, options) {
+     //   console.log('editMessageMedia ');
+        // return this.bot.editMessageMedia(media, options);
     }
 }

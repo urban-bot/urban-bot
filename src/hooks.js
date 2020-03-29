@@ -12,10 +12,14 @@ export function useRouter() {
 export function useMessage(func, dependencies = [], bot) {
     const { userId, bot: botFromContext } = useBotContext();
 
-    const neededBot = bot || botFromContext;
+    const neededBot = bot || botFromContext
 
     const handler = function(ctx) {
         const chatId = ctx.chat.id;
+        // console.log('handler', ctx);
+        // console.log('userId', userId);
+        // console.log('chatId', chatId);
+        // console.log('botFromContext', botFromContext);
 
         if (!userId || chatId === userId) {
             func(ctx);

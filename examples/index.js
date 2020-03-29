@@ -19,18 +19,25 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 const token = isDevelopment ? process.env.TELEGRAM_TOKEN_DEV : process.env.TELEGRAM_TOKEN;
 
+
+
+
+
 function Main() {
     const { setActivePath } = useRouter();
     const [title, setTitle] = React.useState('0');
     const [src, setSrc] = React.useState(true);
+    const { userId, bot } = useBotContext();
 
     useMessage(({ text }) => {
         setTitle(text);
     }, []);
 
+  //  console.log('Render Main ', userId);
     return (
         // FIXME make right order to send message
         <>
+
             <Image
                 src={
                     src
@@ -60,6 +67,15 @@ function Main() {
     );
 }
 
+function Enity() {
+    return <>{new Array(10).fill(<Main/>)}</>;
+}
+
+
+function NewMain() {
+    return <>{new Array(10).fill(<Enity/>)}</>;
+}
+
 function Help() {
     const { setActivePath } = useRouter();
 
@@ -77,7 +93,7 @@ function App() {
         <Root token={token}>
             <Router>
                 <Route path="/start">
-                    <Main />
+                    <NewMain />
                 </Route>
                 <Route path="/help">
                     <Help />

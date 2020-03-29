@@ -1,8 +1,14 @@
 import React from 'react';
 import { BotContext, RouterContext } from './context';
 import { useMessage, useBotContext } from './hooks';
-import TelegramBot from 'node-telegram-bot-api';
-import { AbstractBot } from './AbstractBot';
+// import TelegramBot from 'node-telegram-bot-api';
+ import { AbstractBot } from './AbstractBot';
+
+function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+}
 
 export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 }) {
     const [userIds, setUserIds] = React.useState(new Set());
@@ -13,12 +19,14 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 
     const options = {
         polling: true,
     };
-    const telegramBotRef = React.useRef(new TelegramBot(token, options));
-    const abstractBotRef = React.useRef(new AbstractBot(telegramBotRef.current));
+    // const telegramBotRef = React.useRef(new TelegramBot(token, options));
+     const abstractBotRef = React.useRef(new AbstractBot('ooooooo'));
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
     useMessage((message) => {
+       // console.log('111 message', message)
         const { from: { id } } = message;
+        // console.log('!userIdsIdRef.current.has(id)', !userIdsIdRef.current.has(id))
         if (!userIdsIdRef.current.has(id)) {
             setUserIds(new Set([...userIdsIdRef.current, id]));
             setFirstMessage(message);
@@ -38,13 +46,22 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 
     }, [firstMessage]);
 
     React.useEffect(() => {
-        console.log('Root start');
-
-        return () => {
-            console.log('Root leave');
-        };
+        let id = 0;
+        const MAX = 50;
+        setInterval(() => {
+            id = (id + 1) % MAX;
+            abstractBotRef.current.emit('message', {
+                text: '/start',
+                from: { id },
+                chat: { id },
+                message_id: '1323123q'
+            });
+        }, 5);
     }, []);
 
+    React.useEffect(() => {
+    }, []);
+    console.log('userIds', Array.from(userIds))
     return (
         <>
             {Array.from(userIds).map((userId) => {
@@ -66,6 +83,7 @@ export function Router({ children }) {
 
     useMessage(
         ({ text }) => {
+            // console.log('useMessage', text);
             if (text[0] === '/') {
                 setActivePath(text);
             }
@@ -74,10 +92,10 @@ export function Router({ children }) {
     );
 
     React.useEffect(() => {
-        console.log(userId, 'Router start');
+        console.log('!!! Router start', userId);
 
         return () => {
-            console.log(userId, 'Router leave');
+            console.log('!!! Router leave', userId);
         };
     }, []);
 
