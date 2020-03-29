@@ -7,6 +7,7 @@
     "build": "webpack",
     "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '**/*.{js,jsx}'",
     "postinstall": "find node_modules -name \"*.mjs\" | xargs rm"
   },
   "keywords": [
@@ -21,14 +22,18 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "webpack": "4.41.5",
-    "webpack-cli": "3.3.10",
+    "@babel/core": "7.8.3",
     "@babel/plugin-transform-react-jsx": "7.8.3",
     "babel-loader": "8.0.6",
-    "@babel/core": "7.8.3",
-    "prettier": "1.19.1",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.1",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
     "nodemon": "2.0.2",
-    "eslint": "6.8.0"
+    "prettier": "1.19.1",
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10"
   },
   "repository": {
     "type": "git",
