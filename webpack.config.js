@@ -15,11 +15,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        plugins: [
-                            [
-                                '@babel/plugin-transform-react-jsx',
-                            ],
-                        ],
+                        plugins: [['@babel/plugin-transform-react-jsx']],
                     },
                 },
             },
