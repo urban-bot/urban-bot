@@ -4,15 +4,15 @@ import { useMessage, useBotContext } from './hooks';
 import TelegramBot from 'node-telegram-bot-api';
 import { AbstractBot } from './AbstractBot';
 
-export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10 }) {
+export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10, options }) {
     const [userIds, setUserIds] = React.useState(new Set());
-    const timeoutIdsRef = React.useRef({});
     const userIdsIdRef = React.useRef(userIds);
-    const [firstMessage, setFirstMessage] = React.useState();
     userIdsIdRef.current = userIds;
-    const options = {
-        polling: true,
-    };
+
+    const timeoutIdsRef = React.useRef({});
+
+    const [firstMessage, setFirstMessage] = React.useState();
+
     const telegramBot = React.useMemo(() => new TelegramBot(token, options), []);
     const bot = React.useMemo(() => new AbstractBot(telegramBot), []);
 

@@ -74,7 +74,12 @@ function Help() {
 
 function App() {
     return (
-        <Root token={token}>
+        <Root
+            token={token}
+            options={{
+                polling: true,
+            }}
+        >
             <Router>
                 <Route path="/start">
                     <Main />
