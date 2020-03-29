@@ -1,6 +1,5 @@
 import React from 'react';
 import { BotContext, RouterContext } from './context';
-import { bot } from './render';
 
 export function useBotContext() {
     return React.useContext(BotContext);
@@ -11,7 +10,7 @@ export function useRouter() {
 }
 
 export function useMessage(func, dependencies = []) {
-    const { userId } = useBotContext();
+    const { userId, bot } = useBotContext();
 
     const handler = function(ctx) {
         const chatId = ctx.chat.id;
