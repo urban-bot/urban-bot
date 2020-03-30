@@ -19,15 +19,15 @@ function Main() {
     return (
         // FIXME make right order to send message
         <>
-            <Image
-                src={
-                    src
-                        ? 'https://www.cheatsheet.com/wp-content/uploads/2018/06/jennifer-aniston-leprechaun-640x488.jpg'
-                        : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'
-                }
-                caption={title}
-            />
-            <ButtonGroup title={'Actions'}>
+            {/*<Image*/}
+            {/*    src={*/}
+            {/*        src*/}
+            {/*            ? 'https://www.cheatsheet.com/wp-content/uploads/2018/06/jennifer-aniston-leprechaun-640x488.jpg'*/}
+            {/*            : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'*/}
+            {/*    }*/}
+            {/*    caption={title}*/}
+            {/*/>*/}
+            <ButtonGroup title={title}>
                 <Button
                     onClick={() => {
                         setTitle(title + 1);
@@ -70,7 +70,7 @@ function App() {
         >
             <Router>
                 <Route path="/start">
-                    <Text>123</Text>
+                    <Main />
                 </Route>
                 <Route path="/help">
                     <Help />
