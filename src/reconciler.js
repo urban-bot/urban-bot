@@ -1,5 +1,5 @@
 import ReactReconciler from 'react-reconciler';
-import { createNode, createTextNode, appendChildNode, removeChildNode, updateNode } from './dom';
+import { createNode, appendChildNode, removeChildNode, updateNode } from './dom';
 
 const rootHostContext = {};
 const childHostContext = {};
@@ -24,7 +24,7 @@ const hostConfig = {
     createInstance: (type, newProps) => {
         return createNode(type, newProps);
     },
-    createTextInstance: createTextNode,
+    createTextInstance: () => {},
     // eslint-disable-next-line no-unused-vars
     resetTextContent: (node) => {},
     getPublicInstance: (instance) => instance,

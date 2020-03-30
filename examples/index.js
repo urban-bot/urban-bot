@@ -62,6 +62,32 @@ function Help() {
     );
 }
 
+function Array() {
+    const [array, setArray] = React.useState(['0', '1', '2']);
+    const index = React.useRef(array.length);
+
+    const texts = array.map((v) => {
+        return <Text key={v}>{v}</Text>;
+    });
+
+    return (
+        <>
+            {texts}
+            <ButtonGroup title="array">
+                <Button onClick={() => setArray([...array, index.current++])}>Push</Button>
+                <Button
+                    onClick={() => {
+                        const [_first, ...newArray] = array;
+                        setArray(newArray);
+                    }}
+                >
+                    Delete first
+                </Button>
+            </ButtonGroup>
+        </>
+    );
+}
+
 function App() {
     return (
         <Root
@@ -77,8 +103,8 @@ function App() {
                 <Route path="/help">
                     <Help />
                 </Route>
-                <Route path="/text">
-                    <Text>Privet, I am Urban Bot</Text>
+                <Route path="/array">
+                    <Array />
                 </Route>
             </Router>
         </Root>

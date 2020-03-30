@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
 
-export function Image({ src, caption, buttons }) {
+export const Image = React.memo(function Image({ src, caption, buttons }) {
     const { userId, bot } = useBotContext();
 
     const params = {};
@@ -19,4 +19,4 @@ export function Image({ src, caption, buttons }) {
     }
 
     return <img src={src} bot={bot} userId={userId} params={params} />;
-}
+});
