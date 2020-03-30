@@ -26,24 +26,26 @@ function Main() {
                         : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'
                 }
                 caption={title}
+                buttons={
+                    <ButtonGroup>
+                        <Button
+                            onClick={() => {
+                                setTitle(title + 1);
+                            }}
+                        >
+                            Change title
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setSrc(!src);
+                            }}
+                        >
+                            Toggle picture
+                        </Button>
+                        <Button onClick={() => setActivePath('/help')}>Go to help</Button>
+                    </ButtonGroup>
+                }
             />
-            <ButtonGroup title={'title'}>
-                <Button
-                    onClick={() => {
-                        setTitle(title + 1);
-                    }}
-                >
-                    Change title
-                </Button>
-                <Button
-                    onClick={() => {
-                        setSrc(!src);
-                    }}
-                >
-                    Toggle picture
-                </Button>
-                <Button onClick={() => setActivePath('/help')}>Go to help</Button>
-            </ButtonGroup>
         </>
     );
 }

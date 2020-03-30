@@ -83,8 +83,8 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
 
                 const media = {
                     type: 'photo',
-                    caption: newProps.params.caption,
                     media: newProps.src,
+                    ...(newProps.params || {}),
                 };
 
                 node.bot.editMessageMedia(media, { ...media, ...metaToEdit });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
 
-export function Image({ src, caption, inlineButtons }) {
+export function Image({ src, caption, buttons }) {
     const { userId, bot } = useBotContext();
 
     const params = {};
@@ -10,9 +10,11 @@ export function Image({ src, caption, inlineButtons }) {
         params.caption = caption;
     }
 
-    // FIXME doesn't work
-    if (inlineButtons) {
-        const { reply_markup } = inlineButtons.type(inlineButtons.props);
+    if (buttons) {
+        const { props } = buttons.type(buttons.props);
+
+        const { reply_markup } = props.params || {};
+
         params.reply_markup = reply_markup;
     }
 
