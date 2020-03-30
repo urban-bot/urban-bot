@@ -1,12 +1,5 @@
 import ReactReconciler from 'react-reconciler';
-import {
-    createNode,
-    createTextNode,
-    appendChildNode,
-    insertBeforeNode,
-    removeChildNode,
-    setAttribute
-} from './dom';
+import { createNode, createTextNode, appendChildNode, insertBeforeNode, removeChildNode, setAttribute } from './dom';
 
 const rootHostContext = {};
 const childHostContext = {};
@@ -57,7 +50,7 @@ const hostConfig = {
         return node;
     },
     createTextInstance: createTextNode,
-    resetTextContent: node => {
+    resetTextContent: (node) => {
         if (node.textContent) {
             node.textContent = '';
         }
@@ -69,7 +62,7 @@ const hostConfig = {
             }
         }
     },
-    getPublicInstance: instance => instance,
+    getPublicInstance: (instance) => instance,
     appendInitialChild: appendChildNode,
     appendChild: appendChildNode,
     insertBefore: insertBeforeNode,
@@ -117,8 +110,7 @@ const hostConfig = {
             node.textContent = newText;
         }
     },
-    removeChild: removeChildNode
+    removeChild: removeChildNode,
 };
 
 export const reactReconciler = ReactReconciler(hostConfig);
-
