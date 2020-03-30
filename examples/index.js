@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Image, useMessage, Button, ButtonGroup, Router, useRouter, Root } from '../src';
+import { render, Route, Image, useMessage, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
 
 dotenv.config();
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -70,7 +70,7 @@ function App() {
         >
             <Router>
                 <Route path="/start">
-                    <Main />
+                    <Text>123</Text>
                 </Route>
                 <Route path="/help">
                     <Help />
