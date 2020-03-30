@@ -13,7 +13,9 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
 
     const [firstMessage, setFirstMessage] = React.useState();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const telegramBot = React.useMemo(() => new TelegramBot(token, options), []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const bot = React.useMemo(() => new AbstractBot(telegramBot), []);
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
@@ -47,7 +49,7 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
             // After initializing we repeat this message that react children can process it.
             bot.emit('message', firstMessage);
         }
-    }, [firstMessage]);
+    }, [firstMessage, bot]);
 
     React.useEffect(() => {
         console.log('Root start');

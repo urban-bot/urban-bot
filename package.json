@@ -7,6 +7,8 @@
     "build": "webpack",
     "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '**/*.js'",
+    "lint:fix": "npm run lint -- --fix",
     "postinstall": "find node_modules -name \"*.mjs\" | xargs rm"
   },
   "keywords": [
@@ -21,22 +23,27 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "@babel/plugin-transform-react-jsx": "^7.8.3",
-    "babel-loader": "^8.0.6",
-    "@babel/core": "^7.8.3",
-    "prettier": "^1.19.1",
-    "nodemon": "^2.0.2"
+    "@babel/core": "7.8.3",
+    "@babel/plugin-transform-react-jsx": "7.8.3",
+    "babel-loader": "8.0.6",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.1",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "nodemon": "2.0.2",
+    "prettier": "1.19.1",
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:urban-bot/urban-bot.git"
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "node-telegram-bot-api": "^0.40.0",
-    "react": "^16.13.1",
-    "react-reconciler": "^0.25.1"
+    "dotenv": "8.2.0",
+    "node-telegram-bot-api": "0.40.0",
+    "react": "16.13.1",
+    "react-reconciler": "0.25.1"
   }
 }

@@ -1,18 +1,6 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import {
-    render,
-    Route,
-    Image,
-    Text,
-    useMessage,
-    Button,
-    ButtonGroup,
-    Router,
-    useRouter,
-    useBotContext,
-    Root,
-} from '../src';
+import { render, Route, Image, useMessage, Button, ButtonGroup, Router, useRouter, Root } from '../src';
 
 dotenv.config();
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -26,7 +14,7 @@ function Main() {
 
     useMessage(({ text }) => {
         setTitle(text);
-    }, []);
+    });
 
     return (
         // FIXME make right order to send message

@@ -17,7 +17,7 @@ export function Text({ children }) {
             };
             bot.editMessageText(children, options);
         }
-    }, [children, userId]);
+    }, [children, userId, bot, messageData]);
 
     React.useEffect(() => {
         return () => {
@@ -25,7 +25,7 @@ export function Text({ children }) {
                 bot.deleteMessage(messageData.chat.id, messageData.message_id);
             }
         };
-    }, [messageData]);
+    }, [messageData, bot]);
 
     return null;
 }
