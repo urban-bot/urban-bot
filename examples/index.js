@@ -77,6 +77,9 @@ function App() {
                 <Route path="/help">
                     <Help />
                 </Route>
+                <Route path="/text">
+                    <Text>Privet, I am Urban Bot</Text>
+                </Route>
             </Router>
         </Root>
     );
