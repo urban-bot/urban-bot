@@ -1,57 +1,33 @@
-// Helper utilities implementing some common DOM methods to simplify reconciliation code
-export const createNode = (tagName) => ({
-    nodeName: tagName.toUpperCase(),
-    style: {},
-    attributes: {},
-    childNodes: [],
-    parentNode: null,
-});
-
-export const appendChildNode = (node, childNode) => {
-    if (childNode.parentNode) {
-        removeChildNode(childNode.parentNode, childNode);
+export function createNode(type, props) {
+    if (type === 'message') {
+        return {
+            nodeName: type.toUpperCase(),
+            bot: props.bot,
+            text: props.text,
+            userId: props.userId,
+        };
     }
+}
 
-    childNode.parentNode = node;
+export function appendChildNode(node, childNode) {
+    const meta = childNode.bot.sendMessage(childNode.userId, childNode.text);
 
-    node.childNodes.push(childNode);
-};
+    childNode.meta = meta;
+}
 
-// Same as `appendChildNode`, but without removing child node from parent node
-export const appendStaticNode = (node, childNode) => {
-    node.childNodes.push(childNode);
-};
+export function removeChildNode(node, removedNode) {
+    removedNode.meta.then((meta) => {
+        removedNode.bot.deleteMessage(meta.chat.id, meta.message_id);
+    });
+}
 
-export const insertBeforeNode = (node, newChildNode, beforeChildNode) => {
-    if (newChildNode.parentNode) {
-        removeChildNode(newChildNode.parentNode, newChildNode);
-    }
+export function updateNode(node, updatePayload, type, oldProps, newProps) {
+    node.meta.then((meta) => {
+        const options = {
+            chat_id: meta.chat.id,
+            message_id: meta.message_id,
+        };
 
-    newChildNode.parentNode = node;
-
-    const index = node.childNodes.indexOf(beforeChildNode);
-    if (index >= 0) {
-        node.childNodes.splice(index, 0, newChildNode);
-        return;
-    }
-
-    node.childNodes.push(newChildNode);
-};
-
-export const removeChildNode = (node, removeNode) => {
-    removeNode.parentNode = null;
-
-    const index = node.childNodes.indexOf(removeNode);
-    if (index >= 0) {
-        node.childNodes.splice(index, 1);
-    }
-};
-
-export const setAttribute = (node, key, value) => {
-    node.attributes[key] = value;
-};
-
-export const createTextNode = (text) => ({
-    nodeName: '#text',
-    nodeValue: text,
-});
+        node.bot.editMessageText(newProps.text, options);
+    });
+}
