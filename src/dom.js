@@ -3,14 +3,17 @@ export function createNode(type, props) {
         return {
             nodeName: type.toUpperCase(),
             bot: props.bot,
-            text: props.text,
+            data: {
+                text: props.text,
+                params: props.params,
+            },
             userId: props.userId,
         };
     }
 }
 
 export function appendChildNode(node, childNode) {
-    const meta = childNode.bot.sendMessage(childNode.userId, childNode.text);
+    const meta = childNode.bot.sendMessage(childNode.userId, childNode.data.text, childNode.data.params);
 
     childNode.meta = meta;
 }
@@ -28,6 +31,8 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
             message_id: meta.message_id,
         };
 
-        node.bot.editMessageText(newProps.text, options);
+        const params = newProps.params || {};
+
+        node.bot.editMessageText(newProps.text, { ...params, ...options });
     });
 }
