@@ -2,67 +2,48 @@ import React from 'react';
 import { useBotContext } from '../hooks';
 
 export function ButtonGroup({ children, title }) {
-    const [messageData, setMessageData] = React.useState();
     const { userId, bot } = useBotContext();
+    const callbackRef = React.useRef();
 
-    React.useEffect(() => {
-        const params = {
-            reply_markup: {
-                inline_keyboard: [[]],
-            },
-        };
+    const params = {
+        reply_markup: {
+            inline_keyboard: [[]],
+        },
+    };
 
-        const arrChildren = Array.isArray(children) ? children : [children];
+    const arrChildren = Array.isArray(children) ? children : [children];
 
-        const ids = arrChildren.map((child) => {
-            const id = String(Math.random());
-            // FIXME inline_keyboard can be matrix
-            params.reply_markup.inline_keyboard[0].push({ text: child.props.children, callback_data: id });
+    const ids = arrChildren.map((child) => {
+        const id = String(Math.random());
+        // FIXME inline_keyboard can be matrix
+        params.reply_markup.inline_keyboard[0].push({ text: child.props.children, callback_data: id });
 
-            return id;
-        });
+        return id;
+    });
 
-        function onCallbackQuery(callbackQuery) {
-            ids.forEach((id, i) => {
-                const callbackQueryId = callbackQuery.data;
+    if (callbackRef.current) {
+        bot.removeListener('callback_query', callbackRef.current);
+    }
 
-                if (callbackQueryId === id) {
-                    arrChildren[i].props.onClick(callbackQuery);
-                }
-            });
-        }
+    callbackRef.current = function onCallbackQuery(callbackQuery) {
+        ids.forEach((id, i) => {
+            const callbackQueryId = callbackQuery.data;
 
-        bot.on('callback_query', onCallbackQuery);
-
-        const value = { text: title, ...params };
-
-        if (messageData === undefined) {
-            bot.sendMessage(userId, value.text, value).then((res) => {
-                setMessageData(res);
-            });
-        } else {
-            const options = {
-                chat_id: messageData.chat.id,
-                message_id: messageData.message_id,
-            };
-            bot.editMessageText(value.text, { ...params, ...options });
-        }
-
-        return () => {
-            bot.removeListener('callback_query', onCallbackQuery);
-        };
-    }, [children, title, userId, messageData, bot]);
-
-    // TODO add MODE with deletion or not
-    React.useEffect(() => {
-        return () => {
-            if (messageData) {
-                bot.deleteMessage(messageData.chat.id, messageData.message_id);
+            if (callbackQueryId === id) {
+                arrChildren[i].props.onClick(callbackQuery);
             }
-        };
-    }, [messageData, bot]);
+        });
+    };
 
-    return null;
+    bot.on('callback_query', callbackRef.current);
+
+    React.useEffect(() => {
+        return () => {
+            bot.removeListener('callback_query', callbackRef.current);
+        };
+    }, [bot]);
+
+    return <message userId={userId} text={title} params={params} bot={bot} />;
 }
 
 export function Button() {

@@ -1,57 +1,99 @@
-// Helper utilities implementing some common DOM methods to simplify reconciliation code
-export const createNode = (tagName) => ({
-    nodeName: tagName.toUpperCase(),
-    style: {},
-    attributes: {},
-    childNodes: [],
-    parentNode: null,
-});
+export function createNode(type, props = {}) {
+    const node = {
+        nodeName: type,
+        bot: props.bot,
+        // TODO change userId to chatId
+        userId: props.userId,
+    };
 
-export const appendChildNode = (node, childNode) => {
-    if (childNode.parentNode) {
-        removeChildNode(childNode.parentNode, childNode);
+    switch (type) {
+        case 'root': {
+            return node;
+        }
+        case 'message': {
+            return {
+                ...node,
+                data: {
+                    text: props.text,
+                    params: props.params,
+                },
+            };
+        }
+        case 'img': {
+            return {
+                ...node,
+                data: {
+                    src: props.src,
+                    params: props.params,
+                },
+            };
+        }
+        default: {
+            throw new Error('tag ' + type + ' is not exist');
+        }
     }
+}
 
-    childNode.parentNode = node;
+export function appendChildNode(node, childNode) {
+    switch (childNode.nodeName) {
+        case 'message': {
+            childNode.meta = childNode.bot.sendMessage(childNode.userId, childNode.data.text, childNode.data.params);
 
-    node.childNodes.push(childNode);
-};
+            break;
+        }
+        case 'img': {
+            childNode.meta = childNode.bot.sendPhoto(childNode.userId, childNode.data.src, childNode.data.params);
 
-// Same as `appendChildNode`, but without removing child node from parent node
-export const appendStaticNode = (node, childNode) => {
-    node.childNodes.push(childNode);
-};
-
-export const insertBeforeNode = (node, newChildNode, beforeChildNode) => {
-    if (newChildNode.parentNode) {
-        removeChildNode(newChildNode.parentNode, newChildNode);
+            break;
+        }
+        default: {
+            throw new Error('tag ' + childNode.nodeName + ' is not exist');
+        }
     }
+}
 
-    newChildNode.parentNode = node;
+export function removeChildNode(node, removedNode) {
+    removedNode.meta.then((meta) => {
+        removedNode.bot.deleteMessage(meta.chat.id, meta.message_id);
+    });
+}
 
-    const index = node.childNodes.indexOf(beforeChildNode);
-    if (index >= 0) {
-        node.childNodes.splice(index, 0, newChildNode);
-        return;
+export function updateNode(node, updatePayload, type, oldProps, newProps) {
+    switch (node.nodeName) {
+        case 'message': {
+            node.meta.then((meta) => {
+                const metaToEdit = {
+                    chat_id: meta.chat.id,
+                    message_id: meta.message_id,
+                };
+
+                const params = newProps.params || {};
+
+                node.bot.editMessageText(newProps.text, { ...params, ...metaToEdit });
+            });
+
+            break;
+        }
+        case 'img': {
+            node.meta.then((meta) => {
+                const metaToEdit = {
+                    chat_id: meta.chat.id,
+                    message_id: meta.message_id,
+                };
+
+                const media = {
+                    type: 'photo',
+                    media: newProps.src,
+                    ...(newProps.params || {}),
+                };
+
+                node.bot.editMessageMedia(media, { ...media, ...metaToEdit });
+            });
+
+            break;
+        }
+        default: {
+            throw new Error('tag ' + node.nodeName + ' is not exist');
+        }
     }
-
-    node.childNodes.push(newChildNode);
-};
-
-export const removeChildNode = (node, removeNode) => {
-    removeNode.parentNode = null;
-
-    const index = node.childNodes.indexOf(removeNode);
-    if (index >= 0) {
-        node.childNodes.splice(index, 1);
-    }
-};
-
-export const setAttribute = (node, key, value) => {
-    node.attributes[key] = value;
-};
-
-export const createTextNode = (text) => ({
-    nodeName: '#text',
-    nodeValue: text,
-});
+}

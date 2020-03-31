@@ -1,31 +1,8 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
 
-export function Text({ children }) {
-    const [messageData, setMessageData] = React.useState();
+export const Text = React.memo(function Text({ children }) {
     const { userId, bot } = useBotContext();
 
-    React.useEffect(() => {
-        if (messageData === undefined) {
-            bot.sendMessage(userId, children).then((res) => {
-                setMessageData(res);
-            });
-        } else {
-            const options = {
-                chat_id: messageData.chat.id,
-                message_id: messageData.message_id,
-            };
-            bot.editMessageText(children, options);
-        }
-    }, [children, userId, bot, messageData]);
-
-    React.useEffect(() => {
-        return () => {
-            if (messageData) {
-                bot.deleteMessage(messageData.chat.id, messageData.message_id);
-            }
-        };
-    }, [messageData, bot]);
-
-    return null;
-}
+    return <message text={children} userId={userId} bot={bot} />;
+});
