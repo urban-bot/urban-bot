@@ -4,7 +4,7 @@ import { AbstractBot } from '../AbstractBot';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 
-export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10, options }) {
+export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10, options = {} }) {
     const [userIds, setUserIds] = React.useState(new Set());
     const userIdsIdRef = React.useRef(userIds);
     userIdsIdRef.current = userIds;
@@ -13,10 +13,8 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
 
     const [firstMessage, setFirstMessage] = React.useState();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const telegramBot = React.useMemo(() => new TelegramBot(token, options), []);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const bot = React.useMemo(() => new AbstractBot(telegramBot), []);
+    const telegramBot = React.useMemo(() => new TelegramBot(token, options), [token, options]);
+    const bot = React.useMemo(() => new AbstractBot(telegramBot), [telegramBot]);
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {

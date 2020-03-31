@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Image, useMessage, Button, ButtonGroup, Router, useRouter, Root } from '../src';
+import { render, Route, Image, useMessage, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
 
 dotenv.config();
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -26,24 +26,26 @@ function Main() {
                         : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'
                 }
                 caption={title}
+                buttons={
+                    <ButtonGroup>
+                        <Button
+                            onClick={() => {
+                                setTitle(title + 1);
+                            }}
+                        >
+                            Change title
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setSrc(!src);
+                            }}
+                        >
+                            Toggle picture
+                        </Button>
+                        <Button onClick={() => setActivePath('/help')}>Go to help</Button>
+                    </ButtonGroup>
+                }
             />
-            <ButtonGroup title={'Actions'}>
-                <Button
-                    onClick={() => {
-                        setTitle(title + 1);
-                    }}
-                >
-                    Change title
-                </Button>
-                <Button
-                    onClick={() => {
-                        setSrc(!src);
-                    }}
-                >
-                    Toggle picture
-                </Button>
-                <Button onClick={() => setActivePath('/help')}>Go to help</Button>
-            </ButtonGroup>
         </>
     );
 }
@@ -55,6 +57,32 @@ function Help() {
         <>
             <ButtonGroup title="Help">
                 <Button onClick={() => setActivePath('/start')}>Go back</Button>
+            </ButtonGroup>
+        </>
+    );
+}
+
+function Array() {
+    const [array, setArray] = React.useState(['0', '1', '2']);
+    const index = React.useRef(array.length);
+
+    const texts = array.map((v) => {
+        return <Text key={v}>{v}</Text>;
+    });
+
+    return (
+        <>
+            {texts}
+            <ButtonGroup title="array">
+                <Button onClick={() => setArray([...array, index.current++])}>Push</Button>
+                <Button
+                    onClick={() => {
+                        const [_first, ...newArray] = array;
+                        setArray(newArray);
+                    }}
+                >
+                    Delete first
+                </Button>
             </ButtonGroup>
         </>
     );
@@ -74,6 +102,9 @@ function App() {
                 </Route>
                 <Route path="/help">
                     <Help />
+                </Route>
+                <Route path="/array">
+                    <Array />
                 </Route>
             </Router>
         </Root>
