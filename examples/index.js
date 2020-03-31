@@ -72,7 +72,6 @@ function Array() {
 
     return (
         <>
-            {texts}
             <ButtonGroup title="array">
                 <Button onClick={() => setArray([...array, index.current++])}>Push</Button>
                 <Button
@@ -84,6 +83,7 @@ function Array() {
                     Delete first
                 </Button>
             </ButtonGroup>
+            {texts}
         </>
     );
 }

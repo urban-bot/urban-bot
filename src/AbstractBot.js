@@ -1,6 +1,21 @@
+class PromiseQueue {
+    constructor() {
+        this.last = Promise.resolve();
+    }
+
+    next(promise) {
+        const current = this.last.then(promise);
+        this.last = current;
+
+        return current;
+    }
+}
+
 export class AbstractBot {
     constructor(bot) {
         this.bot = bot;
+
+        this.promiseQueue = new PromiseQueue();
     }
 
     on(...args) {
@@ -16,7 +31,9 @@ export class AbstractBot {
     }
 
     sendMessage(...args) {
-        return this.bot.sendMessage(...args);
+        return this.promiseQueue.next(() => {
+            return this.bot.sendMessage(...args);
+        });
     }
 
     editMessageText(...args) {
@@ -28,7 +45,9 @@ export class AbstractBot {
     }
 
     sendPhoto(...args) {
-        return this.bot.sendPhoto(...args);
+        return this.promiseQueue.next(() => {
+            return this.bot.sendPhoto(...args);
+        });
     }
 
     editMessageMedia(...args) {

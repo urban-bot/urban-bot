@@ -16,7 +16,7 @@ export function useMessage(func) {
         function handler(ctx) {
             const chatId = ctx.chat.id;
 
-            if (!userId || chatId === userId) {
+            if (ctx.text && (!userId || chatId === userId)) {
                 func(ctx);
             }
         }
