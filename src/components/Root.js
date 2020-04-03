@@ -39,7 +39,7 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
         return () => {
             bot.removeListener('message', handler);
         };
-    });
+    }, [bot, timeToClearUserSession]);
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
