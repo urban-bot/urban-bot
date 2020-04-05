@@ -1,3 +1,5 @@
+import { shallowEqual } from './utils';
+
 export function createNode(type, props = {}) {
     const node = {
         nodeName: type,
@@ -59,6 +61,10 @@ export function removeChildNode(node, removedNode) {
 }
 
 export function updateNode(node, updatePayload, type, oldProps, newProps) {
+    if (shallowEqual(oldProps, newProps)) {
+        return;
+    }
+
     switch (node.nodeName) {
         case 'message': {
             node.meta.then((meta) => {
