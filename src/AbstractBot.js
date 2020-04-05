@@ -15,7 +15,15 @@ export class AbstractBot {
     constructor(bot) {
         this.bot = bot;
 
-        this.promiseQueue = new PromiseQueue();
+        this.promiseQueueMap = {};
+    }
+
+    addPromiseQueue(id) {
+        this.promiseQueueMap[id] = new PromiseQueue();
+    }
+
+    deletePromiseQueue(id) {
+        delete this.promiseQueueMap[id];
     }
 
     on(...args) {
@@ -31,7 +39,9 @@ export class AbstractBot {
     }
 
     sendMessage(...args) {
-        return this.promiseQueue.next(() => {
+        const [id] = args;
+
+        return this.promiseQueueMap[id].next(() => {
             return this.bot.sendMessage(...args);
         });
     }
@@ -45,7 +55,9 @@ export class AbstractBot {
     }
 
     sendPhoto(...args) {
-        return this.promiseQueue.next(() => {
+        const [id] = args;
+
+        return this.promiseQueueMap[id].next(() => {
             return this.bot.sendPhoto(...args);
         });
     }

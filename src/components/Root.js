@@ -24,12 +24,14 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
             } = message;
             if (!userIdsIdRef.current.has(id)) {
                 setUserIds(new Set([...userIdsIdRef.current, id]));
+                bot.addPromiseQueue(id);
                 setFirstMessage(message);
             }
 
             clearTimeout(timeoutIdsRef.current[id]);
             timeoutIdsRef.current[id] = setTimeout(() => {
                 userIdsIdRef.current.delete(id);
+                bot.deletePromiseQueue(id);
                 setUserIds(new Set(userIdsIdRef.current));
             }, timeToClearUserSession);
         }

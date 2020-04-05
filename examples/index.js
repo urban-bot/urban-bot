@@ -62,7 +62,7 @@ function Help() {
     );
 }
 
-function Array() {
+function ArrayComponent() {
     const [array, setArray] = React.useState(['0', '1', '2']);
     const index = React.useRef(array.length);
 
@@ -104,7 +104,7 @@ function App() {
                     <Help />
                 </Route>
                 <Route path="/array">
-                    <Array />
+                    <ArrayComponent />
                 </Route>
             </Router>
         </Root>
