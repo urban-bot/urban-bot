@@ -14,9 +14,14 @@ export function useMessage(func) {
 
     React.useEffect(() => {
         function handler(ctx) {
+            // TODO add different type of messages
+            if (ctx.text === undefined) {
+                return;
+            }
+
             const chatId = ctx.chat.id;
 
-            if (!userId || chatId === userId) {
+            if (userId === undefined || chatId === userId) {
                 func(ctx);
             }
         }
