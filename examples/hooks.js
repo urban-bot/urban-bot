@@ -16,6 +16,7 @@ import {
     useMessage,
     useSticker,
     useVoice,
+    useAnimation,
 } from '../src';
 
 dotenv.config();
@@ -30,47 +31,51 @@ function App() {
     });
 
     useText(({ text }) => {
-        setAnswer(answer + '\n' + "You've sent text " + text);
+        setAnswer(answer + '\n' + "You've sent a text " + text);
     });
 
     useVideo(() => {
-        setAnswer(answer + '\n' + "You've sent video");
+        setAnswer(answer + '\n' + "You've sent a video");
     });
 
     usePoll(({ poll }) => {
-        setAnswer(answer + '\n' + "You've sent poll " + poll.question);
+        setAnswer(answer + '\n' + "You've sent a poll " + poll.question);
     });
 
     useVideoNote(() => {
-        setAnswer(answer + '\n' + "You've sent video note");
+        setAnswer(answer + '\n' + "You've sent a video note");
     });
 
     usePhoto(() => {
-        setAnswer(answer + '\n' + "You've sent photo");
+        setAnswer(answer + '\n' + "You've sent a photo");
     });
 
     useLocation(({ location }) => {
-        setAnswer(answer + '\n' + "You've sent location " + location.latitude + ' ' + location.longitude);
+        setAnswer(answer + '\n' + "You've sent a location " + location.latitude + ' ' + location.longitude);
     });
 
     useDocument(({ document }) => {
-        setAnswer(answer + '\n' + "You've sent document " + document.file_name);
+        setAnswer(answer + '\n' + "You've sent a document " + document.file_name);
     });
 
     useContact(({ contact }) => {
-        setAnswer(answer + '\n' + "You've sent contact " + contact.first_name);
+        setAnswer(answer + '\n' + "You've sent a contact " + contact.first_name);
     });
 
     useAudio(({ audio }) => {
-        setAnswer(answer + '\n' + "You've sent audio " + audio.title);
+        setAnswer(answer + '\n' + "You've sent an audio " + audio.title);
     });
 
     useSticker(({ sticker }) => {
-        setAnswer(answer + '\n' + "You've sent sticker " + sticker.emoji);
+        setAnswer(answer + '\n' + "You've sent a sticker " + sticker.emoji);
     });
 
     useVoice(() => {
-        setAnswer(answer + '\n' + "You've sent voice");
+        setAnswer(answer + '\n' + "You've sent a voice");
+    });
+
+    useAnimation(() => {
+        setAnswer(answer + '\n' + "You've sent an animation");
     });
 
     return <Text>{answer}</Text>;
