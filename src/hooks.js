@@ -19,9 +19,9 @@ export function useMessage(func) {
                 return;
             }
 
-            const chatId = ctx.chat.id;
+            const { id } = ctx.from;
 
-            if (userId === undefined || chatId === userId) {
+            if (userId === undefined || id === userId) {
                 func(ctx);
             }
         }

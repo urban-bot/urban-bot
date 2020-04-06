@@ -4,7 +4,6 @@ export function createNode(type, props = {}) {
     const node = {
         nodeName: type,
         bot: props.bot,
-        // TODO change userId to chatId
         userId: props.userId,
     };
 
