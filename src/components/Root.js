@@ -5,9 +5,9 @@ import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 
 export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10, options = {} }) {
-    const [userIds, setUserIds] = React.useState(new Set());
-    const userIdsIdRef = React.useRef(userIds);
-    userIdsIdRef.current = userIds;
+    const [users, setUsers] = React.useState(new Map());
+    const usersRef = React.useRef(users);
+    usersRef.current = users;
 
     const timeoutIdsRef = React.useRef({});
 
@@ -19,20 +19,23 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {
         function handler(message) {
-            const {
-                from: { id },
-            } = message;
-            if (!userIdsIdRef.current.has(id)) {
-                setUserIds(new Set([...userIdsIdRef.current, id]));
+            const { from } = message;
+            const { id, first_name, last_name, username, language_code } = from;
+
+            const user = { firstName: first_name, lastName: last_name, username, languageCode: language_code };
+
+            if (!usersRef.current.has(id)) {
+                usersRef.current.set(id, user);
                 bot.addPromiseQueue(id);
+                setUsers(new Map(usersRef.current));
                 setFirstMessage(message);
             }
 
             clearTimeout(timeoutIdsRef.current[id]);
             timeoutIdsRef.current[id] = setTimeout(() => {
-                userIdsIdRef.current.delete(id);
+                usersRef.current.delete(id);
                 bot.deletePromiseQueue(id);
-                setUserIds(new Set(userIdsIdRef.current));
+                setUsers(new Map(usersRef.current));
             }, timeToClearUserSession);
         }
 
@@ -61,10 +64,9 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
 
     return (
         <>
-            {Array.from(userIds).map((userId) => {
+            {Array.from(users).map(([userId, user]) => {
                 return (
-                    // FIXME pass all user data
-                    <BotContext.Provider key={userId} value={{ userId, bot }}>
+                    <BotContext.Provider key={userId} value={{ userId, bot, ...user }}>
                         <ErrorBoundary>{children}</ErrorBoundary>
                     </BotContext.Provider>
                 );
