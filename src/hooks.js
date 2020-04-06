@@ -26,7 +26,7 @@ function useSubscribe(func, event) {
         return () => {
             bot.removeListener(event, handler);
         };
-    }, [func, bot, userId]);
+    }, [func, bot, userId, event]);
 }
 
 export function useMessage(func) {
