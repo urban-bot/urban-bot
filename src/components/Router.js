@@ -3,12 +3,12 @@ import { useBotContext, useMessage } from '../hooks';
 import { RouterContext } from '../context';
 
 export function Router({ children }) {
-    const [activePath, setActivePath] = React.useState();
+    const [activePath, navigate] = React.useState();
     const { userId } = useBotContext();
 
     useMessage(({ text }) => {
         if (text[0] === '/') {
-            setActivePath(text);
+            navigate(text);
         }
     });
 
@@ -25,7 +25,7 @@ export function Router({ children }) {
         return child.props.path === activePath;
     });
 
-    return <RouterContext.Provider value={{ activePath, setActivePath }}>{child}</RouterContext.Provider>;
+    return <RouterContext.Provider value={{ activePath, navigate }}>{child}</RouterContext.Provider>;
 }
 
 export function Route({ children }) {

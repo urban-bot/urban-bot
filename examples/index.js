@@ -8,7 +8,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const token = isDevelopment ? process.env.TELEGRAM_TOKEN_DEV : process.env.TELEGRAM_TOKEN;
 
 function Main() {
-    const { setActivePath } = useRouter();
+    const { navigate } = useRouter();
     const [title, setTitle] = React.useState('0');
     const [src, setSrc] = React.useState(true);
 
@@ -40,7 +40,7 @@ function Main() {
                     >
                         Toggle picture
                     </Button>
-                    <Button onClick={() => setActivePath('/help')}>Go to help</Button>
+                    <Button onClick={() => navigate('/help')}>Go to help</Button>
                 </ButtonGroup>
             }
         />
@@ -48,11 +48,11 @@ function Main() {
 }
 
 function Help() {
-    const { setActivePath } = useRouter();
+    const { navigate } = useRouter();
 
     return (
         <ButtonGroup title="Help">
-            <Button onClick={() => setActivePath('/start')}>Go back</Button>
+            <Button onClick={() => navigate('/start')}>Go back</Button>
         </ButtonGroup>
     );
 }
