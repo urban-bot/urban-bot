@@ -3,9 +3,8 @@ import React from 'react';
 import { render, Route, Image, useText, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
 
 dotenv.config();
-const isDevelopment = process.env.NODE_ENV === 'development';
 
-const token = isDevelopment ? process.env.TELEGRAM_TOKEN_DEV : process.env.TELEGRAM_TOKEN;
+const token = process.env.TELEGRAM_TOKEN_DEV;
 
 function Main() {
     const { navigate } = useRouter();
