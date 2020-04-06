@@ -9,27 +9,22 @@ export function useRouter() {
     return React.useContext(RouterContext);
 }
 
-export function useMessage(func) {
+export function useText(func) {
     const { userId, bot } = useBotContext();
 
     React.useEffect(() => {
         function handler(ctx) {
-            // TODO add different type of messages
-            if (ctx.text === undefined) {
-                return;
-            }
-
             const { id } = ctx.from;
 
-            if (userId === undefined || id === userId) {
+            if (id === userId) {
                 func(ctx);
             }
         }
 
-        bot.on('message', handler);
+        bot.on('text', handler);
 
         return () => {
-            bot.removeListener('message', handler);
+            bot.removeListener('text', handler);
         };
     }, [func, bot, userId]);
 }

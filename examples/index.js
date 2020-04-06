@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Image, useMessage, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
+import { render, Route, Image, useText, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
 
 dotenv.config();
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -12,7 +12,7 @@ function Main() {
     const [title, setTitle] = React.useState('0');
     const [src, setSrc] = React.useState(true);
 
-    useMessage(({ text }) => {
+    useText(({ text }) => {
         setTitle(text);
     });
 

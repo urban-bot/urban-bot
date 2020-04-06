@@ -1,12 +1,12 @@
 import React from 'react';
-import { useBotContext, useMessage } from '../hooks';
+import { useBotContext, useText } from '../hooks';
 import { RouterContext } from '../context';
 
 export function Router({ children }) {
     const [activePath, navigate] = React.useState();
     const { userId } = useBotContext();
 
-    useMessage(({ text }) => {
+    useText(({ text }) => {
         if (text[0] === '/') {
             navigate(text);
         }
