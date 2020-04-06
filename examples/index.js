@@ -1,6 +1,18 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Image, useMessage, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
+import {
+    render,
+    Route,
+    Image,
+    useMessage,
+    Button,
+    ButtonGroup,
+    Router,
+    useRouter,
+    Root,
+    Text,
+    useBotContext,
+} from '../src';
 
 dotenv.config();
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -8,16 +20,20 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const token = isDevelopment ? process.env.TELEGRAM_TOKEN_DEV : process.env.TELEGRAM_TOKEN;
 
 function Main() {
+    // console.log('Main');
+    // console.log(i++);
     const { setActivePath } = useRouter();
+    const { userId } = useBotContext();
     const [title, setTitle] = React.useState('0');
     const [src, setSrc] = React.useState(true);
+
+    console.log(userId, 'Main');
 
     useMessage(({ text }) => {
         setTitle(text);
     });
 
     return (
-        // FIXME make right order to send message
         <>
             <Image
                 src={
@@ -52,7 +68,7 @@ function Main() {
 
 function Help() {
     const { setActivePath } = useRouter();
-
+    // console.log('Help');
     return (
         <>
             <ButtonGroup title="Help">
@@ -104,7 +120,9 @@ function App() {
                     <Help />
                 </Route>
                 <Route path="/array">
-                    <ArrayComponent />
+                    {new Array(30).fill(0).map((v, i) => {
+                        return <ArrayComponent key={i} />;
+                    })}
                 </Route>
             </Router>
         </Root>

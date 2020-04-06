@@ -39,12 +39,12 @@ export function createNode(type, props = {}) {
 export function appendChildNode(node, childNode) {
     switch (childNode.nodeName) {
         case 'message': {
-            childNode.meta = childNode.bot.sendMessage(childNode.userId, childNode.data.text, childNode.data.params);
+            // childNode.meta = childNode.bot.sendMessage(childNode.userId, childNode.data.text, childNode.data.params);
 
             break;
         }
         case 'img': {
-            childNode.meta = childNode.bot.sendPhoto(childNode.userId, childNode.data.src, childNode.data.params);
+            // childNode.meta = childNode.bot.sendPhoto(childNode.userId, childNode.data.src, childNode.data.params);
 
             break;
         }
@@ -55,9 +55,9 @@ export function appendChildNode(node, childNode) {
 }
 
 export function removeChildNode(node, removedNode) {
-    removedNode.meta.then((meta) => {
-        removedNode.bot.deleteMessage(meta.chat.id, meta.message_id);
-    });
+    // removedNode.meta.then((meta) => {
+    //     removedNode.bot.deleteMessage(meta.chat.id, meta.message_id);
+    // });
 }
 
 export function updateNode(node, updatePayload, type, oldProps, newProps) {
@@ -65,41 +65,41 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
         return;
     }
 
-    switch (node.nodeName) {
-        case 'message': {
-            node.meta.then((meta) => {
-                const metaToEdit = {
-                    chat_id: meta.chat.id,
-                    message_id: meta.message_id,
-                };
-
-                const params = newProps.params || {};
-
-                node.bot.editMessageText(newProps.text, { ...params, ...metaToEdit });
-            });
-
-            break;
-        }
-        case 'img': {
-            node.meta.then((meta) => {
-                const metaToEdit = {
-                    chat_id: meta.chat.id,
-                    message_id: meta.message_id,
-                };
-
-                const media = {
-                    type: 'photo',
-                    media: newProps.src,
-                    ...(newProps.params || {}),
-                };
-
-                node.bot.editMessageMedia(media, { ...media, ...metaToEdit });
-            });
-
-            break;
-        }
-        default: {
-            throw new Error('tag ' + node.nodeName + ' is not exist');
-        }
-    }
+    // switch (node.nodeName) {
+    //     case 'message': {
+    //         node.meta.then((meta) => {
+    //             const metaToEdit = {
+    //                 chat_id: meta.chat.id,
+    //                 message_id: meta.message_id,
+    //             };
+    //
+    //             const params = newProps.params || {};
+    //
+    //             node.bot.editMessageText(newProps.text, { ...params, ...metaToEdit });
+    //         });
+    //
+    //         break;
+    //     }
+    //     case 'img': {
+    //         node.meta.then((meta) => {
+    //             const metaToEdit = {
+    //                 chat_id: meta.chat.id,
+    //                 message_id: meta.message_id,
+    //             };
+    //
+    //             const media = {
+    //                 type: 'photo',
+    //                 media: newProps.src,
+    //                 ...(newProps.params || {}),
+    //             };
+    //
+    //             node.bot.editMessageMedia(media, { ...media, ...metaToEdit });
+    //         });
+    //
+    //         break;
+    //     }
+    //     default: {
+    //         throw new Error('tag ' + node.nodeName + ' is not exist');
+    //     }
+    // }
 }

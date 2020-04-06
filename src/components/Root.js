@@ -3,6 +3,17 @@ import TelegramBot from 'node-telegram-bot-api';
 import { AbstractBot } from '../AbstractBot';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
+let i = 0;
+function randomString() {
+    return (
+        Math.random()
+            .toString(36)
+            .substring(2, 15) +
+        Math.random()
+            .toString(36)
+            .substring(2, 15)
+    );
+}
 
 export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10, options = {} }) {
     const [users, setUsers] = React.useState(new Map());
@@ -61,6 +72,26 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
             console.log('Root leave');
         };
     }, []);
+
+    React.useEffect(() => {
+        setInterval(() => {
+            const id = Math.random();
+            bot.emit('message', {
+                // text: i++ % 2 === 0 ? '/start' : '/help',
+                text: '/start',
+                chat: {
+                    id,
+                },
+                from: {
+                    id,
+                    first_name: randomString(),
+                    last_name: randomString(),
+                    username: randomString(),
+                    language_code: randomString(),
+                },
+            });
+        }, 3000);
+    }, [bot]);
 
     return (
         <>
