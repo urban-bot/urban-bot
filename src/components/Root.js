@@ -4,6 +4,14 @@ import { AbstractBot } from '../AbstractBot';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 
+function User({ userId, bot, user, children }) {
+    return (
+        <BotContext.Provider key={userId} value={{ userId, bot, ...user }}>
+            <ErrorBoundary>{children}</ErrorBoundary>
+        </BotContext.Provider>
+    );
+}
+
 export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10, options = {} }) {
     const [users, setUsers] = React.useState(new Map());
     const usersRef = React.useRef(users);
@@ -23,7 +31,12 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
             const { id } = from;
 
             if (!usersRef.current.has(id)) {
-                usersRef.current.set(id, from);
+                usersRef.current.set(
+                    id,
+                    <User userId={id} bot={bot} user={from} key={id}>
+                        {children}
+                    </User>,
+                );
                 bot.addPromiseQueue(id);
                 setUsers(new Map(usersRef.current));
                 setFirstMessage(message);
@@ -62,12 +75,8 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
 
     return (
         <>
-            {Array.from(users).map(([userId, user]) => {
-                return (
-                    <BotContext.Provider key={userId} value={{ userId, bot, ...user }}>
-                        <ErrorBoundary>{children}</ErrorBoundary>
-                    </BotContext.Provider>
-                );
+            {Array.from(users).map(([, children]) => {
+                return children;
             })}
         </>
     );
