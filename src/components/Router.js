@@ -10,7 +10,7 @@ export function Router({ children }) {
         if (text[0] === '/') {
             navigate(text);
         }
-    });
+    }, true);
 
     React.useEffect(() => {
         console.log(userId, 'Router start');
