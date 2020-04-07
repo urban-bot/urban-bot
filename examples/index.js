@@ -1,18 +1,17 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Image, useMessage, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
+import { render, Route, Image, useText, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
 
 dotenv.config();
-const isDevelopment = process.env.NODE_ENV === 'development';
 
-const token = isDevelopment ? process.env.TELEGRAM_TOKEN_DEV : process.env.TELEGRAM_TOKEN;
+const token = process.env.TELEGRAM_TOKEN_DEV;
 
 function Main() {
-    const { setActivePath } = useRouter();
+    const { navigate } = useRouter();
     const [title, setTitle] = React.useState('0');
     const [src, setSrc] = React.useState(true);
 
-    useMessage(({ text }) => {
+    useText(({ text }) => {
         setTitle(text);
     });
 
@@ -40,7 +39,7 @@ function Main() {
                     >
                         Toggle picture
                     </Button>
-                    <Button onClick={() => setActivePath('/help')}>Go to help</Button>
+                    <Button onClick={() => navigate('/help')}>Go to help</Button>
                 </ButtonGroup>
             }
         />
@@ -48,11 +47,11 @@ function Main() {
 }
 
 function Help() {
-    const { setActivePath } = useRouter();
+    const { navigate } = useRouter();
 
     return (
         <ButtonGroup title="Help">
-            <Button onClick={() => setActivePath('/start')}>Go back</Button>
+            <Button onClick={() => navigate('/start')}>Go back</Button>
         </ButtonGroup>
     );
 }

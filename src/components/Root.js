@@ -20,12 +20,10 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
     React.useEffect(() => {
         function handler(message) {
             const { from } = message;
-            const { id, first_name, last_name, username, language_code } = from;
-
-            const user = { firstName: first_name, lastName: last_name, username, languageCode: language_code };
+            const { id } = from;
 
             if (!usersRef.current.has(id)) {
-                usersRef.current.set(id, user);
+                usersRef.current.set(id, from);
                 bot.addPromiseQueue(id);
                 setUsers(new Map(usersRef.current));
                 setFirstMessage(message);
