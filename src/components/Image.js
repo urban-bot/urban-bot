@@ -1,8 +1,13 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
 
-export const Image = React.memo(function Image({ src, caption, buttons }) {
-    const { userId, bot } = useBotContext();
+export const Image = React.memo(function Image({
+    src,
+    caption,
+    buttons,
+    isNewMessageEveryRender: isNewMessageEveryRenderProp,
+}) {
+    const { userId, bot, isNewMessageEveryRender: isNewMessageEveryRenderContext } = useBotContext();
 
     const params = {};
 
@@ -18,5 +23,15 @@ export const Image = React.memo(function Image({ src, caption, buttons }) {
         params.reply_markup = reply_markup;
     }
 
-    return <img src={src} bot={bot} userId={userId} params={params} />;
+    return (
+        <img
+            src={src}
+            bot={bot}
+            userId={userId}
+            params={params}
+            isNewMessageEveryRender={
+                isNewMessageEveryRenderProp !== undefined ? isNewMessageEveryRenderProp : isNewMessageEveryRenderContext
+            }
+        />
+    );
 });

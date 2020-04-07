@@ -4,15 +4,21 @@ import { AbstractBot } from '../AbstractBot';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 
-function User({ userId, bot, user, children }) {
+function User({ userId, bot, user, children, isNewMessageEveryRender }) {
     return (
-        <BotContext.Provider key={userId} value={{ userId, bot, ...user }}>
+        <BotContext.Provider key={userId} value={{ userId, bot, ...user, isNewMessageEveryRender }}>
             <ErrorBoundary>{children}</ErrorBoundary>
         </BotContext.Provider>
     );
 }
 
-export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10, options = {} }) {
+export function Root({
+    children,
+    token,
+    timeToClearUserSession = 1000 * 60 * 10,
+    options = {},
+    isNewMessageEveryRender = false,
+}) {
     const [users, setUsers] = React.useState(new Map());
     const usersRef = React.useRef(users);
     usersRef.current = users;
@@ -33,7 +39,7 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
             if (!usersRef.current.has(id)) {
                 usersRef.current.set(
                     id,
-                    <User userId={id} bot={bot} user={from} key={id}>
+                    <User userId={id} bot={bot} user={from} key={id} isNewMessageEveryRender={isNewMessageEveryRender}>
                         {children}
                     </User>,
                 );
@@ -55,7 +61,7 @@ export function Root({ children, token, timeToClearUserSession = 1000 * 60 * 10,
         return () => {
             bot.removeListener('message', handler);
         };
-    }, [bot, timeToClearUserSession]);
+    }, [bot, timeToClearUserSession, children, isNewMessageEveryRender]);
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {

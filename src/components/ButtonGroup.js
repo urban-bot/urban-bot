@@ -1,8 +1,8 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
 
-export function ButtonGroup({ children, title }) {
-    const { userId, bot } = useBotContext();
+export function ButtonGroup({ children, title, isNewMessageEveryRender: isNewMessageEveryRenderProp }) {
+    const { userId, bot, isNewMessageEveryRender: isNewMessageEveryRenderContext } = useBotContext();
     const callbackRef = React.useRef();
 
     const params = {
@@ -43,7 +43,17 @@ export function ButtonGroup({ children, title }) {
         };
     }, [bot]);
 
-    return <message userId={userId} text={title} params={params} bot={bot} />;
+    return (
+        <message
+            userId={userId}
+            text={title}
+            params={params}
+            bot={bot}
+            isNewMessageEveryRender={
+                isNewMessageEveryRenderProp !== undefined ? isNewMessageEveryRenderProp : isNewMessageEveryRenderContext
+            }
+        />
+    );
 }
 
 export function Button() {
