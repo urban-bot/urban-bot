@@ -33,8 +33,15 @@ export function useMessage(func) {
     useSubscribe(func, 'message');
 }
 
-export function useText(func) {
-    useSubscribe(func, 'text');
+export function useText(func, considerRouterPath = false) {
+    useSubscribe((ctx) => {
+        const { text } = ctx;
+        if (!considerRouterPath && text[0] === '/') {
+            return;
+        }
+
+        func(ctx);
+    }, 'text');
 }
 
 export function useSticker(func) {
