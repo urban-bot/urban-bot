@@ -1,4 +1,4 @@
-import { shallowEqual } from './utils';
+import { shallowEqual } from './utils/shallowEqual';
 
 export function createNode(type, props = {}) {
     const node = {
