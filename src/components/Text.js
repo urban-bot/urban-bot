@@ -2,8 +2,12 @@ import React from 'react';
 import { useBotContext } from '../hooks';
 import { formatElementToHTML } from '../utils/formatElementToHTML';
 
-export function Text({ children, isNewMessageEveryRender: isNewMessageEveryRenderProp }) {
+export function Text({ children, isNewMessageEveryRender: isNewMessageEveryRenderProp, parseMode }) {
     const { userId, bot, isNewMessageEveryRender: isNewMessageEveryRenderContext } = useBotContext();
+
+    if (typeof children !== 'string') {
+        parseMode = 'HTML';
+    }
 
     const text = formatElementToHTML(children);
 
@@ -14,7 +18,7 @@ export function Text({ children, isNewMessageEveryRender: isNewMessageEveryRende
             bot={bot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             params={{
-                parse_mode: 'HTML',
+                parse_mode: parseMode,
             }}
         />
     );
