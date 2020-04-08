@@ -5,13 +5,14 @@ export function createNode(type, props = {}) {
         nodeName: type,
         bot: props.bot,
         userId: props.userId,
+        isNewMessageEveryRender: props.isNewMessageEveryRender,
     };
 
     switch (type) {
         case 'root': {
             return node;
         }
-        case 'message': {
+        case 'text': {
             return {
                 ...node,
                 data: {
@@ -37,7 +38,7 @@ export function createNode(type, props = {}) {
 
 export function appendChildNode(node, childNode) {
     switch (childNode.nodeName) {
-        case 'message': {
+        case 'text': {
             childNode.meta = childNode.bot.sendMessage(childNode.userId, childNode.data.text, childNode.data.params);
 
             break;
@@ -54,46 +55,62 @@ export function appendChildNode(node, childNode) {
 }
 
 export function removeChildNode(node, removedNode) {
+    if (removedNode.isNewMessageEveryRender) {
+        return;
+    }
+
     removedNode.meta.then((meta) => {
         removedNode.bot.deleteMessage(meta.chat.id, meta.message_id);
     });
 }
 
 export function updateNode(node, updatePayload, type, oldProps, newProps) {
-    if (shallowEqual(oldProps, newProps)) {
+    if (!node.isNewMessageEveryRender && shallowEqual(oldProps, newProps)) {
         return;
     }
 
     switch (node.nodeName) {
-        case 'message': {
-            node.meta.then((meta) => {
-                const metaToEdit = {
-                    chat_id: meta.chat.id,
-                    message_id: meta.message_id,
-                };
+        case 'text': {
+            if (node.isNewMessageEveryRender) {
+                node = createNode(node.nodeName, newProps);
 
-                const params = newProps.params || {};
+                node.meta = node.bot.sendMessage(node.userId, node.data.text, node.data.params);
+            } else {
+                node.meta.then((meta) => {
+                    const metaToEdit = {
+                        chat_id: meta.chat.id,
+                        message_id: meta.message_id,
+                    };
 
-                node.bot.editMessageText(newProps.text, { ...params, ...metaToEdit });
-            });
+                    const params = newProps.params || {};
+
+                    node.bot.editMessageText(newProps.text, { ...params, ...metaToEdit });
+                });
+            }
 
             break;
         }
         case 'img': {
-            node.meta.then((meta) => {
-                const metaToEdit = {
-                    chat_id: meta.chat.id,
-                    message_id: meta.message_id,
-                };
+            if (node.isNewMessageEveryRender) {
+                node = createNode(node.nodeName, newProps);
 
-                const media = {
-                    type: 'photo',
-                    media: newProps.src,
-                    ...(newProps.params || {}),
-                };
+                node.meta = node.bot.sendPhoto(node.userId, node.data.src, node.data.params);
+            } else {
+                node.meta.then((meta) => {
+                    const metaToEdit = {
+                        chat_id: meta.chat.id,
+                        message_id: meta.message_id,
+                    };
 
-                node.bot.editMessageMedia(media, { ...media, ...metaToEdit });
-            });
+                    const media = {
+                        type: 'photo',
+                        media: newProps.src,
+                        ...(newProps.params || {}),
+                    };
+
+                    node.bot.editMessageMedia(media, { ...media, ...metaToEdit });
+                });
+            }
 
             break;
         }
