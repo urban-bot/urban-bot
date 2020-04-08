@@ -51,5 +51,8 @@
         "node-telegram-bot-api": "0.40.0",
         "react": "16.13.1",
         "react-reconciler": "0.25.1"
+    },
+    "engines": {
+        "node": ">= 10.0.0"
     }
 }
