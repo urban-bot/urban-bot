@@ -40,6 +40,11 @@ describe('formatText', () => {
         expect(formatElementToHTML([<pre>text</pre>, <pre>text2</pre>])).toBe('<pre>text</pre><pre>text2</pre>');
     });
 
+    test('br', () => {
+        expect(formatElementToHTML(<br />)).toBe('\n');
+        expect(formatElementToHTML(['hello', <br />, 'world'])).toBe('hello\nworld');
+    });
+
     test('link', () => {
         expect(formatElementToHTML(<a href="http://www.example.com/">inline URL</a>)).toBe(
             '<a href="http://www.example.com/">inline URL</a>',
@@ -100,5 +105,19 @@ describe('formatText', () => {
                 </b>,
             ),
         ).toBe('<b>bold <i>italic bold <s>italic bold strikethrough</s> <u>underline italic bold</u></i> bold</b>');
+
+        expect(
+            formatElementToHTML(
+                <b>
+                    bold
+                    <br />
+                    <i>
+                        italic bold <s>italic bold strikethrough</s> <u>underline italic bold</u>
+                    </i>
+                    <br />
+                    bold
+                </b>,
+            ),
+        ).toBe('<b>bold\n<i>italic bold <s>italic bold strikethrough</s> <u>underline italic bold</u></i>\nbold</b>');
     });
 });

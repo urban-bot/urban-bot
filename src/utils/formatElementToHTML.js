@@ -40,6 +40,10 @@ export function formatElementToHTML(element) {
             return `<pre>${text}</pre>`;
         }
 
+        if (element.type === 'br') {
+            return '\n';
+        }
+
         if (element.type === 'a') {
             const { href, userId } = element.props;
 
