@@ -12,7 +12,7 @@ export function createNode(type, props = {}) {
         case 'root': {
             return node;
         }
-        case 'message': {
+        case 'text': {
             return {
                 ...node,
                 data: {
@@ -38,7 +38,7 @@ export function createNode(type, props = {}) {
 
 export function appendChildNode(node, childNode) {
     switch (childNode.nodeName) {
-        case 'message': {
+        case 'text': {
             childNode.meta = childNode.bot.sendMessage(childNode.userId, childNode.data.text, childNode.data.params);
 
             break;
@@ -70,7 +70,7 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
     }
 
     switch (node.nodeName) {
-        case 'message': {
+        case 'text': {
             if (node.isNewMessageEveryRender) {
                 node = createNode(node.nodeName, newProps);
 

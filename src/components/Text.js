@@ -5,7 +5,7 @@ export function Text({ children, isNewMessageEveryRender: isNewMessageEveryRende
     const { userId, bot, isNewMessageEveryRender: isNewMessageEveryRenderContext } = useBotContext();
 
     return (
-        <message
+        <text
             text={children}
             userId={userId}
             bot={bot}

@@ -44,7 +44,7 @@ export function ButtonGroup({ children, title, isNewMessageEveryRender: isNewMes
     }, [bot]);
 
     return (
-        <message
+        <text
             userId={userId}
             text={title}
             params={params}
