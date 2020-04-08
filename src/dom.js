@@ -31,7 +31,7 @@ export function createNode(type, props = {}) {
             };
         }
         default: {
-            throw new Error('tag ' + type + ' is not exist');
+            throw new Error('tag ' + type + ' does not exist');
         }
     }
 }
@@ -49,7 +49,7 @@ export function appendChildNode(node, childNode) {
             break;
         }
         default: {
-            throw new Error('tag ' + childNode.nodeName + ' is not exist');
+            throw new Error('tag ' + childNode.nodeName + ' does not exist');
         }
     }
 }
@@ -115,7 +115,7 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
             break;
         }
         default: {
-            throw new Error('tag ' + node.nodeName + ' is not exist');
+            throw new Error('tag ' + node.nodeName + ' does not exist');
         }
     }
 }
