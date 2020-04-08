@@ -11,22 +11,6 @@ describe('formatText', () => {
         expect(formatElementToHTML(<b>text</b>)).toBe('<b>text</b>');
         expect(formatElementToHTML([<b>text</b>, <b>text2</b>])).toBe('<b>text</b><b>text2</b>');
         expect(formatElementToHTML([<b>text</b>, ' ', <b>text2</b>])).toBe('<b>text</b> <b>text2</b>');
-        expect(
-            formatElementToHTML(
-                <b>
-                    text <b>text2</b>
-                </b>,
-            ),
-        ).toBe('<b>text <b>text2</b></b>');
-        expect(
-            formatElementToHTML([
-                <b>
-                    text <b>text2</b>
-                </b>,
-                ' ',
-                <b>text2</b>,
-            ]),
-        ).toBe('<b>text <b>text2</b></b> <b>text2</b>');
     });
 
     test('italic', () => {
@@ -76,5 +60,45 @@ describe('formatText', () => {
         expect(formatElementToHTML(<a userId="123456789">user URL</a>)).toBe(
             '<a href="tg://user?id=123456789">user URL</a>',
         );
+    });
+
+    test('deep structure', () => {
+        expect(
+            formatElementToHTML(
+                <b>
+                    text <b>text2</b>
+                </b>,
+            ),
+        ).toBe('<b>text <b>text2</b></b>');
+        expect(
+            formatElementToHTML([
+                <b>
+                    text <b>text2</b>
+                </b>,
+                ' ',
+                <b>text2</b>,
+            ]),
+        ).toBe('<b>text <b>text2</b></b> <b>text2</b>');
+        expect(
+            formatElementToHTML([
+                <b>
+                    text <i>text2</i>
+                </b>,
+                ' ',
+                <b>text2</b>,
+            ]),
+        ).toBe('<b>text <i>text2</i></b> <b>text2</b>');
+
+        expect(
+            formatElementToHTML(
+                <b>
+                    bold{' '}
+                    <i>
+                        italic bold <s>italic bold strikethrough</s> <u>underline italic bold</u>
+                    </i>{' '}
+                    bold
+                </b>,
+            ),
+        ).toBe('<b>bold <i>italic bold <s>italic bold strikethrough</s> <u>underline italic bold</u></i> bold</b>');
     });
 });
