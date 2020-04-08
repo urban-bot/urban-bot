@@ -5,6 +5,7 @@ module.exports = {
         'plugin:prettier/recommended',
         'plugin:react/recommended',
         'plugin:react-hooks/recommended',
+        'plugin:jest/recommended',
     ],
     parserOptions: {
         ecmaVersion: 2020,
@@ -13,6 +14,7 @@ module.exports = {
     env: {
         node: true,
         es6: true,
+        jest: true,
     },
     rules: {
         'react/prop-types': 0,
