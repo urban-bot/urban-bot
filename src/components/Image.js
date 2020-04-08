@@ -6,11 +6,11 @@ export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMes
 
     const params = {};
 
-    if (caption) {
+    if (typeof caption === 'string') {
         params.caption = caption;
     }
 
-    if (buttons) {
+    if (typeof buttons?.type === 'function') {
         const { props } = buttons.type(buttons.props);
 
         const { reply_markup } = props.params || {};
@@ -24,9 +24,7 @@ export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMes
             bot={bot}
             userId={userId}
             params={params}
-            isNewMessageEveryRender={
-                isNewMessageEveryRenderProp !== undefined ? isNewMessageEveryRenderProp : isNewMessageEveryRenderContext
-            }
+            isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
         />
     );
 }
