@@ -16,6 +16,10 @@ export function formatElementToHTML(element) {
     if (React.isValidElement(element)) {
         const text = formatElementToHTML(element.props.children);
 
+        if (element.type === React.Fragment) {
+            return text;
+        }
+
         if (element.type === 'b') {
             return `<b>${text}</b>`;
         }
@@ -58,7 +62,7 @@ export function formatElementToHTML(element) {
             return '';
         }
 
-        throw new Error('tag does not exist');
+        throw new Error(`tag ${element.type} does not exist`);
     }
 
     return '';
