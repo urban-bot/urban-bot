@@ -9,9 +9,7 @@ export function Text({ children, isNewMessageEveryRender: isNewMessageEveryRende
             text={children}
             userId={userId}
             bot={bot}
-            isNewMessageEveryRender={
-                isNewMessageEveryRenderProp !== undefined ? isNewMessageEveryRenderProp : isNewMessageEveryRenderContext
-            }
+            isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
         />
     );
 }

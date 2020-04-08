@@ -49,9 +49,7 @@ export function ButtonGroup({ children, title, isNewMessageEveryRender: isNewMes
             text={title}
             params={params}
             bot={bot}
-            isNewMessageEveryRender={
-                isNewMessageEveryRenderProp !== undefined ? isNewMessageEveryRenderProp : isNewMessageEveryRenderContext
-            }
+            isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
         />
     );
 }
