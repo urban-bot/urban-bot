@@ -1,14 +1,18 @@
 {
     "name": "urban-bot",
-    "version": "0.0.1",
+    "version": "0.0.1-aplha.11",
     "description": "universal messenger bot creator",
+    "files": [
+        "dist/**/*"
+    ],
     "main": "dist/index.js",
     "scripts": {
         "build": "babel src -d dist",
         "start": "nodemon",
         "test": "jest",
-        "lint": "eslint '**/*.js'",
-        "lint:fix": "npm run lint -- --fix"
+        "lint": "eslint \"./src/**/*.js\"",
+        "lint:fix": "npm run lint -- --fix",
+        "my-publish": "rimraf dist && npm run build && npm publish"
     },
     "keywords": [
         "bot",
@@ -31,6 +35,7 @@
         "babel-eslint": "10.1.0",
         "babel-jest": "25.3.0",
         "babel-loader": "8.0.6",
+        "dotenv": "8.2.0",
         "eslint": "6.8.0",
         "eslint-config-prettier": "6.10.1",
         "eslint-plugin-jest": "23.8.2",
@@ -40,6 +45,8 @@
         "jest": "25.3.0",
         "nodemon": "2.0.2",
         "prettier": "1.19.1",
+        "react": "16.13.1",
+        "rimraf": "3.0.2",
         "webpack": "4.41.5",
         "webpack-cli": "3.3.10"
     },
@@ -48,12 +55,13 @@
         "url": "git@github.com:urban-bot/urban-bot.git"
     },
     "dependencies": {
-        "dotenv": "8.2.0",
         "node-telegram-bot-api": "0.40.0",
-        "react": "16.13.1",
         "react-reconciler": "0.25.1"
     },
+    "peerDependencies": {
+        "react": "^16.13.1"
+    },
     "engines": {
-        "node": ">= 10.0.0"
+        "node": ">=10.0.0"
     }
 }
