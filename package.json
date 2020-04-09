@@ -1,14 +1,18 @@
 {
     "name": "urban-bot",
-    "version": "0.0.1",
+    "version": "0.0.1-aplha.11",
     "description": "universal messenger bot creator",
+    "files": [
+        "dist/**/*"
+    ],
     "main": "dist/index.js",
     "scripts": {
         "build": "babel src -d dist",
         "start": "nodemon",
         "test": "jest",
         "lint": "eslint '**/*.js'",
-        "lint:fix": "npm run lint -- --fix"
+        "lint:fix": "npm run lint -- --fix",
+        "my-publish": "rm -rf dist && npm run build && npm publish"
     },
     "keywords": [
         "bot",
@@ -50,10 +54,12 @@
     "dependencies": {
         "dotenv": "8.2.0",
         "node-telegram-bot-api": "0.40.0",
-        "react": "16.13.1",
         "react-reconciler": "0.25.1"
     },
+    "peerDependencies": {
+        "react": "^16.13.1"
+    },
     "engines": {
-        "node": ">= 10.0.0"
+        "node": ">=10.0.0"
     }
 }
