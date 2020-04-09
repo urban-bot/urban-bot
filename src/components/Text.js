@@ -10,6 +10,7 @@ export function Text({
     disableNotification,
     replyToMessageId,
     forceReply,
+    selective,
 }) {
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
@@ -30,6 +31,7 @@ export function Text({
             reply_to_message_id: replyToMessageId,
             reply_markup: {
                 force_reply: forceReply,
+                selective: selective,
             },
         };
     }, [parseMode, disableWebPagePreview, disableNotification, replyToMessageId, forceReply]);
