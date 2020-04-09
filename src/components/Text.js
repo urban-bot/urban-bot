@@ -2,7 +2,15 @@ import React from 'react';
 import { useBotContext } from '../hooks';
 import { formatElementToHTML } from '../utils/formatElementToHTML';
 
-export function Text({ children, isNewMessageEveryRender: isNewMessageEveryRenderProp, parseMode }) {
+export function Text({
+    children,
+    isNewMessageEveryRender: isNewMessageEveryRenderProp,
+    parseMode,
+    disableWebPagePreview,
+    disableNotification,
+    replyToMessageId,
+    forceReply,
+}) {
     const { userId, bot, isNewMessageEveryRender: isNewMessageEveryRenderContext } = useBotContext();
 
     let text;
@@ -22,6 +30,12 @@ export function Text({ children, isNewMessageEveryRender: isNewMessageEveryRende
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             params={{
                 parse_mode: parseMode,
+                disable_web_page_preview: disableWebPagePreview,
+                disable_notification: disableNotification,
+                reply_to_message_id: replyToMessageId,
+                reply_markup: {
+                    force_reply: forceReply,
+                },
             }}
         />
     );
