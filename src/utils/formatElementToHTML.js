@@ -16,53 +16,48 @@ export function formatElementToHTML(element) {
     if (React.isValidElement(element)) {
         const text = formatElementToHTML(element.props.children);
 
-        if (element.type === React.Fragment) {
-            return text;
-        }
-
-        if (element.type === 'b') {
-            return `<b>${text}</b>`;
-        }
-
-        if (element.type === 'i') {
-            return `<i>${text}</i>`;
-        }
-
-        if (element.type === 'u') {
-            return `<u>${text}</u>`;
-        }
-
-        if (element.type === 's') {
-            return `<s>${text}</s>`;
-        }
-
-        if (element.type === 'code') {
-            return `<code>${text}</code>`;
-        }
-
-        if (element.type === 'pre') {
-            return `<pre>${text}</pre>`;
-        }
-
-        if (element.type === 'br') {
-            return '\n';
-        }
-
-        if (element.type === 'a') {
-            const { href, userId } = element.props;
-
-            if (href) {
-                return `<a href="${href}">${text}</a>`;
+        switch (element.type) {
+            case React.Fragment: {
+                return text;
             }
-
-            if (userId) {
-                return `<a href="tg://user?id=${userId}">${text}</a>`;
+            case 'b': {
+                return `<b>${text}</b>`;
             }
+            case 'i': {
+                return `<i>${text}</i>`;
+            }
+            case 'u': {
+                return `<u>${text}</u>`;
+            }
+            case 's': {
+                return `<s>${text}</s>`;
+            }
+            case 'code': {
+                return `<code>${text}</code>`;
+            }
+            case 'pre': {
+                return `<pre>${text}</pre>`;
+            }
+            case 'br': {
+                return '\n';
+            }
+            case 'a': {
+                const { href, userId } = element.props;
 
-            return '';
+                if (href) {
+                    return `<a href="${href}">${text}</a>`;
+                }
+
+                if (userId) {
+                    return `<a href="tg://user?id=${userId}">${text}</a>`;
+                }
+
+                return '';
+            }
+            default: {
+                throw new Error(`tag ${element.type} does not exist`);
+            }
         }
-
-        throw new Error(`tag ${element.type} does not exist`);
     }
 
     return '';
