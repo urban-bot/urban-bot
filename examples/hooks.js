@@ -17,6 +17,7 @@ import {
     useSticker,
     useVoice,
     useAnimation,
+    useDice,
 } from '../src';
 
 dotenv.config();
@@ -76,6 +77,10 @@ function App() {
 
     useAnimation(() => {
         setAnswer("You've sent an animation");
+    });
+
+    useDice(({ dice }) => {
+        setAnswer("You've sent a dice " + dice.value);
     });
 
     if (!answer) {
