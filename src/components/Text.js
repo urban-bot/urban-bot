@@ -11,7 +11,7 @@ export function Text({
     replyToMessageId,
     forceReply,
 }) {
-    const { userId, bot, isNewMessageEveryRender: isNewMessageEveryRenderContext } = useBotContext();
+    const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     let text;
     if (typeof children !== 'string') {
@@ -25,7 +25,7 @@ export function Text({
     return (
         <text
             text={text}
-            userId={userId}
+            chatId={chat.id}
             bot={bot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             params={{

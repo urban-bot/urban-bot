@@ -7,6 +7,7 @@ import { Root } from './components/Root';
 import {
     useBotContext,
     useText,
+    useCommand,
     useRouter,
     useSticker,
     useAnimation,
@@ -31,6 +32,7 @@ export {
     Route,
     Button,
     useText,
+    useCommand,
     Text,
     Image,
     ButtonGroup,
