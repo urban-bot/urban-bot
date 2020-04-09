@@ -10,17 +10,10 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.m?js$/,
+                test: /\.js$/,
                 exclude: /(node_modules)/,
                 use: {
                     loader: 'babel-loader',
-                    options: {
-                        plugins: [
-                            ['@babel/plugin-transform-react-jsx'],
-                            ['@babel/plugin-proposal-nullish-coalescing-operator'],
-                            ['@babel/plugin-proposal-optional-chaining'],
-                        ],
-                    },
                 },
             },
         ],
