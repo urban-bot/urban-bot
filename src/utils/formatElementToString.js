@@ -1,10 +1,10 @@
 import React from 'react';
 
-export function formatElementToHTML(element) {
+export function formatElementToString(element) {
     if (Array.isArray(element)) {
         return element
             .map((child) => {
-                return formatElementToHTML(child);
+                return formatElementToString(child);
             })
             .join('');
     }
@@ -18,7 +18,7 @@ export function formatElementToHTML(element) {
     }
 
     if (React.isValidElement(element)) {
-        const text = formatElementToHTML(element.props.children);
+        const text = formatElementToString(element.props.children);
 
         switch (element.type) {
             case React.Fragment: {

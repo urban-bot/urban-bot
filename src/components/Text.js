@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
-import { formatElementToHTML } from '../utils/formatElementToHTML';
+import { formatElementToString } from '../utils/formatElementToString';
 
 export function Text({
     children,
@@ -19,7 +19,7 @@ export function Text({
     } else {
         parseMode = 'HTML';
 
-        text = formatElementToHTML(children);
+        text = formatElementToString(children);
     }
 
     const params = React.useMemo(() => {
