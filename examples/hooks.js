@@ -24,61 +24,65 @@ dotenv.config();
 const token = process.env.TELEGRAM_TOKEN_DEV;
 
 function App() {
-    const [answer, setAnswer] = React.useState('Please send something');
+    const [answer, setAnswer] = React.useState();
 
     useMessage(() => {
         console.log('calling after any type sending');
     });
 
     useText(({ text }) => {
-        setAnswer(answer + '\n' + "You've sent a text " + text);
+        setAnswer("You've sent a text " + text);
     });
 
     useVideo(() => {
-        setAnswer(answer + '\n' + "You've sent a video");
+        setAnswer("You've sent a video");
     });
 
     usePoll(({ poll }) => {
-        setAnswer(answer + '\n' + "You've sent a poll " + poll.question);
+        setAnswer("You've sent a poll " + poll.question);
     });
 
     useVideoNote(() => {
-        setAnswer(answer + '\n' + "You've sent a video note");
+        setAnswer("You've sent a video note");
     });
 
     usePhoto(() => {
-        setAnswer(answer + '\n' + "You've sent a photo");
+        setAnswer("You've sent a photo");
     });
 
     useLocation(({ location }) => {
-        setAnswer(answer + '\n' + "You've sent a location " + location.latitude + ' ' + location.longitude);
+        setAnswer("You've sent a location " + location.latitude + ' ' + location.longitude);
     });
 
     useDocument(({ document }) => {
-        setAnswer(answer + '\n' + "You've sent a document " + document.file_name);
+        setAnswer("You've sent a document " + document.file_name);
     });
 
     useContact(({ contact }) => {
-        setAnswer(answer + '\n' + "You've sent a contact " + contact.first_name);
+        setAnswer("You've sent a contact " + contact.first_name);
     });
 
     useAudio(({ audio }) => {
-        setAnswer(answer + '\n' + "You've sent an audio " + audio.title);
+        setAnswer("You've sent an audio " + audio.title);
     });
 
     useSticker(({ sticker }) => {
-        setAnswer(answer + '\n' + "You've sent a sticker " + sticker.emoji);
+        setAnswer("You've sent a sticker " + sticker.emoji);
     });
 
     useVoice(() => {
-        setAnswer(answer + '\n' + "You've sent a voice");
+        setAnswer("You've sent a voice");
     });
 
     useAnimation(() => {
-        setAnswer(answer + '\n' + "You've sent an animation");
+        setAnswer("You've sent an animation");
     });
 
-    return <Text>{answer}</Text>;
+    if (!answer) {
+        return null;
+    }
+
+    return <Text isNewMessageEveryRender>{answer}</Text>;
 }
 
 render(
