@@ -9,6 +9,10 @@ export function formatElementToHTML(element) {
             .join('');
     }
 
+    if (typeof element === 'number') {
+        return String(element);
+    }
+
     if (typeof element === 'string') {
         return element;
     }

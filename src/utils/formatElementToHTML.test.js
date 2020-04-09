@@ -73,6 +73,13 @@ describe('formatText', () => {
         ).toBe('<b>text</b><b>text2</b> <b>text3</b><b>text4</b>');
     });
 
+    test('numbers', () => {
+        expect(formatElementToHTML(1)).toBe('1');
+        expect(formatElementToHTML(NaN)).toBe('NaN');
+        expect(formatElementToHTML([1, 2])).toBe('12');
+        expect(formatElementToHTML([<b>{1}</b>, <b>{2}</b>])).toBe('<b>1</b><b>2</b>');
+    });
+
     test('flat structure', () => {
         expect(formatElementToHTML([<b>text</b>, <b>text2</b>])).toBe('<b>text</b><b>text2</b>');
         expect(formatElementToHTML([<b>text</b>, ' ', <b>text2</b>])).toBe('<b>text</b> <b>text2</b>');

@@ -14,13 +14,25 @@ export function Text({
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     let text;
-    if (typeof children !== 'string') {
+    if (typeof children === 'string' || typeof children === 'number') {
+        text = children;
+    } else {
         parseMode = 'HTML';
 
         text = formatElementToHTML(children);
-    } else {
-        text = children;
     }
+
+    const params = React.useMemo(() => {
+        return {
+            parse_mode: parseMode,
+            disable_web_page_preview: disableWebPagePreview,
+            disable_notification: disableNotification,
+            reply_to_message_id: replyToMessageId,
+            reply_markup: {
+                force_reply: forceReply,
+            },
+        };
+    }, [parseMode, disableWebPagePreview, disableNotification, replyToMessageId, forceReply]);
 
     return (
         <text
@@ -28,15 +40,7 @@ export function Text({
             chatId={chat.id}
             bot={bot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
-            params={{
-                parse_mode: parseMode,
-                disable_web_page_preview: disableWebPagePreview,
-                disable_notification: disableNotification,
-                reply_to_message_id: replyToMessageId,
-                reply_markup: {
-                    force_reply: forceReply,
-                },
-            }}
+            params={params}
         />
     );
 }
