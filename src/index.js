@@ -22,6 +22,7 @@ import {
     useVideo,
     useVideoNote,
     useVoice,
+    useDice,
 } from './hooks';
 
 export {
@@ -50,4 +51,5 @@ export {
     useVideo,
     useVideoNote,
     useVoice,
+    useDice,
 };

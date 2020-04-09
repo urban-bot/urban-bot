@@ -95,3 +95,11 @@ export function useVideoNote(func) {
 export function useVoice(func) {
     useSubscribe(func, 'voice');
 }
+
+export function useDice(func) {
+    useMessage((ctx) => {
+        if (ctx.dice !== undefined) {
+            func(ctx);
+        }
+    });
+}
