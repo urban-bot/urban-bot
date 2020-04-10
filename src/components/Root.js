@@ -36,8 +36,6 @@ export function Root({
             const { from, chat } = message;
             const { id: chatId } = chat;
 
-            console.log('chatId', chatId);
-
             if (!chatsRef.current.has(chatId)) {
                 chatsRef.current.set(
                     chat.id,
