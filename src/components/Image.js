@@ -2,7 +2,7 @@ import React from 'react';
 import { useBotContext } from '../hooks';
 
 export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMessageEveryRenderProp }) {
-    const { userId, bot, isNewMessageEveryRender: isNewMessageEveryRenderContext } = useBotContext();
+    const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     const params = {};
 
@@ -22,7 +22,7 @@ export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMes
         <img
             src={src}
             bot={bot}
-            userId={userId}
+            chatId={chat.id}
             params={params}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
         />

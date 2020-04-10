@@ -1,22 +1,20 @@
 import React from 'react';
-import { useBotContext, useText } from '../hooks';
+import { useBotContext, useCommand } from '../hooks';
 import { RouterContext } from '../context';
 
 export function Router({ children }) {
     const [activePath, navigate] = React.useState();
-    const { userId } = useBotContext();
+    const { chat } = useBotContext();
 
-    useText(({ text }) => {
-        if (text[0] === '/') {
-            navigate(text);
-        }
-    }, true);
+    useCommand(({ text }) => {
+        navigate(text);
+    });
 
     React.useEffect(() => {
-        console.log(userId, 'Router start');
+        console.log(chat.id, 'Router start');
 
         return () => {
-            console.log(userId, 'Router leave');
+            console.log(chat.id, 'Router leave');
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
