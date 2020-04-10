@@ -10,13 +10,13 @@ export function useRouter() {
 }
 
 function useSubscribe(func, event) {
-    const { userId, bot } = useBotContext();
+    const { chat, bot } = useBotContext();
 
     React.useEffect(() => {
         function handler(ctx) {
-            const { id } = ctx.from;
+            const { id } = ctx.chat;
 
-            if (id === userId) {
+            if (id === chat.id) {
                 func(ctx);
             }
         }
@@ -26,17 +26,28 @@ function useSubscribe(func, event) {
         return () => {
             bot.removeListener(event, handler);
         };
-    }, [func, bot, userId, event]);
+    }, [func, bot, event, chat]);
 }
 
 export function useMessage(func) {
     useSubscribe(func, 'message');
 }
 
-export function useText(func, considerRouterPath = false) {
+export function useText(func) {
     useSubscribe((ctx) => {
         const { text } = ctx;
-        if (!considerRouterPath && text[0] === '/') {
+        if (text[0] === '/') {
+            return;
+        }
+
+        func(ctx);
+    }, 'text');
+}
+
+export function useCommand(func) {
+    useSubscribe((ctx) => {
+        const { text } = ctx;
+        if (text[0] !== '/') {
             return;
         }
 

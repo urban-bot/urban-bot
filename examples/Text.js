@@ -15,7 +15,9 @@ if (sum2() !== 4) {
 }`;
 
 function App() {
-    const { userId } = useBotContext();
+    const {
+        user: { id: userId },
+    } = useBotContext();
 
     return (
         <Text>

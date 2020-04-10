@@ -4,7 +4,7 @@ export function createNode(type, props = {}) {
     const node = {
         nodeName: type,
         bot: props.bot,
-        userId: props.userId,
+        chatId: props.chatId,
         isNewMessageEveryRender: props.isNewMessageEveryRender,
     };
 
@@ -39,12 +39,12 @@ export function createNode(type, props = {}) {
 export function appendChildNode(node, childNode) {
     switch (childNode.nodeName) {
         case 'text': {
-            childNode.meta = childNode.bot.sendMessage(childNode.userId, childNode.data.text, childNode.data.params);
+            childNode.meta = childNode.bot.sendMessage(childNode.chatId, childNode.data.text, childNode.data.params);
 
             break;
         }
         case 'img': {
-            childNode.meta = childNode.bot.sendPhoto(childNode.userId, childNode.data.src, childNode.data.params);
+            childNode.meta = childNode.bot.sendPhoto(childNode.chatId, childNode.data.src, childNode.data.params);
 
             break;
         }
@@ -74,7 +74,7 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
             if (node.isNewMessageEveryRender) {
                 node = createNode(node.nodeName, newProps);
 
-                node.meta = node.bot.sendMessage(node.userId, node.data.text, node.data.params);
+                node.meta = node.bot.sendMessage(node.chatId, node.data.text, node.data.params);
             } else {
                 node.meta.then((meta) => {
                     const metaToEdit = {
@@ -94,7 +94,7 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
             if (node.isNewMessageEveryRender) {
                 node = createNode(node.nodeName, newProps);
 
-                node.meta = node.bot.sendPhoto(node.userId, node.data.src, node.data.params);
+                node.meta = node.bot.sendPhoto(node.chatId, node.data.src, node.data.params);
             } else {
                 node.meta.then((meta) => {
                     const metaToEdit = {

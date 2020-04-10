@@ -4,9 +4,9 @@ import { AbstractBot } from '../AbstractBot';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 
-function User({ userId, bot, user, children, isNewMessageEveryRender }) {
+function Chat({ bot, user, children, isNewMessageEveryRender, chat }) {
     return (
-        <BotContext.Provider key={userId} value={{ userId, bot, ...user, isNewMessageEveryRender }}>
+        <BotContext.Provider key={chat.id} value={{ bot, user, isNewMessageEveryRender, chat }}>
             <ErrorBoundary>{children}</ErrorBoundary>
         </BotContext.Provider>
     );
@@ -19,9 +19,9 @@ export function Root({
     options = {},
     isNewMessageEveryRender = false,
 }) {
-    const [users, setUsers] = React.useState(new Map());
-    const usersRef = React.useRef(users);
-    usersRef.current = users;
+    const [chats, setChats] = React.useState(new Map());
+    const chatsRef = React.useRef(chats);
+    chatsRef.current = chats;
 
     const timeoutIdsRef = React.useRef({});
 
@@ -33,26 +33,32 @@ export function Root({
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {
         function handler(message) {
-            const { from } = message;
-            const { id } = from;
+            const { from, chat } = message;
+            const { id: chatId } = chat;
 
-            if (!usersRef.current.has(id)) {
-                usersRef.current.set(
-                    id,
-                    <User userId={id} bot={bot} user={from} key={id} isNewMessageEveryRender={isNewMessageEveryRender}>
+            if (!chatsRef.current.has(chatId)) {
+                chatsRef.current.set(
+                    chat.id,
+                    <Chat
+                        bot={bot}
+                        user={from}
+                        key={chatId}
+                        isNewMessageEveryRender={isNewMessageEveryRender}
+                        chat={chat}
+                    >
                         {children}
-                    </User>,
+                    </Chat>,
                 );
-                bot.addPromiseQueue(id);
-                setUsers(new Map(usersRef.current));
+                bot.addPromiseQueue(chatId);
+                setChats(new Map(chatsRef.current));
                 setFirstMessage(message);
             }
 
-            clearTimeout(timeoutIdsRef.current[id]);
-            timeoutIdsRef.current[id] = setTimeout(() => {
-                usersRef.current.delete(id);
-                bot.deletePromiseQueue(id);
-                setUsers(new Map(usersRef.current));
+            clearTimeout(timeoutIdsRef.current[chatId]);
+            timeoutIdsRef.current[chatId] = setTimeout(() => {
+                chatsRef.current.delete(chatId);
+                bot.deletePromiseQueue(chatId);
+                setChats(new Map(chatsRef.current));
             }, timeToClearUserSession);
         }
 
@@ -81,7 +87,7 @@ export function Root({
 
     return (
         <>
-            {Array.from(users).map(([, children]) => {
+            {Array.from(chats).map(([, children]) => {
                 return children;
             })}
         </>
