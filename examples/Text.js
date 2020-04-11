@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import React from 'react';
 import { render, Root, Text, useBotContext } from '../src';
+import { TelegramBot } from '../src/telegramBot/TelegramBot';
 
 dotenv.config();
 
@@ -51,10 +52,11 @@ function App() {
 
 render(
     <Root
-        token={token}
-        options={{
-            polling: true,
-        }}
+        bot={
+            new TelegramBot(token, {
+                polling: true,
+            })
+        }
     >
         <App />
     </Root>,

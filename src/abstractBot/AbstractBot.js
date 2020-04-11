@@ -1,4 +1,4 @@
-import { PromiseQueue } from "./PromiseQueue";
+import { PromiseQueue } from './PromiseQueue';
 
 export class AbstractBot {
     constructor(bot) {
