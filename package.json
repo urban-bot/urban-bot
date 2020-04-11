@@ -48,19 +48,19 @@
         "react": "16.13.1",
         "rimraf": "3.0.2",
         "webpack": "4.41.5",
-        "webpack-cli": "3.3.10",
-        "easyvk": "^2.6.2"
+        "webpack-cli": "3.3.10"
+    },
+    "dependencies": {
+        "node-telegram-bot-api": "0.40.0",
+        "react-reconciler": "0.25.1",
+        "easyvk": "2.6.0"
+    },
+    "peerDependencies": {
+        "react": "^16.13.1"
     },
     "repository": {
         "type": "git",
         "url": "git@github.com:urban-bot/urban-bot.git"
-    },
-    "dependencies": {
-        "node-telegram-bot-api": "0.40.0",
-        "react-reconciler": "0.25.1"
-    },
-    "peerDependencies": {
-        "react": "^16.13.1"
     },
     "engines": {
         "node": ">=10.0.0"

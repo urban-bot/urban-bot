@@ -1,16 +1,10 @@
 import easyvk from 'easyvk';
 
 function parseMessage(msg) {
-    // return {
-    //     out: msg[2] & 2,
-    //     peer_id: msg[3],
-    //     text: msg[5],
-    //     payload: msg[6].payload,
-    // };
     const peer_id = msg[3];
     const text = msg[5];
-
     return {
+        out: msg[2] & 2,
         text,
         from: {},
         chat: {
@@ -20,39 +14,44 @@ function parseMessage(msg) {
 }
 
 export class VkontakteBot {
-    constructor(token, onLoad) {
+    constructor(bot_token, _onLoad) {
         this.bot = easyvk({
-            token,
+            token: bot_token,
+            reauth: true,
             utils: {
                 longpoll: true,
             },
-        }).then(async (vk) => {
-            this.vk = vk;
-            const connection = await vk.longpoll.connect();
-            return {
-                vk,
-                connection,
-            };
-        });
+        })
+            .then(async (vk) => {
+                this.vk = vk;
+                const connection = await vk.longpoll.connect();
+                return {
+                    vk,
+                    connection,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     async on(event, listener) {
         const bot = await this.bot;
         return bot.connection.on(event, (msg) => {
             let _msg = parseMessage(msg);
+            if (_msg.out) {
+                return;
+            }
+
             return listener(_msg);
         });
     }
 
-    emit(type, message, metadata) {
-        //   return this.bot.emit(type, message, metadata);
-    }
+    emit(_type, _message, _metadata) {}
 
-    removeListener(eventName, listener) {
-        // return this.bot.removeListener(eventName, listener);
-    }
+    removeListener(_eventName, _listener) {}
 
-    async sendMessage(chatId, text, form) {
+    async sendMessage(chatId, text, _form) {
         const bot = await this.bot;
         return bot.vk.call('messages.send', {
             peer_id: chatId,
@@ -61,19 +60,11 @@ export class VkontakteBot {
         });
     }
 
-    editMessageText(text, form) {
-        // return this.bot.editMessageText(text, form);
-    }
+    editMessageText(_text, _form) {}
 
-    deleteMessage(chatId, messageId, form) {
-        // return this.bot.deleteMessage(chatId, messageId, form);
-    }
+    deleteMessage(_chatId, _messageId, _form) {}
 
-    async sendPhoto(chatId, src, params) {
-        // return this.bot.sendPhoto(chatId, src, params);
-    }
+    async sendPhoto(_chatId, _src, _params) {}
 
-    editMessageMedia(media, form) {
-        // return this.bot.editMessageMedia(media, form);
-    }
+    editMessageMedia(_media, _form) {}
 }

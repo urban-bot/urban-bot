@@ -2,7 +2,7 @@ import NodeTelegramBot from 'node-telegram-bot-api';
 
 export class TelegramBot {
     constructor(token, options) {
-        this.bot = new NodeTelegramBot(token, options)
+        this.bot = new NodeTelegramBot(token, options);
     }
 
     on(event, listener) {
@@ -18,7 +18,7 @@ export class TelegramBot {
     }
 
     sendMessage(chatId, text, form) {
-        return this.bot.sendMessage(chatId, text, form)
+        return this.bot.sendMessage(chatId, text, form);
     }
 
     editMessageText(text, form) {

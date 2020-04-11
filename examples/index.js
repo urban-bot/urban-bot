@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import React from 'react';
 import { render, Route, Image, useText, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
+import { TelegramBot } from '../src/telegramBot/TelegramBot';
 
 dotenv.config();
 
@@ -85,10 +86,11 @@ function ArrayComponent() {
 function App() {
     return (
         <Root
-            token={token}
-            options={{
-                polling: true,
-            }}
+            bot={
+                new TelegramBot(token, {
+                    polling: true,
+                })
+            }
         >
             <Router>
                 <Route path="/start">
