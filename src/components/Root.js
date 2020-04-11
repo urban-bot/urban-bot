@@ -1,8 +1,8 @@
 import React from 'react';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
-import { AbstractBot } from "../abstractBot/AbstractBot";
-import { TelegramBot } from "../telegramBot/TelegramBot";
+import { AbstractBot } from '../abstractBot/AbstractBot';
+import { VkontakteBot } from '../vkontakteBot/VkontakteBot';
 
 function Chat({ bot, user, children, isNewMessageEveryRender, chat }) {
     return (
@@ -27,8 +27,8 @@ export function Root({
 
     const [firstMessage, setFirstMessage] = React.useState();
 
-    const telegramBot = React.useMemo(() => new TelegramBot(token, options), [token, options]);
-    const bot = React.useMemo(() => new AbstractBot(telegramBot), [telegramBot]);
+    const vkontakteBot = React.useMemo(() => new VkontakteBot(token, options), [token, options]);
+    const bot = React.useMemo(() => new AbstractBot(vkontakteBot), [vkontakteBot]);
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {

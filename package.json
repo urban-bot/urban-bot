@@ -48,7 +48,8 @@
         "react": "16.13.1",
         "rimraf": "3.0.2",
         "webpack": "4.41.5",
-        "webpack-cli": "3.3.10"
+        "webpack-cli": "3.3.10",
+        "easyvk": "^2.6.2"
     },
     "repository": {
         "type": "git",
