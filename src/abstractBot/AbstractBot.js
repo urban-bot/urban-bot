@@ -1,29 +1,17 @@
-class PromiseQueue {
-    constructor() {
-        this.last = Promise.resolve();
-    }
-
-    next(promise) {
-        const current = this.last.then(promise);
-        this.last = current;
-
-        return current;
-    }
-}
+import { PromiseQueue } from "./PromiseQueue";
 
 export class AbstractBot {
     constructor(bot) {
         this.bot = bot;
-
-        this.promiseQueueMap = {};
+        this.promiseQueueMap = new Map();
     }
 
-    addPromiseQueue(id) {
-        this.promiseQueueMap[id] = new PromiseQueue();
+    addUser(id) {
+        this.promiseQueueMap.set(id, new PromiseQueue());
     }
 
-    deletePromiseQueue(id) {
-        delete this.promiseQueueMap[id];
+    deleteUser(id) {
+        this.promiseQueueMap.delete(id);
     }
 
     on(...args) {
@@ -56,7 +44,6 @@ export class AbstractBot {
 
     sendPhoto(...args) {
         const [id] = args;
-
         return this.promiseQueueMap[id].next(() => {
             return this.bot.sendPhoto(...args);
         });

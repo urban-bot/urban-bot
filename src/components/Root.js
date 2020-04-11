@@ -1,8 +1,8 @@
 import React from 'react';
 import TelegramBot from 'node-telegram-bot-api';
-import { AbstractBot } from '../AbstractBot';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
+import { AbstractBot } from "../abstractBot/AbstractBot";
 
 function Chat({ bot, user, children, isNewMessageEveryRender, chat }) {
     return (
@@ -49,7 +49,7 @@ export function Root({
                         {children}
                     </Chat>,
                 );
-                bot.addPromiseQueue(chatId);
+                bot.addUser(chatId);
                 setChats(new Map(chatsRef.current));
                 setFirstMessage(message);
             }
@@ -57,7 +57,7 @@ export function Root({
             clearTimeout(timeoutIdsRef.current[chatId]);
             timeoutIdsRef.current[chatId] = setTimeout(() => {
                 chatsRef.current.delete(chatId);
-                bot.deletePromiseQueue(chatId);
+                bot.deleteUser(chatId);
                 setChats(new Map(chatsRef.current));
             }, timeToClearUserSession);
         }
