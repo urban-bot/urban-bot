@@ -1,8 +1,8 @@
 import React from 'react';
-import TelegramBot from 'node-telegram-bot-api';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { AbstractBot } from "../abstractBot/AbstractBot";
+import { TelegramBot } from "../telegramBot/TelegramBot";
 
 function Chat({ bot, user, children, isNewMessageEveryRender, chat }) {
     return (
