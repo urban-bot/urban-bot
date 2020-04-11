@@ -14,42 +14,39 @@ export class AbstractBot {
         this.promiseQueueMap.delete(id);
     }
 
-    on(...args) {
-        return this.bot.on(...args);
+    on(event, listener) {
+        return this.bot.on(event, listener);
     }
 
-    emit(...args) {
-        return this.bot.emit(...args);
+    emit(type, message) {
+        return this.bot.emit(type, message);
     }
 
-    removeListener(...args) {
-        return this.bot.removeListener(...args);
+    removeListener(eventName, listener) {
+        return this.bot.removeListener(eventName, listener);
     }
 
-    sendMessage(...args) {
-        const [id] = args;
-
-        return this.promiseQueueMap[id].next(() => {
-            return this.bot.sendMessage(...args);
+    sendMessage(chatId, text, form) {
+        return this.promiseQueueMap[chatId].next(() => {
+            return this.bot.sendMessage(chatId, text, form);
         });
     }
 
-    editMessageText(...args) {
-        return this.bot.editMessageText(...args);
+    editMessageText(text, form) {
+        return this.bot.editMessageText(text, form);
     }
 
-    deleteMessage(...args) {
-        return this.bot.deleteMessage(...args);
+    deleteMessage(chatId, messageId, form) {
+        return this.bot.deleteMessage(chatId, messageId, form);
     }
 
-    sendPhoto(...args) {
-        const [id] = args;
-        return this.promiseQueueMap[id].next(() => {
-            return this.bot.sendPhoto(...args);
+    sendPhoto(chatId, src, params) {
+        return this.promiseQueueMap[chatId].next(() => {
+            return this.bot.sendPhoto(chatId, src, params);
         });
     }
 
-    editMessageMedia(...args) {
-        return this.bot.editMessageMedia(...args);
+    editMessageMedia(media, form) {
+        return this.bot.editMessageMedia(media, form);
     }
 }
