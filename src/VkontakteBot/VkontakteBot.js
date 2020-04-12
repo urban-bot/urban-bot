@@ -66,7 +66,9 @@ export class VkontakteBot {
                 break;
             }
             default: {
-                throw new Error('tag ' + nodeName + ' does not exist');
+                throw new Error(
+                    `Tag '${nodeName}' does not exist. Please don't use it with vk bot or add this logic to @urban-bot/telegram.`,
+                );
             }
         }
     }

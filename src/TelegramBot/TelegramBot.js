@@ -26,7 +26,9 @@ export class TelegramBot {
                 return this.bot.sendPhoto(chatId, data.src, data);
             }
             default: {
-                throw new Error('tag ' + nodeName + ' does not exist');
+                throw new Error(
+                    `Tag '${nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                );
             }
         }
     }
@@ -60,7 +62,9 @@ export class TelegramBot {
                 break;
             }
             default: {
-                throw new Error('tag ' + nodeName + ' does not exist');
+                throw new Error(
+                    `Tag '${nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                );
             }
         }
     }
