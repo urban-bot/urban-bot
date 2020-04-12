@@ -19,7 +19,7 @@ import {
     useAnimation,
     useDice,
 } from '../src';
-import { TelegramBot } from '../src/telegramBot/TelegramBot';
+import { TelegramBot } from '../src/TelegramBot/TelegramBot';
 
 dotenv.config();
 

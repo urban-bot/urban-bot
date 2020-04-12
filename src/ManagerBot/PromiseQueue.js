@@ -3,8 +3,8 @@ export class PromiseQueue {
         this.last = Promise.resolve();
     }
 
-    next(promise) {
-        this.last = this.last.then(promise);
+    next(callback) {
+        this.last = this.last.then(callback);
         return this.last;
     }
 }

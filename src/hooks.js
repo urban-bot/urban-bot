@@ -9,108 +9,100 @@ export function useRouter() {
     return React.useContext(RouterContext);
 }
 
-function useSubscribe(func, event) {
+function useSubscribe(callback, event) {
     const { chat, bot } = useBotContext();
 
     React.useEffect(() => {
-        function handler(ctx) {
-            const { id } = ctx.chat;
-
-            if (id === chat.id) {
-                func(ctx);
-            }
-        }
-
-        bot.on(event, handler);
+        bot.on(event, callback, chat.id);
 
         return () => {
-            bot.removeListener(event, handler);
+            bot.removeListener(event, callback);
         };
-    }, [func, bot, event, chat]);
+    }, [callback, bot, event, chat]);
 }
 
-export function useMessage(func) {
-    useSubscribe(func, 'message');
+export function useMessage(callback) {
+    useSubscribe(callback, 'message');
 }
 
-export function useText(func) {
+export function useText(callback) {
     useSubscribe((ctx) => {
         const { text } = ctx;
         if (text[0] === '/') {
             return;
         }
 
-        func(ctx);
+        callback(ctx);
     }, 'text');
 }
 
-export function useCommand(func) {
+export function useCommand(callback) {
     useSubscribe((ctx) => {
         const { text } = ctx;
         if (text[0] !== '/') {
             return;
         }
 
-        func(ctx);
+        callback(ctx);
     }, 'text');
 }
 
-export function useSticker(func) {
-    useSubscribe(func, 'sticker');
+export function useSticker(callback) {
+    useSubscribe(callback, 'sticker');
 }
 
-export function useAnimation(func) {
-    useSubscribe(func, 'animation');
+export function useAnimation(callback) {
+    useSubscribe(callback, 'animation');
 }
 
-export function useAudio(func) {
-    useSubscribe(func, 'audio');
+export function useAudio(callback) {
+    useSubscribe(callback, 'audio');
 }
 
-export function useContact(func) {
-    useSubscribe(func, 'contact');
+export function useContact(callback) {
+    useSubscribe(callback, 'contact');
 }
 
-export function useDocument(func) {
-    useSubscribe(func, 'document');
+export function useDocument(callback) {
+    useSubscribe(callback, 'document');
 }
 
-export function useInvoice(func) {
-    useSubscribe(func, 'invoice');
+export function useInvoice(callback) {
+    useSubscribe(callback, 'invoice');
 }
 
-export function usePassportData(func) {
-    useSubscribe(func, 'passport_data');
+export function usePassportData(callback) {
+    useSubscribe(callback, 'passport_data');
 }
 
-export function useLocation(func) {
-    useSubscribe(func, 'location');
+export function useLocation(callback) {
+    useSubscribe(callback, 'location');
 }
 
-export function usePhoto(func) {
-    useSubscribe(func, 'photo');
+export function usePhoto(callback) {
+    useSubscribe(callback, 'photo');
 }
 
-export function usePoll(func) {
-    useSubscribe(func, 'poll');
+export function usePoll(callback) {
+    useSubscribe(callback, 'poll');
 }
 
-export function useVideo(func) {
-    useSubscribe(func, 'video');
+export function useVideo(callback) {
+    useSubscribe(callback, 'video');
 }
 
-export function useVideoNote(func) {
-    useSubscribe(func, 'video_note');
+export function useVideoNote(callback) {
+    useSubscribe(callback, 'video_note');
 }
 
-export function useVoice(func) {
-    useSubscribe(func, 'voice');
+export function useVoice(callback) {
+    useSubscribe(callback, 'voice');
 }
 
-export function useDice(func) {
+export function useDice(callback) {
     useMessage((ctx) => {
         if (ctx.dice !== undefined) {
-            func(ctx);
+            callback(ctx);
         }
     });
 }

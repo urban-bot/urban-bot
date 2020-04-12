@@ -46,10 +46,10 @@ export function ButtonGroup({ children, title, isNewMessageEveryRender: isNewMes
     return (
         <text
             chatId={chat.id}
-            text={title}
-            params={params}
             bot={bot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
+            text={title}
+            {...params}
         />
     );
 }

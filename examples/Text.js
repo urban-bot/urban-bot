@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import React from 'react';
 import { render, Root, Text, useBotContext } from '../src';
-import { TelegramBot } from '../src/telegramBot/TelegramBot';
+import { TelegramBot } from '../src/TelegramBot/TelegramBot';
 
 dotenv.config();
 
