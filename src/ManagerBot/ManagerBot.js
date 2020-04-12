@@ -14,8 +14,20 @@ export class ManagerBot {
         this.promiseQueueMap.delete(id);
     }
 
-    on(event, listener) {
-        return this.bot.on(event, listener);
+    on(event, listener, chatId) {
+        return this.bot.on(event, function(ctx) {
+            if (chatId !== undefined) {
+                const { id: chatIdFromMessage } = ctx.chat;
+
+                if (chatId === chatIdFromMessage) {
+                    listener(ctx);
+                }
+
+                return;
+            }
+
+            listener(ctx);
+        });
     }
 
     emit(type, message) {

@@ -13,18 +13,10 @@ function useSubscribe(func, event) {
     const { chat, bot } = useBotContext();
 
     React.useEffect(() => {
-        function handler(ctx) {
-            const { id } = ctx.chat;
-
-            if (id === chat.id) {
-                func(ctx);
-            }
-        }
-
-        bot.on(event, handler);
+        bot.on(event, func, chat.id);
 
         return () => {
-            bot.removeListener(event, handler);
+            bot.removeListener(event, func);
         };
     }, [func, bot, event, chat]);
 }
