@@ -19,6 +19,7 @@ import {
     useAnimation,
     useDice,
 } from '../src';
+import { TelegramBot } from '../src/telegramBot/TelegramBot';
 
 dotenv.config();
 
@@ -92,10 +93,11 @@ function App() {
 
 render(
     <Root
-        token={token}
-        options={{
-            polling: true,
-        }}
+        bot={
+            new TelegramBot(token, {
+                polling: true,
+            })
+        }
     >
         <App />
     </Root>,
