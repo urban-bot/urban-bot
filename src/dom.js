@@ -1,57 +1,22 @@
 import { shallowEqual } from './utils/shallowEqual';
 
 export function createNode(type, props = {}) {
+    const { bot, chatId, isNewMessageEveryRender, ...messageProps } = props;
     const node = {
         nodeName: type,
-        bot: props.bot,
-        chatId: props.chatId,
-        isNewMessageEveryRender: props.isNewMessageEveryRender,
+        bot,
+        chatId,
+        isNewMessageEveryRender,
     };
 
-    switch (type) {
-        case 'root': {
-            return node;
-        }
-        case 'text': {
-            return {
-                ...node,
-                data: {
-                    text: props.text,
-                    params: props.params,
-                },
-            };
-        }
-        case 'img': {
-            return {
-                ...node,
-                data: {
-                    src: props.src,
-                    params: props.params,
-                },
-            };
-        }
-        default: {
-            throw new Error('tag ' + type + ' does not exist');
-        }
-    }
+    return {
+        ...node,
+        data: messageProps,
+    };
 }
 
 export function appendChildNode(node, childNode) {
-    switch (childNode.nodeName) {
-        case 'text': {
-            childNode.meta = childNode.bot.sendMessage(childNode.chatId, childNode.data.text, childNode.data.params);
-
-            break;
-        }
-        case 'img': {
-            childNode.meta = childNode.bot.sendPhoto(childNode.chatId, childNode.data.src, childNode.data.params);
-
-            break;
-        }
-        default: {
-            throw new Error('tag ' + childNode.nodeName + ' does not exist');
-        }
-    }
+    childNode.meta = childNode.bot.sendMessage(childNode.nodeName, childNode.chatId, childNode.data);
 }
 
 export function removeChildNode(node, removedNode) {
@@ -60,7 +25,7 @@ export function removeChildNode(node, removedNode) {
     }
 
     removedNode.meta.then((meta) => {
-        removedNode.bot.deleteMessage(meta.chat.id, meta.message_id);
+        removedNode.bot.deleteMessage(node.nodeName, meta.chat.id, meta);
     });
 }
 
@@ -69,53 +34,13 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
         return;
     }
 
-    switch (node.nodeName) {
-        case 'text': {
-            if (node.isNewMessageEveryRender) {
-                node = createNode(node.nodeName, newProps);
-
-                node.meta = node.bot.sendMessage(node.chatId, node.data.text, node.data.params);
-            } else {
-                node.meta.then((meta) => {
-                    const metaToEdit = {
-                        chat_id: meta.chat.id,
-                        message_id: meta.message_id,
-                    };
-
-                    const params = newProps.params || {};
-
-                    node.bot.editMessageText(newProps.text, { ...params, ...metaToEdit });
-                });
-            }
-
-            break;
-        }
-        case 'img': {
-            if (node.isNewMessageEveryRender) {
-                node = createNode(node.nodeName, newProps);
-
-                node.meta = node.bot.sendPhoto(node.chatId, node.data.src, node.data.params);
-            } else {
-                node.meta.then((meta) => {
-                    const metaToEdit = {
-                        chat_id: meta.chat.id,
-                        message_id: meta.message_id,
-                    };
-
-                    const media = {
-                        type: 'photo',
-                        media: newProps.src,
-                        ...(newProps.params || {}),
-                    };
-
-                    node.bot.editMessageMedia(media, { ...media, ...metaToEdit });
-                });
-            }
-
-            break;
-        }
-        default: {
-            throw new Error('tag ' + node.nodeName + ' does not exist');
-        }
+    if (node.isNewMessageEveryRender) {
+        node = createNode(node.nodeName, newProps);
+        node.meta = node.bot.sendMessage(node.nodeName, node.chatId, node.data);
+    } else {
+        node.meta.then((meta) => {
+            const node = createNode(node.nodeName, newProps);
+            node.bot.updateMessage(node.nodeName, node.chatId, node.data, meta);
+        });
     }
 }
