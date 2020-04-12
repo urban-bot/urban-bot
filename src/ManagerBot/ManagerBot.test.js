@@ -9,20 +9,81 @@ const testBot = {
     deleteMessage: jest.fn(),
 };
 
+const testBotEmitter = {
+    on(event, listener) {
+        this[event] = listener;
+    },
+    emit(event, data) {
+        this[event](data);
+    },
+};
+
 describe('ManagerBot', () => {
-    it('on', () => {
-        const managerBot = new ManagerBot(testBot);
-
+    describe('method on', () => {
         const event = 'test-event';
-        const listener = () => {};
+        const listener = jest.fn();
 
-        managerBot.on(event, listener);
+        afterEach(() => {
+            listener.mockClear();
+        });
 
-        expect(testBot.on).toHaveBeenCalledTimes(1);
-        expect(testBot.on.mock.calls[0][0]).toBe(event);
+        it('call inner bot method on', () => {
+            const managerBot = new ManagerBot(testBot);
+
+            managerBot.on(event, listener);
+
+            expect(testBot.on).toHaveBeenCalledTimes(1);
+            expect(testBot.on.mock.calls[0][0]).toBe(event);
+            expect(testBot.on.mock.calls[0][1]).not.toBe(event);
+        });
+
+        it('call listener if chatId is empty', () => {
+            const managerBot = new ManagerBot(testBotEmitter);
+
+            managerBot.on(event, listener);
+            const data = { chat: { id: 123 } };
+
+            testBotEmitter.emit(event, data);
+
+            expect(listener).toHaveBeenCalledTimes(1);
+            expect(listener).toHaveBeenLastCalledWith(data);
+
+            testBotEmitter.emit(event);
+
+            expect(listener).toHaveBeenCalledTimes(2);
+            expect(listener).toHaveBeenLastCalledWith(undefined);
+        });
+
+        it('call listener if chatId is the same with emit data', () => {
+            const managerBot = new ManagerBot(testBotEmitter);
+
+            const id = 123;
+
+            managerBot.on(event, listener, id);
+            const data = { chat: { id } };
+
+            testBotEmitter.emit(event, data);
+
+            expect(listener).toHaveBeenCalledTimes(1);
+            expect(listener).toHaveBeenLastCalledWith(data);
+        });
+
+        it("doesn't call listener if chatId is not the same with emit data", () => {
+            const managerBot = new ManagerBot(testBotEmitter);
+
+            const id = 123;
+            const id2 = 345;
+
+            managerBot.on(event, listener, id);
+            const data = { chat: { id: id2 } };
+
+            testBotEmitter.emit(event, data);
+
+            expect(listener).toHaveBeenCalledTimes(0);
+        });
     });
 
-    it('emit', () => {
+    it('method emit', () => {
         const managerBot = new ManagerBot(testBot);
 
         const event = 'test-event';
@@ -38,7 +99,7 @@ describe('ManagerBot', () => {
         expect(testBot.emit).toHaveBeenCalledTimes(2);
     });
 
-    it('removeListener', () => {
+    it('method removeListener', () => {
         const managerBot = new ManagerBot(testBot);
 
         const event = 'test-event';
@@ -54,7 +115,7 @@ describe('ManagerBot', () => {
         expect(testBot.removeListener).toHaveBeenCalledTimes(2);
     });
 
-    it('updateMessage', () => {
+    it('method updateMessage', () => {
         const managerBot = new ManagerBot(testBot);
 
         const nodeName = 'text';
@@ -71,7 +132,7 @@ describe('ManagerBot', () => {
         expect(testBot.updateMessage).toHaveBeenCalledTimes(2);
     });
 
-    it('deleteMessage', () => {
+    it('method deleteMessage', () => {
         const managerBot = new ManagerBot(testBot);
 
         const nodeName = 'text';
@@ -88,7 +149,7 @@ describe('ManagerBot', () => {
         expect(testBot.deleteMessage).toHaveBeenCalledTimes(2);
     });
 
-    describe('sendMessage', () => {
+    describe('method sendMessage', () => {
         afterEach(() => {
             testBot.sendMessage.mockClear();
         });
