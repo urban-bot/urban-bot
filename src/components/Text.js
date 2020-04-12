@@ -23,33 +23,29 @@ export function Text({
         text = formatElementToString(children);
     }
 
-    const params = React.useMemo(() => {
-        const params = {
-            parse_mode: parseMode,
-            disable_web_page_preview: disableWebPagePreview,
-            disable_notification: disableNotification,
-            reply_to_message_id: replyToMessageId,
+    const params = {
+        parse_mode: parseMode,
+        disable_web_page_preview: disableWebPagePreview,
+        disable_notification: disableNotification,
+        reply_to_message_id: replyToMessageId,
+    };
+
+    if (forceReply !== undefined || selective !== undefined) {
+        const reply_markup = {
+            force_reply: forceReply,
+            selective: selective,
         };
 
-        if (forceReply !== undefined || selective !== undefined) {
-            const reply_markup = {
-                force_reply: forceReply,
-                selective: selective,
-            };
-
-            params.reply_markup = reply_markup;
-        }
-
-        return params;
-    }, [parseMode, disableWebPagePreview, disableNotification, replyToMessageId, forceReply, selective]);
+        params.reply_markup = reply_markup;
+    }
 
     return (
         <text
-            text={text}
             chatId={chat.id}
             bot={bot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
-            params={params}
+            text={text}
+            {...params}
         />
     );
 }

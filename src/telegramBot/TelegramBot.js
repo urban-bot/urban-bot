@@ -17,23 +17,55 @@ export class TelegramBot {
         return this.bot.removeListener(eventName, listener);
     }
 
-    sendMessage(chatId, text, form) {
-        return this.bot.sendMessage(chatId, text, form);
+    sendMessage(nodeName, chatId, data) {
+        switch (nodeName) {
+            case 'text': {
+                return this.bot.sendMessage(chatId, data.text, data);
+            }
+            case 'img': {
+                return this.bot.sendPhoto(chatId, data.src, data);
+            }
+            default: {
+                throw new Error('tag ' + nodeName + ' does not exist');
+            }
+        }
     }
 
-    editMessageText(text, form) {
-        return this.bot.editMessageText(text, form);
+    updateMessage(nodeName, chatId, data, meta) {
+        switch (nodeName) {
+            case 'text': {
+                const metaToEdit = {
+                    chat_id: meta.chat.id,
+                    message_id: meta.message_id,
+                };
+
+                this.bot.editMessageText(data.text, { ...data, ...metaToEdit });
+
+                break;
+            }
+            case 'img': {
+                const metaToEdit = {
+                    chat_id: meta.chat.id,
+                    message_id: meta.message_id,
+                };
+
+                const media = {
+                    type: 'photo',
+                    media: data.src,
+                    ...data,
+                };
+
+                this.bot.editMessageMedia(media, { ...media, ...metaToEdit });
+
+                break;
+            }
+            default: {
+                throw new Error('tag ' + nodeName + ' does not exist');
+            }
+        }
     }
 
-    deleteMessage(chatId, messageId, form) {
-        return this.bot.deleteMessage(chatId, messageId, form);
-    }
-
-    sendPhoto(chatId, src, params) {
-        return this.bot.sendPhoto(chatId, src, params);
-    }
-
-    editMessageMedia(media, form) {
-        return this.bot.editMessageMedia(media, form);
+    deleteMessage(nodeName, chatId, data, meta) {
+        this.bot.deleteMessage(meta.chat.id, meta.message_id);
     }
 }

@@ -20,11 +20,11 @@ export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMes
 
     return (
         <img
-            src={src}
             bot={bot}
             chatId={chat.id}
-            params={params}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
+            src={src}
+            {...params}
         />
     );
 }

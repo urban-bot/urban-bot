@@ -25,7 +25,7 @@ export function removeChildNode(node, removedNode) {
     }
 
     removedNode.meta.then((meta) => {
-        removedNode.bot.deleteMessage(node.nodeName, meta.chat.id, meta);
+        removedNode.bot.deleteMessage(node.nodeName, node.chatId, node.data, meta);
     });
 }
 
