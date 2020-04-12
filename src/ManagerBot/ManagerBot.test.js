@@ -34,7 +34,7 @@ describe('ManagerBot', () => {
 
             expect(testBot.on).toHaveBeenCalledTimes(1);
             expect(testBot.on.mock.calls[0][0]).toBe(event);
-            expect(testBot.on.mock.calls[0][1]).not.toBe(event);
+            expect(testBot.on.mock.calls[0][1]).not.toBe(listener);
         });
 
         it('call listener if chatId is empty', () => {
@@ -42,16 +42,17 @@ describe('ManagerBot', () => {
 
             managerBot.on(event, listener);
             const data = { chat: { id: 123 } };
+            const data2 = { chat: { id: 345 } };
 
             testBotEmitter.emit(event, data);
 
             expect(listener).toHaveBeenCalledTimes(1);
             expect(listener).toHaveBeenLastCalledWith(data);
 
-            testBotEmitter.emit(event);
+            testBotEmitter.emit(event, data2);
 
             expect(listener).toHaveBeenCalledTimes(2);
-            expect(listener).toHaveBeenLastCalledWith(undefined);
+            expect(listener).toHaveBeenLastCalledWith(data2);
         });
 
         it('call listener if chatId is the same with emit data', () => {

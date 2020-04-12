@@ -19,11 +19,9 @@ export class ManagerBot {
             if (chatId !== undefined) {
                 const { id: chatIdFromEvent } = ctx.chat;
 
-                if (chatId === chatIdFromEvent) {
-                    listener(ctx);
+                if (chatId !== chatIdFromEvent) {
+                    return;
                 }
-
-                return;
             }
 
             listener(ctx);
