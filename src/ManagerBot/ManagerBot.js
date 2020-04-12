@@ -39,7 +39,13 @@ export class ManagerBot {
     }
 
     sendMessage(nodeName, chatId, data) {
-        return this.promiseQueueMap.get(chatId).next(() => {
+        const promiseQueueByChatId = this.promiseQueueMap.get(chatId);
+
+        if (promiseQueueByChatId === undefined) {
+            throw new Error('Specify chatId before send message via managerBot.addChat(chatId)');
+        }
+
+        return promiseQueueByChatId.next(() => {
             return this.bot.sendMessage(nodeName, chatId, data);
         });
     }
