@@ -34,13 +34,13 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
         return;
     }
 
+    const newNode = createNode(node.nodeName, newProps);
+
     if (node.isNewMessageEveryRender) {
-        node = createNode(node.nodeName, newProps);
-        node.meta = node.bot.sendMessage(node.nodeName, node.chatId, node.data);
+        node.meta = newNode.bot.sendMessage(newNode.nodeName, newNode.chatId, newNode.data);
     } else {
         node.meta.then((meta) => {
-            const node = createNode(node.nodeName, newProps);
-            node.bot.updateMessage(node.nodeName, node.chatId, node.data, meta);
+            newNode.bot.updateMessage(newNode.nodeName, newNode.chatId, newNode.data, meta);
         });
     }
 }

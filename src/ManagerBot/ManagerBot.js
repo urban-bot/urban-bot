@@ -1,6 +1,6 @@
 import { PromiseQueue } from './PromiseQueue';
 
-export class AbstractBot {
+export class ManagerBot {
     constructor(bot) {
         this.bot = bot;
         this.promiseQueueMap = new Map();
@@ -26,27 +26,17 @@ export class AbstractBot {
         return this.bot.removeListener(eventName, listener);
     }
 
-    sendMessage(chatId, text, form) {
+    sendMessage(nodeName, chatId, data) {
         return this.promiseQueueMap.get(chatId).next(() => {
-            return this.bot.sendMessage(chatId, text, form);
+            return this.bot.sendMessage(nodeName, chatId, data);
         });
     }
 
-    editMessageText(text, form) {
-        return this.bot.editMessageText(text, form);
+    updateMessage(nodeName, chatId, data, meta) {
+        return this.bot.updateMessage(nodeName, chatId, data, meta);
     }
 
-    deleteMessage(chatId, messageId, form) {
-        return this.bot.deleteMessage(chatId, messageId, form);
-    }
-
-    sendPhoto(chatId, src, params) {
-        return this.promiseQueueMap.get(chatId).next(() => {
-            return this.bot.sendPhoto(chatId, src, params);
-        });
-    }
-
-    editMessageMedia(media, form) {
-        return this.bot.editMessageMedia(media, form);
+    deleteMessage(nodeName, chatId, data, meta) {
+        return this.bot.deleteMessage(nodeName, chatId, data, meta);
     }
 }

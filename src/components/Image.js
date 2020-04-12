@@ -13,7 +13,7 @@ export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMes
     if (typeof buttons?.type === 'function') {
         const { props } = buttons.type(buttons.props);
 
-        const { reply_markup } = props.params || {};
+        const { reply_markup } = props || {};
 
         params.reply_markup = reply_markup;
     }

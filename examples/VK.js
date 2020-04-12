@@ -1,5 +1,5 @@
 import React from 'react';
-import { VkontakteBot } from '../src/vkontakteBot/VkontakteBot';
+import { VkontakteBot } from '../src/VkontakteBot/VkontakteBot';
 
 import dotenv from 'dotenv';
 import { render, useMessage, Root, Text } from '../src';
