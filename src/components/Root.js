@@ -1,7 +1,7 @@
 import React from 'react';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
-import { AbstractBot } from '../abstractBot/AbstractBot';
+import { ManagerBot } from '../ManagerBot/ManagerBot';
 
 function Chat({ bot, user, children, isNewMessageEveryRender, chat }) {
     return (
@@ -20,7 +20,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
 
     const [firstMessage, setFirstMessage] = React.useState();
 
-    const abstractBot = React.useMemo(() => new AbstractBot(bot), [bot]);
+    const managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {
@@ -32,7 +32,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
                 chatsRef.current.set(
                     chat.id,
                     <Chat
-                        bot={abstractBot}
+                        bot={managerBot}
                         user={from}
                         key={chatId}
                         isNewMessageEveryRender={isNewMessageEveryRender}
@@ -41,7 +41,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
                         {children}
                     </Chat>,
                 );
-                abstractBot.addChat(chatId);
+                managerBot.addChat(chatId);
                 setChats(new Map(chatsRef.current));
                 setFirstMessage(message);
             }
@@ -49,25 +49,25 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
             clearTimeout(timeoutIdsRef.current[chatId]);
             timeoutIdsRef.current[chatId] = setTimeout(() => {
                 chatsRef.current.delete(chatId);
-                abstractBot.deleteChat(chatId);
+                managerBot.deleteChat(chatId);
                 setChats(new Map(chatsRef.current));
             }, timeToClearUserSession);
         }
 
-        abstractBot.on('message', handler);
+        managerBot.on('message', handler);
 
         return () => {
-            abstractBot.removeListener('message', handler);
+            managerBot.removeListener('message', handler);
         };
-    }, [abstractBot, timeToClearUserSession, children, isNewMessageEveryRender]);
+    }, [managerBot, timeToClearUserSession, children, isNewMessageEveryRender]);
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
             // First message is needed to register user and initialize react children for him.
             // After initializing we repeat this message that react children can process it.
-            abstractBot.emit('message', firstMessage);
+            managerBot.emit('message', firstMessage);
         }
-    }, [firstMessage, abstractBot]);
+    }, [firstMessage, managerBot]);
 
     React.useEffect(() => {
         console.log('Root start');

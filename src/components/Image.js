@@ -13,18 +13,18 @@ export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMes
     if (typeof buttons?.type === 'function') {
         const { props } = buttons.type(buttons.props);
 
-        const { reply_markup } = props.params || {};
+        const { reply_markup } = props || {};
 
         params.reply_markup = reply_markup;
     }
 
     return (
         <img
-            src={src}
             bot={bot}
             chatId={chat.id}
-            params={params}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
+            src={src}
+            {...params}
         />
     );
 }
