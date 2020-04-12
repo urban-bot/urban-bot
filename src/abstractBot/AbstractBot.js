@@ -6,11 +6,11 @@ export class AbstractBot {
         this.promiseQueueMap = new Map();
     }
 
-    addUser(id) {
+    addChat(id) {
         this.promiseQueueMap.set(id, new PromiseQueue());
     }
 
-    deleteUser(id) {
+    deleteChat(id) {
         this.promiseQueueMap.delete(id);
     }
 
@@ -27,7 +27,7 @@ export class AbstractBot {
     }
 
     sendMessage(chatId, text, form) {
-        return this.promiseQueueMap[chatId].next(() => {
+        return this.promiseQueueMap.get(chatId).next(() => {
             return this.bot.sendMessage(chatId, text, form);
         });
     }
@@ -41,7 +41,7 @@ export class AbstractBot {
     }
 
     sendPhoto(chatId, src, params) {
-        return this.promiseQueueMap[chatId].next(() => {
+        return this.promiseQueueMap.get(chatId).next(() => {
             return this.bot.sendPhoto(chatId, src, params);
         });
     }

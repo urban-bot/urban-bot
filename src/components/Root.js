@@ -41,7 +41,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
                         {children}
                     </Chat>,
                 );
-                abstractBot.addUser(chatId);
+                abstractBot.addChat(chatId);
                 setChats(new Map(chatsRef.current));
                 setFirstMessage(message);
             }
@@ -49,7 +49,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
             clearTimeout(timeoutIdsRef.current[chatId]);
             timeoutIdsRef.current[chatId] = setTimeout(() => {
                 chatsRef.current.delete(chatId);
-                abstractBot.deleteUser(chatId);
+                abstractBot.deleteChat(chatId);
                 setChats(new Map(chatsRef.current));
             }, timeToClearUserSession);
         }
