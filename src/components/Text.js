@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
-import { formatElementToString } from '../utils/formatElementToString';
+import { formatHTMLElement } from '../utils/formatHTMLElement';
 
 export function Text(props) {
     const {
@@ -23,7 +23,7 @@ export function Text(props) {
     } else {
         parseMode = 'HTML';
 
-        text = formatElementToString(children);
+        text = formatHTMLElement(children);
     }
 
     return (
