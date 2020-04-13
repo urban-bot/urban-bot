@@ -1,21 +1,34 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
+import { formatHTMLElement } from '../utils/formatHTMLElement';
 
-export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMessageEveryRenderProp }) {
+export function Image(props) {
+    const {
+        src,
+        title: titleElement,
+        buttons: buttonsElement,
+        isNewMessageEveryRender: isNewMessageEveryRenderProp,
+        parseMode: parseModeProp,
+        disableNotification,
+        replyToMessageId,
+        forceReply,
+        ...otherProps
+    } = props;
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
-    const params = {};
+    let formattedButtons;
+    if (buttonsElement !== undefined) {
+        const { props } = buttonsElement.type(buttonsElement.props);
+        const { buttons } = props ?? {};
 
-    if (typeof caption === 'string') {
-        params.caption = caption;
+        formattedButtons = buttons;
     }
 
-    if (typeof buttons?.type === 'function') {
-        const { props } = buttons.type(buttons.props);
-
-        const { reply_markup } = props || {};
-
-        params.reply_markup = reply_markup;
+    let parseMode = parseModeProp;
+    let title = titleElement;
+    if (typeof titleElement !== 'string' && typeof titleElement !== 'number') {
+        parseMode = 'HTML';
+        title = formatHTMLElement(titleElement);
     }
 
     return (
@@ -24,7 +37,13 @@ export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMes
             chatId={chat.id}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             src={src}
-            {...params}
+            title={title}
+            buttons={formattedButtons}
+            parseMode={parseMode}
+            disableNotification={disableNotification}
+            replyToMessageId={replyToMessageId}
+            forceReply={forceReply}
+            {...otherProps}
         />
     );
 }

@@ -1,42 +1,26 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
-import { formatElementToString } from '../utils/formatElementToString';
+import { formatHTMLElement } from '../utils/formatHTMLElement';
 
-export function Text({
-    children,
-    isNewMessageEveryRender: isNewMessageEveryRenderProp,
-    parseMode,
-    disableWebPagePreview,
-    disableNotification,
-    replyToMessageId,
-    forceReply,
-    selective,
-}) {
+export function Text(props) {
+    const {
+        children,
+        isNewMessageEveryRender: isNewMessageEveryRenderProp,
+        parseMode: parseModeProp,
+        disableWebPagePreview,
+        disableNotification,
+        replyToMessageId,
+        forceReply,
+        ...otherProps
+    } = props;
+
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
-    let text;
-    if (typeof children === 'string' || typeof children === 'number') {
-        text = children;
-    } else {
+    let parseMode = parseModeProp;
+    let text = children;
+    if (typeof children !== 'string' && typeof children !== 'number') {
         parseMode = 'HTML';
-
-        text = formatElementToString(children);
-    }
-
-    const params = {
-        parse_mode: parseMode,
-        disable_web_page_preview: disableWebPagePreview,
-        disable_notification: disableNotification,
-        reply_to_message_id: replyToMessageId,
-    };
-
-    if (forceReply !== undefined || selective !== undefined) {
-        const reply_markup = {
-            force_reply: forceReply,
-            selective: selective,
-        };
-
-        params.reply_markup = reply_markup;
+        text = formatHTMLElement(children);
     }
 
     return (
@@ -45,7 +29,12 @@ export function Text({
             bot={bot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             text={text}
-            {...params}
+            parseMode={parseMode}
+            disableWebPagePreview={disableWebPagePreview}
+            disableNotification={disableNotification}
+            replyToMessageId={replyToMessageId}
+            forceReply={forceReply}
+            {...otherProps}
         />
     );
 }
