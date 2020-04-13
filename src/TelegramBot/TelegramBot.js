@@ -9,22 +9,19 @@ function parseTextData(data) {
     };
 
     if (data.forceReply !== undefined || data.selective !== undefined) {
-        const reply_markup = {
+        params.reply_markup = {
             force_reply: data.forceReply,
             selective: data.selective,
         };
-
-        params.reply_markup = reply_markup;
     }
 
     if (data.buttons !== undefined) {
-        params.reply_markup = params.reply_markup ?? {};
-        params.reply_markup.inline_keyboard = [[]];
-
-        data.buttons.forEach((button) => {
-            // FIXME inline_keyboard can be matrix
-            params.reply_markup.inline_keyboard[0].push({ text: button.text, callback_data: button.id });
+        // FIXME inline_keyboard can be matrix
+        const inlineKeyboard = data.buttons.map(({ text, id }) => {
+            return { text, callback_data: id };
         });
+        params.reply_markup = params.reply_markup ?? {};
+        params.reply_markup.inline_keyboard = [inlineKeyboard];
     }
 
     return params;
