@@ -1,5 +1,25 @@
 import NodeTelegramBot from 'node-telegram-bot-api';
 
+function parseTextData(data) {
+    const params = {
+        parse_mode: data.parseMode,
+        disable_web_page_preview: data.disableWebPagePreview,
+        disable_notification: data.disableNotification,
+        reply_to_message_id: data.replyToMessageId,
+    };
+
+    if (data.forceReply !== undefined || data.selective !== undefined) {
+        const reply_markup = {
+            force_reply: data.forceReply,
+            selective: data.selective,
+        };
+
+        params.reply_markup = reply_markup;
+    }
+
+    return params;
+}
+
 export class TelegramBot {
     constructor(token, options) {
         this.bot = new NodeTelegramBot(token, options);
@@ -20,21 +40,7 @@ export class TelegramBot {
     sendMessage(nodeName, chatId, data) {
         switch (nodeName) {
             case 'text': {
-                const params = {
-                    parse_mode: data.parseMode,
-                    disable_web_page_preview: data.disableWebPagePreview,
-                    disable_notification: data.disableNotification,
-                    reply_to_message_id: data.replyToMessageId,
-                };
-
-                if (data.forceReply !== undefined || data.selective !== undefined) {
-                    const reply_markup = {
-                        force_reply: data.forceReply,
-                        selective: data.selective,
-                    };
-
-                    params.reply_markup = reply_markup;
-                }
+                const params = parseTextData(data);
 
                 return this.bot.sendMessage(chatId, data.text, params);
             }
@@ -57,7 +63,9 @@ export class TelegramBot {
                     message_id: meta.message_id,
                 };
 
-                this.bot.editMessageText(data.text, { ...data, ...metaToEdit });
+                const params = parseTextData(data);
+
+                this.bot.editMessageText(data.text, { ...params, ...metaToEdit });
 
                 break;
             }
