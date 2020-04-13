@@ -9,6 +9,9 @@ export function ButtonGroup(props) {
         title: titleElement,
         isNewMessageEveryRender: isNewMessageEveryRenderProp,
         parseMode: parseModeProp,
+        disableNotification,
+        replyToMessageId,
+        forceReply,
         ...otherProps
     } = props;
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
@@ -44,6 +47,9 @@ export function ButtonGroup(props) {
             title={title}
             buttons={buttons}
             parseMode={parseMode}
+            disableNotification={disableNotification}
+            replyToMessageId={replyToMessageId}
+            forceReply={forceReply}
             {...otherProps}
         />
     );

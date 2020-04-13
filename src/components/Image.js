@@ -9,6 +9,9 @@ export function Image(props) {
         buttons: buttonsElement,
         isNewMessageEveryRender: isNewMessageEveryRenderProp,
         parseMode: parseModeProp,
+        disableNotification,
+        replyToMessageId,
+        forceReply,
         ...otherProps
     } = props;
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
@@ -37,6 +40,9 @@ export function Image(props) {
             title={title}
             buttons={formattedButtons}
             parseMode={parseMode}
+            disableNotification={disableNotification}
+            replyToMessageId={replyToMessageId}
+            forceReply={forceReply}
             {...otherProps}
         />
     );
