@@ -7,12 +7,12 @@
     ],
     "main": "dist/index.js",
     "scripts": {
-        "build": "babel src -d dist",
+        "build": "rimraf dist && babel src -d dist",
         "start": "nodemon",
         "test": "jest",
         "lint": "eslint \"./src/**/*.js\"",
         "lint:fix": "npm run lint -- --fix",
-        "my-publish": "rimraf dist && npm run build && npm publish"
+        "my-publish": "npm run build && npm publish"
     },
     "keywords": [
         "bot",
