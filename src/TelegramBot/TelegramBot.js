@@ -17,6 +17,16 @@ function parseTextData(data) {
         params.reply_markup = reply_markup;
     }
 
+    if (data.buttons !== undefined) {
+        params.reply_markup = params.reply_markup ?? {};
+        params.reply_markup.inline_keyboard = [[]];
+
+        data.buttons.forEach((button) => {
+            // FIXME inline_keyboard can be matrix
+            params.reply_markup.inline_keyboard[0].push({ text: button.text, callback_data: button.id });
+        });
+    }
+
     return params;
 }
 
@@ -26,7 +36,18 @@ export class TelegramBot {
     }
 
     on(event, listener) {
-        return this.bot.on(event, listener);
+        let telegramEvent = event;
+        if (event === 'action') {
+            telegramEvent = 'callback_query';
+        }
+
+        return this.bot.on(telegramEvent, function(context) {
+            if (telegramEvent === 'callback_query') {
+                context.chat = context.message.chat;
+                context.actionId = context.data;
+            }
+            listener(context);
+        });
     }
 
     emit(type, message, metadata) {
@@ -46,6 +67,11 @@ export class TelegramBot {
             }
             case 'img': {
                 return this.bot.sendPhoto(chatId, data.src, data);
+            }
+            case 'buttons': {
+                const params = parseTextData(data);
+
+                return this.bot.sendMessage(chatId, data.title, params);
             }
             default: {
                 throw new Error(
@@ -82,6 +108,18 @@ export class TelegramBot {
                 };
 
                 this.bot.editMessageMedia(media, { ...media, ...metaToEdit });
+
+                break;
+            }
+            case 'buttons': {
+                const metaToEdit = {
+                    chat_id: meta.chat.id,
+                    message_id: meta.message_id,
+                };
+
+                const params = parseTextData(data);
+
+                this.bot.editMessageText(data.title, { ...params, ...metaToEdit });
 
                 break;
             }

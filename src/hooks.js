@@ -106,3 +106,7 @@ export function useDice(callback) {
         }
     });
 }
+
+export function useAction(callback) {
+    useSubscribe(callback, 'action');
+}

@@ -25,6 +25,7 @@ import {
     useVideoNote,
     useVoice,
     useDice,
+    useAction,
 } from './hooks';
 
 export {
@@ -56,4 +57,5 @@ export {
     useVoice,
     useDice,
     BotContext,
+    useAction,
 };
