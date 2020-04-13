@@ -20,7 +20,23 @@ export class TelegramBot {
     sendMessage(nodeName, chatId, data) {
         switch (nodeName) {
             case 'text': {
-                return this.bot.sendMessage(chatId, data.text, data);
+                const params = {
+                    parse_mode: data.parseMode,
+                    disable_web_page_preview: data.disableWebPagePreview,
+                    disable_notification: data.disableNotification,
+                    reply_to_message_id: data.replyToMessageId,
+                };
+
+                if (data.forceReply !== undefined || data.selective !== undefined) {
+                    const reply_markup = {
+                        force_reply: data.forceReply,
+                        selective: data.selective,
+                    };
+
+                    params.reply_markup = reply_markup;
+                }
+
+                return this.bot.sendMessage(chatId, data.text, params);
             }
             case 'img': {
                 return this.bot.sendPhoto(chatId, data.src, data);
