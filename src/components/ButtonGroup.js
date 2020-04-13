@@ -1,12 +1,26 @@
 import React from 'react';
 import { useBotContext, useAction } from '../hooks';
 import { formatButtonElement } from '../utils/formatButtonElement';
+import { formatHTMLElement } from '../utils/formatHTMLElement';
 
 export function ButtonGroup(props) {
-    const { children, title, isNewMessageEveryRender: isNewMessageEveryRenderProp, ...otherProps } = props;
+    const {
+        children,
+        title: titleElement,
+        isNewMessageEveryRender: isNewMessageEveryRenderProp,
+        parseMode: parseModeProp,
+        ...otherProps
+    } = props;
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     const buttons = formatButtonElement(children);
+
+    let parseMode = parseModeProp;
+    let title = titleElement;
+    if (typeof titleElement !== 'string' && typeof titleElement !== 'number') {
+        parseMode = 'HTML';
+        title = formatHTMLElement(titleElement);
+    }
 
     useAction((ctx) => {
         const { actionId } = ctx;
@@ -29,6 +43,7 @@ export function ButtonGroup(props) {
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             title={title}
             buttons={buttons}
+            parseMode={parseMode}
             {...otherProps}
         />
     );

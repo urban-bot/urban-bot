@@ -1,12 +1,14 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
+import { formatHTMLElement } from '../utils/formatHTMLElement';
 
 export function Image(props) {
     const {
         src,
-        title,
+        title: titleElement,
         buttons: buttonsElement,
         isNewMessageEveryRender: isNewMessageEveryRenderProp,
+        parseMode: parseModeProp,
         ...otherProps
     } = props;
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
@@ -19,6 +21,13 @@ export function Image(props) {
         formattedButtons = buttons;
     }
 
+    let parseMode = parseModeProp;
+    let title = titleElement;
+    if (typeof titleElement !== 'string' && typeof titleElement !== 'number') {
+        parseMode = 'HTML';
+        title = formatHTMLElement(titleElement);
+    }
+
     return (
         <img
             bot={bot}
@@ -27,6 +36,7 @@ export function Image(props) {
             src={src}
             title={title}
             buttons={formattedButtons}
+            parseMode={parseMode}
             {...otherProps}
         />
     );

@@ -18,7 +18,6 @@ export function Text(props) {
 
     let parseMode = parseModeProp;
     let text = children;
-
     if (typeof children !== 'string' && typeof children !== 'number') {
         parseMode = 'HTML';
         text = formatHTMLElement(children);
