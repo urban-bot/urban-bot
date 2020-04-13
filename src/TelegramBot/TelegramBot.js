@@ -66,7 +66,9 @@ export class TelegramBot {
                 return this.bot.sendMessage(chatId, data.text, params);
             }
             case 'img': {
-                return this.bot.sendPhoto(chatId, data.src, data);
+                const params = parseTextData(data);
+
+                return this.bot.sendPhoto(chatId, data.src, { ...params, caption: data.title });
             }
             case 'buttons': {
                 const params = parseTextData(data);
@@ -101,13 +103,16 @@ export class TelegramBot {
                     message_id: meta.message_id,
                 };
 
+                const params = parseTextData(data);
+
                 const media = {
                     type: 'photo',
                     media: data.src,
-                    ...data,
+                    caption: data.title,
+                    parse_mode: params.parse_mode,
                 };
 
-                this.bot.editMessageMedia(media, { ...media, ...metaToEdit });
+                this.bot.editMessageMedia(media, { ...params, ...metaToEdit });
 
                 break;
             }

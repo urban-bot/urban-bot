@@ -1,21 +1,22 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
 
-export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMessageEveryRenderProp }) {
+export function Image(props) {
+    const {
+        src,
+        title,
+        buttons: buttonsElement,
+        isNewMessageEveryRender: isNewMessageEveryRenderProp,
+        ...otherProps
+    } = props;
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
-    const params = {};
+    let formattedButtons;
+    if (buttonsElement !== undefined) {
+        const { props } = buttonsElement.type(buttonsElement.props);
+        const { buttons } = props ?? {};
 
-    if (typeof caption === 'string') {
-        params.caption = caption;
-    }
-
-    if (typeof buttons?.type === 'function') {
-        const { props } = buttons.type(buttons.props);
-
-        const { reply_markup } = props || {};
-
-        params.reply_markup = reply_markup;
+        formattedButtons = buttons;
     }
 
     return (
@@ -24,7 +25,9 @@ export function Image({ src, caption, buttons, isNewMessageEveryRender: isNewMes
             chatId={chat.id}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             src={src}
-            {...params}
+            title={title}
+            buttons={formattedButtons}
+            {...otherProps}
         />
     );
 }
