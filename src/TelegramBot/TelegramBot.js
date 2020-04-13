@@ -39,7 +39,7 @@ export class TelegramBot {
         }
 
         return this.bot.on(telegramEvent, function(ctx) {
-            if (telegramEvent === 'callback_query') {
+            if (event === 'action') {
                 ctx.chat = ctx.message.chat;
                 ctx.actionId = ctx.data;
             }
