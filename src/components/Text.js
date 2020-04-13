@@ -17,12 +17,10 @@ export function Text(props) {
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     let parseMode = parseModeProp;
-    let text;
-    if (typeof children === 'string' || typeof children === 'number') {
-        text = children;
-    } else {
-        parseMode = 'HTML';
+    let text = children;
 
+    if (typeof children !== 'string' && typeof children !== 'number') {
+        parseMode = 'HTML';
         text = formatHTMLElement(children);
     }
 
