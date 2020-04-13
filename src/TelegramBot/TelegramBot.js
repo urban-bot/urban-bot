@@ -41,12 +41,12 @@ export class TelegramBot {
             telegramEvent = 'callback_query';
         }
 
-        return this.bot.on(telegramEvent, function(context) {
+        return this.bot.on(telegramEvent, function(ctx) {
             if (telegramEvent === 'callback_query') {
-                context.chat = context.message.chat;
-                context.actionId = context.data;
+                ctx.chat = ctx.message.chat;
+                ctx.actionId = ctx.data;
             }
-            listener(context);
+            listener(ctx);
         });
     }
 

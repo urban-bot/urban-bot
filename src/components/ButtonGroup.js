@@ -8,14 +8,14 @@ export function ButtonGroup(props) {
 
     const buttons = formatButtonElement(children);
 
-    useAction((context) => {
-        const { actionId } = context;
+    useAction((ctx) => {
+        const { actionId } = ctx;
 
         for (let i = 0; i < buttons.length; i++) {
             const button = buttons[i];
 
             if (actionId === button.id) {
-                button.onClick(context);
+                button.onClick(ctx);
 
                 break;
             }
