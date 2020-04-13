@@ -28,15 +28,11 @@ export function ButtonGroup(props) {
     useAction((ctx) => {
         const { actionId } = ctx;
 
-        for (let i = 0; i < buttons.length; i++) {
-            const button = buttons[i];
+        const button = buttons.find(({ id }) => {
+            return actionId === id;
+        });
 
-            if (actionId === button.id) {
-                button.onClick(ctx);
-
-                break;
-            }
-        }
+        button?.onClick(ctx);
     });
 
     return (
