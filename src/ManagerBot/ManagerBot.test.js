@@ -199,7 +199,7 @@ describe('ManagerBot', () => {
 
             managerBot.addChat(chatId);
 
-            const firstPromise = managerBot.promiseQueueMap.get(chatId).last;
+            const firstPromise = managerBot.chats.get(chatId).last;
 
             testBot.sendMessage.mockReturnValueOnce(
                 new Promise((resolve) => {
