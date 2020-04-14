@@ -38,11 +38,28 @@ export class TelegramBot {
             telegramEvent = 'callback_query';
         }
 
+        if (event === 'command') {
+            telegramEvent = 'text';
+        }
+
         return this.bot.on(telegramEvent, function(ctx) {
             if (event === 'action') {
                 ctx.chat = ctx.message.chat;
                 ctx.actionId = ctx.data;
             }
+
+            if (event === 'text') {
+                if (ctx.text[0] === '/') {
+                    return;
+                }
+            }
+
+            if (event === 'command') {
+                if (ctx.text[0] !== '/') {
+                    return;
+                }
+            }
+
             listener(ctx);
         });
     }
