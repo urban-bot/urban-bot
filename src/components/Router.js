@@ -6,8 +6,8 @@ export function Router({ children }) {
     const [activePath, navigate] = React.useState();
     const { chat } = useBotContext();
 
-    useCommand(({ text }) => {
-        navigate(text);
+    useCommand(({ command }) => {
+        navigate(command);
     });
 
     React.useEffect(() => {
