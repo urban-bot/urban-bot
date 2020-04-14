@@ -3,15 +3,15 @@ import { PromiseQueue } from './PromiseQueue';
 export class ManagerBot {
     constructor(bot) {
         this.bot = bot;
-        this.promiseQueueMap = new Map();
+        this.chats = new Map();
     }
 
     addChat(id) {
-        this.promiseQueueMap.set(id, new PromiseQueue());
+        this.chats.set(id, new PromiseQueue());
     }
 
     deleteChat(id) {
-        this.promiseQueueMap.delete(id);
+        this.chats.delete(id);
     }
 
     on(event, listener, chatId) {
@@ -37,7 +37,7 @@ export class ManagerBot {
     }
 
     sendMessage(nodeName, chatId, data) {
-        const promiseQueueByChatId = this.promiseQueueMap.get(chatId);
+        const promiseQueueByChatId = this.chats.get(chatId);
 
         if (promiseQueueByChatId === undefined) {
             throw new Error('Specify chatId before send message via managerBot.addChat(chatId)');
