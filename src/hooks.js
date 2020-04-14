@@ -26,25 +26,11 @@ export function useMessage(callback) {
 }
 
 export function useText(callback) {
-    useSubscribe((ctx) => {
-        const { text } = ctx;
-        if (text[0] === '/') {
-            return;
-        }
-
-        callback(ctx);
-    }, 'text');
+    useSubscribe(callback, 'text');
 }
 
 export function useCommand(callback) {
-    useSubscribe((ctx) => {
-        const { text } = ctx;
-        if (text[0] !== '/') {
-            return;
-        }
-
-        callback(ctx);
-    }, 'text');
+    useSubscribe(callback, 'command');
 }
 
 export function useSticker(callback) {
