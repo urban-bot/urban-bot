@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Image, useText, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
+import { render, Route, Image, useText, Button, ButtonGroup, Router, useRouter, Root, Text, useCommand } from '../src';
 import { TelegramBot } from '../src/TelegramBot/TelegramBot';
 
 dotenv.config();
