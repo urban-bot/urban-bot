@@ -105,7 +105,7 @@ export class SlackBot extends EventEmitter {
             }
             default: {
                 throw new Error(
-                    `Tag '${nodeName}' does not exist. Please don't use it with vk bot or add this logic to @urban-bot/telegram.`,
+                    `Tag '${nodeName}' does not exist. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
                 );
             }
         }
@@ -120,11 +120,24 @@ export class SlackBot extends EventEmitter {
             }
             default: {
                 throw new Error(
-                    `Tag '${nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                    `Tag '${nodeName}' does not exist. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
                 );
             }
         }
     }
 
-    deleteMessage(_nodeName, _chatId, _data, _meta) {}
+    deleteMessage(nodeName, chatId, data, meta) {
+        switch (nodeName) {
+            case 'text': {
+                this.client.chat.delete({ channel: meta.channel, ts: meta.ts });
+
+                break;
+            }
+            default: {
+                throw new Error(
+                    `Tag '${nodeName}' does not exist. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
+                );
+            }
+        }
+    }
 }

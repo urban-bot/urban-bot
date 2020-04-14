@@ -6,6 +6,10 @@ import { render, useMessage, Root, Text, Router, Route } from '../src';
 
 dotenv.config();
 
+function ArrayComponent() {
+    return <Text>Array</Text>;
+}
+
 function Main() {
     const [title, setTitle] = React.useState('Send message');
 
@@ -21,14 +25,17 @@ function App() {
         <Root
             bot={
                 new SlackBot({
-                    signingSecret: '6f28eeba42717acfb2249c78e6a4b190',
-                    token: 'xoxb-1067397452132-1061285523475-FYuXpydlFDZnhKHRghGKbg18',
+                    signingSecret: process.env.SLACK_SIGNING_SECRET,
+                    token: process.env.SLACK_TOKEN,
                 })
             }
         >
             <Router>
                 <Route path="/start">
                     <Main />
+                </Route>
+                <Route path="/array">
+                    <ArrayComponent />
                 </Route>
             </Router>
         </Root>

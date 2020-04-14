@@ -2,14 +2,14 @@
 const { createEventAdapter } = require('@slack/events-api');
 const { createMessageAdapter } = require('@slack/interactive-messages');
 const { WebClient } = require('@slack/web-api');
-const SLACK_SIGNING_SECRET = '6f28eeba42717acfb2249c78e6a4b190';
+const SLACK_SIGNING_SECRET = process.env.SLACK_SIGNING_SECRET;
 const slackEvents = createEventAdapter(SLACK_SIGNING_SECRET);
 const slackInteractions = createMessageAdapter(SLACK_SIGNING_SECRET);
 const port = 8080;
 const app = require('express')();
 const bodyParser = require('body-parser');
 
-const token = 'xoxb-1067397452132-1061285523475-FYuXpydlFDZnhKHRghGKbg18';
+const token = process.env.SLACK_TOKEN;
 const web = new WebClient(token);
 
 // Attach listeners to events by Slack Event "type". See: https://api.slack.com/events/message.im
