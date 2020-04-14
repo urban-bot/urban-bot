@@ -58,6 +58,8 @@ export class TelegramBot {
                 if (ctx.text[0] !== '/') {
                     return;
                 }
+
+                ctx.command = ctx.text;
             }
 
             listener(ctx);
