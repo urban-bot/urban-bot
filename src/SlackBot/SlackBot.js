@@ -1,5 +1,10 @@
-const { createEventAdapter } = require('@slack/events-api');
-const { WebClient } = require('@slack/web-api');
+import { createEventAdapter } from '@slack/events-api';
+import { WebClient } from '@slack/web-api';
+import express from 'express';
+import bodyParser from 'body-parser';
+import EventEmitter from 'events';
+
+const app = express();
 
 function adoptMessage(message) {
     // {
@@ -27,15 +32,48 @@ function adoptMessage(message) {
     };
 }
 
-export class SlackBot {
+export class SlackBot extends EventEmitter {
     constructor({ signingSecret, port = 8080, token }) {
-        this.slackEvents = createEventAdapter(signingSecret);
+        super();
         this.client = new WebClient(token);
 
-        this.slackEvents.start(port);
+        this.slackEvents = createEventAdapter(signingSecret);
+        this.slackEvents.on('error', console.error);
+        app.use('/slack/events', this.slackEvents.expressMiddleware());
+
+        app.post('/slack/commands', bodyParser.urlencoded({ extended: false }), (...args) =>
+            this.handleCommand(...args),
+        );
+
+        app.listen(port, () => {
+            console.log('start listen ' + port);
+        });
+    }
+
+    handleCommand(req, res, next) {
+        const { channel_id, command, text, user_id, user_name } = req.body;
+        const ctx = {
+            chat: {
+                id: channel_id,
+            },
+            from: {
+                id: user_id,
+                username: user_name,
+            },
+            command,
+            text,
+        };
+        super.emit('command', ctx);
+        // this.web.chat.postMessage({ channel: req.body.channel_id, text: req.body.text }).catch(console.log);
+        res.send();
+        next();
     }
 
     on(event, listener) {
+        if (event === 'command') {
+            return super.on('command', listener);
+        }
+
         return this.slackEvents.on(event, function(message) {
             if (message.bot_id !== undefined) {
                 return;
