@@ -1,17 +1,14 @@
 // Initialize using signing secret from environment variables
 const { createEventAdapter } = require('@slack/events-api');
 const { createMessageAdapter } = require('@slack/interactive-messages');
-// const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
 const { WebClient } = require('@slack/web-api');
 const SLACK_SIGNING_SECRET = '6f28eeba42717acfb2249c78e6a4b190';
 const slackEvents = createEventAdapter(SLACK_SIGNING_SECRET);
 const slackInteractions = createMessageAdapter(SLACK_SIGNING_SECRET);
 const port = 8080;
-// Initialize an express app
 const app = require('express')();
 const bodyParser = require('body-parser');
 
-// const token = process.env.SLACK_TOKEN;
 const token = 'xoxb-1067397452132-1061285523475-FYuXpydlFDZnhKHRghGKbg18';
 const web = new WebClient(token);
 
@@ -44,6 +41,7 @@ function slackSlashCommand(req, res, next) {
     web.chat.postMessage({ channel: req.body.channel_id, text: req.body.text }).catch(console.log);
     next();
 }
+
 app.post('/slack/commands', bodyParser.urlencoded({ extended: false }), slackSlashCommand);
 
 app.listen(port, () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { SlackBot } from '../src/SlackBot/SlackBot';
 
 import dotenv from 'dotenv';
-import { render, useMessage, Root, Text } from '../src';
+import { render, useMessage, Root, Text, Router, Route } from '../src';
 
 dotenv.config();
 
@@ -26,7 +26,11 @@ function App() {
                 })
             }
         >
-            <Main />
+            <Router>
+                <Route path="/start">
+                    <Main />
+                </Route>
+            </Router>
         </Root>
     );
 }
