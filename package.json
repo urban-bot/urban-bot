@@ -51,9 +51,12 @@
         "webpack-cli": "3.3.10"
     },
     "dependencies": {
+        "@slack/events-api": "^2.3.2",
+        "@slack/web-api": "^5.8.0",
+        "easyvk": "2.6.0",
+        "ngrok": "^3.2.7",
         "node-telegram-bot-api": "0.40.0",
-        "react-reconciler": "0.25.1",
-        "easyvk": "2.6.0"
+        "react-reconciler": "0.25.1"
     },
     "peerDependencies": {
         "react": "^16.13.1"
