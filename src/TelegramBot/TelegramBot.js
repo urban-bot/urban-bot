@@ -31,58 +31,30 @@ export class TelegramBot {
     constructor(token, options) {
         this.bot = new NodeTelegramBot(token, options);
 
-        this.listeners = new Map();
+        this.bot.on('text', this.handleText);
+        this.bot.on('callback_query', this.handleCallbackQuery);
     }
 
-    on(event, listener, eventId) {
-        let telegramEvent = event;
-        if (event === 'action') {
-            telegramEvent = 'callback_query';
+    processUpdate(_event, _data) {
+        // this method will be overridden
+    }
+
+    handleCallbackQuery = (ctx) => {
+        ctx.chat = ctx.message.chat;
+        ctx.actionId = ctx.data;
+
+        return this.processUpdate('action', ctx);
+    };
+
+    handleText = (ctx) => {
+        if (ctx.text[0] === '/') {
+            ctx.command = ctx.text;
+
+            return this.processUpdate('command', ctx);
+        } else {
+            return this.processUpdate('text', ctx);
         }
-
-        if (event === 'command') {
-            telegramEvent = 'text';
-        }
-
-        function adaptedListener(ctx) {
-            if (event === 'action') {
-                ctx.chat = ctx.message.chat;
-                ctx.actionId = ctx.data;
-            }
-
-            if (event === 'text') {
-                if (ctx.text[0] === '/') {
-                    return;
-                }
-            }
-
-            if (event === 'command') {
-                if (ctx.text[0] !== '/') {
-                    return;
-                }
-
-                ctx.command = ctx.text;
-            }
-
-            listener(ctx);
-        }
-
-        this.listeners.set(eventId, adaptedListener);
-
-        return this.bot.on(telegramEvent, adaptedListener);
-    }
-
-    emit(type, message, metadata) {
-        return this.bot.emit(type, message, metadata);
-    }
-
-    removeListener(eventName, listener, eventId) {
-        const adaptedListener = this.listeners.get(eventId);
-        const removeListenerRes = this.bot.removeListener(eventName, adaptedListener);
-        this.listeners.delete(eventId);
-
-        return removeListenerRes;
-    }
+    };
 
     sendMessage(nodeName, chatId, data) {
         switch (nodeName) {
