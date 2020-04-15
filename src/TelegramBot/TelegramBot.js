@@ -44,6 +44,7 @@ export class TelegramBot {
         this.bot.on('poll', (ctx) => this.processUpdate('poll', ctx));
         this.bot.on('video', (ctx) => this.processUpdate('video', ctx));
         this.bot.on('voice', (ctx) => this.processUpdate('voice', ctx));
+        this.bot.on('message', this.handleMessage);
     }
 
     // FIXME think about better implementation
@@ -55,12 +56,18 @@ export class TelegramBot {
         throw new Error('this method must be initialized via initializeProcessUpdate');
     }
 
+    handleMessage = (ctx) => {
+        if (ctx.dice) {
+            return this.processUpdate('dice', ctx);
+        }
+    };
+
     handleCallbackQuery = (ctx) => {
         ctx.chat = ctx.message.chat;
         ctx.actionId = ctx.data;
 
         return this.processUpdate('action', ctx);
-    }
+    };
 
     handleText = (ctx) => {
         if (ctx.text[0] === '/') {
@@ -70,7 +77,7 @@ export class TelegramBot {
         } else {
             return this.processUpdate('text', ctx);
         }
-    }
+    };
 
     sendMessage(nodeName, chatId, data) {
         switch (nodeName) {

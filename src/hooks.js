@@ -23,8 +23,8 @@ function useSubscribe(callback, event) {
     }, [callback, bot, event, chat]);
 }
 
-export function useMessage(callback) {
-    useSubscribe(callback, 'message');
+export function useAny(callback) {
+    useSubscribe(callback, 'any');
 }
 
 export function useText(callback) {
@@ -80,11 +80,7 @@ export function useVoice(callback) {
 }
 
 export function useDice(callback) {
-    useMessage((ctx) => {
-        if (ctx.dice !== undefined) {
-            callback(ctx);
-        }
-    });
+    useSubscribe(callback, 'dice');
 }
 
 export function useAction(callback) {

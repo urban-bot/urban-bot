@@ -12,7 +12,7 @@ import {
     useDocument,
     useContact,
     useAudio,
-    useMessage,
+    useAny,
     useSticker,
     useVoice,
     useAnimation,
@@ -28,7 +28,7 @@ const token = process.env.TELEGRAM_TOKEN_DEV;
 function App() {
     const [answer, setAnswer] = React.useState();
 
-    useMessage(() => {
+    useAny(() => {
         console.log('calling after any type sending');
     });
 
