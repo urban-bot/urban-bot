@@ -30,14 +30,7 @@ function App() {
                 })
             }
         >
-            <Router>
-                <Route path="/start">
-                    <Main />
-                </Route>
-                <Route path="/array">
-                    <ArrayComponent />
-                </Route>
-            </Router>
+            <Main />
         </Root>
     );
 }

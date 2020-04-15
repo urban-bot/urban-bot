@@ -6,7 +6,7 @@ import EventEmitter from 'events';
 
 const app = express();
 
-function adoptMessage(message) {
+function adaptMessage(message) {
     // {
     //     client_msg_id: 'aff6917a-ddf5-4944-8ef2-5456d0aafd89',
     //         type: 'message',
@@ -41,16 +41,29 @@ export class SlackBot extends EventEmitter {
         this.slackEvents.on('error', console.error);
         app.use('/slack/events', this.slackEvents.expressMiddleware());
 
-        app.post('/slack/commands', bodyParser.urlencoded({ extended: false }), (...args) =>
-            this.handleCommand(...args),
-        );
+        app.post('/slack/commands', bodyParser.urlencoded({ extended: false }), this.handleCommand);
+        this.slackEvents.on('message', this.handleMessage);
 
         app.listen(port, () => {
             console.log('start listen ' + port);
         });
     }
 
-    handleCommand(req, res, next) {
+    handleMessage = (ctx) => {
+        if (ctx.bot_id !== undefined) {
+            return;
+        }
+
+        if (ctx.subtype) {
+            return;
+        }
+
+        const data = adaptMessage(ctx);
+
+        return super.emit('message', data);
+    };
+
+    handleCommand = (req, res, next) => {
         const { channel_id, command, text, user_id, user_name } = req.body;
         const ctx = {
             chat: {
@@ -66,40 +79,22 @@ export class SlackBot extends EventEmitter {
         super.emit('command', ctx);
         res.send();
         next();
-    }
+    };
 
-    on(event, listener) {
-        if (event === 'command') {
-            return super.on('command', listener);
-        }
-
-        return this.slackEvents.on(event, function(message) {
-            if (message.bot_id !== undefined) {
-                return;
-            }
-
-            if (event === 'message') {
-                if (message.subtype) {
-                    return;
-                }
-            }
-
-            const data = adoptMessage(message);
-            return listener(data);
-        });
-    }
+    on(event, listener, eventId) {
+        // console.log('on', event, eventId);
+        return super.on(event, listener);
+    };
 
     emit(_type, _message, _metadata) {
         // return this.slackEvents.emit(type, message, metadata);
-    }
+    };
 
-    removeListener(event, listener) {
-        if (event === 'command') {
-            return super.removeListener('command', listener);
-        }
-
-        return this.slackEvents.removeListener(event, listener);
-    }
+    removeListener(event, listener, eventId) {
+        // console.log('removeListener', event, eventId);
+        console.log('listenerCount', super.listenerCount('message'));
+        return super.removeListener(event, listener);
+    };
 
     sendMessage(nodeName, chatId, data) {
         switch (nodeName) {
