@@ -72,10 +72,11 @@ describe('ManagerBot', () => {
         it("doesn't call listener if chatId is not the same with emit data", () => {
             const managerBot = new ManagerBot(testBotEmitter);
 
+            const eventId = '123';
             const id = 123;
             const id2 = 345;
 
-            managerBot.on(event, listener, id);
+            managerBot.on(event, listener, eventId, id);
             const data = { chat: { id: id2 } };
 
             testBotEmitter.emit(event, data);
@@ -105,13 +106,14 @@ describe('ManagerBot', () => {
 
         const event = 'test-event';
         const listener = () => {};
+        const eventId = '123';
 
-        managerBot.removeListener(event, listener);
+        managerBot.removeListener(event, listener, eventId);
 
         expect(testBot.removeListener).toHaveBeenCalledTimes(1);
-        expect(testBot.removeListener).toHaveBeenLastCalledWith(event, listener);
+        expect(testBot.removeListener).toHaveBeenLastCalledWith(event, listener, eventId);
 
-        managerBot.removeListener(event, listener);
+        managerBot.removeListener(event, listener, eventId);
 
         expect(testBot.removeListener).toHaveBeenCalledTimes(2);
     });

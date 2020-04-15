@@ -1,5 +1,6 @@
 import React from 'react';
 import { BotContext, RouterContext } from './context';
+import { getRandomId } from './utils/getRandomId';
 
 export function useBotContext() {
     return React.useContext(BotContext);
@@ -13,10 +14,11 @@ function useSubscribe(callback, event) {
     const { chat, bot } = useBotContext();
 
     React.useEffect(() => {
-        bot.on(event, callback, chat.id);
+        const eventId = getRandomId();
+        bot.on(event, callback, eventId, chat.id);
 
         return () => {
-            bot.removeListener(event, callback);
+            bot.removeListener(event, callback, eventId);
         };
     }, [callback, bot, event, chat]);
 }
