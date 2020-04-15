@@ -2,7 +2,6 @@ import { createEventAdapter } from '@slack/events-api';
 import { WebClient } from '@slack/web-api';
 import express from 'express';
 import bodyParser from 'body-parser';
-import EventEmitter from 'events';
 
 const app = express();
 
@@ -32,9 +31,8 @@ function adaptMessage(message) {
     };
 }
 
-export class SlackBot extends EventEmitter {
+export class SlackBot {
     constructor({ signingSecret, port = 8080, token }) {
-        super();
         this.client = new WebClient(token);
 
         this.slackEvents = createEventAdapter(signingSecret);
@@ -49,6 +47,10 @@ export class SlackBot extends EventEmitter {
         });
     }
 
+    processUpdate(_event, _data) {
+        // this method will be overridden
+    }
+
     handleMessage = (ctx) => {
         if (ctx.bot_id !== undefined) {
             return;
@@ -60,10 +62,10 @@ export class SlackBot extends EventEmitter {
 
         const data = adaptMessage(ctx);
 
-        return super.emit('message', data);
+        return this.processUpdate('text', data);
     };
 
-    handleCommand = (req, res, next) => {
+    handleCommand = (req, res) => {
         const { channel_id, command, text, user_id, user_name } = req.body;
         const ctx = {
             chat: {
@@ -76,24 +78,8 @@ export class SlackBot extends EventEmitter {
             command,
             text,
         };
-        super.emit('command', ctx);
         res.send();
-        next();
-    };
-
-    on(event, listener, eventId) {
-        // console.log('on', event, eventId);
-        return super.on(event, listener);
-    };
-
-    emit(_type, _message, _metadata) {
-        // return this.slackEvents.emit(type, message, metadata);
-    };
-
-    removeListener(event, listener, eventId) {
-        // console.log('removeListener', event, eventId);
-        console.log('listenerCount', super.listenerCount('message'));
-        return super.removeListener(event, listener);
+        return this.processUpdate('command', ctx);
     };
 
     sendMessage(nodeName, chatId, data) {
