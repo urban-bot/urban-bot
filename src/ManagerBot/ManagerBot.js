@@ -14,7 +14,7 @@ export class ManagerBot {
         this.chats.delete(id);
     }
 
-    on(event, listener, chatId, eventId) {
+    on(event, listener, eventId, chatId) {
         return this.bot.on(
             event,
             function(ctx) {

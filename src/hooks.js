@@ -15,7 +15,7 @@ function useSubscribe(callback, event) {
 
     React.useEffect(() => {
         const eventId = getRandomId();
-        bot.on(event, callback, chat.id, eventId);
+        bot.on(event, callback, eventId, chat.id);
 
         return () => {
             bot.removeListener(event, callback, eventId);
