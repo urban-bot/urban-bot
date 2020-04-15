@@ -64,7 +64,6 @@ export class SlackBot extends EventEmitter {
             text,
         };
         super.emit('command', ctx);
-        // this.web.chat.postMessage({ channel: req.body.channel_id, text: req.body.text }).catch(console.log);
         res.send();
         next();
     }
@@ -90,12 +89,16 @@ export class SlackBot extends EventEmitter {
         });
     }
 
-    emit(type, message, metadata) {
+    emit(_type, _message, _metadata) {
         // return this.slackEvents.emit(type, message, metadata);
     }
 
-    removeListener(eventName, listener) {
-        return this.slackEvents.removeListener(eventName, listener);
+    removeListener(event, listener) {
+        if (event === 'command') {
+            return super.removeListener('command', listener);
+        }
+
+        return this.slackEvents.removeListener(event, listener);
     }
 
     sendMessage(nodeName, chatId, data) {

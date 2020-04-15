@@ -11,10 +11,10 @@ function ArrayComponent() {
 }
 
 function Main() {
-    const [title, setTitle] = React.useState('Send message');
+    const [title, setTitle] = React.useState(0);
 
     useMessage(({ text }) => {
-        setTitle(text);
+        setTitle(title + Number(text));
     });
 
     return <Text>{title}</Text>;
