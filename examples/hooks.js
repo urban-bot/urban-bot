@@ -7,7 +7,6 @@ import {
     useText,
     useVideo,
     usePoll,
-    useVideoNote,
     usePhoto,
     useLocation,
     useDocument,
@@ -18,6 +17,7 @@ import {
     useVoice,
     useAnimation,
     useDice,
+    useCommand,
 } from '../src';
 import { TelegramBot } from '../src/TelegramBot/TelegramBot';
 
@@ -36,16 +36,16 @@ function App() {
         setAnswer("You've sent a text " + text);
     });
 
+    useCommand(({ command }) => {
+        setAnswer("You've sent a command " + command);
+    });
+
     useVideo(() => {
         setAnswer("You've sent a video");
     });
 
     usePoll(({ poll }) => {
         setAnswer("You've sent a poll " + poll.question);
-    });
-
-    useVideoNote(() => {
-        setAnswer("You've sent a video note");
     });
 
     usePhoto(() => {

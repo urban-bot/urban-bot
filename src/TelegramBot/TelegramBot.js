@@ -33,10 +33,26 @@ export class TelegramBot {
 
         this.bot.on('text', this.handleText);
         this.bot.on('callback_query', this.handleCallbackQuery);
+        this.bot.on('sticker', (ctx) => this.processUpdate('sticker', ctx));
+        this.bot.on('animation', (ctx) => this.processUpdate('animation', ctx));
+        this.bot.on('audio', (ctx) => this.processUpdate('audio', ctx));
+        this.bot.on('contact', (ctx) => this.processUpdate('contact', ctx));
+        this.bot.on('document', (ctx) => this.processUpdate('document', ctx));
+        this.bot.on('invoice', (ctx) => this.processUpdate('invoice', ctx));
+        this.bot.on('location', (ctx) => this.processUpdate('location', ctx));
+        this.bot.on('photo', (ctx) => this.processUpdate('photo', ctx));
+        this.bot.on('poll', (ctx) => this.processUpdate('poll', ctx));
+        this.bot.on('video', (ctx) => this.processUpdate('video', ctx));
+        this.bot.on('voice', (ctx) => this.processUpdate('voice', ctx));
     }
 
-    processUpdate(_event, _data) {
-        // this method will be overridden
+    // FIXME think about better implementation
+    initializeProcessUpdate(processUpdate) {
+        this.processUpdate = processUpdate;
+    }
+
+    processUpdate() {
+        throw new Error('this method must be initialized via initializeProcessUpdate');
     }
 
     handleCallbackQuery = (ctx) => {
@@ -44,7 +60,7 @@ export class TelegramBot {
         ctx.actionId = ctx.data;
 
         return this.processUpdate('action', ctx);
-    };
+    }
 
     handleText = (ctx) => {
         if (ctx.text[0] === '/') {
@@ -54,7 +70,7 @@ export class TelegramBot {
         } else {
             return this.processUpdate('text', ctx);
         }
-    };
+    }
 
     sendMessage(nodeName, chatId, data) {
         switch (nodeName) {
