@@ -72,7 +72,7 @@ describe('ManagerBot', () => {
         it("doesn't call listener if chatId is not the same with emit data", () => {
             const managerBot = new ManagerBot(testBotEmitter);
 
-            const eventId = '123'
+            const eventId = '123';
             const id = 123;
             const id2 = 345;
 
