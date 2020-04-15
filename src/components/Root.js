@@ -2,6 +2,7 @@ import React from 'react';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
+import { getRandomId } from '../utils/getRandomId';
 
 function Chat({ bot, user, children, isNewMessageEveryRender, chat }) {
     return (
@@ -24,6 +25,8 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
 
     // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {
+        const eventId = getRandomId();
+
         function handler(message) {
             const { from, chat } = message;
             const { id: chatId } = chat;
@@ -54,10 +57,10 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
             }, timeToClearUserSession);
         }
 
-        managerBot.on('message', handler);
+        managerBot.on('message', handler, eventId);
 
         return () => {
-            managerBot.removeListener('message', handler);
+            managerBot.removeListener('message', handler, eventId);
         };
     }, [managerBot, timeToClearUserSession, children, isNewMessageEveryRender]);
 

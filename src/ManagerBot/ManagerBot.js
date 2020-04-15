@@ -14,26 +14,30 @@ export class ManagerBot {
         this.chats.delete(id);
     }
 
-    on(event, listener, chatId) {
-        return this.bot.on(event, function(ctx) {
-            if (chatId !== undefined) {
-                const { id: chatIdFromEvent } = ctx.chat;
+    on(event, listener, eventId, chatId) {
+        return this.bot.on(
+            event,
+            function(ctx) {
+                if (chatId !== undefined) {
+                    const { id: chatIdFromEvent } = ctx.chat;
 
-                if (chatId !== chatIdFromEvent) {
-                    return;
+                    if (chatId !== chatIdFromEvent) {
+                        return;
+                    }
                 }
-            }
 
-            listener(ctx);
-        });
+                listener(ctx);
+            },
+            eventId,
+        );
     }
 
     emit(type, message) {
         return this.bot.emit(type, message);
     }
 
-    removeListener(eventName, listener) {
-        return this.bot.removeListener(eventName, listener);
+    removeListener(eventName, listener, eventId) {
+        return this.bot.removeListener(eventName, listener, eventId);
     }
 
     sendMessage(nodeName, chatId, data) {

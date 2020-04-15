@@ -30,9 +30,11 @@ function parseTextData(data) {
 export class TelegramBot {
     constructor(token, options) {
         this.bot = new NodeTelegramBot(token, options);
+
+        this.listeners = new Map();
     }
 
-    on(event, listener) {
+    on(event, listener, eventId) {
         let telegramEvent = event;
         if (event === 'action') {
             telegramEvent = 'callback_query';
@@ -42,7 +44,7 @@ export class TelegramBot {
             telegramEvent = 'text';
         }
 
-        return this.bot.on(telegramEvent, function(ctx) {
+        function adaptedListener(ctx) {
             if (event === 'action') {
                 ctx.chat = ctx.message.chat;
                 ctx.actionId = ctx.data;
@@ -63,15 +65,23 @@ export class TelegramBot {
             }
 
             listener(ctx);
-        });
+        }
+
+        this.listeners.set(eventId, adaptedListener);
+
+        return this.bot.on(telegramEvent, adaptedListener);
     }
 
     emit(type, message, metadata) {
         return this.bot.emit(type, message, metadata);
     }
 
-    removeListener(eventName, listener) {
-        return this.bot.removeListener(eventName, listener);
+    removeListener(eventName, listener, eventId) {
+        const adaptedListener = this.listeners.get(eventId);
+        const removeListenerRes = this.bot.removeListener(eventName, adaptedListener);
+        this.listeners.delete(eventId);
+
+        return removeListenerRes;
     }
 
     sendMessage(nodeName, chatId, data) {
