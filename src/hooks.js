@@ -59,10 +59,6 @@ export function useInvoice(callback) {
     useSubscribe(callback, 'invoice');
 }
 
-export function usePassportData(callback) {
-    useSubscribe(callback, 'passport_data');
-}
-
 export function useLocation(callback) {
     useSubscribe(callback, 'location');
 }
@@ -77,10 +73,6 @@ export function usePoll(callback) {
 
 export function useVideo(callback) {
     useSubscribe(callback, 'video');
-}
-
-export function useVideoNote(callback) {
-    useSubscribe(callback, 'video_note');
 }
 
 export function useVoice(callback) {

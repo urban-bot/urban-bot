@@ -7,7 +7,7 @@ export class ManagerBot extends EventEmitter {
         this.bot = bot;
         this.chats = new Map();
 
-        bot.processUpdate = this.processUpdate;
+        bot.initializeProcessUpdate(this.processUpdate);
 
         this.listenersMap = new Map();
     }
