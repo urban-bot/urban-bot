@@ -57,7 +57,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
             }, timeToClearUserSession);
         }
 
-        managerBot.on('message', handler, undefined, eventId);
+        managerBot.on('message', handler, eventId);
 
         return () => {
             managerBot.removeListener('message', handler, eventId);
