@@ -1,4 +1,5 @@
 import { Button } from '../components/ButtonGroup';
+import { getRandomId } from './getRandomId';
 
 export function formatButtonElement(element) {
     const mockCallback = () => {};
@@ -9,7 +10,7 @@ export function formatButtonElement(element) {
             throw new Error('Please use only Button components inside ButtonGroup.');
         }
 
-        const { children: text, onClick = mockCallback, id = String(Math.random()), ...other } = child.props;
+        const { children: text, onClick = mockCallback, id = getRandomId(), ...other } = child.props;
 
         return { text, onClick, id, ...other };
     });
