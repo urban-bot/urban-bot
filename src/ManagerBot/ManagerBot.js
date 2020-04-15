@@ -1,10 +1,21 @@
 import { PromiseQueue } from './PromiseQueue';
+import EventEmitter from 'events';
 
-export class ManagerBot {
+export class ManagerBot extends EventEmitter {
     constructor(bot) {
+        super();
         this.bot = bot;
         this.chats = new Map();
+
+        bot.processUpdate = this.processUpdate;
+
+        this.listenersMap = new Map();
     }
+
+    processUpdate = (event, data) => {
+        super.emit('any', { realEvent: event, ...data });
+        super.emit(event, data);
+    };
 
     addChat(id) {
         this.chats.set(id, new PromiseQueue());
@@ -15,29 +26,27 @@ export class ManagerBot {
     }
 
     on(event, listener, eventId, chatId) {
-        return this.bot.on(
-            event,
-            function(ctx) {
-                if (chatId !== undefined) {
-                    const { id: chatIdFromEvent } = ctx.chat;
+        function listenerGuard(ctx) {
+            if (chatId !== undefined) {
+                const { id: chatIdFromEvent } = ctx.chat;
 
-                    if (chatId !== chatIdFromEvent) {
-                        return;
-                    }
+                if (chatId !== chatIdFromEvent) {
+                    return;
                 }
+            }
 
-                listener(ctx);
-            },
-            eventId,
-        );
+            listener(ctx);
+        }
+        this.listenersMap.set(eventId, listenerGuard);
+
+        return super.on(event, listenerGuard);
     }
 
-    emit(type, message) {
-        return this.bot.emit(type, message);
-    }
+    removeListener(event, listener, eventId) {
+        const listenerGuard = this.listenersMap.get(eventId);
+        this.listenersMap.delete(eventId);
 
-    removeListener(eventName, listener, eventId) {
-        return this.bot.removeListener(eventName, listener, eventId);
+        return super.removeListener(event, listenerGuard);
     }
 
     sendMessage(nodeName, chatId, data) {

@@ -23,7 +23,6 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
 
     const managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
-    // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {
         const eventId = getRandomId();
 
@@ -57,10 +56,10 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
             }, timeToClearUserSession);
         }
 
-        managerBot.on('message', handler, eventId);
+        managerBot.on('any', handler, eventId);
 
         return () => {
-            managerBot.removeListener('message', handler, eventId);
+            managerBot.removeListener('any', handler, eventId);
         };
     }, [managerBot, timeToClearUserSession, children, isNewMessageEveryRender]);
 
@@ -68,7 +67,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
         if (firstMessage !== undefined) {
             // First message is needed to register user and initialize react children for him.
             // After initializing we repeat this message that react children can process it.
-            managerBot.emit('message', firstMessage);
+            managerBot.emit(firstMessage.realEvent, firstMessage);
         }
     }, [firstMessage, managerBot]);
 
