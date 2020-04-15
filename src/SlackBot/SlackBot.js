@@ -47,8 +47,13 @@ export class SlackBot {
         });
     }
 
+    // FIXME think about better implementation
+    initializeProcessUpdate(processUpdate) {
+        this.processUpdate = processUpdate;
+    }
+
     processUpdate(_event, _data) {
-        // this method will be overridden
+        throw new Error('this method must be initialized via initializeProcessUpdate');
     }
 
     handleMessage = (ctx) => {
