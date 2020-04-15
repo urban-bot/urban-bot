@@ -67,6 +67,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
         if (firstMessage !== undefined) {
             // First message is needed to register user and initialize react children for him.
             // After initializing we repeat this message that react children can process it.
+            managerBot.emit('any', { realEvent: firstMessage.realEvent, ...firstMessage });
             managerBot.emit(firstMessage.realEvent, firstMessage);
         }
     }, [firstMessage, managerBot]);
