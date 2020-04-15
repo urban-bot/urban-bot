@@ -25,7 +25,7 @@ slackEvents.on('error', console.error);
 app.use('/slack/events', slackEvents.expressMiddleware());
 
 // Handle interactions from messages containing an action block with an `action_id` of `select_coffee`
-slackInteractions.action({ callbackId: 'test' }, (payload, respond) => {
+slackInteractions.action({ callbackId: 'test' }, (payload, _respond) => {
     console.log('slackInteractions', payload);
     // `payload` contains information about the action
     // Block Kit Builder can be used to explore the payload shape for various action blocks:
