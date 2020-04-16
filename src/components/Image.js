@@ -12,9 +12,15 @@ export function Image(props) {
         disableNotification,
         replyToMessageId,
         forceReply,
+        altText,
         ...otherProps
     } = props;
-    const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
+    const {
+        bot,
+        isNewMessageEveryRender: isNewMessageEveryRenderContext,
+        chat,
+        parseMode: parseModeContext,
+    } = useBotContext();
 
     let formattedButtons;
     if (buttonsElement !== undefined) {
@@ -24,11 +30,12 @@ export function Image(props) {
         formattedButtons = buttons;
     }
 
-    let parseMode = parseModeProp;
+    let parseMode = parseModeProp ?? parseModeContext;
     let title = titleElement;
-    if (typeof titleElement !== 'string' && typeof titleElement !== 'number') {
-        parseMode = 'HTML';
-        title = formatHTMLElement(titleElement);
+
+    if (typeof children !== 'string' && typeof children !== 'number') {
+        parseMode = parseMode ?? 'HTML';
+        title = formatHTMLElement(titleElement, parseMode);
     }
 
     return (
@@ -38,6 +45,7 @@ export function Image(props) {
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             src={src}
             title={title}
+            altText={altText}
             buttons={formattedButtons}
             parseMode={parseMode}
             disableNotification={disableNotification}

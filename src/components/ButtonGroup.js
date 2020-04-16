@@ -14,15 +14,21 @@ export function ButtonGroup(props) {
         forceReply,
         ...otherProps
     } = props;
-    const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
+    const {
+        bot,
+        isNewMessageEveryRender: isNewMessageEveryRenderContext,
+        chat,
+        parseMode: parseModeContext,
+    } = useBotContext();
 
     const buttons = formatButtonElement(children);
 
-    let parseMode = parseModeProp;
+    let parseMode = parseModeProp ?? parseModeContext;
     let title = titleElement;
-    if (typeof titleElement !== 'string' && typeof titleElement !== 'number') {
-        parseMode = 'HTML';
-        title = formatHTMLElement(titleElement);
+
+    if (typeof children !== 'string' && typeof children !== 'number') {
+        parseMode = parseMode ?? 'HTML';
+        title = formatHTMLElement(titleElement, parseMode);
     }
 
     useAction((ctx) => {
