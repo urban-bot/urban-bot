@@ -15,7 +15,7 @@ export function ButtonGroup(props) {
         ...otherProps
     } = props;
     const {
-        bot,
+        $$managerBot,
         isNewMessageEveryRender: isNewMessageEveryRenderContext,
         chat,
         parseMode: parseModeContext,
@@ -44,7 +44,7 @@ export function ButtonGroup(props) {
     return (
         <buttons
             chat={chat}
-            bot={bot}
+            $$managerBot={$$managerBot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             title={title}
             buttons={buttons}

@@ -4,9 +4,12 @@ import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
 import { getRandomId } from '../utils/getRandomId';
 
-function Chat({ bot, user, children, isNewMessageEveryRender, chat, parseMode }) {
+function Chat({ bot, user, children, isNewMessageEveryRender, chat, parseMode, $$managerBot }) {
     return (
-        <BotContext.Provider key={chat.id} value={{ bot, user, isNewMessageEveryRender, chat, parseMode }}>
+        <BotContext.Provider
+            key={chat.id}
+            value={{ bot, user, isNewMessageEveryRender, chat, parseMode, $$managerBot }}
+        >
             <ErrorBoundary>{children}</ErrorBoundary>
         </BotContext.Provider>
     );
@@ -40,7 +43,8 @@ export function Root({
                 chatsRef.current.set(
                     chat.id,
                     <Chat
-                        bot={managerBot}
+                        bot={bot}
+                        $$managerBot={managerBot}
                         user={from}
                         key={chatId}
                         isNewMessageEveryRender={isNewMessageEveryRender}

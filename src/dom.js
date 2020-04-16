@@ -1,10 +1,10 @@
 import { shallowEqual } from './utils/shallowEqual';
 
 export function createNode(type, props = {}) {
-    const { bot, chat, isNewMessageEveryRender, ...messageProps } = props;
+    const { $$managerBot, chat, isNewMessageEveryRender, ...messageProps } = props;
     const node = {
         nodeName: type,
-        bot,
+        $$managerBot,
         chat,
         isNewMessageEveryRender,
     };
@@ -16,7 +16,7 @@ export function createNode(type, props = {}) {
 }
 
 export function appendChildNode(node, childNode) {
-    childNode.meta = childNode.bot.sendMessage(childNode.nodeName, childNode.chat, childNode.data);
+    childNode.meta = childNode.$$managerBot.sendMessage(childNode.nodeName, childNode.chat, childNode.data);
 }
 
 export function removeChildNode(node, removedNode) {
@@ -25,7 +25,7 @@ export function removeChildNode(node, removedNode) {
     }
 
     removedNode.meta.then((meta) => {
-        removedNode.bot.deleteMessage(removedNode.nodeName, removedNode.chat, removedNode.data, meta);
+        removedNode.$$managerBot.deleteMessage(removedNode.nodeName, removedNode.chat, removedNode.data, meta);
     });
 }
 
@@ -37,10 +37,10 @@ export function updateNode(node, updatePayload, type, oldProps, newProps) {
     const newNode = createNode(node.nodeName, newProps);
 
     if (node.isNewMessageEveryRender) {
-        node.meta = newNode.bot.sendMessage(newNode.nodeName, newNode.chat, newNode.data);
+        node.meta = newNode.$$managerBot.sendMessage(newNode.nodeName, newNode.chat, newNode.data);
     } else {
         node.meta.then((meta) => {
-            newNode.bot.updateMessage(newNode.nodeName, newNode.chat, newNode.data, meta);
+            newNode.$$managerBot.updateMessage(newNode.nodeName, newNode.chat, newNode.data, meta);
         });
     }
 }
