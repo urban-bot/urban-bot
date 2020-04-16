@@ -5,7 +5,6 @@ export class ManagerBot extends EventEmitter {
     constructor(bot) {
         super();
         this.bot = bot;
-        this.type = this.bot.type;
         this.chats = new Map();
 
         bot.initializeProcessUpdate(this.processUpdate);

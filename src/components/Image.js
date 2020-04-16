@@ -16,7 +16,7 @@ export function Image(props) {
         ...otherProps
     } = props;
     const {
-        bot,
+        $$managerBot,
         isNewMessageEveryRender: isNewMessageEveryRenderContext,
         chat,
         parseMode: parseModeContext,
@@ -40,7 +40,7 @@ export function Image(props) {
 
     return (
         <img
-            bot={bot}
+            $$managerBot={$$managerBot}
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             src={src}

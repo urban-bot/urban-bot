@@ -11,16 +11,16 @@ export function useRouter() {
 }
 
 function useSubscribe(callback, event) {
-    const { chat, bot } = useBotContext();
+    const { chat, $$managerBot } = useBotContext();
 
     React.useEffect(() => {
         const eventId = getRandomId();
-        bot.on(event, callback, eventId, chat.id);
+        $$managerBot.on(event, callback, eventId, chat.id);
 
         return () => {
-            bot.removeListener(event, callback, eventId);
+            $$managerBot.removeListener(event, callback, eventId);
         };
-    }, [callback, bot, event, chat]);
+    }, [callback, $$managerBot, event, chat]);
 }
 
 export function useAny(callback) {

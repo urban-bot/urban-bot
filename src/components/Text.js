@@ -15,7 +15,7 @@ export function Text(props) {
     } = props;
 
     const {
-        bot,
+        $$managerBot,
         isNewMessageEveryRender: isNewMessageEveryRenderContext,
         chat,
         parseMode: parseModeContext,
@@ -32,7 +32,7 @@ export function Text(props) {
     return (
         <text
             chat={chat}
-            bot={bot}
+            $$managerBot={$$managerBot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             text={text}
             parseMode={parseMode}
