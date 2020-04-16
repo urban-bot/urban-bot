@@ -27,10 +27,9 @@ function parseTextData(data) {
     return params;
 }
 
-export const BOT_TYPE = 'TELEGRAM';
-
 export class TelegramBot {
-    type = BOT_TYPE;
+    static TYPE = 'TELEGRAM';
+    type = TelegramBot.TYPE;
 
     constructor(token, options) {
         this.bot = new NodeTelegramBot(token, options);

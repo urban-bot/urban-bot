@@ -56,10 +56,9 @@ function formatTitle(title) {
     };
 }
 
-export const BOT_TYPE = 'SLACK';
-
 export class SlackBot {
-    type = BOT_TYPE;
+    static TYPE = 'SLACK';
+    type = SlackBot.TYPE;
 
     constructor({ signingSecret, port = 8080, token }) {
         this.client = new WebClient(token);
