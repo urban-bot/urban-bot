@@ -1,6 +1,9 @@
 import React from 'react';
 
-export function formatHTMLElement(element, parseMode = 'HTML') {
+export const MARKDOWN_MODE = 'markdown';
+const HTML_MODE = 'HTML';
+
+export function formatHTMLElement(element, parseMode = HTML_MODE) {
     if (Array.isArray(element)) {
         return element
             .map((child) => {
@@ -32,42 +35,42 @@ export function formatHTMLElement(element, parseMode = 'HTML') {
                 return `<b>${text}</b>`;
             }
             case 'i': {
-                if (parseMode === 'markdown') {
+                if (parseMode === MARKDOWN_MODE) {
                     return `_${text}_`;
                 }
 
                 return `<i>${text}</i>`;
             }
             case 'u': {
-                if (parseMode === 'markdown') {
+                if (parseMode === MARKDOWN_MODE) {
                     return text;
                 }
 
                 return `<u>${text}</u>`;
             }
             case 's': {
-                if (parseMode === 'markdown') {
+                if (parseMode === MARKDOWN_MODE) {
                     return `~${text}~`;
                 }
 
                 return `<s>${text}</s>`;
             }
             case 'q': {
-                if (parseMode === 'markdown') {
+                if (parseMode === MARKDOWN_MODE) {
                     return `> ${text}`;
                 }
 
                 return `<q>${text}</q>`;
             }
             case 'code': {
-                if (parseMode === 'markdown') {
+                if (parseMode === MARKDOWN_MODE) {
                     return `\`${text}\``;
                 }
 
                 return `<code>${text}</code>`;
             }
             case 'pre': {
-                if (parseMode === 'markdown') {
+                if (parseMode === MARKDOWN_MODE) {
                     return `\`\`\`${text}\`\`\``;
                 }
 
@@ -79,7 +82,7 @@ export function formatHTMLElement(element, parseMode = 'HTML') {
             case 'a': {
                 const { href } = element.props;
 
-                if (parseMode === 'markdown') {
+                if (parseMode === MARKDOWN_MODE) {
                     return `<${href}|${text}>`;
                 }
 

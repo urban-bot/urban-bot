@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`formatText throw error if tag does not process 1`] = `"tag not-exist-tag does not exist"`;
