@@ -80,7 +80,6 @@ export class TelegramBot {
     };
 
     sendMessage(nodeName, chat, data) {
-        console.log(chat)
         switch (nodeName) {
             case 'text': {
                 const params = parseTextData(data);
