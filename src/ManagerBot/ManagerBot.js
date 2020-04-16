@@ -49,23 +49,23 @@ export class ManagerBot extends EventEmitter {
         return super.removeListener(event, listenerGuard);
     }
 
-    sendMessage(nodeName, chatId, data) {
-        const promiseQueueByChatId = this.chats.get(chatId);
+    sendMessage(nodeName, chat, data) {
+        const promiseQueueByChatId = this.chats.get(chat.id);
 
         if (promiseQueueByChatId === undefined) {
             throw new Error('Specify chatId before send message via managerBot.addChat(chatId)');
         }
 
         return promiseQueueByChatId.next(() => {
-            return this.bot.sendMessage(nodeName, chatId, data);
+            return this.bot.sendMessage(nodeName, chat, data);
         });
     }
 
-    updateMessage(nodeName, chatId, data, meta) {
-        return this.bot.updateMessage(nodeName, chatId, data, meta);
+    updateMessage(nodeName, chat, data, meta) {
+        return this.bot.updateMessage(nodeName, chat, data, meta);
     }
 
-    deleteMessage(nodeName, chatId, data, meta) {
-        return this.bot.deleteMessage(nodeName, chatId, data, meta);
+    deleteMessage(nodeName, chat, data, meta) {
+        return this.bot.deleteMessage(nodeName, chat, data, meta);
     }
 }

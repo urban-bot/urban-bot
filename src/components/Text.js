@@ -25,7 +25,7 @@ export function Text(props) {
 
     return (
         <text
-            chatId={chat.id}
+            chat={chat}
             bot={bot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             text={text}

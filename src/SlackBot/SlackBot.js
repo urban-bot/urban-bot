@@ -87,10 +87,10 @@ export class SlackBot {
         return this.processUpdate('command', ctx);
     };
 
-    sendMessage(nodeName, chatId, data) {
+    sendMessage(nodeName, chat, data) {
         switch (nodeName) {
             case 'text': {
-                return this.client.chat.postMessage({ channel: chatId, text: data.text });
+                return this.client.chat.postMessage({ channel: chat.id, text: data.text });
             }
             default: {
                 throw new Error(
@@ -100,7 +100,7 @@ export class SlackBot {
         }
     }
 
-    updateMessage(nodeName, chatId, data, meta) {
+    updateMessage(nodeName, chat, data, meta) {
         switch (nodeName) {
             case 'text': {
                 this.client.chat.update({ channel: meta.channel, ts: meta.ts, text: data.text });
@@ -115,7 +115,7 @@ export class SlackBot {
         }
     }
 
-    deleteMessage(nodeName, chatId, data, meta) {
+    deleteMessage(nodeName, chat, data, meta) {
         switch (nodeName) {
             case 'text': {
                 this.client.chat.delete({ channel: meta.channel, ts: meta.ts });
