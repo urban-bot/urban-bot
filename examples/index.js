@@ -14,7 +14,7 @@ import {
     useBotContext,
 } from '../src';
 import { TelegramBot } from '../src/TelegramBot/TelegramBot';
-import { SlackBot, BOT_TYPE as SLACK_BOT_TYPE } from '../src/SlackBot/SlackBot';
+import { SlackBot } from '../src/SlackBot/SlackBot';
 import { TextExample } from './Text';
 import { HooksExample } from './hooks';
 
@@ -39,7 +39,7 @@ function Main() {
                     ? 'https://www.cheatsheet.com/wp-content/uploads/2018/06/jennifer-aniston-leprechaun-640x488.jpg'
                     : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'
             }
-            title={bot.type !== SLACK_BOT_TYPE ? <b>{title}</b> : title}
+            title={bot.type !== SlackBot.TYPE ? <b>{title}</b> : title}
             altText="girls "
             buttons={
                 <ButtonGroup>
