@@ -1,4 +1,5 @@
 import { createEventAdapter } from '@slack/events-api';
+import { createMessageAdapter } from '@slack/interactive-messages';
 import { WebClient } from '@slack/web-api';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -31,16 +32,47 @@ function adaptMessage(message) {
     };
 }
 
+function formatButtons(buttons) {
+    return buttons.map((button) => {
+        return {
+            type: 'button',
+            text: {
+                type: 'plain_text',
+                text: button.text,
+                emoji: true,
+            },
+            value: button.id,
+        };
+    });
+}
+
+function formatTitle(title) {
+    return {
+        type: 'section',
+        text: {
+            type: 'mrkdwn',
+            text: title,
+        },
+    };
+}
+
+export const BOT_TYPE = 'SLACK';
+
 export class SlackBot {
+    type = BOT_TYPE;
+
     constructor({ signingSecret, port = 8080, token }) {
         this.client = new WebClient(token);
 
-        this.slackEvents = createEventAdapter(signingSecret);
-        this.slackEvents.on('error', console.error);
-        app.use('/slack/events', this.slackEvents.expressMiddleware());
+        this.events = createEventAdapter(signingSecret);
+        this.interactions = createMessageAdapter(signingSecret);
+        this.events.on('error', console.error);
+        app.use('/slack/events', this.events.expressMiddleware());
+        app.use('/slack/actions', this.interactions.expressMiddleware());
 
         app.post('/slack/commands', bodyParser.urlencoded({ extended: false }), this.handleCommand);
-        this.slackEvents.on('message', this.handleMessage);
+        this.events.on('message', this.handleMessage);
+        this.interactions.action(/.*/, this.handleAction);
 
         app.listen(port, () => {
             console.log('start listen ' + port);
@@ -55,6 +87,15 @@ export class SlackBot {
     processUpdate(_event, _data) {
         throw new Error('this method must be initialized via initializeProcessUpdate');
     }
+
+    handleAction = (ctx) => {
+        const adaptedCtx = {
+            chat: ctx.channel,
+            actionId: ctx.actions[0].value,
+        };
+
+        return this.processUpdate('action', adaptedCtx);
+    };
 
     handleMessage = (ctx) => {
         if (ctx.bot_id !== undefined) {
@@ -90,7 +131,55 @@ export class SlackBot {
     sendMessage(nodeName, chat, data) {
         switch (nodeName) {
             case 'text': {
-                return this.client.chat.postMessage({ channel: chat.id, text: data.text });
+                return this.client.chat.postMessage({
+                    channel: chat.id,
+                    text: data.text,
+                });
+            }
+            case 'img': {
+                const blocks = [
+                    {
+                        type: 'image',
+                        title: {
+                            type: 'plain_text',
+                            text: data.title,
+                            emoji: true,
+                        },
+                        image_url: data.src,
+                        alt_text: data.altText,
+                    },
+                ];
+
+                if (data.buttons !== undefined) {
+                    blocks.push({
+                        type: 'actions',
+                        elements: formatButtons(data.buttons),
+                    });
+                }
+
+                return this.client.chat.postMessage({
+                    channel: chat.id,
+                    blocks,
+                });
+            }
+            case 'buttons': {
+                const elements = formatButtons(data.buttons);
+
+                const blocks = [];
+
+                if (data.title !== undefined) {
+                    blocks.push(formatTitle(data.title));
+                }
+
+                blocks.push({
+                    type: 'actions',
+                    elements,
+                });
+
+                return this.client.chat.postMessage({
+                    channel: chat.id,
+                    blocks,
+                });
             }
             default: {
                 throw new Error(
@@ -107,18 +196,54 @@ export class SlackBot {
 
                 break;
             }
-            default: {
-                throw new Error(
-                    `Tag '${nodeName}' does not exist. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
-                );
-            }
-        }
-    }
+            case 'img': {
+                const blocks = [
+                    {
+                        type: 'image',
+                        title: {
+                            type: 'plain_text',
+                            text: data.title,
+                            emoji: true,
+                        },
+                        image_url: data.src,
+                        alt_text: data.altText,
+                    },
+                ];
 
-    deleteMessage(nodeName, chat, data, meta) {
-        switch (nodeName) {
-            case 'text': {
-                this.client.chat.delete({ channel: meta.channel, ts: meta.ts });
+                if (data.buttons !== undefined) {
+                    blocks.push({
+                        type: 'actions',
+                        elements: formatButtons(data.buttons),
+                    });
+                }
+
+                this.client.chat.update({
+                    channel: meta.channel,
+                    ts: meta.ts,
+                    blocks,
+                });
+
+                break;
+            }
+            case 'buttons': {
+                const elements = formatButtons(data.buttons);
+
+                const blocks = [];
+
+                if (data.title !== undefined) {
+                    blocks.push(formatTitle(data.title));
+                }
+
+                blocks.push({
+                    type: 'actions',
+                    elements,
+                });
+
+                this.client.chat.update({
+                    channel: meta.channel,
+                    ts: meta.ts,
+                    blocks,
+                });
 
                 break;
             }
@@ -128,5 +253,9 @@ export class SlackBot {
                 );
             }
         }
+    }
+
+    deleteMessage(nodeName, chat, data, meta) {
+        this.client.chat.delete({ channel: meta.channel, ts: meta.ts });
     }
 }

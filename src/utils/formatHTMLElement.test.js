@@ -41,16 +41,6 @@ describe('formatText', () => {
         );
     });
 
-    test('link user', () => {
-        expect(formatHTMLElement(<a userId={123456789}>user URL</a>)).toBe(
-            '<a href="tg://user?id=123456789">user URL</a>',
-        );
-
-        expect(formatHTMLElement(<a userId="123456789">user URL</a>)).toBe(
-            '<a href="tg://user?id=123456789">user URL</a>',
-        );
-    });
-
     test('react fragment', () => {
         expect(
             formatHTMLElement(
