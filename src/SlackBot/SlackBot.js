@@ -56,7 +56,11 @@ function formatTitle(title) {
     };
 }
 
+export const BOT_TYPE = 'SLACK';
+
 export class SlackBot {
+    type = BOT_TYPE;
+
     constructor({ signingSecret, port = 8080, token }) {
         this.client = new WebClient(token);
 
@@ -145,7 +149,6 @@ export class SlackBot {
                         alt_text: data.altText,
                     },
                 ];
-
 
                 if (data.buttons !== undefined) {
                     blocks.push({
