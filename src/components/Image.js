@@ -12,6 +12,7 @@ export function Image(props) {
         disableNotification,
         replyToMessageId,
         forceReply,
+        altText,
         ...otherProps
     } = props;
     const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
@@ -38,6 +39,7 @@ export function Image(props) {
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             src={src}
             title={title}
+            altText={altText}
             buttons={formattedButtons}
             parseMode={parseMode}
             disableNotification={disableNotification}
