@@ -4,15 +4,21 @@ import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
 import { getRandomId } from '../utils/getRandomId';
 
-function Chat({ bot, user, children, isNewMessageEveryRender, chat }) {
+function Chat({ bot, user, children, isNewMessageEveryRender, chat, parseMode }) {
     return (
-        <BotContext.Provider key={chat.id} value={{ bot, user, isNewMessageEveryRender, chat }}>
+        <BotContext.Provider key={chat.id} value={{ bot, user, isNewMessageEveryRender, chat, parseMode }}>
             <ErrorBoundary>{children}</ErrorBoundary>
         </BotContext.Provider>
     );
 }
 
-export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, isNewMessageEveryRender = false }) {
+export function Root({
+    children,
+    bot,
+    timeToClearUserSession = 1000 * 60 * 10,
+    isNewMessageEveryRender = false,
+    parseMode,
+}) {
     const [chats, setChats] = React.useState(new Map());
     const chatsRef = React.useRef(chats);
     chatsRef.current = chats;
@@ -39,6 +45,7 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
                         key={chatId}
                         isNewMessageEveryRender={isNewMessageEveryRender}
                         chat={chat}
+                        parseMode={parseMode}
                     >
                         {children}
                     </Chat>,
