@@ -57,7 +57,7 @@ function Help() {
     );
 }
 
-function ArrayComponent() {
+export function ArrayComponent() {
     const [array, setArray] = React.useState(['0', '1', '2']);
     const index = React.useRef(array.length);
 
