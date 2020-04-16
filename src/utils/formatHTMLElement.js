@@ -1,10 +1,10 @@
 import React from 'react';
 
-export function formatHTMLElement(element) {
+export function formatHTMLElement(element, parseMode = 'HTML') {
     if (Array.isArray(element)) {
         return element
             .map((child) => {
-                return formatHTMLElement(child);
+                return formatHTMLElement(child, parseMode);
             })
             .join('');
     }
@@ -18,45 +18,65 @@ export function formatHTMLElement(element) {
     }
 
     if (React.isValidElement(element)) {
-        const text = formatHTMLElement(element.props.children);
+        const text = formatHTMLElement(element.props.children, parseMode);
 
         switch (element.type) {
             case React.Fragment: {
                 return text;
             }
             case 'b': {
+                if (parseMode === 'markdown') {
+                    return `*${text}*`;
+                }
+
                 return `<b>${text}</b>`;
             }
             case 'i': {
+                if (parseMode === 'markdown') {
+                    return `_${text}_`;
+                }
+
                 return `<i>${text}</i>`;
             }
             case 'u': {
+                if (parseMode === 'markdown') {
+                    return text;
+                }
+
                 return `<u>${text}</u>`;
             }
             case 's': {
+                if (parseMode === 'markdown') {
+                    return `~${text}~`;
+                }
+
                 return `<s>${text}</s>`;
             }
             case 'code': {
+                if (parseMode === 'markdown') {
+                    return `\`${text}\``;
+                }
+
                 return `<code>${text}</code>`;
             }
             case 'pre': {
+                if (parseMode === 'markdown') {
+                    return `\`\`\`${text}\`\`\``;
+                }
+
                 return `<pre>${text}</pre>`;
             }
             case 'br': {
                 return '\n';
             }
             case 'a': {
-                const { href, userId } = element.props;
+                const { href } = element.props;
 
-                if (href) {
-                    return `<a href="${href}">${text}</a>`;
+                if (parseMode === 'markdown') {
+                    return `<${href}|${text}>`;
                 }
 
-                if (userId) {
-                    return `<a href="tg://user?id=${userId}">${text}</a>`;
-                }
-
-                return '';
+                return `<a href="${href}">${text}</a>`;
             }
             default: {
                 throw new Error(`tag ${element.type} does not exist`);

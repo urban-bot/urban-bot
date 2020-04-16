@@ -3,6 +3,8 @@ import React from 'react';
 import { render, Route, Image, useText, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
 import { TelegramBot } from '../src/TelegramBot/TelegramBot';
 import { SlackBot } from '../src/SlackBot/SlackBot';
+import { TextExample } from './Text';
+import { HooksExample } from './hooks';
 
 dotenv.config();
 
@@ -42,7 +44,7 @@ function Main() {
                     >
                         Toggle picture
                     </Button>
-                    <Button onClick={() => navigate('/help')}>Go to help</Button>
+                    <Button onClick={() => navigate('/text')}>Go to text</Button>
                 </ButtonGroup>
             }
         />
@@ -85,17 +87,20 @@ export function ArrayComponent() {
     );
 }
 
-function App() {
+function App({ parseMode }) {
     return (
         <Router>
             <Route path="/start">
                 <Main />
             </Route>
-            <Route path="/help">
-                <Help />
+            <Route path="/text">
+                <TextExample parseMode={parseMode} />
             </Route>
             <Route path="/array">
                 <ArrayComponent />
+            </Route>
+            <Route path="/hooks">
+                <HooksExample />
             </Route>
         </Router>
     );
@@ -109,7 +114,7 @@ render(
             })
         }
     >
-        <App />
+        <App parseMode="HTML" />
     </Root>,
 );
 
@@ -122,6 +127,6 @@ render(
             })
         }
     >
-        <App />
+        <App parseMode="markdown" />
     </Root>,
 );
