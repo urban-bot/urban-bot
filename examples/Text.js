@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text } from '../src';
+import { Text, useBotContext } from '../src';
+import { BOT_TYPE as TELEGRAM_BOT_TYPE } from '../src/TelegramBot/TelegramBot';
 
 const someCode = `function sum2() {
     return 2 + 2;
@@ -10,6 +11,8 @@ if (sum2() !== 4) {
 }`;
 
 export function TextExample() {
+    const { bot } = useBotContext();
+
     return (
         <Text>
             Usual text
@@ -22,6 +25,12 @@ export function TextExample() {
             <br />
             <s>Strikethrough text</s>
             <br />
+            {bot.type !== TELEGRAM_BOT_TYPE ? (
+                <>
+                    <q>quote</q>
+                    <br />
+                </>
+            ) : null}
             <b>
                 Bold and <s>Strikethrough text</s>
             </b>

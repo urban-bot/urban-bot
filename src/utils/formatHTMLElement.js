@@ -52,6 +52,13 @@ export function formatHTMLElement(element, parseMode = 'HTML') {
 
                 return `<s>${text}</s>`;
             }
+            case 'q': {
+                if (parseMode === 'markdown') {
+                    return `> ${text}`;
+                }
+
+                return `<q>${text}</q>`;
+            }
             case 'code': {
                 if (parseMode === 'markdown') {
                     return `\`${text}\``;
