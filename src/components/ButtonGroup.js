@@ -37,7 +37,7 @@ export function ButtonGroup(props) {
 
     return (
         <buttons
-            chatId={chat.id}
+            chat={chat}
             bot={bot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             title={title}

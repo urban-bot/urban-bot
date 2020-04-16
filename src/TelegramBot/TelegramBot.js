@@ -79,22 +79,23 @@ export class TelegramBot {
         }
     };
 
-    sendMessage(nodeName, chatId, data) {
+    sendMessage(nodeName, chat, data) {
+        console.log(chat)
         switch (nodeName) {
             case 'text': {
                 const params = parseTextData(data);
 
-                return this.bot.sendMessage(chatId, data.text, params);
+                return this.bot.sendMessage(chat.id, data.text, params);
             }
             case 'img': {
                 const params = parseTextData(data);
 
-                return this.bot.sendPhoto(chatId, data.src, { ...params, caption: data.title });
+                return this.bot.sendPhoto(chat.id, data.src, { ...params, caption: data.title });
             }
             case 'buttons': {
                 const params = parseTextData(data);
 
-                return this.bot.sendMessage(chatId, data.title, params);
+                return this.bot.sendMessage(chat.id, data.title, params);
             }
             default: {
                 throw new Error(
@@ -104,7 +105,7 @@ export class TelegramBot {
         }
     }
 
-    updateMessage(nodeName, chatId, data, meta) {
+    updateMessage(nodeName, chat, data, meta) {
         switch (nodeName) {
             case 'text': {
                 const metaToEdit = {
@@ -157,7 +158,7 @@ export class TelegramBot {
         }
     }
 
-    deleteMessage(nodeName, chatId, data, meta) {
+    deleteMessage(nodeName, chat, data, meta) {
         this.bot.deleteMessage(meta.chat.id, meta.message_id);
     }
 }

@@ -34,7 +34,7 @@ export function Image(props) {
     return (
         <img
             bot={bot}
-            chatId={chat.id}
+            chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             src={src}
             title={title}
