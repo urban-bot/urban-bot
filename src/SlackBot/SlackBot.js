@@ -46,6 +46,16 @@ function formatButtons(buttons) {
     });
 }
 
+function formatTitle(title) {
+    return {
+        type: 'section',
+        text: {
+            type: 'plain_text',
+            text: title,
+        },
+    };
+}
+
 export class SlackBot {
     constructor({ signingSecret, port = 8080, token }) {
         this.client = new WebClient(token);
@@ -122,19 +132,40 @@ export class SlackBot {
                     text: data.text,
                 });
             }
+            case 'img': {
+                const blocks = [
+                    {
+                        type: 'image',
+                        title: {
+                            type: 'plain_text',
+                            text: data.title,
+                            emoji: true,
+                        },
+                        image_url: data.src,
+                        alt_text: data.altText,
+                    },
+                ];
+
+
+                if (data.buttons !== undefined) {
+                    blocks.push({
+                        type: 'actions',
+                        elements: formatButtons(data.buttons),
+                    });
+                }
+
+                return this.client.chat.postMessage({
+                    channel: chat.id,
+                    blocks,
+                });
+            }
             case 'buttons': {
                 const elements = formatButtons(data.buttons);
 
                 const blocks = [];
 
                 if (data.title !== undefined) {
-                    blocks.push({
-                        type: 'section',
-                        text: {
-                            type: 'plain_text',
-                            text: data.title,
-                        },
-                    });
+                    blocks.push(formatTitle(data.title));
                 }
 
                 blocks.push({
@@ -162,19 +193,42 @@ export class SlackBot {
 
                 break;
             }
+            case 'img': {
+                const blocks = [
+                    {
+                        type: 'image',
+                        title: {
+                            type: 'plain_text',
+                            text: data.title,
+                            emoji: true,
+                        },
+                        image_url: data.src,
+                        alt_text: data.altText,
+                    },
+                ];
+
+                if (data.buttons !== undefined) {
+                    blocks.push({
+                        type: 'actions',
+                        elements: formatButtons(data.buttons),
+                    });
+                }
+
+                this.client.chat.update({
+                    channel: meta.channel,
+                    ts: meta.ts,
+                    blocks,
+                });
+
+                break;
+            }
             case 'buttons': {
                 const elements = formatButtons(data.buttons);
 
                 const blocks = [];
 
                 if (data.title !== undefined) {
-                    blocks.push({
-                        type: 'section',
-                        text: {
-                            type: 'plain_text',
-                            text: data.title,
-                        },
-                    });
+                    blocks.push(formatTitle(data.title));
                 }
 
                 blocks.push({

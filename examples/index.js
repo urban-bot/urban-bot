@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import React from 'react';
 import { render, Route, Image, useText, Button, ButtonGroup, Router, useRouter, Root, Text } from '../src';
 import { TelegramBot } from '../src/TelegramBot/TelegramBot';
+import { SlackBot } from '../src/SlackBot/SlackBot';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ function Main() {
                     : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'
             }
             title={<b>{title}</b>}
+            altText="girls "
             buttons={
                 <ButtonGroup>
                     <Button
@@ -85,26 +87,41 @@ export function ArrayComponent() {
 
 function App() {
     return (
-        <Root
-            bot={
-                new TelegramBot(token, {
-                    polling: true,
-                })
-            }
-        >
-            <Router>
-                <Route path="/start">
-                    <Main />
-                </Route>
-                <Route path="/help">
-                    <Help />
-                </Route>
-                <Route path="/array">
-                    <ArrayComponent />
-                </Route>
-            </Router>
-        </Root>
+        <Router>
+            <Route path="/start">
+                <Main />
+            </Route>
+            <Route path="/help">
+                <Help />
+            </Route>
+            <Route path="/array">
+                <ArrayComponent />
+            </Route>
+        </Router>
     );
 }
 
-render(<App />);
+render(
+    <Root
+        bot={
+            new TelegramBot(token, {
+                polling: true,
+            })
+        }
+    >
+        <App />
+    </Root>,
+);
+
+render(
+    <Root
+        bot={
+            new SlackBot({
+                signingSecret: process.env.SLACK_SIGNING_SECRET,
+                token: process.env.SLACK_TOKEN,
+            })
+        }
+    >
+        <App />
+    </Root>,
+);
