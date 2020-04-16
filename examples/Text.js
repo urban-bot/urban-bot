@@ -9,9 +9,9 @@ if (sum2() !== 4) {
     console.log('WTF');
 }`;
 
-export function TextExample({ parseMode }) {
+export function TextExample() {
     return (
-        <Text parseMode={parseMode}>
+        <Text>
             Usual text
             <br />
             <b>Bold text</b>

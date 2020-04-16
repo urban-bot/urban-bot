@@ -6,7 +6,7 @@ export function Text(props) {
     const {
         children,
         isNewMessageEveryRender: isNewMessageEveryRenderProp,
-        parseMode,
+        parseMode: parseModeProp,
         disableWebPagePreview,
         disableNotification,
         replyToMessageId,
@@ -14,10 +14,18 @@ export function Text(props) {
         ...otherProps
     } = props;
 
-    const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
+    const {
+        bot,
+        isNewMessageEveryRender: isNewMessageEveryRenderContext,
+        chat,
+        parseMode: parseModeContext,
+    } = useBotContext();
 
+    let parseMode = parseModeProp ?? parseModeContext;
     let text = children;
+
     if (typeof children !== 'string' && typeof children !== 'number') {
+        parseMode = parseMode ?? 'HTML';
         text = formatHTMLElement(children, parseMode);
     }
 

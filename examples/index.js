@@ -51,16 +51,6 @@ function Main() {
     );
 }
 
-function Help() {
-    const { navigate } = useRouter();
-
-    return (
-        <ButtonGroup title={<i>Help</i>}>
-            <Button onClick={() => navigate('/start')}>Go back</Button>
-        </ButtonGroup>
-    );
-}
-
 export function ArrayComponent() {
     const [array, setArray] = React.useState(['0', '1', '2']);
     const index = React.useRef(array.length);
@@ -71,7 +61,7 @@ export function ArrayComponent() {
 
     return (
         <>
-            <ButtonGroup title="array">
+            <ButtonGroup title={<b>array</b>}>
                 <Button onClick={() => setArray([...array, index.current++])}>Push</Button>
                 <Button
                     onClick={() => {
@@ -87,14 +77,14 @@ export function ArrayComponent() {
     );
 }
 
-function App({ parseMode }) {
+function App() {
     return (
         <Router>
             <Route path="/start">
                 <Main />
             </Route>
             <Route path="/text">
-                <TextExample parseMode={parseMode} />
+                <TextExample />
             </Route>
             <Route path="/array">
                 <ArrayComponent />
@@ -113,8 +103,9 @@ render(
                 polling: true,
             })
         }
+        parseMode="HTML"
     >
-        <App parseMode="HTML" />
+        <App />
     </Root>,
 );
 
@@ -126,7 +117,8 @@ render(
                 token: process.env.SLACK_TOKEN,
             })
         }
+        parseMode="markdown"
     >
-        <App parseMode="markdown" />
+        <App />
     </Root>,
 );
