@@ -52,7 +52,7 @@
         "webpack-cli": "3.3.10"
     },
     "dependencies": {
-        "@slack/events-api": "^2.3.2",
+        "@slack/events-api": "2.3.2",
         "@slack/interactive-messages": "1.5.0",
         "@slack/web-api": "5.8.0",
         "body-parser": "1.19.0",
