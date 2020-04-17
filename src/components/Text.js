@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
-import { formatHTMLElement } from '../utils/formatHTMLElement';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export function Text(props) {
     const {
@@ -26,7 +26,7 @@ export function Text(props) {
 
     if (typeof children !== 'string' && typeof children !== 'number') {
         parseMode = parseMode ?? 'HTML';
-        text = formatHTMLElement(children, parseMode);
+        text = formatMarkupLanguageElement(children, parseMode);
     }
 
     return (

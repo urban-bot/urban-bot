@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBotContext, useAction } from '../hooks';
 import { formatButtonElement } from '../utils/formatButtonElement';
-import { formatHTMLElement } from '../utils/formatHTMLElement';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export function ButtonGroup(props) {
     const {
@@ -28,7 +28,7 @@ export function ButtonGroup(props) {
 
     if (typeof children !== 'string' && typeof children !== 'number') {
         parseMode = parseMode ?? 'HTML';
-        title = formatHTMLElement(titleElement, parseMode);
+        title = formatMarkupLanguageElement(titleElement, parseMode);
     }
 
     useAction((ctx) => {

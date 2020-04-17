@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBotContext } from '../hooks';
-import { formatHTMLElement } from '../utils/formatHTMLElement';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export function Image(props) {
     const {
@@ -35,7 +35,7 @@ export function Image(props) {
 
     if (typeof children !== 'string' && typeof children !== 'number') {
         parseMode = parseMode ?? 'HTML';
-        title = formatHTMLElement(titleElement, parseMode);
+        title = formatMarkupLanguageElement(titleElement, parseMode);
     }
 
     return (
