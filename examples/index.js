@@ -130,7 +130,6 @@ render(
                 token: process.env.SLACK_TOKEN,
             })
         }
-        parseMode="markdown"
     >
         <App />
     </Root>,
