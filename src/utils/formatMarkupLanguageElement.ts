@@ -3,7 +3,9 @@ import React from 'react';
 export const MARKDOWN_MODE = 'markdown';
 export const HTML_MODE = 'HTML';
 
-function formatHTMLElement(element, text) {
+type Element = React.ReactElement<React.PropsWithChildren<unknown>> | string | number | Element[];
+
+function formatHTMLElement(element: React.ReactElement<React.PropsWithChildren<unknown>>, text: string): string {
     switch (element.type) {
         case React.Fragment: {
             return text;
@@ -33,7 +35,7 @@ function formatHTMLElement(element, text) {
             return '\n';
         }
         case 'a': {
-            const { href } = element.props;
+            const { href } = element.props as { href: string };
 
             return `<a href="${href}">${text}</a>`;
         }
@@ -43,7 +45,7 @@ function formatHTMLElement(element, text) {
     }
 }
 
-function formatMarkdownElement(element, text) {
+function formatMarkdownElement(element: React.ReactElement, text: string): string {
     switch (element.type) {
         case React.Fragment: {
             return text;
@@ -83,7 +85,10 @@ function formatMarkdownElement(element, text) {
     }
 }
 
-export function formatMarkupLanguageElement(element, parseMode) {
+export function formatMarkupLanguageElement(
+    element: Element,
+    parseMode: typeof HTML_MODE | typeof MARKDOWN_MODE,
+): string {
     if (Array.isArray(element)) {
         return element
             .map((child) => {
@@ -100,7 +105,11 @@ export function formatMarkupLanguageElement(element, parseMode) {
         return element;
     }
 
-    if (React.isValidElement(element)) {
+    if (React.isValidElement<React.PropsWithChildren<unknown>>(element)) {
+        if (!React.isValidElement(element.props.children)) {
+            return '';
+        }
+
         const text = formatMarkupLanguageElement(element.props.children, parseMode);
 
         switch (parseMode) {

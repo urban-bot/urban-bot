@@ -203,6 +203,8 @@ describe('formatMarkupLanguageElement', () => {
 
     describe('not right parseMode', () => {
         test('throw error if parseMode does npt exist', () => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             expect(() => formatMarkupLanguageElement(<b>text</b>, 'notRightParseMode')).toThrowErrorMatchingSnapshot();
         });
     });
