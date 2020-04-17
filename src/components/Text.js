@@ -1,12 +1,12 @@
 import React from 'react';
-import { useBotContext } from '../hooks';
-import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { useBotContext } from '../hooks/hooks';
+import { useFormatElement } from '../hooks/useFormatElement';
 
 export function Text(props) {
     const {
         children,
         isNewMessageEveryRender: isNewMessageEveryRenderProp,
-        parseMode: parseModeProp,
+        parseMode,
         disableWebPagePreview,
         disableNotification,
         replyToMessageId,
@@ -14,28 +14,17 @@ export function Text(props) {
         ...otherProps
     } = props;
 
-    const {
-        $$managerBot,
-        isNewMessageEveryRender: isNewMessageEveryRenderContext,
-        chat,
-        parseMode: parseModeContext,
-    } = useBotContext();
+    const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
-    let parseMode = parseModeProp ?? parseModeContext;
-    let text = children;
-
-    if (typeof children !== 'string' && typeof children !== 'number') {
-        parseMode = parseMode ?? 'HTML';
-        text = formatMarkupLanguageElement(children, parseMode);
-    }
+    const [formattedText, finalParseMode] = useFormatElement(children, parseMode);
 
     return (
         <text
             chat={chat}
             $$managerBot={$$managerBot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
-            text={text}
-            parseMode={parseMode}
+            text={formattedText}
+            parseMode={finalParseMode}
             disableWebPagePreview={disableWebPagePreview}
             disableNotification={disableNotification}
             replyToMessageId={replyToMessageId}
