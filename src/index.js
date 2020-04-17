@@ -24,7 +24,7 @@ import {
     useVoice,
     useDice,
     useAction,
-} from './hooks';
+} from './hooks/hooks';
 
 export {
     render,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { BotContext, RouterContext } from './context';
-import { getRandomId } from './utils/getRandomId';
+import { BotContext, RouterContext } from '../context';
+import { getRandomId } from '../utils/getRandomId';
 
 export function useBotContext() {
     return React.useContext(BotContext);

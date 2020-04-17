@@ -1,26 +1,21 @@
 import React from 'react';
-import { useBotContext } from '../hooks';
-import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { useBotContext } from '../hooks/hooks';
+import { useFormatElement } from '../hooks/useFormatElement';
 
 export function Image(props) {
     const {
         src,
-        title: titleElement,
+        title,
         buttons: buttonsElement,
         isNewMessageEveryRender: isNewMessageEveryRenderProp,
-        parseMode: parseModeProp,
+        parseMode,
         disableNotification,
         replyToMessageId,
         forceReply,
         altText,
         ...otherProps
     } = props;
-    const {
-        $$managerBot,
-        isNewMessageEveryRender: isNewMessageEveryRenderContext,
-        chat,
-        parseMode: parseModeContext,
-    } = useBotContext();
+    const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     let formattedButtons;
     if (buttonsElement !== undefined) {
@@ -30,13 +25,7 @@ export function Image(props) {
         formattedButtons = buttons;
     }
 
-    let parseMode = parseModeProp ?? parseModeContext;
-    let title = titleElement;
-
-    if (typeof children !== 'string' && typeof children !== 'number') {
-        parseMode = parseMode ?? 'HTML';
-        title = formatMarkupLanguageElement(titleElement, parseMode);
-    }
+    const [formattedTitle, finalParseMode] = useFormatElement(title, parseMode);
 
     return (
         <img
@@ -44,10 +33,10 @@ export function Image(props) {
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             src={src}
-            title={title}
+            title={formattedTitle}
             altText={altText}
             buttons={formattedButtons}
-            parseMode={parseMode}
+            parseMode={finalParseMode}
             disableNotification={disableNotification}
             replyToMessageId={replyToMessageId}
             forceReply={forceReply}
