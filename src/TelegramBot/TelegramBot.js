@@ -1,8 +1,12 @@
 import NodeTelegramBot from 'node-telegram-bot-api';
 
 function parseTextData(data) {
+    let parse_mode;
+    if (data.parseMode !== undefined) {
+        parse_mode = data.parseMode === 'HTML' ? 'HTML' : 'MarkdownV2';
+    }
     const params = {
-        parse_mode: data.parseMode,
+        parse_mode,
         disable_web_page_preview: data.disableWebPagePreview,
         disable_notification: data.disableNotification,
         reply_to_message_id: data.replyToMessageId,
