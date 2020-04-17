@@ -48,6 +48,7 @@ describe('formatMarkupLanguageElement', () => {
 
         it('throw error if tag does not process', async () => {
             expect(() =>
+                // @ts-ignore
                 formatMarkupLanguageElement(<not-exist-tag>text</not-exist-tag>, HTML_MODE),
             ).toThrowErrorMatchingSnapshot();
         });

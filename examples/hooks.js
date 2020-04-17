@@ -15,7 +15,7 @@ import {
     useAnimation,
     useDice,
     useCommand,
-} from '../src';
+} from '../dist';
 
 export function HooksExample() {
     const [answer, setAnswer] = React.useState();
