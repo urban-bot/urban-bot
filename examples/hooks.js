@@ -1,39 +1,35 @@
-import dotenv from 'dotenv';
 import React from 'react';
 import {
-    render,
-    Root,
     Text,
     useText,
     useVideo,
     usePoll,
-    useVideoNote,
     usePhoto,
     useLocation,
     useDocument,
     useContact,
     useAudio,
-    useMessage,
+    useAny,
     useSticker,
     useVoice,
     useAnimation,
     useDice,
+    useCommand,
 } from '../src';
-import { TelegramBot } from '../src/TelegramBot/TelegramBot';
 
-dotenv.config();
-
-const token = process.env.TELEGRAM_TOKEN_DEV;
-
-function App() {
+export function HooksExample() {
     const [answer, setAnswer] = React.useState();
 
-    useMessage(() => {
+    useAny(() => {
         console.log('calling after any type sending');
     });
 
     useText(({ text }) => {
         setAnswer("You've sent a text " + text);
+    });
+
+    useCommand(({ command }) => {
+        setAnswer("You've sent a command " + command);
     });
 
     useVideo(() => {
@@ -42,10 +38,6 @@ function App() {
 
     usePoll(({ poll }) => {
         setAnswer("You've sent a poll " + poll.question);
-    });
-
-    useVideoNote(() => {
-        setAnswer("You've sent a video note");
     });
 
     usePhoto(() => {
@@ -90,15 +82,3 @@ function App() {
 
     return <Text isNewMessageEveryRender>{answer}</Text>;
 }
-
-render(
-    <Root
-        bot={
-            new TelegramBot(token, {
-                polling: true,
-            })
-        }
-    >
-        <App />
-    </Root>,
-);

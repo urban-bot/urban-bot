@@ -52,28 +52,26 @@ export class VkontakteBot {
 
     removeListener(_eventName, _listener) {}
 
-    async sendMessage(nodeName, chatId, data) {
+    async sendMessage(nodeName, chat, data) {
         const bot = await this.bot;
 
         switch (nodeName) {
             case 'text': {
-                bot.vk.call('messages.send', {
-                    peer_id: chatId,
+                return bot.vk.call('messages.send', {
+                    peer_id: chat.id,
                     message: data.text,
                     random_id: easyvk.randomId(),
                 });
-
-                break;
             }
             default: {
                 throw new Error(
-                    `Tag '${nodeName}' does not exist. Please don't use it with vk bot or add this logic to @urban-bot/telegram.`,
+                    `Tag '${nodeName}' does not exist. Please don't use it with vk bot or add this logic to @urban-bot/vk.`,
                 );
             }
         }
     }
 
-    updateMessage(_nodeName, _chatId, _data, _meta) {}
+    updateMessage(_nodeName, _chat, _data, _meta) {}
 
-    deleteMessage(_nodeName, _chatId, _data, _meta) {}
+    deleteMessage(_nodeName, _chat, _data, _meta) {}
 }
