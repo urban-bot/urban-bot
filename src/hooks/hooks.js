@@ -1,5 +1,6 @@
 import React from 'react';
-import { BotContext, RouterContext } from './context';
+import { BotContext, RouterContext } from '../context';
+import { getRandomId } from '../utils/getRandomId';
 
 export function useBotContext() {
     return React.useContext(BotContext);
@@ -10,19 +11,20 @@ export function useRouter() {
 }
 
 function useSubscribe(callback, event) {
-    const { chat, bot } = useBotContext();
+    const { chat, $$managerBot } = useBotContext();
 
     React.useEffect(() => {
-        bot.on(event, callback, chat.id);
+        const eventId = getRandomId();
+        $$managerBot.on(event, callback, eventId, chat.id);
 
         return () => {
-            bot.removeListener(event, callback);
+            $$managerBot.removeListener(event, callback, eventId);
         };
-    }, [callback, bot, event, chat]);
+    }, [callback, $$managerBot, event, chat]);
 }
 
-export function useMessage(callback) {
-    useSubscribe(callback, 'message');
+export function useAny(callback) {
+    useSubscribe(callback, 'any');
 }
 
 export function useText(callback) {
@@ -57,10 +59,6 @@ export function useInvoice(callback) {
     useSubscribe(callback, 'invoice');
 }
 
-export function usePassportData(callback) {
-    useSubscribe(callback, 'passport_data');
-}
-
 export function useLocation(callback) {
     useSubscribe(callback, 'location');
 }
@@ -77,20 +75,12 @@ export function useVideo(callback) {
     useSubscribe(callback, 'video');
 }
 
-export function useVideoNote(callback) {
-    useSubscribe(callback, 'video_note');
-}
-
 export function useVoice(callback) {
     useSubscribe(callback, 'voice');
 }
 
 export function useDice(callback) {
-    useMessage((ctx) => {
-        if (ctx.dice !== undefined) {
-            callback(ctx);
-        }
-    });
+    useSubscribe(callback, 'dice');
 }
 
 export function useAction(callback) {

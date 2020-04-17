@@ -1,29 +1,23 @@
 import React from 'react';
-import { useBotContext, useAction } from '../hooks';
+import { useBotContext, useAction } from '../hooks/hooks';
 import { formatButtonElement } from '../utils/formatButtonElement';
-import { formatHTMLElement } from '../utils/formatHTMLElement';
+import { useFormatElement } from '../hooks/useFormatElement';
 
 export function ButtonGroup(props) {
     const {
         children,
-        title: titleElement,
+        title,
         isNewMessageEveryRender: isNewMessageEveryRenderProp,
-        parseMode: parseModeProp,
+        parseMode,
         disableNotification,
         replyToMessageId,
         forceReply,
         ...otherProps
     } = props;
-    const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
+    const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     const buttons = formatButtonElement(children);
-
-    let parseMode = parseModeProp;
-    let title = titleElement;
-    if (typeof titleElement !== 'string' && typeof titleElement !== 'number') {
-        parseMode = 'HTML';
-        title = formatHTMLElement(titleElement);
-    }
+    const [formattedTitle, finalParseMode] = useFormatElement(title, parseMode);
 
     useAction((ctx) => {
         const { actionId } = ctx;
@@ -37,12 +31,12 @@ export function ButtonGroup(props) {
 
     return (
         <buttons
-            chatId={chat.id}
-            bot={bot}
+            chat={chat}
+            $$managerBot={$$managerBot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
-            title={title}
+            title={formattedTitle}
             buttons={buttons}
-            parseMode={parseMode}
+            parseMode={finalParseMode}
             disableNotification={disableNotification}
             replyToMessageId={replyToMessageId}
             forceReply={forceReply}

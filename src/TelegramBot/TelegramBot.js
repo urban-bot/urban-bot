@@ -1,8 +1,12 @@
 import NodeTelegramBot from 'node-telegram-bot-api';
 
 function parseTextData(data) {
+    let parse_mode;
+    if (data.parseMode !== undefined) {
+        parse_mode = data.parseMode === 'HTML' ? 'HTML' : 'MarkdownV2';
+    }
     const params = {
-        parse_mode: data.parseMode,
+        parse_mode,
         disable_web_page_preview: data.disableWebPagePreview,
         disable_notification: data.disableNotification,
         reply_to_message_id: data.replyToMessageId,
@@ -28,68 +32,76 @@ function parseTextData(data) {
 }
 
 export class TelegramBot {
+    static TYPE = 'TELEGRAM';
+    type = TelegramBot.TYPE;
+
     constructor(token, options) {
         this.bot = new NodeTelegramBot(token, options);
+
+        this.bot.on('text', this.handleText);
+        this.bot.on('callback_query', this.handleCallbackQuery);
+        this.bot.on('sticker', (ctx) => this.processUpdate('sticker', ctx));
+        this.bot.on('animation', (ctx) => this.processUpdate('animation', ctx));
+        this.bot.on('audio', (ctx) => this.processUpdate('audio', ctx));
+        this.bot.on('contact', (ctx) => this.processUpdate('contact', ctx));
+        this.bot.on('document', (ctx) => this.processUpdate('document', ctx));
+        this.bot.on('invoice', (ctx) => this.processUpdate('invoice', ctx));
+        this.bot.on('location', (ctx) => this.processUpdate('location', ctx));
+        this.bot.on('photo', (ctx) => this.processUpdate('photo', ctx));
+        this.bot.on('poll', (ctx) => this.processUpdate('poll', ctx));
+        this.bot.on('video', (ctx) => this.processUpdate('video', ctx));
+        this.bot.on('voice', (ctx) => this.processUpdate('voice', ctx));
+        this.bot.on('message', this.handleMessage);
     }
 
-    on(event, listener) {
-        let telegramEvent = event;
-        if (event === 'action') {
-            telegramEvent = 'callback_query';
+    // FIXME think about better implementation
+    initializeProcessUpdate(processUpdate) {
+        this.processUpdate = processUpdate;
+    }
+
+    processUpdate() {
+        throw new Error('this method must be initialized via initializeProcessUpdate');
+    }
+
+    handleMessage = (ctx) => {
+        if (ctx.dice) {
+            return this.processUpdate('dice', ctx);
         }
+    };
 
-        if (event === 'command') {
-            telegramEvent = 'text';
+    handleCallbackQuery = (ctx) => {
+        ctx.chat = ctx.message.chat;
+        ctx.actionId = ctx.data;
+
+        return this.processUpdate('action', ctx);
+    };
+
+    handleText = (ctx) => {
+        if (ctx.text[0] === '/') {
+            ctx.command = ctx.text;
+
+            return this.processUpdate('command', ctx);
+        } else {
+            return this.processUpdate('text', ctx);
         }
+    };
 
-        return this.bot.on(telegramEvent, function(ctx) {
-            if (event === 'action') {
-                ctx.chat = ctx.message.chat;
-                ctx.actionId = ctx.data;
-            }
-
-            if (event === 'text') {
-                if (ctx.text[0] === '/') {
-                    return;
-                }
-            }
-
-            if (event === 'command') {
-                if (ctx.text[0] !== '/') {
-                    return;
-                }
-
-                ctx.command = ctx.text;
-            }
-
-            listener(ctx);
-        });
-    }
-
-    emit(type, message, metadata) {
-        return this.bot.emit(type, message, metadata);
-    }
-
-    removeListener(eventName, listener) {
-        return this.bot.removeListener(eventName, listener);
-    }
-
-    sendMessage(nodeName, chatId, data) {
+    sendMessage(nodeName, chat, data) {
         switch (nodeName) {
             case 'text': {
                 const params = parseTextData(data);
 
-                return this.bot.sendMessage(chatId, data.text, params);
+                return this.bot.sendMessage(chat.id, data.text, params);
             }
             case 'img': {
                 const params = parseTextData(data);
 
-                return this.bot.sendPhoto(chatId, data.src, { ...params, caption: data.title });
+                return this.bot.sendPhoto(chat.id, data.src, { ...params, caption: data.title });
             }
             case 'buttons': {
                 const params = parseTextData(data);
 
-                return this.bot.sendMessage(chatId, data.title, params);
+                return this.bot.sendMessage(chat.id, data.title, params);
             }
             default: {
                 throw new Error(
@@ -99,7 +111,7 @@ export class TelegramBot {
         }
     }
 
-    updateMessage(nodeName, chatId, data, meta) {
+    updateMessage(nodeName, chat, data, meta) {
         switch (nodeName) {
             case 'text': {
                 const metaToEdit = {
@@ -152,7 +164,7 @@ export class TelegramBot {
         }
     }
 
-    deleteMessage(nodeName, chatId, data, meta) {
+    deleteMessage(nodeName, chat, data, meta) {
         this.bot.deleteMessage(meta.chat.id, meta.message_id);
     }
 }

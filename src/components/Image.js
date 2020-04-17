@@ -1,20 +1,21 @@
 import React from 'react';
-import { useBotContext } from '../hooks';
-import { formatHTMLElement } from '../utils/formatHTMLElement';
+import { useBotContext } from '../hooks/hooks';
+import { useFormatElement } from '../hooks/useFormatElement';
 
 export function Image(props) {
     const {
         src,
-        title: titleElement,
+        title,
         buttons: buttonsElement,
         isNewMessageEveryRender: isNewMessageEveryRenderProp,
-        parseMode: parseModeProp,
+        parseMode,
         disableNotification,
         replyToMessageId,
         forceReply,
+        altText,
         ...otherProps
     } = props;
-    const { bot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
+    const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     let formattedButtons;
     if (buttonsElement !== undefined) {
@@ -24,22 +25,18 @@ export function Image(props) {
         formattedButtons = buttons;
     }
 
-    let parseMode = parseModeProp;
-    let title = titleElement;
-    if (typeof titleElement !== 'string' && typeof titleElement !== 'number') {
-        parseMode = 'HTML';
-        title = formatHTMLElement(titleElement);
-    }
+    const [formattedTitle, finalParseMode] = useFormatElement(title, parseMode);
 
     return (
         <img
-            bot={bot}
-            chatId={chat.id}
+            $$managerBot={$$managerBot}
+            chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             src={src}
-            title={title}
+            title={formattedTitle}
+            altText={altText}
             buttons={formattedButtons}
-            parseMode={parseMode}
+            parseMode={finalParseMode}
             disableNotification={disableNotification}
             replyToMessageId={replyToMessageId}
             forceReply={forceReply}

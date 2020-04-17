@@ -1,10 +1,21 @@
 import { PromiseQueue } from './PromiseQueue';
+import EventEmitter from 'events';
 
-export class ManagerBot {
+export class ManagerBot extends EventEmitter {
     constructor(bot) {
+        super();
         this.bot = bot;
         this.chats = new Map();
+
+        bot.initializeProcessUpdate(this.processUpdate);
+
+        this.listenersMap = new Map();
     }
+
+    processUpdate = (event, data) => {
+        super.emit('any', { realEvent: event, ...data });
+        super.emit(event, data);
+    };
 
     addChat(id) {
         this.chats.set(id, new PromiseQueue());
@@ -14,8 +25,8 @@ export class ManagerBot {
         this.chats.delete(id);
     }
 
-    on(event, listener, chatId) {
-        return this.bot.on(event, function(ctx) {
+    on(event, listener, eventId, chatId) {
+        function listenerGuard(ctx) {
             if (chatId !== undefined) {
                 const { id: chatIdFromEvent } = ctx.chat;
 
@@ -25,34 +36,36 @@ export class ManagerBot {
             }
 
             listener(ctx);
-        });
+        }
+        this.listenersMap.set(eventId, listenerGuard);
+
+        return super.on(event, listenerGuard);
     }
 
-    emit(type, message) {
-        return this.bot.emit(type, message);
+    removeListener(event, listener, eventId) {
+        const listenerGuard = this.listenersMap.get(eventId);
+        this.listenersMap.delete(eventId);
+
+        return super.removeListener(event, listenerGuard);
     }
 
-    removeListener(eventName, listener) {
-        return this.bot.removeListener(eventName, listener);
-    }
-
-    sendMessage(nodeName, chatId, data) {
-        const promiseQueueByChatId = this.chats.get(chatId);
+    sendMessage(nodeName, chat, data) {
+        const promiseQueueByChatId = this.chats.get(chat.id);
 
         if (promiseQueueByChatId === undefined) {
             throw new Error('Specify chatId before send message via managerBot.addChat(chatId)');
         }
 
         return promiseQueueByChatId.next(() => {
-            return this.bot.sendMessage(nodeName, chatId, data);
+            return this.bot.sendMessage(nodeName, chat, data);
         });
     }
 
-    updateMessage(nodeName, chatId, data, meta) {
-        return this.bot.updateMessage(nodeName, chatId, data, meta);
+    updateMessage(nodeName, chat, data, meta) {
+        return this.bot.updateMessage(nodeName, chat, data, meta);
     }
 
-    deleteMessage(nodeName, chatId, data, meta) {
-        return this.bot.deleteMessage(nodeName, chatId, data, meta);
+    deleteMessage(nodeName, chat, data, meta) {
+        return this.bot.deleteMessage(nodeName, chat, data, meta);
     }
 }

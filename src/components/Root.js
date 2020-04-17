@@ -2,16 +2,26 @@ import React from 'react';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
+import { getRandomId } from '../utils/getRandomId';
 
-function Chat({ bot, user, children, isNewMessageEveryRender, chat }) {
+function Chat({ bot, user, children, isNewMessageEveryRender, chat, parseMode, $$managerBot }) {
     return (
-        <BotContext.Provider key={chat.id} value={{ bot, user, isNewMessageEveryRender, chat }}>
+        <BotContext.Provider
+            key={chat.id}
+            value={{ bot, user, isNewMessageEveryRender, chat, parseMode, $$managerBot }}
+        >
             <ErrorBoundary>{children}</ErrorBoundary>
         </BotContext.Provider>
     );
 }
 
-export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, isNewMessageEveryRender = false }) {
+export function Root({
+    children,
+    bot,
+    timeToClearUserSession = 1000 * 60 * 10,
+    isNewMessageEveryRender = false,
+    parseMode,
+}) {
     const [chats, setChats] = React.useState(new Map());
     const chatsRef = React.useRef(chats);
     chatsRef.current = chats;
@@ -22,8 +32,9 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
 
     const managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
-    // TODO update session not only for new message. For example it could be inlineQuery or edit message
     React.useEffect(() => {
+        const eventId = getRandomId();
+
         function handler(message) {
             const { from, chat } = message;
             const { id: chatId } = chat;
@@ -32,11 +43,13 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
                 chatsRef.current.set(
                     chat.id,
                     <Chat
-                        bot={managerBot}
+                        bot={bot}
+                        $$managerBot={managerBot}
                         user={from}
                         key={chatId}
                         isNewMessageEveryRender={isNewMessageEveryRender}
                         chat={chat}
+                        parseMode={parseMode}
                     >
                         {children}
                     </Chat>,
@@ -54,18 +67,19 @@ export function Root({ children, bot, timeToClearUserSession = 1000 * 60 * 10, i
             }, timeToClearUserSession);
         }
 
-        managerBot.on('message', handler);
+        managerBot.on('any', handler, eventId);
 
         return () => {
-            managerBot.removeListener('message', handler);
+            managerBot.removeListener('any', handler, eventId);
         };
-    }, [managerBot, timeToClearUserSession, children, isNewMessageEveryRender]);
+    }, [managerBot, timeToClearUserSession, children, isNewMessageEveryRender, bot, parseMode]);
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
             // First message is needed to register user and initialize react children for him.
             // After initializing we repeat this message that react children can process it.
-            managerBot.emit('message', firstMessage);
+            managerBot.emit('any', { realEvent: firstMessage.realEvent, ...firstMessage });
+            managerBot.emit(firstMessage.realEvent, firstMessage);
         }
     }, [firstMessage, managerBot]);
 
