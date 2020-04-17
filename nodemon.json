@@ -1,5 +1,5 @@
 {
     "watch": ["src", "examples"],
     "ext": "js",
-    "exec": "webpack && node ./dist/index.js"
+    "exec": "tsc && ts-node ./examples/index.js"
   }
