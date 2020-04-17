@@ -1,6 +1,4 @@
-interface MapType {
-    [key: string]: any;
-}
+import { MapType } from '../types';
 
 export function shallowEqual(obj1: MapType, obj2: MapType) {
     return Object.entries(obj1).every(([key1, value1]) => {
