@@ -72,7 +72,7 @@ export function Root({
         return () => {
             managerBot.removeListener('any', handler, eventId);
         };
-    }, [managerBot, timeToClearUserSession, children, isNewMessageEveryRender]);
+    }, [managerBot, timeToClearUserSession, children, isNewMessageEveryRender, bot, parseMode]);
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
