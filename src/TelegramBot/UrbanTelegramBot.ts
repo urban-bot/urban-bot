@@ -210,7 +210,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                         id: ctx.sticker.file_id,
                         size: ctx.sticker.file_size,
                         width: ctx.sticker.width,
-                        height: ctx.sticker.width,
+                        height: ctx.sticker.height,
                         name: ctx.sticker.set_name,
                     },
                 };
