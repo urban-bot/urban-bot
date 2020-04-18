@@ -68,7 +68,7 @@ describe('formatButtonElement', () => {
     });
 
     it('throw error if passed not Button', () => {
-        function Text() {
+        function Text(_props: React.PropsWithChildren<unknown>) {
             return null;
         }
 

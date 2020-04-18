@@ -29,6 +29,7 @@ module.exports = {
         'no-unused-vars': [2, { varsIgnorePattern: '_.+', argsIgnorePattern: '_.+' }],
         '@typescript-eslint/no-use-before-define': 0,
         '@typescript-eslint/explicit-function-return-type': 0,
+        '@typescript-eslint/no-empty-function': 0,
     },
     settings: {
         'import/resolver': {
