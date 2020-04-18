@@ -15,10 +15,11 @@ function useSubscribe(callback, event) {
 
     React.useEffect(() => {
         const eventId = getRandomId();
-        $$managerBot.on(event, callback, eventId, chat.id);
+        const adapter = ({ payload, ...other }) => callback({ ...other, ...payload });
+        $$managerBot.on(event, adapter, eventId, chat.id);
 
         return () => {
-            $$managerBot.removeListener(event, callback, eventId);
+            $$managerBot.removeListener(event, adapter, eventId);
         };
     }, [callback, $$managerBot, event, chat]);
 }

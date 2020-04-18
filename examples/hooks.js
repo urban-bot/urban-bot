@@ -36,32 +36,32 @@ export function HooksExample() {
         setAnswer("You've sent a video");
     });
 
-    usePoll(({ poll }) => {
-        setAnswer("You've sent a poll " + poll.question);
+    usePoll(({ question }) => {
+        setAnswer("You've sent a poll " + question);
     });
 
     usePhoto(() => {
         setAnswer("You've sent a photo");
     });
 
-    useLocation(({ location }) => {
-        setAnswer("You've sent a location " + location.latitude + ' ' + location.longitude);
+    useLocation(({ latitude, longitude }) => {
+        setAnswer("You've sent a location " + latitude + ' ' + longitude);
     });
 
-    useDocument(({ document }) => {
-        setAnswer("You've sent a document " + document.file_name);
+    useDocument(({ fileName }) => {
+        setAnswer("You've sent a document " + fileName);
     });
 
-    useContact(({ contact }) => {
-        setAnswer("You've sent a contact " + contact.first_name);
+    useContact(({ firstName }) => {
+        setAnswer("You've sent a contact " + firstName);
     });
 
-    useAudio(({ audio }) => {
-        setAnswer("You've sent an audio " + audio.title);
+    useAudio(({ title }) => {
+        setAnswer("You've sent an audio " + title);
     });
 
-    useSticker(({ sticker }) => {
-        setAnswer("You've sent a sticker " + sticker.emoji);
+    useSticker(({ emoji }) => {
+        setAnswer("You've sent a sticker " + emoji);
     });
 
     useVoice(() => {
@@ -72,8 +72,8 @@ export function HooksExample() {
         setAnswer("You've sent an animation");
     });
 
-    useDice(({ dice }) => {
-        setAnswer("You've sent a dice " + dice.value);
+    useDice(({ value }) => {
+        setAnswer("You've sent a dice " + value);
     });
 
     if (!answer) {
