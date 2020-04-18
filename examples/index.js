@@ -13,7 +13,7 @@ import {
     Text,
     useBotContext,
 } from '../dist';
-import { TelegramBot } from '../dist/TelegramBot/TelegramBot';
+import { UrbanTelegramBot } from '../dist/TelegramBot/UrbanTelegramBot';
 import { SlackBot } from '../dist/SlackBot/SlackBot';
 import { TextExample } from './Text';
 import { HooksExample } from './hooks';
@@ -112,7 +112,7 @@ function App() {
 render(
     <Root
         bot={
-            new TelegramBot(token, {
+            new UrbanTelegramBot(token, {
                 polling: true,
             })
         }

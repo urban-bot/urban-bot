@@ -12,9 +12,9 @@ export class ManagerBot extends EventEmitter {
         this.listenersMap = new Map();
     }
 
-    processUpdate = (event, data) => {
-        super.emit('any', { realEvent: event, ...data });
-        super.emit(event, data);
+    processUpdate = (data) => {
+        super.emit('any', { realEvent: data.type, ...data });
+        super.emit(data.type, data);
     };
 
     addChat(id) {
