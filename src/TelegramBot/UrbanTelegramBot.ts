@@ -69,14 +69,13 @@ function parseTextData(data: ParseTextDataPropType): TelegramBot.SendMessageOpti
 }
 type ProcessUpdate<Type, NativeEventPayload> = (event: UrbanEvent<Type, NativeEventPayload>) => void;
 
-type TelegramPayloads = TelegramBot.Message | TelegramBot.CallbackQuery;
-
 type TelegramBotLostMessage = {
     dice?: {
         value: number;
     };
 };
 type TelegramBotMessage = TelegramBot.Message & TelegramBotLostMessage;
+type TelegramPayloads = TelegramBotMessage | TelegramBot.CallbackQuery;
 
 export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
     static TYPE = 'TELEGRAM' as const;
@@ -97,7 +96,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
         this.bot.on('invoice', (ctx) => this.handleMessage('invoice', ctx));
         this.bot.on('location', (ctx) => this.handleMessage('location', ctx));
         this.bot.on('photo', (ctx) => this.handleMessage('photo', ctx));
-        this.bot.on('poll' as any, (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBot.Message));
+        this.bot.on('poll' as any, (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBotMessage));
         this.bot.on('video', (ctx) => this.handleMessage('video', ctx));
         this.bot.on('voice', (ctx) => this.handleMessage('voice', ctx));
         this.bot.on('message', (ctx) => {
@@ -148,7 +147,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
 
                     this.processUpdate(adaptedContext);
                 } else {
-                    const adaptedContext: UrbanEventText<TELEGRAM, TelegramBot.Message> = {
+                    const adaptedContext: UrbanEventText<TELEGRAM, TelegramBotMessage> = {
                         ...common,
                         type: 'text',
                         payload: {
@@ -165,7 +164,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                 if (ctx.dice === undefined) {
                     break;
                 }
-                const adaptedContext: UrbanEventDice<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventDice<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'dice',
                     payload: {
@@ -182,7 +181,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventPoll<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventPoll<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'poll',
                     payload: {
@@ -203,7 +202,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventSticker<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventSticker<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'sticker',
                     payload: {
@@ -225,7 +224,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventAnimation<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventAnimation<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'animation',
                     payload: {
@@ -243,7 +242,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventAudio<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventAudio<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'audio',
                     payload: {
@@ -262,7 +261,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventContact<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventContact<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'contact',
                     payload: {
@@ -281,7 +280,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventDocument<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventDocument<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'document',
                     payload: {
@@ -299,7 +298,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventInvoice<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventInvoice<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'invoice',
                     payload: {
@@ -319,7 +318,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventLocation<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventLocation<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'location',
                     payload: {
@@ -336,7 +335,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventPhoto<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventPhoto<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'photo',
                     payload: {
@@ -370,7 +369,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     break;
                 }
 
-                const adaptedContext: UrbanEventVoice<TELEGRAM, TelegramBot.Message> = {
+                const adaptedContext: UrbanEventVoice<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'voice',
                     payload: {
