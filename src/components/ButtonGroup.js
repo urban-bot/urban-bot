@@ -45,6 +45,6 @@ export function ButtonGroup(props) {
     );
 }
 
-export function Button() {
+export function Button(_props) {
     return null;
 }
