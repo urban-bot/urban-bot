@@ -230,8 +230,8 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
                     type: 'animation',
                     payload: {
                         duration: ctx.animation.duration,
-                        fileName: ctx.animation.fileName,
-                        mimeType: ctx.animation.mimeType,
+                        fileName: ctx.animation.file_name,
+                        mimeType: ctx.animation.mime_type,
                     },
                 };
 
