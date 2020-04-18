@@ -205,7 +205,7 @@ describe('ManagerBot', () => {
 
             managerBot.addChat(chat.id);
 
-            const firstPromise = managerBot.chats.get(chat.id).last;
+            const firstPromise = managerBot.chats.get(chat.id).promiseQueue.last;
 
             testBot.sendMessage.mockReturnValueOnce(
                 new Promise((resolve) => {
