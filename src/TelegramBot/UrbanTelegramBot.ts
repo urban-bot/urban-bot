@@ -17,7 +17,7 @@ import {
     UrbanEventAudio,
     UrbanEventAnimation,
     UrbanEventAction,
-    UrbanEventType,
+    UrbanEventType, UrbanEventCommon,
 } from '../types/Events';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanNewMessage } from '../types/Messages';
@@ -67,9 +67,15 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
     }
 
     handleMessage = (type: UrbanEventType<TELEGRAM, TelegramPayload>, ctx: TelegramBotMessage) => {
-        const common = {
+        const common: UrbanEventCommon<TELEGRAM, TelegramBotMessage> = {
             chat: {
                 id: String(ctx.chat.id),
+            },
+            from: {
+                id: ctx.from?.id,
+                username: ctx.from?.username,
+                firstName: ctx.from?.first_name,
+                surname: ctx.from?.last_name,
             },
             nativeEvent: {
                 type: UrbanTelegramBot.TYPE,
@@ -337,6 +343,12 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
                 type: 'action',
                 chat: {
                     id: String(ctx.message.chat.id),
+                },
+                from: {
+                    id: ctx.from?.id,
+                    username: ctx.from?.username,
+                    firstName: ctx.from?.first_name,
+                    surname: ctx.from?.last_name,
                 },
                 payload: {
                     actionId: ctx.data,
