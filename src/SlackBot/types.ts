@@ -109,6 +109,18 @@ export type SlackMessageContext = {
     blocks?: KnownBlock[];
 };
 
-export type SlackCommandContext = { channel_id: string; command: string; text: string };
+export type SlackCommandContext = {
+    user_name: string;
+    user_id: string;
+    token: string;
+    channel_id: string;
+    channel_name: string;
+    command: string;
+    text: string;
+    team_id: string;
+    team_domain: string;
+    response_url?: string;
+    trigger_id: string;
+};
 
 export type SlackPayload = SlackActionContext | SlackMessageContext | SlackCommandContext;
