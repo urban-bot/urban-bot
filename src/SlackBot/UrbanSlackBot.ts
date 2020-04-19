@@ -10,6 +10,7 @@ import { KnownBlock, Button, SectionBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
 import { UrbanEvent, UrbanEventAction, UrbanEventCommand } from '../types/Events';
 import { UrbanNewMessage, UrbanExistingMessage, UrbanButton } from '../types/Messages';
+import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext } from './types';
 
 type SLACK = 'SLACK';
 const app = express();
@@ -27,7 +28,7 @@ const app = express();
 //     channel_type: 'channel'
 // }
 
-function adaptMessage(message: SlackMessageContext): UrbanEvent<SLACK, SlackPayloads> {
+function adaptMessage(message: SlackMessageContext): UrbanEvent<SLACK, SlackPayload> {
     // return {
     //     text: message.text,
     //     from: {
@@ -84,7 +85,7 @@ type UrbanSlackBotProps = {
     port: number;
 };
 
-export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayloads, SlackMessageContext> {
+export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessageContext> {
     static TYPE = 'SLACK' as const;
     type = UrbanSlackBot.TYPE;
     client: WebClient;
@@ -110,16 +111,16 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayloads, SlackMessag
     }
 
     // FIXME think about better implementation
-    initializeProcessUpdate(processUpdate: ProcessUpdate<SLACK, SlackPayloads>) {
+    initializeProcessUpdate(processUpdate: ProcessUpdate<SLACK, SlackPayload>) {
         this.processUpdate = processUpdate;
     }
 
-    processUpdate(_event: UrbanEvent<SLACK, SlackPayloads>) {
+    processUpdate(_event: UrbanEvent<SLACK, SlackPayload>) {
         throw new Error('this method must be initialized via initializeProcessUpdate');
     }
 
     handleAction = (ctx: SlackActionContext) => {
-        const adaptedCtx: UrbanEventAction<SLACK, SlackPayloads> = {
+        const adaptedCtx: UrbanEventAction<SLACK, SlackPayload> = {
             type: 'action',
             chat: {
                 id: ctx.channel.id,
@@ -151,8 +152,8 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayloads, SlackMessag
     };
 
     handleCommand = (req: express.Request, res: express.Response) => {
-        const { channel_id, command, text } = req.body as Body;
-        const ctx: UrbanEventCommand<SLACK, Body> = {
+        const { channel_id, command, text } = req.body as SlackCommandContext;
+        const ctx: UrbanEventCommand<SLACK, SlackCommandContext> = {
             type: 'command',
             chat: {
                 id: channel_id,
