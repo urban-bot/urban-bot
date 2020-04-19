@@ -19,7 +19,8 @@ import {
     UrbanEventAction,
     EventType,
 } from '../types/Events';
-import { UrbanBot } from '../types/UrbanBotType';
+import { UrbanBot } from '../types/UrbanBot';
+import { UrbanBotExistingMessage, UrbanBotNewMessage } from '../types/Messages';
 type TELEGRAM = 'TELEGRAM';
 
 type ParseTextDataPropType = {
@@ -77,7 +78,9 @@ type TelegramBotLostMessage = {
 type TelegramBotMessage = TelegramBot.Message & TelegramBotLostMessage;
 type TelegramPayloads = TelegramBotMessage | TelegramBot.CallbackQuery;
 
-export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
+type Meta = TelegramBotMessage;
+
+export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Meta> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanTelegramBot.TYPE;
 
@@ -100,10 +103,10 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
         this.bot.on('video', (ctx) => this.handleMessage('video', ctx));
         this.bot.on('voice', (ctx) => this.handleMessage('voice', ctx));
         this.bot.on('message', (ctx) => {
-            const fixTypes: TelegramBotMessage = ctx;
+            const ctxWithDice: TelegramBotMessage = ctx;
 
-            if (fixTypes.dice !== undefined) {
-                this.handleMessage('dice', fixTypes);
+            if (ctxWithDice.dice !== undefined) {
+                this.handleMessage('dice', ctxWithDice);
 
                 return;
             }
@@ -404,57 +407,60 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
         }
     };
 
-    sendMessage(nodeName: any, chat: any, data: any) {
-        switch (nodeName) {
+    sendMessage(message: UrbanBotNewMessage) {
+        switch (message.nodeName) {
             case 'text': {
-                const params = parseTextData(data);
+                const params = parseTextData(message.data);
 
-                return this.bot.sendMessage(chat.id, data.text, params);
+                return this.bot.sendMessage(message.chat.id, message.data.text, params);
             }
             case 'img': {
-                const params = parseTextData(data);
+                const params = parseTextData(message.data);
 
-                return this.bot.sendPhoto(chat.id, data.src, { ...params, caption: data.title } as any);
+                return this.bot.sendPhoto(message.chat.id, message.data.src, {
+                    ...params,
+                    caption: message.data.title,
+                });
             }
             case 'buttons': {
-                const params = parseTextData(data);
+                const params = parseTextData(message.data);
 
-                return this.bot.sendMessage(chat.id, data.title, params);
+                return this.bot.sendMessage(message.chat.id, message.data.title, params);
             }
             default: {
                 throw new Error(
-                    `Tag '${nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                    `Tag '${message.nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
                 );
             }
         }
     }
 
-    updateMessage(nodeName: any, _chat: any, data: any, meta: any) {
-        switch (nodeName) {
+    updateMessage(message: UrbanBotExistingMessage<Meta>) {
+        switch (message.nodeName) {
             case 'text': {
                 const metaToEdit = {
-                    chat_id: meta.chat.id,
-                    message_id: meta.message_id,
+                    chat_id: message.meta.chat.id,
+                    message_id: message.meta.message_id,
                 };
 
-                const params = parseTextData(data);
+                const params = parseTextData(message.data);
 
-                this.bot.editMessageText(data.text, { ...params, ...metaToEdit } as any);
+                this.bot.editMessageText(message.data.text, { ...params, ...metaToEdit } as any);
 
                 break;
             }
             case 'img': {
                 const metaToEdit = {
-                    chat_id: meta.chat.id,
-                    message_id: meta.message_id,
+                    chat_id: message.meta.chat.id,
+                    message_id: message.meta.message_id,
                 };
 
-                const params = parseTextData(data);
+                const params = parseTextData(message.data);
 
                 const media = {
                     type: 'photo',
-                    media: data.src,
-                    caption: data.title,
+                    media: message.data.src,
+                    caption: message.data.title,
                     parse_mode: params.parse_mode,
                 };
 
@@ -466,25 +472,25 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads> {
             }
             case 'buttons': {
                 const metaToEdit = {
-                    chat_id: meta.chat.id,
-                    message_id: meta.message_id,
+                    chat_id: message.meta.chat.id,
+                    message_id: message.meta.message_id,
                 };
 
-                const params = parseTextData(data);
+                const params = parseTextData(message.data);
 
-                this.bot.editMessageText(data.title, { ...params, ...metaToEdit } as any);
+                this.bot.editMessageText(message.data.title, { ...params, ...metaToEdit });
 
                 break;
             }
             default: {
                 throw new Error(
-                    `Tag '${nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                    `Tag '${message.nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
                 );
             }
         }
     }
 
-    deleteMessage(_nodeName: any, _chat: any, _data: any, _meta: any) {
-        this.bot.deleteMessage(_meta.chat.id, _meta.message_id);
+    deleteMessage(message: UrbanBotExistingMessage<Meta>) {
+        this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 }
