@@ -2,4 +2,4 @@ export type Chat = {
     id: string;
 };
 
-export type ParseMode = 'HTML' | 'markdown';
+export type UrbanParseMode = 'HTML' | 'markdown';

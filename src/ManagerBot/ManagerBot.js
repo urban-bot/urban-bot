@@ -57,15 +57,15 @@ export class ManagerBot extends EventEmitter {
         }
 
         return promiseQueueByChatId.next(() => {
-            return this.bot.sendMessage(nodeName, chat, data);
+            return this.bot.sendMessage({ nodeName, chat, data });
         });
     }
 
     updateMessage(nodeName, chat, data, meta) {
-        return this.bot.updateMessage(nodeName, chat, data, meta);
+        return this.bot.updateMessage({ nodeName, chat, data, meta });
     }
 
     deleteMessage(nodeName, chat, data, meta) {
-        return this.bot.deleteMessage(nodeName, chat, data, meta);
+        return this.bot.deleteMessage({ nodeName, chat, data, meta });
     }
 }
