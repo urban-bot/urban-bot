@@ -1,54 +1,60 @@
-import { Chat, ParseMode } from './index';
+import { Chat, UrbanParseMode } from './index';
+import { OtherProps } from '../types';
+
+export type UrbanBotButton = OtherProps & {
+    text: string;
+    id?: string;
+};
 
 export type UrbanBotMessageCommon = {
     chat: Chat;
 };
 
-export type UrbanBotNewMessageText = {
+export type UrbanBotMessageCommonData = OtherProps & {
+    parseMode?: UrbanParseMode;
+    disableNotification?: boolean;
+    replyToMessageId?: string;
+    forceReply?: boolean;
+};
+
+export type UrbanBotMessageTextData = UrbanBotMessageCommonData & {
+    text: string;
+    disableWebPagePreview?: boolean;
+};
+
+export type UrbanBotNewMessageText = UrbanBotMessageCommon & {
     nodeName: 'text';
-    data: {
-        text: string;
-        parseMode: ParseMode;
-        disableWebPagePreview: boolean;
-        disableNotification: boolean;
-        replyToMessageId: string;
-        forceReply: boolean;
-    };
-} & UrbanBotMessageCommon;
+    data: UrbanBotMessageTextData;
+};
 
-export type UrbanBotNewMessageImage = {
+export type UrbanBotMessageImageData = UrbanBotMessageCommonData & {
+    title: string;
+    src: string;
+    buttons: UrbanBotButton[];
+    // FIXME rename to alt
+    altText: string;
+};
+
+export type UrbanBotNewMessageImage = UrbanBotMessageCommon & {
     nodeName: 'img';
-    data: {
-        title: string;
-        src: string;
-        // FIXME describe buttons
-        buttons: any;
-        // FIXME rename to alt
-        altText: string;
-        parseMode: ParseMode;
-        disableNotification: boolean;
-        replyToMessageId: string;
-        forceReply: boolean;
-    };
-} & UrbanBotMessageCommon;
+    buttons: UrbanBotButton[];
+    data: UrbanBotMessageImageData;
+};
 
-export type UrbanBotNewMessageButtons = {
+export type UrbanBotMessageButtonsData = UrbanBotMessageCommonData & {
+    title: string;
+    buttons: UrbanBotButton[];
+};
+
+export type UrbanBotNewMessageButtons = UrbanBotMessageCommon & {
     nodeName: 'buttons';
-    data: {
-        title: string;
-        // FIXME describe buttons
-        buttons: any;
-        parseMode: ParseMode;
-        disableNotification: boolean;
-        replyToMessageId: string;
-        forceReply: boolean;
-    };
-} & UrbanBotMessageCommon;
+    data: UrbanBotMessageButtonsData;
+};
 
 export type UrbanBotNewMessage = UrbanBotNewMessageText | UrbanBotNewMessageImage | UrbanBotNewMessageButtons;
 
-export type UrbanBotExistingMessage<Meta> = {
+export type UrbanBotExistingMessage<Meta> = UrbanBotNewMessage & {
     meta: Meta;
-} & UrbanBotNewMessage;
+};
 
 export type UrbanBotNewMessageType = UrbanBotNewMessage['nodeName'];

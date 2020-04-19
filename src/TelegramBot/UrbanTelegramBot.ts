@@ -21,53 +21,10 @@ import {
 } from '../types/Events';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanBotExistingMessage, UrbanBotNewMessage } from '../types/Messages';
+import { formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
+
 type TELEGRAM = 'TELEGRAM';
 
-type ParseTextDataPropType = {
-    parseMode: 'HTML' | 'MarkdownV2' | undefined;
-
-    disableWebPagePreview: unknown;
-    disableNotification: unknown;
-    replyToMessageId: unknown;
-
-    forceReply: unknown;
-    selective: unknown;
-
-    buttons: { text: unknown; id: unknown }[];
-};
-
-function parseTextData(data: ParseTextDataPropType): TelegramBot.SendMessageOptions {
-    let parse_mode: 'HTML' | 'MarkdownV2' | undefined;
-
-    if (data.parseMode !== undefined) {
-        parse_mode = data.parseMode === 'HTML' ? 'HTML' : 'MarkdownV2';
-    }
-
-    const params: any = {
-        parse_mode,
-        disable_web_page_preview: data.disableWebPagePreview,
-        disable_notification: data.disableNotification,
-        reply_to_message_id: data.replyToMessageId,
-    };
-
-    if (data.forceReply !== undefined || data.selective !== undefined) {
-        params.reply_markup = {
-            force_reply: data.forceReply,
-            selective: data.selective,
-        };
-    }
-
-    if (data.buttons !== undefined) {
-        // FIXME inline_keyboard can be matrix
-        const inlineKeyboard = data.buttons.map(({ text, id }) => {
-            return { text, callback_data: id };
-        });
-        params.reply_markup = params.reply_markup ?? {};
-        params.reply_markup.inline_keyboard = [inlineKeyboard];
-    }
-
-    return params;
-}
 type ProcessUpdate<Type, NativeEventPayload> = (event: UrbanEvent<Type, NativeEventPayload>) => void;
 
 type TelegramBotLostMessage = {
@@ -410,12 +367,12 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
     sendMessage(message: UrbanBotNewMessage) {
         switch (message.nodeName) {
             case 'text': {
-                const params = parseTextData(message.data);
+                const params = formatParamsForNewMessage(message);
 
                 return this.bot.sendMessage(message.chat.id, message.data.text, params);
             }
             case 'img': {
-                const params = parseTextData(message.data);
+                const params = formatParamsForNewMessage(message);
 
                 return this.bot.sendPhoto(message.chat.id, message.data.src, {
                     ...params,
@@ -423,13 +380,15 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
                 });
             }
             case 'buttons': {
-                const params = parseTextData(message.data);
+                const params = formatParamsForNewMessage(message);
 
                 return this.bot.sendMessage(message.chat.id, message.data.title, params);
             }
             default: {
                 throw new Error(
-                    `Tag '${message.nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                    `Tag '${
+                        (message as any).nodeName
+                    }' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
                 );
             }
         }
@@ -443,9 +402,9 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
                     message_id: message.meta.message_id,
                 };
 
-                const params = parseTextData(message.data);
+                const params = formatParamsForExistingMessage(message);
 
-                this.bot.editMessageText(message.data.text, { ...params, ...metaToEdit } as any);
+                this.bot.editMessageText(message.data.text, { ...params, ...metaToEdit });
 
                 break;
             }
@@ -455,13 +414,13 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
                     message_id: message.meta.message_id,
                 };
 
-                const params = parseTextData(message.data);
+                const params = formatParamsForExistingMessage(message);
 
                 const media = {
                     type: 'photo',
                     media: message.data.src,
                     caption: message.data.title,
-                    parse_mode: params.parse_mode,
+                    parse_mode: 'parse_mode' in params ? params.parse_mode : undefined,
                 };
 
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -476,7 +435,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
                     message_id: message.meta.message_id,
                 };
 
-                const params = parseTextData(message.data);
+                const params = formatParamsForExistingMessage(message);
 
                 this.bot.editMessageText(message.data.title, { ...params, ...metaToEdit });
 
@@ -484,7 +443,9 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
             }
             default: {
                 throw new Error(
-                    `Tag '${message.nodeName}' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                    `Tag '${
+                        (message as any).nodeName
+                    }' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
                 );
             }
         }
