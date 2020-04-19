@@ -120,21 +120,27 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
     }
 
     handleAction = (ctx: SlackActionContext) => {
-        const adaptedCtx: UrbanEventAction<SLACK, SlackPayload> = {
-            type: 'action',
-            chat: {
-                id: ctx.channel.id,
-            },
-            payload: {
-                actionId: ctx.actions[0].value,
-            },
-            nativeEvent: {
-                type: UrbanSlackBot.TYPE,
-                payload: ctx,
-            },
-        };
+        if (ctx.actions.length > 0 && ctx.actions[0].type === 'button') {
+            if (ctx.actions[0].value === undefined) {
+                return;
+            }
 
-        return this.processUpdate(adaptedCtx);
+            const adaptedCtx: UrbanEventAction<SLACK, SlackPayload> = {
+                type: 'action',
+                chat: {
+                    id: ctx.channel.id,
+                },
+                payload: {
+                    actionId: ctx.actions[0].value,
+                },
+                nativeEvent: {
+                    type: UrbanSlackBot.TYPE,
+                    payload: ctx,
+                },
+            };
+
+            this.processUpdate(adaptedCtx);
+        }
     };
 
     handleMessage = (ctx: SlackMessageContext) => {
