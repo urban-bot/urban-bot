@@ -1,7 +1,7 @@
+import { Chat } from './index';
+
 export type UrbanEventCommon<Type, NativeEventPayload> = {
-    chat: {
-        id: string;
-    };
+    chat: Chat;
     nativeEvent?: NativeEvent<Type, NativeEventPayload>;
 };
 

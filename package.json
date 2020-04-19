@@ -27,8 +27,8 @@
     "license": "MIT",
     "devDependencies": {
         "@types/jest": "25.2.1",
-        "@types/react": "16.9.34",
         "@types/node-telegram-bot-api": "^0.40.3",
+        "@types/react": "16.9.34",
         "@typescript-eslint/eslint-plugin": "2.28.0",
         "@typescript-eslint/parser": "2.28.0",
         "dotenv": "8.2.0",
