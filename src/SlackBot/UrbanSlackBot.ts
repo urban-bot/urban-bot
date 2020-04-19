@@ -14,19 +14,6 @@ import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandCont
 
 type SLACK = 'SLACK';
 const app = express();
-// {
-//     client_msg_id: 'aff6917a-ddf5-4944-8ef2-5456d0aafd89',
-//         type: 'message',
-//         subtype?: 'edited',
-//     text: '123',
-//     user: 'U011ZBPDA84',
-//     ts: '1586877611.010700',
-//     team: 'T011ZBPDA3W',
-//     blocks: [ { type: 'rich_text', block_id: 'jOx', elements: [Array] } ],
-//     channel: 'C011ZBPDPSQ',
-//     event_ts: '1586877611.010700',
-//     channel_type: 'channel'
-// }
 
 function adaptMessage(message: SlackMessageContext): UrbanEvent<SLACK, SlackPayload> {
     return {
