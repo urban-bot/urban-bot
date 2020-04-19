@@ -1,60 +1,60 @@
-import { Chat, UrbanParseMode } from './index';
+import { UrbanChat, UrbanParseMode } from './index';
 import { OtherProps } from '../types';
 
-export type UrbanBotButton = OtherProps & {
+export type UrbanButton = OtherProps & {
     text: string;
     id?: string;
 };
 
-export type UrbanBotMessageCommon = {
-    chat: Chat;
+export type UrbanMessageCommon = {
+    chat: UrbanChat;
 };
 
-export type UrbanBotMessageCommonData = OtherProps & {
+export type UrbanMessageCommonData = OtherProps & {
     parseMode?: UrbanParseMode;
     disableNotification?: boolean;
     replyToMessageId?: string;
     forceReply?: boolean;
 };
 
-export type UrbanBotMessageTextData = UrbanBotMessageCommonData & {
+export type UrbanMessageTextData = UrbanMessageCommonData & {
     text: string;
     disableWebPagePreview?: boolean;
 };
 
-export type UrbanBotNewMessageText = UrbanBotMessageCommon & {
+export type UrbanNewMessageText = UrbanMessageCommon & {
     nodeName: 'text';
-    data: UrbanBotMessageTextData;
+    data: UrbanMessageTextData;
 };
 
-export type UrbanBotMessageImageData = UrbanBotMessageCommonData & {
+export type UrbanMessageImageData = UrbanMessageCommonData & {
     title: string;
     src: string;
-    buttons: UrbanBotButton[];
+    buttons: UrbanButton[];
     // FIXME rename to alt
     altText: string;
 };
 
-export type UrbanBotNewMessageImage = UrbanBotMessageCommon & {
+export type UrbanNewMessageImage = UrbanMessageCommon & {
     nodeName: 'img';
-    buttons: UrbanBotButton[];
-    data: UrbanBotMessageImageData;
+    buttons: UrbanButton[];
+    data: UrbanMessageImageData;
 };
 
-export type UrbanBotMessageButtonsData = UrbanBotMessageCommonData & {
+export type UrbanMessageButtonsData = UrbanMessageCommonData & {
     title: string;
-    buttons: UrbanBotButton[];
+    buttons: UrbanButton[];
 };
 
-export type UrbanBotNewMessageButtons = UrbanBotMessageCommon & {
+export type UrbanNewMessageButtons = UrbanMessageCommon & {
     nodeName: 'buttons';
-    data: UrbanBotMessageButtonsData;
+    data: UrbanMessageButtonsData;
 };
 
-export type UrbanBotNewMessage = UrbanBotNewMessageText | UrbanBotNewMessageImage | UrbanBotNewMessageButtons;
+export type UrbanNewMessage = UrbanNewMessageText | UrbanNewMessageImage | UrbanNewMessageButtons;
 
-export type UrbanBotExistingMessage<Meta> = UrbanBotNewMessage & {
+export type UrbanExistingMessage<Meta> = UrbanNewMessage & {
     meta: Meta;
 };
 
-export type UrbanBotNewMessageType = UrbanBotNewMessage['nodeName'];
+export type UrbanNewMessageType = UrbanNewMessage['nodeName'];

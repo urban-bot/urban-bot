@@ -1,7 +1,7 @@
-import { Chat } from './index';
+import { UrbanChat } from './index';
 
 export type UrbanEventCommon<Type, NativeEventPayload> = {
-    chat: Chat;
+    chat: UrbanChat;
     nativeEvent?: NativeEvent<Type, NativeEventPayload>;
 };
 
@@ -158,4 +158,4 @@ export type UrbanSpecificEvent<Type, NativeEventPayload> =
 
 export type UrbanEvent<Type, NativeEventPayload> = UrbanSpecificEvent<Type, NativeEventPayload>;
 
-export type EventType<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>['type'];
+export type UrbanEventType<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>['type'];

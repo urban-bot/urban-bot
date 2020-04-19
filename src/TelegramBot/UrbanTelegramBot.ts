@@ -17,10 +17,10 @@ import {
     UrbanEventAudio,
     UrbanEventAnimation,
     UrbanEventAction,
-    EventType,
+    UrbanEventType,
 } from '../types/Events';
 import { UrbanBot } from '../types/UrbanBot';
-import { UrbanBotExistingMessage, UrbanBotNewMessage } from '../types/Messages';
+import { UrbanExistingMessage, UrbanNewMessage } from '../types/Messages';
 import { formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
 
 type TELEGRAM = 'TELEGRAM';
@@ -79,7 +79,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
         throw new Error('this method must be initialized via initializeProcessUpdate');
     }
 
-    handleMessage = (type: EventType<TELEGRAM, TelegramPayloads>, ctx: TelegramBotMessage) => {
+    handleMessage = (type: UrbanEventType<TELEGRAM, TelegramPayloads>, ctx: TelegramBotMessage) => {
         const common = {
             chat: {
                 id: String(ctx.chat.id),
@@ -364,7 +364,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
         }
     };
 
-    sendMessage(message: UrbanBotNewMessage) {
+    sendMessage(message: UrbanNewMessage) {
         switch (message.nodeName) {
             case 'text': {
                 const params = formatParamsForNewMessage(message);
@@ -394,7 +394,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
         }
     }
 
-    updateMessage(message: UrbanBotExistingMessage<Meta>) {
+    updateMessage(message: UrbanExistingMessage<Meta>) {
         switch (message.nodeName) {
             case 'text': {
                 const metaToEdit = {
@@ -451,7 +451,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
         }
     }
 
-    deleteMessage(message: UrbanBotExistingMessage<Meta>) {
+    deleteMessage(message: UrbanExistingMessage<Meta>) {
         this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 }
