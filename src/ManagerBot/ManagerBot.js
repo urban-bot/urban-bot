@@ -8,55 +8,53 @@ export class ManagerBot extends EventEmitter {
         this.chats = new Map();
 
         bot.initializeProcessUpdate(this.processUpdate);
-
-        this.listenersMap = new Map();
     }
 
     processUpdate = (event, data) => {
         super.emit('any', { realEvent: event, ...data });
         super.emit(event, data);
+
+        const { id } = data.chat;
+        const { eventEmitter } = this.chats.get(id);
+        eventEmitter.emit('any', { realEvent: event, ...data });
+        eventEmitter.emit(event, data);
     };
 
     addChat(id) {
-        this.chats.set(id, new PromiseQueue());
+        this.chats.set(id, { promiseQueue: new PromiseQueue(), eventEmitter: new EventEmitter() });
     }
 
     deleteChat(id) {
         this.chats.delete(id);
     }
 
-    on(event, listener, eventId, chatId) {
-        function listenerGuard(ctx) {
-            if (chatId !== undefined) {
-                const { id: chatIdFromEvent } = ctx.chat;
-
-                if (chatId !== chatIdFromEvent) {
-                    return;
-                }
-            }
-
-            listener(ctx);
+    on(event, listener, chatId) {
+        if (chatId === undefined) {
+            return super.on(event, listener);
+        } else {
+            const { eventEmitter } = this.chats.get(chatId);
+            eventEmitter.on(event, listener);
         }
-        this.listenersMap.set(eventId, listenerGuard);
-
-        return super.on(event, listenerGuard);
     }
 
-    removeListener(event, listener, eventId) {
-        const listenerGuard = this.listenersMap.get(eventId);
-        this.listenersMap.delete(eventId);
+    removeListener(event, listener, chatId) {
+        if (chatId === undefined) {
+            return super.removeListener(event, listener);
+        } else {
+            const { eventEmitter } = this.chats.get(chatId);
 
-        return super.removeListener(event, listenerGuard);
+            return eventEmitter.removeListener(event, listener);
+        }
     }
 
     sendMessage(nodeName, chat, data) {
-        const promiseQueueByChatId = this.chats.get(chat.id);
+        const chatById = this.chats.get(chat.id);
 
-        if (promiseQueueByChatId === undefined) {
+        if (chatById === undefined) {
             throw new Error('Specify chatId before send message via managerBot.addChat(chatId)');
         }
 
-        return promiseQueueByChatId.next(() => {
+        return chatById.promiseQueue.next(() => {
             return this.bot.sendMessage(nodeName, chat, data);
         });
     }
