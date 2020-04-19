@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { UrbanBotNewMessage } from '../types/Messages';
+import { UrbanNewMessage } from '../types/Messages';
 import TelegramBot from 'node-telegram-bot-api';
 import { UrbanParseMode } from '../types/index';
 
@@ -9,7 +9,7 @@ type EditMessageOptions =
     | TelegramBot.EditMessageLiveLocationOptions
     | TelegramBot.EditMessageReplyMarkupOptions;
 
-function formatReplyMarkupForNewMessage(message: UrbanBotNewMessage) {
+function formatReplyMarkupForNewMessage(message: UrbanNewMessage) {
     if (message.data.forceReply !== undefined) {
         const replyMarkup: TelegramBot.ForceReply = {
             force_reply: message.data.forceReply,
@@ -35,7 +35,7 @@ function formatReplyMarkupForNewMessage(message: UrbanBotNewMessage) {
     }
 }
 
-function formatReplyMarkupForExistingMessage(message: UrbanBotNewMessage) {
+function formatReplyMarkupForExistingMessage(message: UrbanNewMessage) {
     if ((message.nodeName === 'buttons' || message.nodeName === 'img') && message.data.buttons !== undefined) {
         const replyMarkup: TelegramBot.InlineKeyboardMarkup = {
             inline_keyboard: [
@@ -57,7 +57,7 @@ function formatParseMode(parseMode: UrbanParseMode | undefined) {
     return parseMode === 'HTML' ? 'HTML' : 'MarkdownV2';
 }
 
-function formatParams(message: UrbanBotNewMessage) {
+function formatParams(message: UrbanNewMessage) {
     const parse_mode = formatParseMode(message.data.parseMode);
 
     if (message.nodeName === 'text') {
@@ -74,7 +74,7 @@ function formatParams(message: UrbanBotNewMessage) {
     } as const;
 }
 
-export function formatParamsForNewMessage(message: UrbanBotNewMessage): TelegramBot.SendMessageOptions {
+export function formatParamsForNewMessage(message: UrbanNewMessage): TelegramBot.SendMessageOptions {
     const params: TelegramBot.SendMessageOptions = formatParams(message);
 
     if (message.data.replyToMessageId !== undefined) {
@@ -88,7 +88,7 @@ export function formatParamsForNewMessage(message: UrbanBotNewMessage): Telegram
     return params;
 }
 
-export function formatParamsForExistingMessage(message: UrbanBotNewMessage): EditMessageOptions {
+export function formatParamsForExistingMessage(message: UrbanNewMessage): EditMessageOptions {
     const params: EditMessageOptions = formatParams(message);
 
     params.reply_markup = formatReplyMarkupForExistingMessage(message);

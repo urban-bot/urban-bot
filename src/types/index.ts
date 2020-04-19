@@ -1,4 +1,4 @@
-export type Chat = {
+export type UrbanChat = {
     id: string;
 };
 
