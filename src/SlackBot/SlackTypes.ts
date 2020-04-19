@@ -4,7 +4,9 @@ type SlackAction = {
 };
 
 type SlackActionContext = {
-    channel: string;
+    channel: {
+        id: string;
+    };
     actions: SlackAction[];
 };
 
