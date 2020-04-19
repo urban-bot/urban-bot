@@ -29,21 +29,13 @@ const app = express();
 // }
 
 function adaptMessage(message: SlackMessageContext): UrbanEvent<SLACK, SlackPayload> {
-    // return {
-    //     text: message.text,
-    //     from: {
-    //         id: message.user,
-    //     },
-    //     chat: {
-    //         id: message.channel,
-    //     },
-    // };
-
-    // message.user ???????7
     return {
         type: 'text',
         chat: {
             id: message.channel,
+        },
+        from: {
+            id: message.user,
         },
         payload: {
             text: message.text,
@@ -130,6 +122,10 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 chat: {
                     id: ctx.channel.id,
                 },
+                from: {
+                    id: ctx.user.id,
+                    username: ctx.user.username,
+                },
                 payload: {
                     actionId: ctx.actions[0].value,
                 },
@@ -158,7 +154,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
     };
 
     handleCommand = (req: express.Request, res: express.Response) => {
-        const { channel_id, command, text } = req.body as SlackCommandContext;
+        const { channel_id, command, text, user_id, user_name } = req.body as SlackCommandContext;
         const ctx: UrbanEventCommand<SLACK, SlackCommandContext> = {
             type: 'command',
             chat: {
@@ -167,6 +163,10 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             payload: {
                 command,
                 text,
+            },
+            from: {
+                id: user_id,
+                username: user_name,
             },
             nativeEvent: {
                 type: UrbanSlackBot.TYPE,
