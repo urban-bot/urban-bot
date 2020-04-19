@@ -21,7 +21,7 @@ export type UrbanEventCommand<Type, NativeEventPayload> = {
     type: 'command';
     payload: {
         command: string;
-        text: string;
+        text?: string;
     };
 } & UrbanEventCommon<Type, NativeEventPayload>;
 

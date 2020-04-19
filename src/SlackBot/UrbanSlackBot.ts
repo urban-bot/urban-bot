@@ -122,7 +122,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayloads, SlackMessag
         const adaptedCtx: UrbanEventAction<SLACK, SlackPayloads> = {
             type: 'action',
             chat: {
-                id: ctx.channel,
+                id: ctx.channel.id,
             },
             payload: {
                 actionId: ctx.actions[0].value,
