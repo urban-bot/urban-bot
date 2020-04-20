@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBotContext, useAction } from '../hooks/hooks';
+import { useBotContext, useAction } from '../dist/hooks/hooks';
 import { formatButtonElement } from '../utils/formatButtonElement';
 import { useFormatElement } from '../hooks/useFormatElement';
 
