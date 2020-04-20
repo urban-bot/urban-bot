@@ -1,4 +1,4 @@
-import { MapType } from '../types';
+import { MapType } from '../types/common';
 
 export function shallowEqual(obj1: MapType, obj2: MapType) {
     return Object.entries(obj1).every(([key1, value1]) => {

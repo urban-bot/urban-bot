@@ -1,6 +1,5 @@
 import React, { Context } from 'react';
 import { BotContext, RouterContext } from '../context';
-import { getRandomId } from '../utils/getRandomId';
 import EventEmitter from 'events';
 import { UrbanChat } from '../types/index';
 
@@ -25,12 +24,11 @@ function useSubscribe(callback: Callback, event: string | symbol) {
     const { chat, $$managerBot } = useBotContext();
 
     React.useEffect(() => {
-        const eventId = getRandomId();
         const adapter = ({ payload, ...other }: any) => callback({ ...other, ...payload });
-        $$managerBot.on(event, adapter, eventId, chat.id);
+        $$managerBot.on(event, adapter, chat.id);
 
         return () => {
-            $$managerBot.removeListener(event, adapter, eventId);
+            $$managerBot.removeListener(event, adapter, chat.id);
         };
     }, [callback, $$managerBot, event, chat]);
 }

@@ -17,27 +17,14 @@ import {
     UrbanEventAudio,
     UrbanEventAnimation,
     UrbanEventAction,
-    UrbanEventType,
+    UrbanEventType, UrbanEventCommon,
 } from '../types/Events';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanNewMessage } from '../types/Messages';
 import { formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
+import { Meta, TELEGRAM, TelegramPayload, ProcessUpdate, TelegramBotMessage } from './types';
 
-type TELEGRAM = 'TELEGRAM';
-
-type ProcessUpdate<Type, NativeEventPayload> = (event: UrbanEvent<Type, NativeEventPayload>) => void;
-
-type TelegramBotLostMessage = {
-    dice?: {
-        value: number;
-    };
-};
-type TelegramBotMessage = TelegramBot.Message & TelegramBotLostMessage;
-type TelegramPayloads = TelegramBotMessage | TelegramBot.CallbackQuery;
-
-type Meta = TelegramBotMessage;
-
-export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Meta> {
+export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Meta> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanTelegramBot.TYPE;
 
@@ -71,18 +58,24 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
     }
 
     // FIXME think about better implementation
-    initializeProcessUpdate(processUpdate: ProcessUpdate<TELEGRAM, TelegramPayloads>) {
+    initializeProcessUpdate(processUpdate: ProcessUpdate<TELEGRAM, TelegramPayload>) {
         this.processUpdate = processUpdate;
     }
 
-    processUpdate(_event: UrbanEvent<TELEGRAM, TelegramPayloads>) {
+    processUpdate(_event: UrbanEvent<TELEGRAM, TelegramPayload>) {
         throw new Error('this method must be initialized via initializeProcessUpdate');
     }
 
-    handleMessage = (type: UrbanEventType<TELEGRAM, TelegramPayloads>, ctx: TelegramBotMessage) => {
-        const common = {
+    handleMessage = (type: UrbanEventType<TELEGRAM, TelegramPayload>, ctx: TelegramBotMessage) => {
+        const common: UrbanEventCommon<TELEGRAM, TelegramBotMessage> = {
             chat: {
                 id: String(ctx.chat.id),
+            },
+            from: {
+                id: ctx.from?.id,
+                username: ctx.from?.username,
+                firstName: ctx.from?.first_name,
+                surname: ctx.from?.last_name,
             },
             nativeEvent: {
                 type: UrbanTelegramBot.TYPE,
@@ -350,6 +343,12 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayloads, Me
                 type: 'action',
                 chat: {
                     id: String(ctx.message.chat.id),
+                },
+                from: {
+                    id: ctx.from?.id,
+                    username: ctx.from?.username,
+                    firstName: ctx.from?.first_name,
+                    surname: ctx.from?.last_name,
                 },
                 payload: {
                     actionId: ctx.data,

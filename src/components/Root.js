@@ -2,7 +2,6 @@ import React from 'react';
 import { BotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
-import { getRandomId } from '../utils/getRandomId';
 
 function Chat({ bot, user, children, isNewMessageEveryRender, chat, parseMode, $$managerBot }) {
     return (
@@ -33,8 +32,6 @@ export function Root({
     const managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
     React.useEffect(() => {
-        const eventId = getRandomId();
-
         function handler(message) {
             const { from, chat } = message;
             const { id: chatId } = chat;
@@ -67,10 +64,10 @@ export function Root({
             }, timeToClearUserSession);
         }
 
-        managerBot.on('any', handler, eventId);
+        managerBot.on('any', handler);
 
         return () => {
-            managerBot.removeListener('any', handler, eventId);
+            managerBot.removeListener('any', handler);
         };
     }, [managerBot, timeToClearUserSession, children, isNewMessageEveryRender, bot, parseMode]);
 

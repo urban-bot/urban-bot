@@ -1,5 +1,5 @@
 import { UrbanChat, UrbanParseMode } from './index';
-import { OtherProps } from '../types';
+import { OtherProps } from './common';
 
 export type UrbanButton = OtherProps & {
     text: string;
@@ -52,6 +52,7 @@ export type UrbanNewMessageButtons = UrbanMessageCommon & {
 };
 
 export type UrbanNewMessage = UrbanNewMessageText | UrbanNewMessageImage | UrbanNewMessageButtons;
+export type UrbanNewMessageData = UrbanMessageTextData | UrbanMessageImageData | UrbanMessageButtonsData;
 
 export type UrbanExistingMessage<Meta> = UrbanNewMessage & {
     meta: Meta;
