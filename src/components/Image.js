@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBotContext } from '../dist/hooks/hooks';
+import { useBotContext } from '../hooks/hooks';
 import { useFormatElement } from '../hooks/useFormatElement';
 
 export function Image(props) {

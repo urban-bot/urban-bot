@@ -1,4 +1,4 @@
-import { useBotContext } from '../dist/hooks';
+import { useBotContext } from './hooks';
 import { formatMarkupLanguageElement, MARKDOWN_MODE } from '../utils/formatMarkupLanguageElement';
 
 export function useFormatElement(element, parseMode) {
