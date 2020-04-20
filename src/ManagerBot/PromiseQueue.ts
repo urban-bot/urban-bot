@@ -1,4 +1,4 @@
-type AnyFunction = (...args: any[]) => any;
+import { AnyFunction } from '../types/common';
 
 export class PromiseQueue {
     last: Promise<any>;

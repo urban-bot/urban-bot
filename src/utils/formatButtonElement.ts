@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '../components/ButtonGroup';
 import { getRandomId } from './getRandomId';
-import { OtherProps } from '../types';
+import { OtherProps } from '../types/common';
 
 type ButtonProps = {
     onClick: Function;
