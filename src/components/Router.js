@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBotContext, useCommand } from '../dist/hooks/hooks';
+import { useBotContext, useCommand } from '../hooks/hooks';
 import { RouterContext } from '../context';
 
 export function Router({ children }) {
