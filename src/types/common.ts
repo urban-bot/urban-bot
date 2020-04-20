@@ -5,3 +5,5 @@ export type MapType = {
 export type OtherProps = {
     [propName: string]: unknown;
 };
+
+export type AnyFunction = (...args: any[]) => any;
