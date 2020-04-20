@@ -3,6 +3,12 @@ import { UrbanChat } from './index';
 export type UrbanEventCommon<Type, NativeEventPayload> = {
     chat: UrbanChat;
     nativeEvent?: NativeEvent<Type, NativeEventPayload>;
+    from?: {
+        id?: string | number;
+        username?: string;
+        firstName?: string;
+        surname?: string;
+    };
 };
 
 export type NativeEvent<Type, NativeEventPayload> = {

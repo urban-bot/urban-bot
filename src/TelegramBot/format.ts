@@ -83,8 +83,6 @@ export function formatParamsForNewMessage(message: UrbanNewMessage): TelegramBot
 
     params.reply_markup = formatReplyMarkupForNewMessage(message);
 
-    console.log(params.reply_markup);
-
     return params;
 }
 
