@@ -10,7 +10,7 @@ import { KnownBlock, Button, SectionBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
 import { UrbanEvent, UrbanEventAction, UrbanEventCommand } from '../types/Events';
 import { UrbanNewMessage, UrbanExistingMessage, UrbanButton } from '../types/Messages';
-import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext } from './types';
+import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext, SlackMessageMeta } from './types';
 
 type SLACK = 'SLACK';
 const app = express();
@@ -64,7 +64,7 @@ type UrbanSlackBotProps = {
     port: number;
 };
 
-export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessageContext> {
+export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessageMeta> {
     static TYPE = 'SLACK' as const;
     type = UrbanSlackBot.TYPE;
     client: WebClient;
@@ -164,13 +164,13 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         return this.processUpdate(ctx);
     };
 
-    sendMessage(message: UrbanNewMessage): Promise<SlackMessageContext> {
+    async sendMessage(message: UrbanNewMessage): Promise<SlackMessageMeta> {
         switch (message.nodeName) {
             case 'text': {
                 return (this.client.chat.postMessage({
                     channel: message.chat.id,
                     text: message.data.text,
-                }) as unknown) as Promise<SlackMessageContext>; // TODO: investigate me
+                }) as unknown) as Promise<SlackMessageMeta>;
             }
             case 'img': {
                 const blocks: KnownBlock[] = [
@@ -197,7 +197,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                     channel: message.chat.id,
                     blocks,
                     text: message.data.title,
-                }) as unknown) as Promise<SlackMessageContext>; // TODO: investigate me;
+                }) as unknown) as Promise<SlackMessageMeta>;
             }
             case 'buttons': {
                 const elements = formatButtons(message.data.buttons);
@@ -217,7 +217,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                     channel: message.chat.id,
                     blocks,
                     text: message.data.title,
-                }) as unknown) as Promise<SlackMessageContext>; // TODO: investigate me;
+                }) as unknown) as Promise<SlackMessageMeta>;
             }
             default: {
                 throw new Error(
@@ -229,7 +229,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         }
     }
 
-    updateMessage(message: UrbanExistingMessage<SlackMessageContext>) {
+    updateMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
         switch (message.nodeName) {
             case 'text': {
                 this.client.chat.update({
@@ -303,7 +303,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         }
     }
 
-    deleteMessage(message: UrbanExistingMessage<SlackMessageContext>) {
+    deleteMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
         this.client.chat.delete({ channel: message.meta.channel, ts: message.meta.ts });
     }
 }
