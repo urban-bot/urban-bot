@@ -19,7 +19,7 @@ import {
 
 export function HooksExample() {
     const [answer, setAnswer] = React.useState('');
-   // const { useAny,useText } = useHooks<qeweqw>()
+
     useAny(() => {
         console.log('calling after any type sending');
     });
