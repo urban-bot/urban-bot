@@ -1,7 +1,6 @@
 import { shallowEqual } from './utils/shallowEqual';
-import { UrbanExistingMessage, UrbanMessageData, UrbanMessageNodeName, UrbanNewMessage } from './types/Messages';
+import { UrbanExistingMessage, UrbanMessageNodeName, UrbanNewMessage } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanChat } from './types';
 
 export type UrbanNode<Type, NativeEventPayload, Meta> = Omit<UrbanExistingMessage<Meta>, 'meta'> & {
     $$managerBot: ManagerBot<Type, NativeEventPayload, Meta>;
@@ -9,7 +8,7 @@ export type UrbanNode<Type, NativeEventPayload, Meta> = Omit<UrbanExistingMessag
     meta?: Promise<Meta>;
 };
 
-type UrbanNodeRoot = {
+export type UrbanNodeRoot = {
     nodeName: 'root';
 };
 
@@ -41,9 +40,13 @@ export function createNode<Type, NativeEventPayload, Meta>(
 }
 
 export function appendChildNode<Type, NativeEventPayload, Meta>(
-    _node: UrbanNode<Type, NativeEventPayload, Meta>,
-    childNode: UrbanNode<Type, NativeEventPayload, Meta>,
+    _node: UrbanNode<Type, NativeEventPayload, Meta> | UrbanNodeRoot,
+    childNode: UrbanNode<Type, NativeEventPayload, Meta> | UrbanNodeRoot,
 ) {
+    if (childNode.nodeName === 'root') {
+        return;
+    }
+
     const message = {
         nodeName: childNode.nodeName,
         chat: childNode.chat,
@@ -91,7 +94,7 @@ export function updateNode<Type, NativeEventPayload, Meta>(
     const newNode = createNode(node.nodeName, newProps);
 
     if (newNode.nodeName === 'root') {
-        throw new Error('root nodeName shouldn\'t update')
+        throw new Error("root nodeName shouldn't update");
     }
 
     const message = {
