@@ -71,7 +71,7 @@ export class ManagerBot<Type, NativeEventPayload, Meta> {
         }
     }
 
-    sendMessage(message: UrbanNewMessage) {
+    sendMessage(message: UrbanNewMessage): Promise<Meta> {
         const chatById = this.chats.get(message.chat.id);
 
         if (chatById === undefined) {
