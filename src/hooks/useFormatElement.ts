@@ -1,12 +1,13 @@
 import { useBotContext } from './hooks';
-import { formatMarkupLanguageElement, MARKDOWN_MODE } from '../utils/formatMarkupLanguageElement';
+import { formatMarkupLanguageElement, Element, MARKDOWN_MODE } from '../utils/formatMarkupLanguageElement';
+import { UrbanParseMode } from '../types';
 
-export function useFormatElement(element, parseMode) {
+export function useFormatElement(element: Element, parseMode: UrbanParseMode): [string, UrbanParseMode] {
     const { parseMode: parseModeContext } = useBotContext();
     let finalParseMode = parseMode ?? parseModeContext;
     let formattedString;
 
-    if (typeof children !== 'string' && typeof children !== 'number') {
+    if (typeof element !== 'string' && typeof element !== 'number') {
         finalParseMode = finalParseMode ?? MARKDOWN_MODE;
         formattedString = formatMarkupLanguageElement(element, finalParseMode);
     } else {
