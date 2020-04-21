@@ -10,3 +10,5 @@ export type UrbanFrom = {
 };
 
 export type UrbanParseMode = 'HTML' | 'markdown';
+
+export type UrbanListener<Event> = (event: Event) => unknown;

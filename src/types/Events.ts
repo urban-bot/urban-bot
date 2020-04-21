@@ -141,7 +141,7 @@ export type UrbanEventVoice<Type, NativeEventPayload> = {
     };
 } & UrbanEventCommon<Type, NativeEventPayload>;
 
-export type UrbanSpecificEvent<Type, NativeEventPayload> =
+export type UrbanEvent<Type, NativeEventPayload> =
     | UrbanEventAction<Type, NativeEventPayload>
     | UrbanEventVoice<Type, NativeEventPayload>
     | UrbanEventCommand<Type, NativeEventPayload>
@@ -157,7 +157,5 @@ export type UrbanSpecificEvent<Type, NativeEventPayload> =
     | UrbanEventSticker<Type, NativeEventPayload>
     | UrbanEventLocation<Type, NativeEventPayload>
     | UrbanEventDice<Type, NativeEventPayload>;
-
-export type UrbanEvent<Type, NativeEventPayload> = UrbanSpecificEvent<Type, NativeEventPayload>;
 
 export type UrbanEventType<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>['type'];
