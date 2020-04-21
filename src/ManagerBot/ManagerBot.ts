@@ -1,8 +1,9 @@
 import { PromiseQueue } from './PromiseQueue';
 import EventEmitter from 'events';
 import { ProcessUpdate, UrbanBot } from '../types/UrbanBot';
-import { AnyFunction } from '../types/common';
 import { UrbanExistingMessage, UrbanNewMessage } from '../types/Messages';
+import { UrbanListener } from '../types';
+import { UrbanEvent } from '../types/Events';
 
 type Chat = {
     eventEmitter: EventEmitter;
@@ -42,7 +43,7 @@ export class ManagerBot<Type, NativeEventPayload, Meta> {
         this.chats.delete(id);
     }
 
-    on(event: string | symbol, listener: AnyFunction, chatId: string) {
+    on(event: string | symbol, listener: UrbanListener<UrbanEvent<Type, NativeEventPayload>>, chatId?: string) {
         if (chatId === undefined) {
             return this.eventEmitter.on(event, listener);
         } else {
@@ -57,7 +58,7 @@ export class ManagerBot<Type, NativeEventPayload, Meta> {
         }
     }
 
-    removeListener(event: string, listener: AnyFunction, chatId: string) {
+    removeListener(event: string, listener: UrbanListener<UrbanEvent<Type, NativeEventPayload>>, chatId?: string) {
         if (chatId === undefined) {
             return this.eventEmitter.removeListener(event, listener);
         } else {
