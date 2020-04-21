@@ -4,7 +4,7 @@ import { useFormatElement } from '../hooks/useFormatElement';
 import { UrbanMessageTextData } from '../types/Messages';
 
 export type TextProps = Omit<UrbanMessageTextData, 'text'> & {
-    children: React.ElementType | string | number;
+    children: React.ReactNode;
     isNewMessageEveryRender?: boolean;
 };
 
