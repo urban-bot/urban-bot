@@ -1,7 +1,7 @@
 import React from 'react';
 import { getBotContext, RouterContext } from '../context';
 import { UrbanListener } from '../types';
-import { UrbanEvent, UrbanEventText, UrbanEventType } from '../types/Events';
+import { UrbanEvent, UrbanEventText } from '../types/Events';
 
 export function useBotContext<Type, NativeEventPayload, Meta>() {
     const BotContext = getBotContext<Type, NativeEventPayload, Meta>();
@@ -24,10 +24,12 @@ export function useRouter() {
     return routerContext;
 }
 
-function useSubscribe<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEvent<Type, NativeEventPayload>>,
-    event: UrbanEventType<Type, NativeEventPayload> | 'any',
-) {
+function useSubscribe<
+    Type,
+    NativeEventPayload,
+    Meta,
+    Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>
+>(callback: UrbanListener<Event>, event: Event['type'] | 'any') {
     const { chat, $$managerBot } = useBotContext<Type, NativeEventPayload, Meta>();
 
     React.useEffect(() => {
@@ -46,7 +48,7 @@ export function useAny<Type, NativeEventPayload, Meta>(callback: UrbanListener<U
 export function useText<Type, NativeEventPayload, Meta>(
     callback: UrbanListener<UrbanEventText<Type, NativeEventPayload>>,
 ) {
-    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'text');
+    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventText<Type, NativeEventPayload>>(callback, 'text');
 }
 
 export function useCommand<Type, NativeEventPayload, Meta>(
