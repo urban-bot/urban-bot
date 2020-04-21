@@ -56,7 +56,7 @@ export class VkontakteBot {
         const bot = await this.bot;
 
         switch (nodeName) {
-            case 'text': {
+            case 'urban-text': {
                 return bot.vk.call('messages.send', {
                     peer_id: chat.id,
                     message: data.text,

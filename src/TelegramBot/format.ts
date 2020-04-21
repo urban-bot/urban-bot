@@ -26,7 +26,7 @@ function formatReplyMarkupForNewMessage(message: UrbanNewMessage) {
         return replyMarkup;
     }
 
-    if ((message.nodeName === 'buttons' || message.nodeName === 'img') && message.data.buttons !== undefined) {
+    if ((message.nodeName === 'urban-buttons' || message.nodeName === 'urban-img') && message.data.buttons !== undefined) {
         const replyMarkup: TelegramBot.InlineKeyboardMarkup = {
             inline_keyboard: [
                 message.data.buttons.map(({ text, id }) => {
@@ -40,7 +40,7 @@ function formatReplyMarkupForNewMessage(message: UrbanNewMessage) {
 }
 
 function formatReplyMarkupForExistingMessage(message: UrbanNewMessage) {
-    if ((message.nodeName === 'buttons' || message.nodeName === 'img') && message.data.buttons !== undefined) {
+    if ((message.nodeName === 'urban-buttons' || message.nodeName === 'urban-img') && message.data.buttons !== undefined) {
         const replyMarkup: TelegramBot.InlineKeyboardMarkup = {
             inline_keyboard: [
                 message.data.buttons.map(({ text, id }) => {
@@ -64,7 +64,7 @@ function formatParseMode(parseMode: UrbanParseMode | undefined) {
 function formatParams(message: UrbanNewMessage) {
     const parse_mode = formatParseMode(message.data.parseMode);
 
-    if (message.nodeName === 'text') {
+    if (message.nodeName === 'urban-text') {
         if (message.data.disableWebPagePreview === true) {
             return {
                 parse_mode,

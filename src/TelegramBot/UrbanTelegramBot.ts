@@ -365,12 +365,12 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
 
     sendMessage(message: UrbanNewMessage) {
         switch (message.nodeName) {
-            case 'text': {
+            case 'urban-text': {
                 const params = formatParamsForNewMessage(message);
 
                 return this.bot.sendMessage(message.chat.id, message.data.text, params);
             }
-            case 'img': {
+            case 'urban-img': {
                 const params = formatParamsForNewMessage(message);
 
                 return this.bot.sendPhoto(message.chat.id, message.data.src, {
@@ -378,7 +378,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
                     caption: message.data.title,
                 });
             }
-            case 'buttons': {
+            case 'urban-buttons': {
                 const params = formatParamsForNewMessage(message);
 
                 return this.bot.sendMessage(message.chat.id, message.data.title, params);
@@ -395,7 +395,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
 
     updateMessage(message: UrbanExistingMessage<Meta>) {
         switch (message.nodeName) {
-            case 'text': {
+            case 'urban-text': {
                 const metaToEdit = {
                     chat_id: message.meta.chat.id,
                     message_id: message.meta.message_id,
@@ -407,7 +407,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
 
                 break;
             }
-            case 'img': {
+            case 'urban-img': {
                 const metaToEdit = {
                     chat_id: message.meta.chat.id,
                     message_id: message.meta.message_id,
@@ -428,7 +428,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
 
                 break;
             }
-            case 'buttons': {
+            case 'urban-buttons': {
                 const metaToEdit = {
                     chat_id: message.meta.chat.id,
                     message_id: message.meta.message_id,

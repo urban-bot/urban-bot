@@ -166,13 +166,13 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
 
     async sendMessage(message: UrbanNewMessage): Promise<SlackMessageMeta> {
         switch (message.nodeName) {
-            case 'text': {
+            case 'urban-text': {
                 return (this.client.chat.postMessage({
                     channel: message.chat.id,
                     text: message.data.text,
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
-            case 'img': {
+            case 'urban-img': {
                 const blocks: KnownBlock[] = [
                     {
                         type: 'image',
@@ -199,7 +199,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                     text: message.data.title ?? '',
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
-            case 'buttons': {
+            case 'urban-buttons': {
                 const elements = formatButtons(message.data.buttons);
 
                 const blocks: KnownBlock[] = [];
@@ -231,7 +231,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
 
     updateMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
         switch (message.nodeName) {
-            case 'text': {
+            case 'urban-text': {
                 this.client.chat.update({
                     channel: message.meta.channel,
                     ts: message.meta.ts,
@@ -240,7 +240,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
 
                 break;
             }
-            case 'img': {
+            case 'urban-img': {
                 const blocks: KnownBlock[] = [
                     {
                         type: 'image',
@@ -270,7 +270,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
 
                 break;
             }
-            case 'buttons': {
+            case 'urban-buttons': {
                 const elements = formatButtons(message.data.buttons);
 
                 const blocks: KnownBlock[] = [];

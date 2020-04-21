@@ -22,7 +22,7 @@ export type UrbanMessageTextData = UrbanMessageCommonData & {
 };
 
 export type UrbanNewMessageText = UrbanMessageCommon & {
-    nodeName: 'text';
+    nodeName: 'urban-text';
     data: UrbanMessageTextData;
 };
 
@@ -35,7 +35,7 @@ export type UrbanMessageImageData = UrbanMessageCommonData & {
 };
 
 export type UrbanNewMessageImage = UrbanMessageCommon & {
-    nodeName: 'img';
+    nodeName: 'urban-img';
     data: UrbanMessageImageData;
 };
 
@@ -45,7 +45,7 @@ export type UrbanMessageButtonsData = UrbanMessageCommonData & {
 };
 
 export type UrbanNewMessageButtons = UrbanMessageCommon & {
-    nodeName: 'buttons';
+    nodeName: 'urban-buttons';
     data: UrbanMessageButtonsData;
 };
 
