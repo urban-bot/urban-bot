@@ -23,7 +23,7 @@ export function Text({
     const [formattedText, finalParseMode] = useFormatElement(children, parseMode);
 
     return (
-        <text1
+        <text
             chat={chat}
             $$managerBot={$$managerBot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
