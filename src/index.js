@@ -4,7 +4,7 @@ import { Text } from './components/Text';
 import { Image } from './components/Image';
 import { ButtonGroup, Button } from './components/ButtonGroup';
 import { Root } from './components/Root';
-import { BotContext, RouterContext } from './context';
+import { getBotContext, RouterContext } from './context';
 import {
     useBotContext,
     useText,
@@ -52,7 +52,7 @@ export {
     useVideo,
     useVoice,
     useDice,
-    BotContext,
+    getBotContext,
     RouterContext,
     useAction,
 };

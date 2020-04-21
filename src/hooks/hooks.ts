@@ -1,27 +1,30 @@
-import React, { Context } from 'react';
-import { BotContext, RouterContext } from '../context';
-import EventEmitter from 'events';
-import { UrbanChat } from '../types/index';
+import React from 'react';
+import { getBotContext, RouterContext } from '../context';
+import { AnyFunction } from '../types/common';
 
-type BotContext = {
-    chat: UrbanChat;
-    $$managerBot: EventEmitter;
-};
+export function useBotContext<Type, NativeEventPayload, Meta>() {
+    const BotContext = getBotContext<Type, NativeEventPayload, Meta>();
+    const botContext = React.useContext(BotContext);
 
-type Callback = (props: unknown) => void;
+    if (botContext === undefined) {
+        throw new Error('You should use useBotContext only under Root component');
+    }
 
-type RouterContext = unknown;
-
-export function useBotContext() {
-    return React.useContext<BotContext>((BotContext as unknown) as Context<BotContext>);
+    return botContext;
 }
 
 export function useRouter() {
-    return React.useContext<RouterContext>((RouterContext as unknown) as Context<RouterContext>);
+    const routerContext = React.useContext(RouterContext);
+
+    if (routerContext === undefined) {
+        throw new Error('You should use useBotContext only under Router component');
+    }
+
+    return routerContext;
 }
 
-function useSubscribe(callback: Callback, event: string | symbol) {
-    const { chat, $$managerBot } = useBotContext();
+function useSubscribe<Type, NativeEventPayload, Meta>(callback: AnyFunction, event: string) {
+    const { chat, $$managerBot } = useBotContext<Type, NativeEventPayload, Meta>();
 
     React.useEffect(() => {
         const adapter = ({ payload, ...other }: any) => callback({ ...other, ...payload });
@@ -33,66 +36,66 @@ function useSubscribe(callback: Callback, event: string | symbol) {
     }, [callback, $$managerBot, event, chat]);
 }
 
-export function useAny(callback: Callback) {
-    useSubscribe(callback, 'any');
+export function useAny<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'any');
 }
 
-export function useText(callback: Callback) {
-    useSubscribe(callback, 'text');
+export function useText<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'text');
 }
 
-export function useCommand(callback: Callback) {
-    useSubscribe(callback, 'command');
+export function useCommand<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'command');
 }
 
-export function useSticker(callback: Callback) {
-    useSubscribe(callback, 'sticker');
+export function useSticker<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'sticker');
 }
 
-export function useAnimation(callback: Callback) {
-    useSubscribe(callback, 'animation');
+export function useAnimation<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'animation');
 }
 
-export function useAudio(callback: Callback) {
-    useSubscribe(callback, 'audio');
+export function useAudio<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'audio');
 }
 
-export function useContact(callback: Callback) {
-    useSubscribe(callback, 'contact');
+export function useContact<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'contact');
 }
 
-export function useDocument(callback: Callback) {
-    useSubscribe(callback, 'document');
+export function useDocument<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'document');
 }
 
-export function useInvoice(callback: Callback) {
-    useSubscribe(callback, 'invoice');
+export function useInvoice<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'invoice');
 }
 
-export function useLocation(callback: Callback) {
-    useSubscribe(callback, 'location');
+export function useLocation<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'location');
 }
 
-export function usePhoto(callback: Callback) {
-    useSubscribe(callback, 'photo');
+export function usePhoto<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'photo');
 }
 
-export function usePoll(callback: Callback) {
-    useSubscribe(callback, 'poll');
+export function usePoll<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'poll');
 }
 
-export function useVideo(callback: Callback) {
-    useSubscribe(callback, 'video');
+export function useVideo<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'video');
 }
 
-export function useVoice(callback: Callback) {
-    useSubscribe(callback, 'voice');
+export function useVoice<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'voice');
 }
 
-export function useDice(callback: Callback) {
-    useSubscribe(callback, 'dice');
+export function useDice<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'dice');
 }
 
-export function useAction(callback: Callback) {
-    useSubscribe(callback, 'action');
+export function useAction<Type, NativeEventPayload, Meta>(callback: AnyFunction) {
+    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'action');
 }
