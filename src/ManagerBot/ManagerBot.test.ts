@@ -1,25 +1,43 @@
 /* eslint-disable jest/no-commented-out-tests */
 import { ManagerBot } from './ManagerBot';
+import { UrbanExistingMessage, UrbanNewMessage } from '../types/Messages';
 
 const testBot = {
-    on: jest.fn(),
-    emit: jest.fn(),
+    processUpdate: jest.fn(),
     sendMessage: jest.fn(),
-    removeListener: jest.fn(),
     updateMessage: jest.fn(),
     deleteMessage: jest.fn(),
     initializeProcessUpdate: jest.fn(),
 };
 
+const meta = { messageId: 345 };
+const chat = { id: '123' };
+const newMessage: UrbanNewMessage = {
+    nodeName: 'text',
+    chat,
+    data: { text: 'text' },
+} as const;
+
+const newMessage2: UrbanNewMessage = {
+    nodeName: 'img',
+    chat,
+    data: { src: 'http://...' },
+}
+
+const existingMessage: UrbanExistingMessage<typeof meta> = {
+    ...newMessage,
+    meta,
+} as const;
+
 // eslint-disable-next-line no-unused-vars
-const testBotEmitter = {
-    on(event, listener) {
-        this[event] = listener;
-    },
-    emit(event, data) {
-        this[event](data);
-    },
-};
+// const testBotEmitter = {
+//     on(event, listener) {
+//         this[event] = listener;
+//     },
+//     emit(event, data) {
+//         this[event](data);
+//     },
+// };
 
 // FIXME rewrite broken tests
 describe('ManagerBot', () => {
@@ -125,16 +143,12 @@ describe('ManagerBot', () => {
     it('method updateMessage', () => {
         const managerBot = new ManagerBot(testBot);
 
-        const nodeName = 'text';
-        const chatId = 123;
-        const data = { text: '123' };
-        const meta = { messageId: 345 };
-        managerBot.updateMessage(nodeName, chatId, data, meta);
+        managerBot.updateMessage(existingMessage);
 
         expect(testBot.updateMessage).toHaveBeenCalledTimes(1);
-        expect(testBot.updateMessage).toHaveBeenLastCalledWith(nodeName, chatId, data, meta);
+        expect(testBot.updateMessage).toHaveBeenLastCalledWith(existingMessage);
 
-        managerBot.updateMessage(nodeName, chatId, data, meta);
+        managerBot.updateMessage(existingMessage);
 
         expect(testBot.updateMessage).toHaveBeenCalledTimes(2);
     });
@@ -142,16 +156,12 @@ describe('ManagerBot', () => {
     it('method deleteMessage', () => {
         const managerBot = new ManagerBot(testBot);
 
-        const nodeName = 'text';
-        const chatId = 123;
-        const data = { text: '123' };
-        const meta = { messageId: 345 };
-        managerBot.deleteMessage(nodeName, chatId, data, meta);
+        managerBot.deleteMessage(existingMessage);
 
         expect(testBot.deleteMessage).toHaveBeenCalledTimes(1);
-        expect(testBot.deleteMessage).toHaveBeenLastCalledWith(nodeName, chatId, data, meta);
+        expect(testBot.deleteMessage).toHaveBeenLastCalledWith(existingMessage);
 
-        managerBot.deleteMessage(nodeName, chatId, data, meta);
+        managerBot.deleteMessage(existingMessage);
 
         expect(testBot.deleteMessage).toHaveBeenCalledTimes(2);
     });
@@ -161,90 +171,91 @@ describe('ManagerBot', () => {
             testBot.sendMessage.mockClear();
         });
 
-        const nodeName = 'text';
-        const chat = { id: 123 };
-        const data = { text: '123' };
-
         const nodeName2 = 'img';
         const data2 = { src: 'http://something' };
 
         it('send one message', () => {
             const managerBot = new ManagerBot(testBot);
 
-            managerBot.addChat(chat.id);
+            managerBot.addChat(existingMessage.chat.id);
 
             testBot.sendMessage.mockReturnValue(Promise.resolve());
 
-            const res = managerBot.sendMessage(nodeName, chat, data);
+            const res = managerBot.sendMessage(existingMessage);
 
             return res.then(() => {
                 expect(testBot.sendMessage).toHaveBeenCalledTimes(1);
-                expect(testBot.sendMessage).toHaveBeenLastCalledWith(nodeName, chat, data);
+                expect(testBot.sendMessage).toHaveBeenLastCalledWith(existingMessage);
             });
         });
 
         it('send two messages', () => {
             const managerBot = new ManagerBot(testBot);
 
-            managerBot.addChat(chat.id);
+            managerBot.addChat(newMessage.chat.id);
 
             testBot.sendMessage.mockReturnValue(Promise.resolve());
 
-            const res1 = managerBot.sendMessage(nodeName, chat, data);
-            const res2 = managerBot.sendMessage(nodeName2, chat, data2);
+            const res1 = managerBot.sendMessage(newMessage);
+            const res2 = managerBot.sendMessage(newMessage2);
 
             return Promise.all([res1, res2]).then(() => {
                 expect(testBot.sendMessage).toHaveBeenCalledTimes(2);
-                expect(testBot.sendMessage).toHaveBeenCalledWith(nodeName, chat, data);
-                expect(testBot.sendMessage).toHaveBeenCalledWith(nodeName2, chat, data2);
+                expect(testBot.sendMessage).toHaveBeenCalledWith(newMessage);
+                expect(testBot.sendMessage).toHaveBeenCalledWith(newMessage2);
             });
         });
 
         it('send next message only when previous was finished', () => {
             const managerBot = new ManagerBot(testBot);
 
-            managerBot.addChat(chat.id);
+            managerBot.addChat(newMessage.chat.id);
 
-            const firstPromise = managerBot.chats.get(chat.id).promiseQueue.last;
+            // @ts-ignore
+            const firstPromise = managerBot.chats.get(newMessage.chat.id)?.promiseQueue.last;
+
+            if (firstPromise === undefined) {
+                throw new Error('promiseQueue is not found');
+            }
 
             testBot.sendMessage.mockReturnValueOnce(
                 new Promise((resolve) => {
                     setTimeout(resolve, 1000);
                 }),
             );
-            const res1 = managerBot.sendMessage(nodeName, chat, data);
+            const res1 = managerBot.sendMessage(newMessage);
 
             testBot.sendMessage.mockReturnValueOnce(Promise.resolve());
-            managerBot.sendMessage(nodeName2, chat, data2);
+            managerBot.sendMessage(newMessage2);
 
             return firstPromise
                 .then(() => {
-                    expect(testBot.sendMessage).toHaveBeenNthCalledWith(1, nodeName, chat, data);
+                    expect(testBot.sendMessage).toHaveBeenNthCalledWith(1, newMessage);
                     expect(testBot.sendMessage).not.toHaveBeenCalledTimes(2);
 
                     return res1;
                 })
                 .then(() => {
-                    expect(testBot.sendMessage).toHaveBeenNthCalledWith(2, nodeName2, chat, data2);
+                    expect(testBot.sendMessage).toHaveBeenNthCalledWith(2, newMessage2);
                 });
         });
 
         it('throw error without initializing chatId', () => {
             const managerBot = new ManagerBot(testBot);
 
-            expect(() => managerBot.sendMessage(nodeName, chat.id, data)).toThrowErrorMatchingSnapshot();
+            expect(() => managerBot.sendMessage(newMessage)).toThrowErrorMatchingSnapshot();
         });
 
         it('throw error if send message after delete chatId', async () => {
             const managerBot = new ManagerBot(testBot);
-            managerBot.addChat(chat.id);
+            managerBot.addChat(newMessage.chat.id);
             testBot.sendMessage.mockReturnValue(Promise.resolve());
 
-            await managerBot.sendMessage(nodeName, chat, data);
+            await managerBot.sendMessage(newMessage);
             expect(testBot.sendMessage).toHaveBeenCalledTimes(1);
 
-            managerBot.deleteChat(chat.id);
-            expect(() => managerBot.sendMessage(nodeName2, chat, data2)).toThrowErrorMatchingSnapshot();
+            managerBot.deleteChat(newMessage.chat.id);
+            expect(() => managerBot.sendMessage(newMessage2)).toThrowErrorMatchingSnapshot();
         });
     });
 });
