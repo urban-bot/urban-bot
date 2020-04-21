@@ -7,7 +7,7 @@ import {
     UrbanEventDice,
     UrbanEventVideo,
     UrbanEventPoll,
-    UrbanEventPhoto,
+    UrbanEventImage,
     UrbanEventLocation,
     UrbanEventInvoice,
     UrbanEventCommand,
@@ -42,7 +42,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
         this.bot.on('document', (ctx) => this.handleMessage('document', ctx));
         this.bot.on('invoice', (ctx) => this.handleMessage('invoice', ctx));
         this.bot.on('location', (ctx) => this.handleMessage('location', ctx));
-        this.bot.on('photo', (ctx) => this.handleMessage('photo', ctx));
+        this.bot.on('photo', (ctx) => this.handleMessage('image', ctx));
         this.bot.on('poll' as any, (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBotMessage));
         this.bot.on('video', (ctx) => this.handleMessage('video', ctx));
         this.bot.on('voice', (ctx) => this.handleMessage('voice', ctx));
@@ -283,14 +283,14 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
                 this.processUpdate(adaptedContext);
                 break;
             }
-            case 'photo': {
+            case 'image': {
                 if (ctx.photo === undefined) {
                     break;
                 }
 
-                const adaptedContext: UrbanEventPhoto<TELEGRAM, TelegramBotMessage> = {
+                const adaptedContext: UrbanEventImage<TELEGRAM, TelegramBotMessage> = {
                     ...common,
-                    type: 'photo',
+                    type: 'image',
                     payload: {
                         fileIds: ctx.photo.map((photo) => photo.file_id),
                     },
