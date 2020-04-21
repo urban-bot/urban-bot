@@ -13,13 +13,13 @@ const testBot = {
 const meta = { messageId: 345 };
 const chat = { id: '123' };
 const newMessage: UrbanNewMessage = {
-    nodeName: 'text',
+    nodeName: 'urban-text',
     chat,
     data: { text: 'text' },
 } as const;
 
 const newMessage2: UrbanNewMessage = {
-    nodeName: 'img',
+    nodeName: 'urban-img',
     chat,
     data: { src: 'http://...' },
 }
@@ -171,9 +171,6 @@ describe('ManagerBot', () => {
             testBot.sendMessage.mockClear();
         });
 
-        const nodeName2 = 'img';
-        const data2 = { src: 'http://something' };
-
         it('send one message', () => {
             const managerBot = new ManagerBot(testBot);
 
@@ -211,6 +208,7 @@ describe('ManagerBot', () => {
 
             managerBot.addChat(newMessage.chat.id);
 
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             const firstPromise = managerBot.chats.get(newMessage.chat.id)?.promiseQueue.last;
 
