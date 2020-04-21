@@ -1,7 +1,6 @@
 import { UrbanChat, UrbanParseMode } from './index';
-import { OtherProps } from './common';
 
-export type UrbanButton = OtherProps & {
+export type UrbanButton = {
     text: string;
     id?: string;
 };
@@ -10,7 +9,7 @@ export type UrbanMessageCommon = {
     chat: UrbanChat;
 };
 
-export type UrbanMessageCommonData = OtherProps & {
+export type UrbanMessageCommonData = {
     parseMode?: UrbanParseMode;
     disableNotification?: boolean;
     replyToMessageId?: string;
@@ -28,16 +27,15 @@ export type UrbanNewMessageText = UrbanMessageCommon & {
 };
 
 export type UrbanMessageImageData = UrbanMessageCommonData & {
-    title: string;
+    title?: string;
     src: string;
-    buttons: UrbanButton[];
+    buttons?: UrbanButton[];
     // FIXME rename to alt
-    altText: string;
+    altText?: string;
 };
 
 export type UrbanNewMessageImage = UrbanMessageCommon & {
     nodeName: 'img';
-    buttons: UrbanButton[];
     data: UrbanMessageImageData;
 };
 
