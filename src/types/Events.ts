@@ -109,8 +109,8 @@ export type UrbanEventLocation<Type, NativeEventPayload> = {
     };
 } & UrbanEventCommon<Type, NativeEventPayload>;
 
-export type UrbanEventPhoto<Type, NativeEventPayload> = {
-    type: 'photo';
+export type UrbanEventImage<Type, NativeEventPayload> = {
+    type: 'image';
     payload: {
         fileIds: string[];
     };
@@ -151,7 +151,7 @@ export type UrbanEvent<Type, NativeEventPayload> =
     | UrbanEventVideo<Type, NativeEventPayload>
     | UrbanEventText<Type, NativeEventPayload>
     | UrbanEventPoll<Type, NativeEventPayload>
-    | UrbanEventPhoto<Type, NativeEventPayload>
+    | UrbanEventImage<Type, NativeEventPayload>
     | UrbanEventDocument<Type, NativeEventPayload>
     | UrbanEventContact<Type, NativeEventPayload>
     | UrbanEventSticker<Type, NativeEventPayload>

@@ -4,7 +4,7 @@ import {
     useText,
     useVideo,
     usePoll,
-    usePhoto,
+    useImage,
     useLocation,
     useDocument,
     useContact,
@@ -40,7 +40,7 @@ export function HooksExample() {
         setAnswer("You've sent a poll " + question);
     });
 
-    usePhoto(() => {
+    useImage(() => {
         setAnswer("You've sent a photo");
     });
 
