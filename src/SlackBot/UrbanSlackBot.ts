@@ -178,11 +178,11 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                         type: 'image',
                         title: {
                             type: 'plain_text',
-                            text: message.data.title,
+                            text: message.data.title ?? '',
                             emoji: true,
                         },
                         image_url: message.data.src,
-                        alt_text: message.data.altText,
+                        alt_text: message.data.altText ?? '',
                     },
                 ];
 
@@ -196,7 +196,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 return (this.client.chat.postMessage({
                     channel: message.chat.id,
                     blocks,
-                    text: message.data.title,
+                    text: message.data.title ?? '',
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
             case 'buttons': {
@@ -246,11 +246,11 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                         type: 'image',
                         title: {
                             type: 'plain_text',
-                            text: message.data.title,
+                            text: message.data.title ?? '',
                             emoji: true,
                         },
                         image_url: message.data.src,
-                        alt_text: message.data.altText,
+                        alt_text: message.data.altText ?? '',
                     },
                 ];
 
@@ -265,7 +265,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                     channel: message.meta.channel,
                     ts: message.meta.ts,
                     blocks,
-                    text: message.data.title, // TODO: investigate me
+                    text: message.data.title ?? '', // TODO: investigate me
                 });
 
                 break;
