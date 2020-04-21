@@ -1,24 +1,7 @@
 import React from 'react';
 import { getBotContext, RouterContext } from '../context';
 import { UrbanListener } from '../types';
-import {
-    UrbanEvent,
-    UrbanEventAction,
-    UrbanEventAnimation,
-    UrbanEventAudio,
-    UrbanEventCommand,
-    UrbanEventContact,
-    UrbanEventDice,
-    UrbanEventDocument,
-    UrbanEventInvoice,
-    UrbanEventLocation,
-    UrbanEventImage,
-    UrbanEventPoll,
-    UrbanEventSticker,
-    UrbanEventText,
-    UrbanEventVideo,
-    UrbanEventVoice,
-} from '../types/Events';
+import { UrbanEvent, UrbanListenerByType } from '../types/Events';
 
 export function useBotContext<Type, NativeEventPayload, Meta>() {
     const BotContext = getBotContext<Type, NativeEventPayload, Meta>();
@@ -44,8 +27,8 @@ export function useRouter() {
 function useSubscribe<
     Type,
     NativeEventPayload,
-    Meta,
-    Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>
+    Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>,
+    Meta = unknown
 >(callback: UrbanListener<Event>, event: Event['type'] | 'any') {
     const { chat, $$managerBot } = useBotContext<Type, NativeEventPayload, Meta>();
 
@@ -58,96 +41,80 @@ function useSubscribe<
     }, [callback, $$managerBot, event, chat]);
 }
 
-export function useAny<Type, NativeEventPayload, Meta>(callback: UrbanListener<UrbanEvent<Type, NativeEventPayload>>) {
-    useSubscribe<Type, NativeEventPayload, Meta>(callback, 'any');
+export function useAny<Type, NativeEventPayload>(callback: UrbanListener<UrbanEvent<Type, NativeEventPayload>>) {
+    useSubscribe(callback, 'any');
 }
 
-export function useText<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventText<Type, NativeEventPayload>>,
-) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventText<Type, NativeEventPayload>>(callback, 'text');
+export function useText<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'text'>) {
+    useSubscribe(callback, 'text');
 }
 
-export function useCommand<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventCommand<Type, NativeEventPayload>>,
+export function useCommand<Type, NativeEventPayload>(
+    callback: UrbanListenerByType<Type, NativeEventPayload, 'command'>,
 ) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventCommand<Type, NativeEventPayload>>(callback, 'command');
+    useSubscribe(callback, 'command');
 }
 
-export function useSticker<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventSticker<Type, NativeEventPayload>>,
+export function useSticker<Type, NativeEventPayload>(
+    callback: UrbanListenerByType<Type, NativeEventPayload, 'sticker'>,
 ) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventSticker<Type, NativeEventPayload>>(callback, 'sticker');
+    useSubscribe(callback, 'sticker');
 }
 
-export function useAnimation<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventAnimation<Type, NativeEventPayload>>,
+export function useAnimation<Type, NativeEventPayload>(
+    callback: UrbanListenerByType<Type, NativeEventPayload, 'animation'>,
 ) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventAnimation<Type, NativeEventPayload>>(callback, 'animation');
+    useSubscribe(callback, 'animation');
 }
 
-export function useAudio<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventAudio<Type, NativeEventPayload>>,
-) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventAudio<Type, NativeEventPayload>>(callback, 'audio');
+export function useAudio<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'audio'>) {
+    useSubscribe(callback, 'audio');
 }
 
-export function useContact<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventContact<Type, NativeEventPayload>>,
+export function useContact<Type, NativeEventPayload>(
+    callback: UrbanListenerByType<Type, NativeEventPayload, 'contact'>,
 ) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventContact<Type, NativeEventPayload>>(callback, 'contact');
+    useSubscribe(callback, 'contact');
 }
 
-export function useDocument<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventDocument<Type, NativeEventPayload>>,
+export function useDocument<Type, NativeEventPayload>(
+    callback: UrbanListenerByType<Type, NativeEventPayload, 'document'>,
 ) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventDocument<Type, NativeEventPayload>>(callback, 'document');
+    useSubscribe(callback, 'document');
 }
 
-export function useInvoice<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventInvoice<Type, NativeEventPayload>>,
+export function useInvoice<Type, NativeEventPayload>(
+    callback: UrbanListenerByType<Type, NativeEventPayload, 'invoice'>,
 ) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventInvoice<Type, NativeEventPayload>>(callback, 'invoice');
+    useSubscribe(callback, 'invoice');
 }
 
-export function useLocation<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventLocation<Type, NativeEventPayload>>,
+export function useLocation<Type, NativeEventPayload>(
+    callback: UrbanListenerByType<Type, NativeEventPayload, 'location'>,
 ) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventLocation<Type, NativeEventPayload>>(callback, 'location');
+    useSubscribe(callback, 'location');
 }
 
-export function useImage<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventImage<Type, NativeEventPayload>>,
-) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventImage<Type, NativeEventPayload>>(callback, 'image');
+export function useImage<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'image'>) {
+    useSubscribe(callback, 'image');
 }
 
-export function usePoll<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventPoll<Type, NativeEventPayload>>,
-) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventPoll<Type, NativeEventPayload>>(callback, 'poll');
+export function usePoll<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'poll'>) {
+    useSubscribe(callback, 'poll');
 }
 
-export function useVideo<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventVideo<Type, NativeEventPayload>>,
-) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventVideo<Type, NativeEventPayload>>(callback, 'video');
+export function useVideo<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'video'>) {
+    useSubscribe(callback, 'video');
 }
 
-export function useVoice<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventVoice<Type, NativeEventPayload>>,
-) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventVoice<Type, NativeEventPayload>>(callback, 'voice');
+export function useVoice<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'voice'>) {
+    useSubscribe(callback, 'voice');
 }
 
-export function useDice<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventDice<Type, NativeEventPayload>>,
-) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventDice<Type, NativeEventPayload>>(callback, 'dice');
+export function useDice<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'dice'>) {
+    useSubscribe(callback, 'dice');
 }
 
-export function useAction<Type, NativeEventPayload, Meta>(
-    callback: UrbanListener<UrbanEventAction<Type, NativeEventPayload>>,
-) {
-    useSubscribe<Type, NativeEventPayload, Meta, UrbanEventAction<Type, NativeEventPayload>>(callback, 'action');
+export function useAction<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'action'>) {
+    useSubscribe(callback, 'action');
 }

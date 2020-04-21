@@ -1,4 +1,4 @@
-import { UrbanChat, UrbanFrom } from './index';
+import { UrbanChat, UrbanFrom, UrbanListener } from './index';
 
 export type UrbanEventCommon<Type, NativeEventPayload> = {
     chat: UrbanChat;
@@ -157,5 +157,47 @@ export type UrbanEvent<Type, NativeEventPayload> =
     | UrbanEventSticker<Type, NativeEventPayload>
     | UrbanEventLocation<Type, NativeEventPayload>
     | UrbanEventDice<Type, NativeEventPayload>;
+
+export type UrbanEventByType<
+    Type,
+    NativeEventPayload,
+    T extends UrbanEvent<Type, NativeEventPayload>['type']
+> = T extends 'text'
+    ? UrbanEventText<Type, NativeEventPayload>
+    : T extends 'command'
+    ? UrbanEventCommand<Type, NativeEventPayload>
+    : T extends 'pool'
+    ? UrbanEventPoll<Type, NativeEventPayload>
+    : T extends 'sticker'
+    ? UrbanEventSticker<Type, NativeEventPayload>
+    : T extends 'animation'
+    ? UrbanEventAnimation<Type, NativeEventPayload>
+    : T extends 'audio'
+    ? UrbanEventAudio<Type, NativeEventPayload>
+    : T extends 'contact'
+    ? UrbanEventContact<Type, NativeEventPayload>
+    : T extends 'document'
+    ? UrbanEventDocument<Type, NativeEventPayload>
+    : T extends 'invoice'
+    ? UrbanEventInvoice<Type, NativeEventPayload>
+    : T extends 'location'
+    ? UrbanEventLocation<Type, NativeEventPayload>
+    : T extends 'image'
+    ? UrbanEventImage<Type, NativeEventPayload>
+    : T extends 'dice'
+    ? UrbanEventDice<Type, NativeEventPayload>
+    : T extends 'voice'
+    ? UrbanEventVoice<Type, NativeEventPayload>
+    : T extends 'action'
+    ? UrbanEventAction<Type, NativeEventPayload>
+    : T extends 'video'
+    ? UrbanEventVideo<Type, NativeEventPayload>
+    : UrbanEvent<Type, NativeEventPayload>;
+
+export type UrbanListenerByType<
+    Type,
+    NativeEventPayload,
+    T extends UrbanEvent<Type, NativeEventPayload>['type']
+> = UrbanListener<UrbanEventByType<Type, NativeEventPayload, T>>;
 
 export type UrbanEventType<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>['type'];
