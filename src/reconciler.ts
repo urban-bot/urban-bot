@@ -16,22 +16,19 @@ const hostConfig = {
     getChildHostContext: () => {
         return childHostContext;
     },
-    // eslint-disable-next-line no-unused-vars
-    shouldSetTextContent: (type, props) => {
+    shouldSetTextContent: (_type: unknown, _props: unknown) => {
         return false;
         // return typeof props.children === 'string' || typeof props.children === 'number';
     },
-    createInstance: (type, newProps) => {
-        return createNode(type, newProps);
-    },
+    createInstance: createNode,
     createTextInstance: () => {},
     // eslint-disable-next-line no-unused-vars
-    resetTextContent: (node) => {},
-    getPublicInstance: (instance) => instance,
+    resetTextContent: (_node: unknown) => {},
+    getPublicInstance: (instance: unknown) => instance,
     appendInitialChild: appendChildNode,
     appendChild: appendChildNode,
     insertBefore: appendChildNode,
-    finalizeInitialChildren: () => {},
+    finalizeInitialChildren: () => false,
     supportsMutation: true,
     appendChildToContainer: appendChildNode,
     insertInContainerBefore: appendChildNode,
@@ -39,8 +36,17 @@ const hostConfig = {
     prepareUpdate: () => true,
     commitUpdate: updateNode,
     // eslint-disable-next-line no-unused-vars
-    commitTextUpdate: (node, oldText, newText) => {},
+    commitTextUpdate: (_node: unknown, _oldText: unknown, _newText: unknown) => {},
     removeChild: removeChildNode,
+    shouldDeprioritizeSubtree: () => false,
+    scheduleDeferredCallback: () => {},
+    cancelDeferredCallback: () => {},
+    setTimeout: () => {},
+    clearTimeout: () => {},
+    noTimeout: () => {},
+    isPrimaryRenderer: false,
+    supportsPersistence: false,
+    supportsHydration: false,
 };
 
 export const reactReconciler = ReactReconciler(hostConfig);
