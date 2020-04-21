@@ -1,13 +1,15 @@
 import React from 'react';
-import { BotContext } from '../context';
+import { getBotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
 
-function Chat({ bot, user, children, isNewMessageEveryRender, chat, parseMode, $$managerBot }) {
+function Chat({ bot, from, children, isNewMessageEveryRender, chat, parseMode, $$managerBot }) {
+    const BotContext = getBotContext();
+
     return (
         <BotContext.Provider
             key={chat.id}
-            value={{ bot, user, isNewMessageEveryRender, chat, parseMode, $$managerBot }}
+            value={{ bot, from, isNewMessageEveryRender, chat, parseMode, $$managerBot }}
         >
             <ErrorBoundary>{children}</ErrorBoundary>
         </BotContext.Provider>
@@ -42,7 +44,7 @@ export function Root({
                     <Chat
                         bot={bot}
                         $$managerBot={managerBot}
-                        user={from}
+                        from={from}
                         key={chatId}
                         isNewMessageEveryRender={isNewMessageEveryRender}
                         chat={chat}
@@ -73,7 +75,7 @@ export function Root({
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
-            // First message is needed to register user and initialize react children for him.
+            // First message is needed to register chat and initialize react children for it.
             // After initializing we repeat this message that react children can process it.
             managerBot.emit('any', { realEvent: firstMessage.realEvent, ...firstMessage });
             managerBot.emit(firstMessage.realEvent, firstMessage);

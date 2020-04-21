@@ -1,14 +1,9 @@
-import { UrbanChat } from './index';
+import { UrbanChat, UrbanFrom } from './index';
 
 export type UrbanEventCommon<Type, NativeEventPayload> = {
     chat: UrbanChat;
     nativeEvent?: NativeEvent<Type, NativeEventPayload>;
-    from?: {
-        id?: string | number;
-        username?: string;
-        firstName?: string;
-        surname?: string;
-    };
+    from?: UrbanFrom;
 };
 
 export type NativeEvent<Type, NativeEventPayload> = {
