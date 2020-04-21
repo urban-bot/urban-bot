@@ -43,7 +43,11 @@ export class ManagerBot<Type, NativeEventPayload, Meta> {
         this.chats.delete(id);
     }
 
-    on(event: string | symbol, listener: UrbanListener<UrbanEvent<Type, NativeEventPayload>>, chatId?: string) {
+    on<Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>>(
+        event: Event['type'] | 'any',
+        listener: UrbanListener<Event>,
+        chatId?: string,
+    ) {
         if (chatId === undefined) {
             return this.eventEmitter.on(event, listener);
         } else {
@@ -58,7 +62,11 @@ export class ManagerBot<Type, NativeEventPayload, Meta> {
         }
     }
 
-    removeListener(event: string, listener: UrbanListener<UrbanEvent<Type, NativeEventPayload>>, chatId?: string) {
+    removeListener<Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>>(
+        event: Event['type'] | 'any',
+        listener: UrbanListener<Event>,
+        chatId?: string,
+    ) {
         if (chatId === undefined) {
             return this.eventEmitter.removeListener(event, listener);
         } else {
