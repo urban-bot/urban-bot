@@ -12,7 +12,8 @@
         "test": "jest",
         "lint": "eslint \"./src/**\"",
         "lint:fix": "npm run lint -- --fix",
-        "my-publish": "npm run build && npm publish"
+        "my-publish": "npm run build && npm publish",
+        "typecheck": "tsc --noEmit"
     },
     "keywords": [
         "bot",
