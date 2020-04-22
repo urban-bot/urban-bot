@@ -148,14 +148,6 @@ export type SlackMessageMeta = WebAPICallResult & {
         scopes?: SlackScope[];
         acceptedScopes?: SlackScope[];
     };
-    //     message: {
-    //
-    //         bot_profile: {
-    //             icons: [Object],
-    //         }
-    //     },
-    //     }
-    // }
 };
 
 export type SlackScope =

@@ -84,9 +84,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         this.events.on('message', this.handleMessage);
         this.interactions.action(/.*/, this.handleAction);
 
-        app.listen(port, () => {
-            console.log('start listen ' + port);
-        });
+        app.listen(port);
     }
 
     // FIXME think about better implementation
