@@ -1,13 +1,7 @@
 import React from 'react';
 import { Button } from '../components/ButtonGroup';
 import { getRandomId } from './getRandomId';
-import { OtherProps } from '../types/common';
-
-type ButtonProps = {
-    onClick: Function;
-    children: string;
-    id?: string;
-} & OtherProps;
+import { ButtonProps } from '../components/Image';
 
 type FormattedButton = Omit<ButtonProps, 'children'> & {
     id: string;

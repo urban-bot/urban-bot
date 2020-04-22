@@ -10,7 +10,7 @@ type Chat = {
     promiseQueue: PromiseQueue;
 };
 
-export class ManagerBot<Type, NativeEventPayload, Meta> {
+export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unknown> {
     private chats = new Map<string, Chat>();
     private eventEmitter: EventEmitter;
 
