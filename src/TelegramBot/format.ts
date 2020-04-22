@@ -26,7 +26,10 @@ function formatReplyMarkupForNewMessage(message: UrbanMessage) {
         return replyMarkup;
     }
 
-    if ((message.nodeName === 'urban-buttons' || message.nodeName === 'urban-img') && message.data.buttons !== undefined) {
+    if (
+        (message.nodeName === 'urban-buttons' || message.nodeName === 'urban-img') &&
+        message.data.buttons !== undefined
+    ) {
         const replyMarkup: TelegramBot.InlineKeyboardMarkup = {
             inline_keyboard: [
                 message.data.buttons.map(({ text, id }) => {
