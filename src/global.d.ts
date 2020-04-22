@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface,@typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import { UrbanMessageTextData, UrbanMessageImageData, UrbanMessageButtonsData } from './types/Messages';
@@ -19,7 +20,6 @@ export type UrbanElementButtons = UrbanElement & UrbanMessageButtonsData;
 declare module 'react' {
     namespace JSX {
         // copy from @types/react
-        // eslint-disable-next-line @typescript-eslint/no-empty-interface
         interface Element extends React.ReactElement<any, any> {}
         interface ElementClass extends React.Component<any> {
             render(): React.ReactNode;
