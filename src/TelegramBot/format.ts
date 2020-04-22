@@ -15,11 +15,7 @@ function formatReplyMarkupForNewMessage(message: UrbanMessage) {
             force_reply: message.data.forceReply,
         };
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         if ('selective' in message.data && typeof message.data.selective === 'boolean') {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
             replyMarkup.selective = message.data.selective;
         }
 
