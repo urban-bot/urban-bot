@@ -3,8 +3,6 @@ import React from 'react';
 export const MARKDOWN_MODE = 'markdown';
 export const HTML_MODE = 'HTML';
 
-export type Element = React.ReactElement<React.PropsWithChildren<unknown>> | Element[] | string | number | any;
-
 function formatHTMLElement(element: React.ReactElement<React.PropsWithChildren<unknown>>, text: string): string {
     switch (element.type) {
         case React.Fragment: {
@@ -86,7 +84,7 @@ function formatMarkdownElement(element: React.ReactElement, text: string): strin
 }
 
 export function formatMarkupLanguageElement(
-    element: Element,
+    element: React.ReactNode,
     parseMode?: typeof HTML_MODE | typeof MARKDOWN_MODE,
 ): string {
     if (Array.isArray(element)) {
