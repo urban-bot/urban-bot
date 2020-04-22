@@ -59,16 +59,9 @@ describe('formatButtonElement', () => {
         expect(formatButtonElement(element)[0].customProp).toBe(customProp);
     });
 
-    it('add mock onClick by default', () => {
-        const text = 'test name';
-        const element = <Button>{text}</Button>;
-
-        expect(formatButtonElement(element)[0].onClick).toEqual(expect.any(Function));
-    });
-
     it('add random id by default', () => {
         const text = 'test name';
-        const element = <Button>{text}</Button>;
+        const element = <Button onClick={() => {}}>{text}</Button>;
 
         expect(formatButtonElement(element)[0].id).toEqual(expect.any(String));
     });

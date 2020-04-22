@@ -17,36 +17,8 @@ export type UrbanElementText = UrbanElement & { data: UrbanMessageTextData };
 export type UrbanElementImage = UrbanElement & { data: UrbanMessageImageData };
 export type UrbanElementButtons = UrbanElement & { data: UrbanMessageButtonsData };
 
-declare module 'react' {
+declare global {
     namespace JSX {
-        // copy from @types/react
-        interface Element extends React.ReactElement<any, any> {}
-        interface ElementClass extends React.Component<any> {
-            render(): React.ReactNode;
-        }
-        interface ElementAttributesProperty {
-            props: {};
-        }
-        interface ElementChildrenAttribute {
-            children: {};
-        }
-
-        // We can't recurse forever because `type` can't be self-referential;
-        // let's assume it's reasonable to do a single React.lazy() around a single React.memo() / vice-versa
-        type LibraryManagedAttributes<C, P> = C extends
-            | React.MemoExoticComponent<infer T>
-            | React.LazyExoticComponent<infer T>
-            ? T extends React.MemoExoticComponent<infer U> | React.LazyExoticComponent<infer U>
-                ? ReactManagedAttributes<U, P>
-                : ReactManagedAttributes<T, P>
-            : ReactManagedAttributes<C, P>;
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-interface
-        interface IntrinsicAttributes extends React.Attributes {}
-        // eslint-disable-next-line @typescript-eslint/no-empty-interface
-        interface IntrinsicClassAttributes<T> extends React.ClassAttributes<T> {}
-
-        // urban-bot overriding
         export interface IntrinsicElements {
             'urban-text': UrbanElementText;
             'urban-img': UrbanElementImage;
