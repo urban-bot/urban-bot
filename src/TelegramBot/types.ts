@@ -13,4 +13,4 @@ export type TelegramBotLostMessage = {
 export type TelegramBotMessage = TelegramBot.Message & TelegramBotLostMessage;
 export type TelegramPayload = TelegramBotMessage | TelegramBot.CallbackQuery;
 
-export type Meta = TelegramBotMessage;
+export type TelegramMessageMeta = TelegramBotMessage;
