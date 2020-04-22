@@ -12,9 +12,9 @@ import {
     Root,
     Text,
     useBotContext,
-} from '../dist';
-import { UrbanTelegramBot } from '../dist/TelegramBot/UrbanTelegramBot';
-import { UrbanSlackBot } from '../dist/SlackBot/UrbanSlackBot';
+} from '../src';
+import { UrbanTelegramBot } from '../src/TelegramBot/UrbanTelegramBot';
+import { UrbanSlackBot } from '../src/SlackBot/UrbanSlackBot';
 import { TextExample } from './Text';
 import { HooksExample } from './hooks';
 
