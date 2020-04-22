@@ -1,5 +1,5 @@
 {
     "watch": ["src", "examples"],
-    "ext": "ts,js",
+    "ext": "ts,js,tsx",
     "exec": "tsc --incremental && ts-node ./examples/index.js"
 }

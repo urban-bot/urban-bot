@@ -22,13 +22,13 @@ export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unk
 
     processUpdate: ProcessUpdate<Type, NativeEventPayload> = (event) => {
         this.eventEmitter.emit('any', event);
-        this.eventEmitter.emit(event.type);
+        this.eventEmitter.emit(event.type, event);
 
         const { id } = event.chat;
         const chat = this.chats.get(id);
 
         if (chat === undefined) {
-            throw new Error('Specify chatId via managerBot.addChat(chatId) to process messages for specific chat');
+            return;
         }
 
         chat.eventEmitter.emit('any', event);
@@ -65,9 +65,21 @@ export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unk
     emit<Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>>(
         eventName: Event['type'] | 'any',
         event: Event,
+        chatId?: string,
     ) {
         this.eventEmitter.emit('any', event);
         this.eventEmitter.emit(eventName, event);
+
+        if (chatId !== undefined) {
+            const chat = this.chats.get(chatId);
+
+            if (chat === undefined) {
+                throw new Error('Specify chatId via managerBot.addChat(chatId) to emit messages for specific chat');
+            }
+
+            chat.eventEmitter.emit('any', event);
+            chat.eventEmitter.emit(event.type, event);
+        }
     }
 
     removeListener<Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>>(

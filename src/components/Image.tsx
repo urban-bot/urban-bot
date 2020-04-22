@@ -40,9 +40,9 @@ export function Image({
             throw new Error('ButtonGroup component should return children');
         }
 
-        const { buttons } = buttonsElementChildren.props as UrbanElementButtons;
+        const { data } = buttonsElementChildren.props as UrbanElementButtons;
 
-        formattedButtons = buttons;
+        formattedButtons = data.buttons;
     }
 
     const [formattedTitle, finalParseMode] = useFormatElement(title, parseMode);
@@ -52,15 +52,17 @@ export function Image({
             $$managerBot={$$managerBot}
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
-            src={src}
-            title={formattedTitle}
-            altText={altText}
-            buttons={formattedButtons}
-            parseMode={finalParseMode}
-            disableNotification={disableNotification}
-            replyToMessageId={replyToMessageId}
-            forceReply={forceReply}
-            {...otherProps}
+            data={{
+                disableNotification,
+                replyToMessageId,
+                forceReply,
+                parseMode: finalParseMode,
+                buttons: formattedButtons,
+                title: formattedTitle,
+                altText: altText,
+                src,
+                ...otherProps,
+            }}
         />
     );
 }

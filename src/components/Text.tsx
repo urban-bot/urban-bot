@@ -27,13 +27,15 @@ export function Text({
             chat={chat}
             $$managerBot={$$managerBot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
-            text={formattedText}
-            parseMode={finalParseMode}
-            disableWebPagePreview={disableWebPagePreview}
-            disableNotification={disableNotification}
-            replyToMessageId={replyToMessageId}
-            forceReply={forceReply}
-            {...otherProps}
+            data={{
+                disableNotification,
+                disableWebPagePreview,
+                replyToMessageId,
+                forceReply,
+                parseMode: finalParseMode,
+                text: formattedText,
+                ...otherProps,
+            }}
         />
     );
 }

@@ -12,9 +12,9 @@ export type UrbanElement<Type = unknown, NativeEventPayload = unknown, Meta = un
     isNewMessageEveryRender?: boolean;
 };
 
-export type UrbanElementText = UrbanElement & UrbanMessageTextData;
-export type UrbanElementImage = UrbanElement & UrbanMessageImageData;
-export type UrbanElementButtons = UrbanElement & UrbanMessageButtonsData;
+export type UrbanElementText = UrbanElement & { data: UrbanMessageTextData };
+export type UrbanElementImage = UrbanElement & { data: UrbanMessageImageData };
+export type UrbanElementButtons = UrbanElement & { data: UrbanMessageButtonsData };
 
 declare module 'react' {
     namespace JSX {
