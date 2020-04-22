@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { UrbanNewMessage } from '../types/Messages';
+import { UrbanMessage } from '../types/Messages';
 import TelegramBot from 'node-telegram-bot-api';
 import { UrbanParseMode } from '../types/index';
 
@@ -9,7 +9,7 @@ type EditMessageOptions =
     | TelegramBot.EditMessageLiveLocationOptions
     | TelegramBot.EditMessageReplyMarkupOptions;
 
-function formatReplyMarkupForNewMessage(message: UrbanNewMessage) {
+function formatReplyMarkupForNewMessage(message: UrbanMessage) {
     if (message.data.forceReply !== undefined) {
         const replyMarkup: TelegramBot.ForceReply = {
             force_reply: message.data.forceReply,
@@ -39,8 +39,11 @@ function formatReplyMarkupForNewMessage(message: UrbanNewMessage) {
     }
 }
 
-function formatReplyMarkupForExistingMessage(message: UrbanNewMessage) {
-    if ((message.nodeName === 'urban-buttons' || message.nodeName === 'urban-img') && message.data.buttons !== undefined) {
+function formatReplyMarkupForExistingMessage(message: UrbanMessage) {
+    if (
+        (message.nodeName === 'urban-buttons' || message.nodeName === 'urban-img') &&
+        message.data.buttons !== undefined
+    ) {
         const replyMarkup: TelegramBot.InlineKeyboardMarkup = {
             inline_keyboard: [
                 message.data.buttons.map(({ text, id }) => {
@@ -61,7 +64,7 @@ function formatParseMode(parseMode: UrbanParseMode | undefined) {
     return parseMode === 'HTML' ? 'HTML' : 'MarkdownV2';
 }
 
-function formatParams(message: UrbanNewMessage) {
+function formatParams(message: UrbanMessage) {
     const parse_mode = formatParseMode(message.data.parseMode);
 
     if (message.nodeName === 'urban-text') {
@@ -78,7 +81,7 @@ function formatParams(message: UrbanNewMessage) {
     } as const;
 }
 
-export function formatParamsForNewMessage(message: UrbanNewMessage): TelegramBot.SendMessageOptions {
+export function formatParamsForNewMessage(message: UrbanMessage): TelegramBot.SendMessageOptions {
     const params: TelegramBot.SendMessageOptions = formatParams(message);
 
     if (message.data.replyToMessageId !== undefined) {
@@ -90,7 +93,7 @@ export function formatParamsForNewMessage(message: UrbanNewMessage): TelegramBot
     return params;
 }
 
-export function formatParamsForExistingMessage(message: UrbanNewMessage): EditMessageOptions {
+export function formatParamsForExistingMessage(message: UrbanMessage): EditMessageOptions {
     const params: EditMessageOptions = formatParams(message);
 
     params.reply_markup = formatReplyMarkupForExistingMessage(message);

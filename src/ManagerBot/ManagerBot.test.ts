@@ -1,6 +1,6 @@
 /* eslint-disable jest/no-commented-out-tests */
 import { ManagerBot } from './ManagerBot';
-import { UrbanExistingMessage, UrbanNewMessage } from '../types/Messages';
+import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 
 const testBot = {
     processUpdate: jest.fn(),
@@ -12,13 +12,13 @@ const testBot = {
 
 const meta = { messageId: 345 };
 const chat = { id: '123' };
-const newMessage: UrbanNewMessage = {
+const newMessage: UrbanMessage = {
     nodeName: 'urban-text',
     chat,
     data: { text: 'text' },
 } as const;
 
-const newMessage2: UrbanNewMessage = {
+const newMessage2: UrbanMessage = {
     nodeName: 'urban-img',
     chat,
     data: { src: 'http://...' },

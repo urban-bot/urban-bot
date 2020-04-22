@@ -20,7 +20,7 @@ import {
     UrbanEventType, UrbanEventCommon,
 } from '../types/Events';
 import { UrbanBot } from '../types/UrbanBot';
-import { UrbanExistingMessage, UrbanNewMessage } from '../types/Messages';
+import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
 import { Meta, TELEGRAM, TelegramPayload, ProcessUpdate, TelegramBotMessage } from './types';
 
@@ -363,7 +363,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
         }
     };
 
-    sendMessage(message: UrbanNewMessage) {
+    sendMessage(message: UrbanMessage) {
         switch (message.nodeName) {
             case 'urban-text': {
                 const params = formatParamsForNewMessage(message);

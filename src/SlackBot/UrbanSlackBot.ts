@@ -9,7 +9,7 @@ import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
 import { KnownBlock, Button, SectionBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
 import { UrbanEvent, UrbanEventAction, UrbanEventCommand } from '../types/Events';
-import { UrbanNewMessage, UrbanExistingMessage, UrbanButton } from '../types/Messages';
+import { UrbanMessage, UrbanExistingMessage, UrbanButton } from '../types/Messages';
 import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext, SlackMessageMeta } from './types';
 
 type SLACK = 'SLACK';
@@ -164,7 +164,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         return this.processUpdate(ctx);
     };
 
-    async sendMessage(message: UrbanNewMessage): Promise<SlackMessageMeta> {
+    async sendMessage(message: UrbanMessage): Promise<SlackMessageMeta> {
         switch (message.nodeName) {
             case 'urban-text': {
                 return (this.client.chat.postMessage({
