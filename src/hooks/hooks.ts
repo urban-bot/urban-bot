@@ -3,8 +3,8 @@ import { getBotContext, RouterContext } from '../context';
 import { UrbanListener } from '../types';
 import { UrbanEvent, UrbanListenerByType } from '../types/Events';
 
-export function useBotContext<Type, NativeEventPayload, Meta>() {
-    const BotContext = getBotContext<Type, NativeEventPayload, Meta>();
+export function useBotContext<Type, NativeEventPayload, MessageMeta>() {
+    const BotContext = getBotContext<Type, NativeEventPayload, MessageMeta>();
     const botContext = React.useContext(BotContext);
 
     if (botContext === undefined) {
@@ -28,9 +28,9 @@ function useSubscribe<
     Type,
     NativeEventPayload,
     Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>,
-    Meta = unknown
+    MessageMeta = unknown
 >(callback: UrbanListener<Event>, event: Event['type'] | 'any') {
-    const { chat, $$managerBot } = useBotContext<Type, NativeEventPayload, Meta>();
+    const { chat, $$managerBot } = useBotContext<Type, NativeEventPayload, MessageMeta>();
 
     React.useEffect(() => {
         $$managerBot.on(event, callback, chat.id);

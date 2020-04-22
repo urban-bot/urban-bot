@@ -7,18 +7,18 @@ import { UrbanBot } from '../types/UrbanBot';
 import { UrbanEvent } from '../types/Events';
 import { MARKDOWN_MODE } from '../utils/formatMarkupLanguageElement';
 
-export type ChatProps<Type, NativeEventPayload, Meta> = {
-    bot: UrbanBot<Type, NativeEventPayload, Meta>;
+export type ChatProps<Type, NativeEventPayload, MessageMeta> = {
+    bot: UrbanBot<Type, NativeEventPayload, MessageMeta>;
     from?: UrbanFrom;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
     parseMode: UrbanParseMode;
-    $$managerBot: ManagerBot<Type, NativeEventPayload, Meta>;
+    $$managerBot: ManagerBot<Type, NativeEventPayload, MessageMeta>;
     children: React.ReactNode;
     key: string;
 };
 
-function Chat<Type, NativeEventPayload, Meta>({
+function Chat<Type, NativeEventPayload, MessageMeta>({
     bot,
     from,
     children,
@@ -26,8 +26,8 @@ function Chat<Type, NativeEventPayload, Meta>({
     chat,
     parseMode,
     $$managerBot,
-}: ChatProps<Type, NativeEventPayload, Meta>) {
-    const BotContext = getBotContext<Type, NativeEventPayload, Meta>();
+}: ChatProps<Type, NativeEventPayload, MessageMeta>) {
+    const BotContext = getBotContext<Type, NativeEventPayload, MessageMeta>();
 
     return (
         <BotContext.Provider
@@ -41,21 +41,21 @@ function Chat<Type, NativeEventPayload, Meta>({
     );
 }
 
-export type RootProps<Type = unknown, NativeEventPayload = unknown, Meta = unknown> = {
-    bot: UrbanBot<Type, NativeEventPayload, Meta>;
+export type RootProps<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown> = {
+    bot: UrbanBot<Type, NativeEventPayload, MessageMeta>;
     children: React.ReactNode;
     timeToClearUserSession?: number;
     isNewMessageEveryRender?: boolean;
     parseMode?: UrbanParseMode;
 };
 
-export function Root<Type = unknown, NativeEventPayload = unknown, Meta = unknown>({
+export function Root<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown>({
     children,
     bot,
     timeToClearUserSession = 1000 * 60 * 10,
     isNewMessageEveryRender = false,
     parseMode = MARKDOWN_MODE,
-}: RootProps<Type, NativeEventPayload, Meta>) {
+}: RootProps<Type, NativeEventPayload, MessageMeta>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map());
     const chatsRef = React.useRef(chats);
@@ -75,7 +75,7 @@ export function Root<Type = unknown, NativeEventPayload = unknown, Meta = unknow
             if (!chatsRef.current.has(chatId)) {
                 chatsRef.current.set(
                     chat.id,
-                    <Chat<Type, NativeEventPayload, Meta>
+                    <Chat<Type, NativeEventPayload, MessageMeta>
                         bot={bot}
                         $$managerBot={$$managerBot}
                         from={from}

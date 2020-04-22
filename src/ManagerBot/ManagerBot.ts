@@ -10,11 +10,11 @@ type Chat = {
     promiseQueue: PromiseQueue;
 };
 
-export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unknown> {
+export class ManagerBot<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown> {
     private chats = new Map<string, Chat>();
     private eventEmitter: EventEmitter;
 
-    constructor(private bot: UrbanBot<Type, NativeEventPayload, Meta>) {
+    constructor(private bot: UrbanBot<Type, NativeEventPayload, MessageMeta>) {
         this.eventEmitter = new EventEmitter();
 
         bot.initializeProcessUpdate(this.processUpdate);
@@ -99,23 +99,23 @@ export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unk
         }
     }
 
-    sendMessage(message: UrbanMessage): Promise<Meta> {
+    sendMessage(message: UrbanMessage): Promise<MessageMeta> {
         const chatById = this.chats.get(message.chat.id);
 
         if (chatById === undefined) {
             throw new Error('Specify chatId via managerBot.addChat(chatId) to sendMessage for specific chat');
         }
 
-        return chatById.promiseQueue.next<Meta>(() => {
+        return chatById.promiseQueue.next<MessageMeta>(() => {
             return this.bot.sendMessage(message);
         });
     }
 
-    updateMessage(message: UrbanExistingMessage<Meta>) {
+    updateMessage(message: UrbanExistingMessage<MessageMeta>) {
         return this.bot.updateMessage(message);
     }
 
-    deleteMessage(message: UrbanExistingMessage<Meta>) {
+    deleteMessage(message: UrbanExistingMessage<MessageMeta>) {
         return this.bot.deleteMessage(message);
     }
 }

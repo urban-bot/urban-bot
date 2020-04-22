@@ -5,11 +5,11 @@ export type ProcessUpdate<Type = unknown, NativeEventPayload = unknown> = (
     event: UrbanEvent<Type, NativeEventPayload>,
 ) => void;
 
-export interface UrbanBot<Type = unknown, NativeEventPayload = unknown, Meta = unknown> {
+export interface UrbanBot<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown> {
     type: string;
     processUpdate: ProcessUpdate<Type, NativeEventPayload>;
     initializeProcessUpdate: (processUpdate: ProcessUpdate<Type, NativeEventPayload>) => void;
-    sendMessage: (message: UrbanMessage) => Promise<Meta>;
-    updateMessage: (message: UrbanExistingMessage<Meta>) => void;
-    deleteMessage: (message: UrbanExistingMessage<Meta>) => void;
+    sendMessage: (message: UrbanMessage) => Promise<MessageMeta>;
+    updateMessage: (message: UrbanExistingMessage<MessageMeta>) => void;
+    deleteMessage: (message: UrbanExistingMessage<MessageMeta>) => void;
 }
