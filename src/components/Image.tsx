@@ -5,12 +5,6 @@ import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroup } from './ButtonGroup';
 import { UrbanElementButtons } from '../global.d';
 
-export type ButtonProps = {
-    onClick: (...args: unknown[]) => unknown;
-    children: string;
-    id?: string;
-};
-
 export type ImageProps = UrbanMessageCommonData & {
     src: string;
     title?: React.ReactNode;

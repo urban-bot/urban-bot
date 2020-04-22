@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '../components/ButtonGroup';
 import { getRandomId } from './getRandomId';
-import { ButtonProps } from '../components/Image';
+import { ButtonProps } from '../components/ButtonGroup';
 
 type FormattedButton = Omit<ButtonProps, 'children'> & {
     id: string;
