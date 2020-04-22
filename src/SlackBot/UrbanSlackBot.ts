@@ -61,7 +61,7 @@ function formatTitle(title: string): SectionBlock {
 type UrbanSlackBotProps = {
     signingSecret: string;
     token: string;
-    port: number;
+    port?: number;
 };
 
 export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessageMeta> {
@@ -222,6 +222,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             default: {
                 throw new Error(
                     `Tag '${
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
                     }' does not exist. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
                 );
@@ -296,6 +297,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             default: {
                 throw new Error(
                     `Tag '${
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
                     }' does not exist. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
                 );

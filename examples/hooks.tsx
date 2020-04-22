@@ -15,7 +15,7 @@ import {
     useAnimation,
     useDice,
     useCommand,
-} from '../dist';
+} from '../src';
 
 export function HooksExample() {
     const [answer, setAnswer] = React.useState('');
@@ -53,7 +53,7 @@ export function HooksExample() {
     });
 
     useContact(({ payload }) => {
-        setAnswer(`You've sent a contact ${payload.firstName } ${payload.lastName ?? ''}`);
+        setAnswer(`You've sent a contact ${payload.firstName} ${payload.lastName ?? ''}`);
     });
 
     useAudio(({ payload }) => {

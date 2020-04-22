@@ -17,7 +17,8 @@ import {
     UrbanEventAudio,
     UrbanEventAnimation,
     UrbanEventAction,
-    UrbanEventType, UrbanEventCommon,
+    UrbanEventType,
+    UrbanEventCommon,
 } from '../types/Events';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
@@ -43,6 +44,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
         this.bot.on('invoice', (ctx) => this.handleMessage('invoice', ctx));
         this.bot.on('location', (ctx) => this.handleMessage('location', ctx));
         this.bot.on('photo', (ctx) => this.handleMessage('image', ctx));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.bot.on('poll' as any, (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBotMessage));
         this.bot.on('video', (ctx) => this.handleMessage('video', ctx));
         this.bot.on('voice', (ctx) => this.handleMessage('voice', ctx));
@@ -386,6 +388,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
             default: {
                 throw new Error(
                     `Tag '${
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
                     }' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
                 );
@@ -443,6 +446,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
             default: {
                 throw new Error(
                     `Tag '${
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
                     }' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
                 );

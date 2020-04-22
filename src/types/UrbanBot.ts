@@ -6,6 +6,7 @@ export type ProcessUpdate<Type = unknown, NativeEventPayload = unknown> = (
 ) => void;
 
 export interface UrbanBot<Type = unknown, NativeEventPayload = unknown, Meta = unknown> {
+    type: string;
     processUpdate: ProcessUpdate<Type, NativeEventPayload>;
     initializeProcessUpdate: (processUpdate: ProcessUpdate<Type, NativeEventPayload>) => void;
     sendMessage: (message: UrbanMessage) => Promise<Meta>;

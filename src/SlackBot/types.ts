@@ -19,8 +19,6 @@ import {
 } from '@slack/types';
 import { WebAPICallResult } from '@slack/web-api';
 
-export type Respond = (message: any) => Promise<unknown>;
-
 export type SlackUser = {
     id: string;
     username: string;

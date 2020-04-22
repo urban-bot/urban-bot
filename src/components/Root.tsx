@@ -44,9 +44,9 @@ function Chat<Type, NativeEventPayload, Meta>({
 export type RootProps<Type = unknown, NativeEventPayload = unknown, Meta = unknown> = {
     bot: UrbanBot<Type, NativeEventPayload, Meta>;
     children: React.ReactNode;
-    timeToClearUserSession: number;
-    isNewMessageEveryRender: boolean;
-    parseMode: UrbanParseMode;
+    timeToClearUserSession?: number;
+    isNewMessageEveryRender?: boolean;
+    parseMode?: UrbanParseMode;
 };
 
 export function Root<Type = unknown, NativeEventPayload = unknown, Meta = unknown>({
