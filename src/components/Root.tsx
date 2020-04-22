@@ -56,6 +56,7 @@ export function Root<Type = unknown, NativeEventPayload = unknown, Meta = unknow
     isNewMessageEveryRender = false,
     parseMode = MARKDOWN_MODE,
 }: RootProps<Type, NativeEventPayload, Meta>) {
+    // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map());
     const chatsRef = React.useRef(chats);
     chatsRef.current = chats;
