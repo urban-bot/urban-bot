@@ -61,7 +61,7 @@ function formatTitle(title: string): SectionBlock {
 type UrbanSlackBotProps = {
     signingSecret: string;
     token: string;
-    port: number;
+    port?: number;
 };
 
 export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessageMeta> {
