@@ -1,4 +1,5 @@
 import { UrbanChat, UrbanParseMode } from './index';
+import { OtherProps } from './common';
 
 export type UrbanButton = {
     text: string;
@@ -9,7 +10,7 @@ export type UrbanMessageCommon = {
     chat: UrbanChat;
 };
 
-export type UrbanMessageCommonData = {
+export type UrbanMessageCommonData = OtherProps & {
     parseMode?: UrbanParseMode;
     disableNotification?: boolean;
     replyToMessageId?: string;

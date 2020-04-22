@@ -111,18 +111,16 @@ function App() {
 const urbanTelegramBot = new UrbanTelegramBot(process.env.TELEGRAM_TOKEN_DEV as string, {
     polling: true,
 });
-
-const urbanSlackBot = new UrbanSlackBot({
-    signingSecret: process.env.SLACK_SIGNING_SECRET as string,
-    token: process.env.SLACK_TOKEN as string,
-});
-
 render(
     <Root bot={urbanTelegramBot} parseMode="HTML">
         <App />
     </Root>,
 );
 
+const urbanSlackBot = new UrbanSlackBot({
+    signingSecret: process.env.SLACK_SIGNING_SECRET as string,
+    token: process.env.SLACK_TOKEN as string,
+});
 render(
     <Root bot={urbanSlackBot}>
         <App />
