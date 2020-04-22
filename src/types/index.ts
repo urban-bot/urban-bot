@@ -3,7 +3,7 @@ export type UrbanChat = {
 };
 
 export type UrbanFrom = {
-    id?: string | number;
+    id?: string;
     username?: string;
     firstName?: string;
     surname?: string;

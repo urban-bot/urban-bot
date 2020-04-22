@@ -3,7 +3,7 @@ import { UrbanChat, UrbanFrom, UrbanListener } from './index';
 export type UrbanEventCommon<Type, NativeEventPayload> = {
     chat: UrbanChat;
     nativeEvent?: NativeEvent<Type, NativeEventPayload>;
-    from?: UrbanFrom;
+    from: UrbanFrom;
 };
 
 export type NativeEvent<Type, NativeEventPayload> = {

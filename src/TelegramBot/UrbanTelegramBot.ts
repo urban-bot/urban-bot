@@ -74,7 +74,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
                 id: String(ctx.chat.id),
             },
             from: {
-                id: ctx.from?.id,
+                id: String(ctx.from?.id),
                 username: ctx.from?.username,
                 firstName: ctx.from?.first_name,
                 surname: ctx.from?.last_name,
@@ -347,7 +347,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
                     id: String(ctx.message.chat.id),
                 },
                 from: {
-                    id: ctx.from?.id,
+                    id: String(ctx.from?.id),
                     username: ctx.from?.username,
                     firstName: ctx.from?.first_name,
                     surname: ctx.from?.last_name,
