@@ -53,8 +53,8 @@ export type UrbanMessageButtons = UrbanMessageCommon & {
 export type UrbanMessage = UrbanMessageText | UrbanMessageImage | UrbanMessageButtons;
 export type UrbanMessageData = UrbanMessageTextData | UrbanMessageImageData | UrbanMessageButtonsData;
 
-export type UrbanExistingMessage<Meta> = UrbanMessage & {
-    meta: Meta;
+export type UrbanExistingMessage<MessageMeta> = UrbanMessage & {
+    meta: MessageMeta;
 };
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];

@@ -5,8 +5,8 @@ import { UrbanChat } from './types';
 
 export type Markup = { children: React.ReactNode };
 export type Link = Markup & { href: string };
-export type UrbanElement<Type = unknown, NativeEventPayload = unknown, Meta = unknown> = {
-    $$managerBot: ManagerBot<Type, NativeEventPayload, Meta>;
+export type UrbanElement<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown> = {
+    $$managerBot: ManagerBot<Type, NativeEventPayload, MessageMeta>;
     chat: UrbanChat;
     isNewMessageEveryRender?: boolean;
 };

@@ -3,19 +3,19 @@ import { ManagerBot } from './ManagerBot/ManagerBot';
 import { UrbanChat, UrbanFrom, UrbanParseMode } from './types';
 import { UrbanBot } from './types/UrbanBot';
 
-export type BotContextType<Type = unknown, NativeEventPayload = unknown, Meta = unknown> = {
-    $$managerBot: ManagerBot<Type, NativeEventPayload, Meta>;
+export type BotContextType<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown> = {
+    $$managerBot: ManagerBot<Type, NativeEventPayload, MessageMeta>;
     chat: UrbanChat;
     from?: UrbanFrom;
     isNewMessageEveryRender: boolean;
     parseMode: UrbanParseMode;
-    bot: UrbanBot<Type, NativeEventPayload, Meta>;
+    bot: UrbanBot<Type, NativeEventPayload, MessageMeta>;
 };
 
 export const BotContext = React.createContext(undefined);
 
-export function getBotContext<Type = unknown, NativeEventPayload = unknown, Meta = unknown>() {
-    return (BotContext as unknown) as React.Context<BotContextType<Type, NativeEventPayload, Meta>>;
+export function getBotContext<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown>() {
+    return (BotContext as unknown) as React.Context<BotContextType<Type, NativeEventPayload, MessageMeta>>;
 }
 
 export type RouterContext = {
