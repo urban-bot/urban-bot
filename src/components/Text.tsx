@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
 import { useFormatElement } from '../hooks/useFormatElement';
-import { UrbanMessageCommonData, UrbanMessageTextData } from '../types/Messages';
+import { UrbanMessageCommonData } from '../types/Messages';
 
 export type TextProps = UrbanMessageCommonData & {
     disableWebPagePreview?: boolean;
