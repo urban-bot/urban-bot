@@ -1,9 +1,10 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
 import { useFormatElement } from '../hooks/useFormatElement';
-import { UrbanMessageTextData } from '../types/Messages';
+import { UrbanMessageCommonData, UrbanMessageTextData } from '../types/Messages';
 
-export type TextProps = Omit<UrbanMessageTextData, 'text'> & {
+export type TextProps = UrbanMessageCommonData & {
+    disableWebPagePreview?: boolean;
     children: React.ReactNode;
     isNewMessageEveryRender?: boolean;
 };
