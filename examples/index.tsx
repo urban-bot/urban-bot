@@ -20,16 +20,14 @@ import { HooksExample } from './hooks';
 
 dotenv.config();
 
-const token = process.env.TELEGRAM_TOKEN_DEV;
-
 function Main() {
     const { bot } = useBotContext();
     const { navigate } = useRouter();
     const [title, setTitle] = React.useState('0');
     const [src, setSrc] = React.useState(true);
 
-    useText(({ text }) => {
-        setTitle(text);
+    useText(({ payload }) => {
+        setTitle(payload.text);
     });
 
     return (
@@ -66,26 +64,27 @@ function Main() {
 
 export function ArrayComponent() {
     const [array, setArray] = React.useState(['0', '1', '2']);
-    const index = React.useRef(array.length);
+    const [index, setIndex] = React.useState(array.length);
 
-    const texts = array.map((v) => {
-        return <Text key={v}>{v}</Text>;
-    });
+    const addLast = () => {
+        setArray([...array, String(index)]);
+        setIndex(index + 1);
+    };
+
+    const deleteFirst = () => {
+        const [_first, ...newArray] = array;
+        setArray(newArray);
+    };
 
     return (
         <>
             <ButtonGroup title={<b>array</b>}>
-                <Button onClick={() => setArray([...array, index.current++])}>Push</Button>
-                <Button
-                    onClick={() => {
-                        const [_first, ...newArray] = array;
-                        setArray(newArray);
-                    }}
-                >
-                    Delete first
-                </Button>
+                <Button onClick={addLast}>Push</Button>
+                <Button onClick={deleteFirst}>Delete first</Button>
             </ButtonGroup>
-            {texts}
+            {array.map((value) => {
+                return <Text key={value}>{value}</Text>;
+            })}
         </>
     );
 }
@@ -109,28 +108,23 @@ function App() {
     );
 }
 
+const urbanTelegramBot = new UrbanTelegramBot(process.env.TELEGRAM_TOKEN_DEV as string, {
+    polling: true,
+});
+
+const urbanSlackBot = new UrbanSlackBot({
+    signingSecret: process.env.SLACK_SIGNING_SECRET as string,
+    token: process.env.SLACK_TOKEN as string,
+});
+
 render(
-    <Root
-        bot={
-            new UrbanTelegramBot(token, {
-                polling: true,
-            })
-        }
-        parseMode="HTML"
-    >
+    <Root bot={urbanTelegramBot} parseMode="HTML" isNewMessageEveryRender>
         <App />
     </Root>,
 );
 
 render(
-    <Root
-        bot={
-            new UrbanSlackBot({
-                signingSecret: process.env.SLACK_SIGNING_SECRET,
-                token: process.env.SLACK_TOKEN,
-            })
-        }
-    >
+    <Root bot={urbanSlackBot} isNewMessageEveryRender>
         <App />
     </Root>,
 );
