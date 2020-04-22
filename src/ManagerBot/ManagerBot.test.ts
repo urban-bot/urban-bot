@@ -8,6 +8,7 @@ const testBot = {
     updateMessage: jest.fn(),
     deleteMessage: jest.fn(),
     initializeProcessUpdate: jest.fn(),
+    type: 'TEST-BOT',
 };
 
 const meta = { messageId: 345 };
@@ -22,7 +23,7 @@ const newMessage2: UrbanMessage = {
     nodeName: 'urban-img',
     chat,
     data: { src: 'http://...' },
-}
+};
 
 const existingMessage: UrbanExistingMessage<typeof meta> = {
     ...newMessage,
