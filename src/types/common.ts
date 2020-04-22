@@ -1,9 +1,7 @@
 export type MapType = {
-    [key: string]: any;
+    [key: string]: unknown;
 };
 
 export type OtherProps = {
     [propName: string]: unknown;
 };
-
-export type AnyFunction = (...args: any[]) => any;
