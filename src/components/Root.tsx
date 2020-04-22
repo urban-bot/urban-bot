@@ -14,8 +14,7 @@ export type ChatProps<Type, NativeEventPayload, Meta> = {
     isNewMessageEveryRender: boolean;
     parseMode: UrbanParseMode;
     $$managerBot: ManagerBot<Type, NativeEventPayload, Meta>;
-    // FIXME children are necessary but <Chat... is given an error that it doesn't get it as a prop but it gets it inside tag
-    children?: React.ReactNode;
+    children: React.ReactNode;
     key: string;
 };
 
@@ -27,7 +26,7 @@ function Chat<Type, NativeEventPayload, Meta>({
     chat,
     parseMode,
     $$managerBot,
-}: ChatProps<Type, NativeEventPayload, Meta>): React.FunctionComponent {
+}: ChatProps<Type, NativeEventPayload, Meta>) {
     const BotContext = getBotContext<Type, NativeEventPayload, Meta>();
 
     return (
