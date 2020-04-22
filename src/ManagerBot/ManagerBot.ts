@@ -1,7 +1,7 @@
 import { PromiseQueue } from './PromiseQueue';
 import EventEmitter from 'events';
 import { ProcessUpdate, UrbanBot } from '../types/UrbanBot';
-import { UrbanExistingMessage, UrbanNewMessage } from '../types/Messages';
+import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { UrbanListener } from '../types';
 import { UrbanEvent } from '../types/Events';
 
@@ -79,7 +79,7 @@ export class ManagerBot<Type, NativeEventPayload, Meta> {
         }
     }
 
-    sendMessage(message: UrbanNewMessage): Promise<Meta> {
+    sendMessage(message: UrbanMessage): Promise<Meta> {
         const chatById = this.chats.get(message.chat.id);
 
         if (chatById === undefined) {

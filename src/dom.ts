@@ -1,5 +1,5 @@
 import { shallowEqual } from './utils/shallowEqual';
-import { UrbanExistingMessage, UrbanMessageNodeName, UrbanNewMessage } from './types/Messages';
+import { UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
 
 export type UrbanNode<Type, NativeEventPayload, Meta> = Omit<UrbanExistingMessage<Meta>, 'meta'> & {
@@ -51,7 +51,7 @@ export function appendChildNode<Type, NativeEventPayload, Meta>(
         nodeName: childNode.nodeName,
         chat: childNode.chat,
         data: childNode.data,
-    } as UrbanNewMessage;
+    } as UrbanMessage;
 
     childNode.meta = childNode.$$managerBot.sendMessage(message);
 }
@@ -101,7 +101,7 @@ export function updateNode<Type, NativeEventPayload, Meta>(
         nodeName: newNode.nodeName,
         chat: newNode.chat,
         data: newNode.data,
-    } as UrbanNewMessage;
+    } as UrbanMessage;
 
     if (node.isNewMessageEveryRender) {
         node.meta = newNode.$$managerBot.sendMessage(message);

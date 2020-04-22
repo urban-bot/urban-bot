@@ -21,7 +21,7 @@ export type UrbanMessageTextData = UrbanMessageCommonData & {
     disableWebPagePreview?: boolean;
 };
 
-export type UrbanNewMessageText = UrbanMessageCommon & {
+export type UrbanMessageText = UrbanMessageCommon & {
     nodeName: 'urban-text';
     data: UrbanMessageTextData;
 };
@@ -34,7 +34,7 @@ export type UrbanMessageImageData = UrbanMessageCommonData & {
     altText?: string;
 };
 
-export type UrbanNewMessageImage = UrbanMessageCommon & {
+export type UrbanMessageImage = UrbanMessageCommon & {
     nodeName: 'urban-img';
     data: UrbanMessageImageData;
 };
@@ -44,16 +44,16 @@ export type UrbanMessageButtonsData = UrbanMessageCommonData & {
     buttons: UrbanButton[];
 };
 
-export type UrbanNewMessageButtons = UrbanMessageCommon & {
+export type UrbanMessageButtons = UrbanMessageCommon & {
     nodeName: 'urban-buttons';
     data: UrbanMessageButtonsData;
 };
 
-export type UrbanNewMessage = UrbanNewMessageText | UrbanNewMessageImage | UrbanNewMessageButtons;
+export type UrbanMessage = UrbanMessageText | UrbanMessageImage | UrbanMessageButtons;
 export type UrbanMessageData = UrbanMessageTextData | UrbanMessageImageData | UrbanMessageButtonsData;
 
-export type UrbanExistingMessage<Meta> = UrbanNewMessage & {
+export type UrbanExistingMessage<Meta> = UrbanMessage & {
     meta: Meta;
 };
 
-export type UrbanMessageNodeName = UrbanNewMessage['nodeName'];
+export type UrbanMessageNodeName = UrbanMessage['nodeName'];
