@@ -23,9 +23,9 @@ import {
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
-import { Meta, TELEGRAM, TelegramPayload, ProcessUpdate, TelegramBotMessage } from './types';
+import { TelegramMessageMeta, TELEGRAM, TelegramPayload, ProcessUpdate, TelegramBotMessage } from './types';
 
-export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Meta> {
+export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, TelegramMessageMeta> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanTelegramBot.TYPE;
 
@@ -396,7 +396,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
         }
     }
 
-    updateMessage(message: UrbanExistingMessage<Meta>) {
+    updateMessage(message: UrbanExistingMessage<TelegramMessageMeta>) {
         switch (message.nodeName) {
             case 'urban-text': {
                 const metaToEdit = {
@@ -454,7 +454,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Met
         }
     }
 
-    deleteMessage(message: UrbanExistingMessage<Meta>) {
+    deleteMessage(message: UrbanExistingMessage<TelegramMessageMeta>) {
         this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 }
