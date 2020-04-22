@@ -22,7 +22,6 @@ const hostConfig = {
     },
     createInstance: createNode,
     createTextInstance: () => {},
-    // eslint-disable-next-line no-unused-vars
     resetTextContent: (_node: unknown) => {},
     getPublicInstance: (instance: unknown) => instance,
     appendInitialChild: appendChildNode,
@@ -35,7 +34,6 @@ const hostConfig = {
     removeChildFromContainer: removeChildNode,
     prepareUpdate: () => true,
     commitUpdate: updateNode,
-    // eslint-disable-next-line no-unused-vars
     commitTextUpdate: (_node: unknown, _oldText: unknown, _newText: unknown) => {},
     removeChild: removeChildNode,
     shouldDeprioritizeSubtree: () => false,
