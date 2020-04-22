@@ -1,8 +1,8 @@
 import React from 'react';
-import { VkontakteBot } from '../dist/VkontakteBot/VkontakteBot';
+import { VkontakteBot } from '../src/VkontakteBot/VkontakteBot';
 
 import dotenv from 'dotenv';
-import { render, useAny, Root, Text } from '../dist';
+import { render, useAny, Root, Text } from '../src';
 
 dotenv.config();
 
