@@ -106,7 +106,7 @@ export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unk
             throw new Error('Specify chatId via managerBot.addChat(chatId) to sendMessage for specific chat');
         }
 
-        return chatById.promiseQueue.next(() => {
+        return chatById.promiseQueue.next<Meta>(() => {
             return this.bot.sendMessage(message);
         });
     }

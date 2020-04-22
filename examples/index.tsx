@@ -118,13 +118,13 @@ const urbanSlackBot = new UrbanSlackBot({
 });
 
 render(
-    <Root bot={urbanTelegramBot} parseMode="HTML" isNewMessageEveryRender>
+    <Root bot={urbanTelegramBot} parseMode="HTML">
         <App />
     </Root>,
 );
 
 render(
-    <Root bot={urbanSlackBot} isNewMessageEveryRender>
+    <Root bot={urbanSlackBot}>
         <App />
     </Root>,
 );
