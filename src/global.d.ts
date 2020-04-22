@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-interface,@typescript-eslint/no-explicit-any */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import { UrbanMessageTextData, UrbanMessageImageData, UrbanMessageButtonsData } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';

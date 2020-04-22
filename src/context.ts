@@ -12,14 +12,10 @@ export type BotContextType<Type = unknown, NativeEventPayload = unknown, Meta = 
     bot: UrbanBot<Type, NativeEventPayload, Meta>;
 };
 
-let BotContext: any;
+export const BotContext = React.createContext(undefined);
 
 export function getBotContext<Type = unknown, NativeEventPayload = unknown, Meta = unknown>() {
-    if (BotContext === undefined) {
-        BotContext = React.createContext<BotContextType<Type, NativeEventPayload, Meta> | undefined>(undefined);
-    }
-
-    return BotContext as React.Context<BotContextType<Type, NativeEventPayload, Meta>>;
+    return (BotContext as unknown) as React.Context<BotContextType<Type, NativeEventPayload, Meta>>;
 }
 
 export type RouterContext = {
