@@ -10,14 +10,12 @@ type FormattedButton = Omit<ButtonProps, 'children'> & {
 export function formatButtonElement(
     element: React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[],
 ): FormattedButton[] {
-    const mockCallback = () => {};
-
     return React.Children.map(element, (child) => {
         if (child.type !== Button) {
             throw new Error('Please use only Button components inside ButtonGroup.');
         }
 
-        const { children: text, onClick = mockCallback, id = getRandomId(), ...other } = child.props;
+        const { children: text, onClick, id = getRandomId(), ...other } = child.props;
 
         return { text, onClick, id, ...other };
     });
