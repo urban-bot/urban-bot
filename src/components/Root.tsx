@@ -99,6 +99,8 @@ export function Root<Type = unknown, NativeEventPayload = unknown, Meta = unknow
             }, timeToClearUserSession);
         }
 
+        $$managerBot.on('any', handler);
+
         return () => {
             $$managerBot.removeListener('any', handler);
         };

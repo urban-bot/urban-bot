@@ -40,13 +40,15 @@ export function ButtonGroup({
             chat={chat}
             $$managerBot={$$managerBot}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
-            title={formattedTitle}
-            buttons={buttons}
-            parseMode={finalParseMode}
-            disableNotification={disableNotification}
-            replyToMessageId={replyToMessageId}
-            forceReply={forceReply}
-            {...otherProps}
+            data={{
+                disableNotification,
+                replyToMessageId,
+                forceReply,
+                parseMode: finalParseMode,
+                buttons,
+                title: formattedTitle,
+                ...otherProps,
+            }}
         />
     );
 }
