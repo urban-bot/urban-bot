@@ -6,18 +6,22 @@ import { UrbanChat } from './types';
 
 export type Markup = {};
 export type Link = Markup & { href: string };
-export type UrbanElement = {
-    $$managerBot: ManagerBot;
+export type UrbanElement<Type = unknown, NativeEventPayload = unknown, Meta = unknown> = {
+    $$managerBot: ManagerBot<Type, NativeEventPayload, Meta>;
     chat: UrbanChat;
     isNewMessageEveryRender?: boolean;
 };
 
+export type UrbanElementText = UrbanElement & UrbanMessageTextData;
+export type UrbanElementImage = UrbanElement & UrbanMessageImageData;
+export type UrbanElementButtons = UrbanElement & UrbanMessageButtonsData;
+
 declare module 'react' {
     namespace JSX {
         export interface IntrinsicElements {
-            'urban-text': UrbanElement & UrbanMessageTextData;
-            'urban-img': UrbanElement & UrbanMessageImageData;
-            'urban-buttons': UrbanElement & UrbanMessageButtonsData;
+            'urban-text': UrbanElementText;
+            'urban-img': UrbanElementImage;
+            'urban-buttons': UrbanElementButtons;
             b: Markup;
             i: Markup;
             u: Markup;
