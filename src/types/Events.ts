@@ -184,6 +184,8 @@ export type UrbanEventByType<
     ? UrbanEventLocation<Type, NativeEventPayload>
     : T extends 'image'
     ? UrbanEventImage<Type, NativeEventPayload>
+    : T extends 'poll'
+    ? UrbanEventPoll<Type, NativeEventPayload>
     : T extends 'dice'
     ? UrbanEventDice<Type, NativeEventPayload>
     : T extends 'voice'
