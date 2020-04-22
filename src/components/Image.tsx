@@ -2,7 +2,7 @@ import React from 'react';
 import { useBotContext } from '../hooks/hooks';
 import { useFormatElement } from '../hooks/useFormatElement';
 import { UrbanMessageCommonData } from '../types/Messages';
-import { ButtonGroup } from './ButtonGroup';
+import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
 import { UrbanElementButtons } from '../global.d';
 
 export type ImageProps = UrbanMessageCommonData & {
@@ -11,7 +11,7 @@ export type ImageProps = UrbanMessageCommonData & {
     // FIXME rename to alt
     altText?: string;
     isNewMessageEveryRender?: boolean;
-    buttons?: React.FunctionComponentElement<any>;
+    buttons?: React.FunctionComponentElement<ButtonGroupProps>;
 };
 
 export function Image({

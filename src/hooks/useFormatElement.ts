@@ -1,8 +1,9 @@
 import { useBotContext } from './hooks';
-import { formatMarkupLanguageElement, Element } from '../utils/formatMarkupLanguageElement';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 import { UrbanParseMode } from '../types';
+import { ReactNode } from 'react';
 
-export function useFormatElement(element: Element, parseMode?: UrbanParseMode): [string, UrbanParseMode] {
+export function useFormatElement(element: ReactNode, parseMode?: UrbanParseMode): [string, UrbanParseMode] {
     const { parseMode: parseModeContext } = useBotContext();
     const finalParseMode = parseMode ?? parseModeContext;
     let formattedString;
