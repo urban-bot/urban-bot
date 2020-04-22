@@ -1,6 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ManagerBot method sendMessage throw error if send message after delete chatId 1`] = `"Specify chatId before send message via managerBot.addChat(chatId)"`;
-
-exports[`ManagerBot method sendMessage throw error without initializing chatId 1`] = `"Specify chatId before send message via managerBot.addChat(chatId)"`;
-
