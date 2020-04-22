@@ -20,19 +20,19 @@ export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unk
         bot.initializeProcessUpdate(this.processUpdate);
     }
 
-    processUpdate: ProcessUpdate<Type, NativeEventPayload> = (data) => {
-        this.eventEmitter.emit('any', { realEvent: data.type, ...data });
-        this.eventEmitter.emit(data.type);
+    processUpdate: ProcessUpdate<Type, NativeEventPayload> = (event) => {
+        this.eventEmitter.emit('any', event);
+        this.eventEmitter.emit(event.type);
 
-        const { id } = data.chat;
+        const { id } = event.chat;
         const chat = this.chats.get(id);
 
         if (chat === undefined) {
             throw new Error('Specify chatId via managerBot.addChat(chatId) to process messages for specific chat');
         }
 
-        chat.eventEmitter.emit('any', { realEvent: data.type, ...data });
-        chat.eventEmitter.emit(data.type, data);
+        chat.eventEmitter.emit('any', event);
+        chat.eventEmitter.emit(event.type, event);
     };
 
     addChat(id: string) {
@@ -44,12 +44,12 @@ export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unk
     }
 
     on<Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>>(
-        event: Event['type'] | 'any',
+        eventName: Event['type'] | 'any',
         listener: UrbanListener<Event>,
         chatId?: string,
     ) {
         if (chatId === undefined) {
-            return this.eventEmitter.on(event, listener);
+            return this.eventEmitter.on(eventName, listener);
         } else {
             const chat = this.chats.get(chatId);
             if (chat === undefined) {
@@ -58,24 +58,32 @@ export class ManagerBot<Type = unknown, NativeEventPayload = unknown, Meta = unk
                 );
             }
 
-            return chat.eventEmitter.on(event, listener);
+            return chat.eventEmitter.on(eventName, listener);
         }
     }
 
+    emit<Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>>(
+        eventName: Event['type'] | 'any',
+        event: Event,
+    ) {
+        this.eventEmitter.emit('any', event);
+        this.eventEmitter.emit(eventName, event);
+    }
+
     removeListener<Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>>(
-        event: Event['type'] | 'any',
+        eventName: Event['type'] | 'any',
         listener: UrbanListener<Event>,
         chatId?: string,
     ) {
         if (chatId === undefined) {
-            return this.eventEmitter.removeListener(event, listener);
+            return this.eventEmitter.removeListener(eventName, listener);
         } else {
             const chat = this.chats.get(chatId);
             if (chat === undefined) {
                 throw new Error('Specify chatId via managerBot.addChat(chatId) to sendMessage for specific chat');
             }
 
-            return chat.eventEmitter.removeListener(event, listener);
+            return chat.eventEmitter.removeListener(eventName, listener);
         }
     }
 
