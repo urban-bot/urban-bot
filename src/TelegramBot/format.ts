@@ -3,7 +3,7 @@ import { UrbanMessage } from '../types/Messages';
 import TelegramBot from 'node-telegram-bot-api';
 import { UrbanParseMode } from '../types/index';
 
-type EditMessageOptions =
+export type EditMessageOptions =
     | TelegramBot.EditMessageTextOptions
     | TelegramBot.EditMessageCaptionOptions
     | TelegramBot.EditMessageLiveLocationOptions

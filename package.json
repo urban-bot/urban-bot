@@ -10,7 +10,7 @@
         "build": "rimraf dist && tsc",
         "start": "nodemon",
         "test": "jest",
-        "lint": "eslint \"./src/**\"",
+        "lint": "eslint \"./src/**\" \"./examples/**\"",
         "lint:fix": "npm run lint -- --fix",
         "my-publish": "npm run build && npm publish",
         "typecheck": "tsc --noEmit"

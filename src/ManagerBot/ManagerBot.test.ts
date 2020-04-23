@@ -21,7 +21,7 @@ const newMessage: UrbanMessage = {
 const newMessage2: UrbanMessage = {
     nodeName: 'urban-img',
     chat,
-    data: { src: 'http://...' },
+    data: { image: 'http://...' },
 };
 
 const existingMessage: UrbanExistingMessage<typeof meta> = {
