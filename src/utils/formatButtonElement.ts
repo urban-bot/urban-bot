@@ -1,10 +1,13 @@
 import React from 'react';
 import { getRandomId } from './getRandomId';
 import { Button, ButtonProps } from '../components/ButtonGroup';
+import { OtherProps } from '../types/common';
 
-type FormattedButton = Omit<ButtonProps, 'children'> & {
+type FormattedButton = OtherProps & {
     id: string;
     text: string;
+    // FIXME describe type for onClick?
+    onClick: (...args: unknown[]) => unknown;
 };
 
 export function formatButtonElement(
