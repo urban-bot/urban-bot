@@ -8,8 +8,7 @@ import { UrbanElementButtons } from '../global.d';
 export type ImageProps = UrbanMessageCommonData & {
     src: string;
     title?: React.ReactNode;
-    // FIXME rename to alt
-    altText?: string;
+    alt?: string;
     isNewMessageEveryRender?: boolean;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
 };
@@ -23,7 +22,7 @@ export function Image({
     disableNotification,
     replyToMessageId,
     forceReply,
-    altText,
+    alt,
     ...otherProps
 }: ImageProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
@@ -59,7 +58,7 @@ export function Image({
                 parseMode: finalParseMode,
                 buttons: formattedButtons,
                 title: formattedTitle,
-                altText: altText,
+                alt,
                 src,
                 ...otherProps,
             }}

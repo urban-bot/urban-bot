@@ -31,8 +31,7 @@ export type UrbanMessageImageData = UrbanMessageCommonData & {
     title?: string;
     src: string;
     buttons?: UrbanButton[];
-    // FIXME rename to alt
-    altText?: string;
+    alt?: string;
 };
 
 export type UrbanMessageImage = UrbanMessageCommon & {
