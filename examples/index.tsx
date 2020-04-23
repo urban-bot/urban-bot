@@ -38,7 +38,7 @@ function Main() {
                     : 'https://cs10.pikabu.ru/post_img/2019/02/12/5/154995561311747403.jpg'
             }
             title={bot.type !== UrbanSlackBot.TYPE ? <b>{title}</b> : title}
-            altText="girls "
+            alt="girls "
             buttons={
                 <ButtonGroup>
                     <Button

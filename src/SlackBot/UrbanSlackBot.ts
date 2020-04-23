@@ -180,7 +180,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                             emoji: true,
                         },
                         image_url: message.data.src,
-                        alt_text: message.data.altText ?? '',
+                        alt_text: message.data.alt ?? '',
                     },
                 ];
 
@@ -249,7 +249,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                             emoji: true,
                         },
                         image_url: message.data.src,
-                        alt_text: message.data.altText ?? '',
+                        alt_text: message.data.alt ?? '',
                     },
                 ];
 
