@@ -7,7 +7,6 @@ const testBot = {
     sendMessage: jest.fn(),
     updateMessage: jest.fn(),
     deleteMessage: jest.fn(),
-    initializeProcessUpdate: jest.fn(),
     type: 'TEST-BOT',
 };
 

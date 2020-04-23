@@ -17,7 +17,7 @@ export class ManagerBot<Type = unknown, NativeEventPayload = unknown, MessageMet
     constructor(private bot: UrbanBot<Type, NativeEventPayload, MessageMeta>) {
         this.eventEmitter = new EventEmitter();
 
-        bot.initializeProcessUpdate(this.processUpdate);
+        bot.processUpdate = this.processUpdate;
     }
 
     processUpdate: ProcessUpdate<Type, NativeEventPayload> = (event) => {

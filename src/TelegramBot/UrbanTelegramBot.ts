@@ -23,7 +23,7 @@ import {
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
-import { TelegramMessageMeta, TELEGRAM, TelegramPayload, ProcessUpdate, TelegramBotMessage } from './types';
+import { TelegramMessageMeta, TELEGRAM, TelegramPayload, TelegramBotMessage } from './types';
 
 export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, TelegramMessageMeta> {
     static TYPE = 'TELEGRAM' as const;
@@ -59,13 +59,8 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
         });
     }
 
-    // FIXME think about better implementation
-    initializeProcessUpdate(processUpdate: ProcessUpdate<TELEGRAM, TelegramPayload>) {
-        this.processUpdate = processUpdate;
-    }
-
     processUpdate(_event: UrbanEvent<TELEGRAM, TelegramPayload>) {
-        throw new Error('this method must be initialized via initializeProcessUpdate');
+        throw new Error('this method must be overridden');
     }
 
     handleMessage = (type: UrbanEventType<TELEGRAM, TelegramPayload>, ctx: TelegramBotMessage) => {

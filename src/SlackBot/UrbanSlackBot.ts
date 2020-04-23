@@ -4,7 +4,7 @@ import { createMessageAdapter } from '@slack/interactive-messages';
 import { WebClient } from '@slack/web-api';
 import express from 'express';
 import bodyParser from 'body-parser';
-import { UrbanBot, ProcessUpdate } from '../types/UrbanBot';
+import { UrbanBot } from '../types/UrbanBot';
 import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
 import { KnownBlock, Button, SectionBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
@@ -87,13 +87,8 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         app.listen(port);
     }
 
-    // FIXME think about better implementation
-    initializeProcessUpdate(processUpdate: ProcessUpdate<SLACK, SlackPayload>) {
-        this.processUpdate = processUpdate;
-    }
-
     processUpdate(_event: UrbanEvent<SLACK, SlackPayload>) {
-        throw new Error('this method must be initialized via initializeProcessUpdate');
+        throw new Error('this method must be overridden');
     }
 
     handleAction = (ctx: SlackActionContext) => {
