@@ -240,7 +240,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 break;
             }
             case 'urban-img': {
-                if (typeof message.data.src !== 'string') {
+                if (typeof message.data.image !== 'string') {
                     // FIXME process not only string image
                     throw new Error('Slack can process only image as string');
                 }
@@ -252,7 +252,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                             text: message.data.title ?? '',
                             emoji: true,
                         },
-                        image_url: message.data.src,
+                        image_url: message.data.image,
                         alt_text: message.data.alt ?? '',
                     },
                 ];
