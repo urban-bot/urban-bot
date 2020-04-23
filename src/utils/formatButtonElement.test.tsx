@@ -45,17 +45,11 @@ describe('formatButtonElement', () => {
         const id = String(Math.random());
         const customProp = true;
         const element = (
-            // FIXME add otherProps to Button
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
             <Button onClick={onClick} customProp={customProp} id={id}>
                 {text}
             </Button>
         );
 
-        // FIXME add otherProps to Button
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         expect(formatButtonElement(element)[0].customProp).toBe(customProp);
     });
 
