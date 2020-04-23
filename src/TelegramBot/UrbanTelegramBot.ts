@@ -470,17 +470,10 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
     }
 
     // FIXME this methods should be fixed in node-telegram-bot-api
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    editMessageMedia(media: TelegramBot.InputMedia, form: EditMessageOptions, formData?: any) {
-        const data = { ...form, media: JSON.stringify(media) };
-        if (formData) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            return this.bot._request('editMessageMedia', { qs: data, formData });
-        } else {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            return this.bot._request('editMessageMedia', { form: data });
-        }
+    editMessageMedia(media: TelegramBot.InputMedia, options: EditMessageOptions, formData?: unknown) {
+        const qs = { ...options, media: JSON.stringify(media) };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return this.bot._request('editMessageMedia', { qs, formData });
     }
 }
