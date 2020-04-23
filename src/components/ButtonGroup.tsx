@@ -3,6 +3,7 @@ import { useBotContext, useAction } from '../hooks/hooks';
 import { formatButtonElement } from '../utils/formatButtonElement';
 import { useFormatElement } from '../hooks/useFormatElement';
 import { UrbanMessageCommonData } from '../types/Messages';
+import { OtherProps } from '../types/common';
 
 export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
@@ -53,7 +54,7 @@ export function ButtonGroup({
     );
 }
 
-export type ButtonProps = {
+export type ButtonProps = OtherProps & {
     // FIXME describe type for onClick?
     onClick: (...args: unknown[]) => unknown;
     children: string;
