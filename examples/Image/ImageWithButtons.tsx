@@ -5,43 +5,48 @@ import React from 'react';
 import { UrbanSlackBot } from '../../src/SlackBot/UrbanSlackBot';
 
 // FIXME make normal paths
-const photoIL = fs.readFileSync(path.join(__dirname, '../../../examples/Image', 'IL86.jpg'));
-const photoAN = fs.readFileSync(path.join(__dirname, '../../../examples/Image', 'AN24.jpg'));
+const photoAN = fs.readFileSync(path.join(__dirname, '../../../examples/Image', 'an-24.jpg'));
 
 export function ImageWithButtons() {
     const { bot } = useBotContext();
     const { navigate } = useRouter();
-    const [title, setTitle] = React.useState('0');
-    const [isFirstImage, setIsFirstImage] = React.useState(true);
+    const [title, setTitle] = React.useState('✈️');
+    const [isImageFromLink, setIsImageFromLink] = React.useState(true);
 
-    useText(() => {
-        setIsFirstImage(!isFirstImage);
+    useText(({ payload }) => {
+        setTitle(payload.text);
     });
 
     return (
-        <Image
-            image={isFirstImage ? photoIL : photoAN}
-            title={bot.type !== UrbanSlackBot.TYPE ? <b>{title}</b> : title}
-            alt="girls "
-            buttons={
-                <ButtonGroup>
-                    <Button
-                        onClick={() => {
-                            setTitle(title + 1);
-                        }}
-                    >
-                        Change title
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            setIsFirstImage(!isFirstImage);
-                        }}
-                    >
-                        Toggle picture
-                    </Button>
-                    <Button onClick={() => navigate('/text')}>Go to text</Button>
-                </ButtonGroup>
-            }
-        />
+        <>
+            <Image
+                image={
+                    isImageFromLink
+                        ? 'https://upload.wikimedia.org/wikipedia/commons/3/32/Aeroflot_Tu-154B-2_CCCP-85396_ZRH_1982-6-20.png'
+                        : photoAN
+                }
+                title={bot.type !== UrbanSlackBot.TYPE ? <b>{title}</b> : title}
+                alt="planes"
+                buttons={
+                    <ButtonGroup>
+                        <Button
+                            onClick={() => {
+                                setTitle(title + '✈️');
+                            }}
+                        >
+                            Add plane
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setIsImageFromLink(!isImageFromLink);
+                            }}
+                        >
+                            Toggle picture
+                        </Button>
+                        <Button onClick={() => navigate('/text')}>Go to text</Button>
+                    </ButtonGroup>
+                }
+            />
+        </>
     );
 }
