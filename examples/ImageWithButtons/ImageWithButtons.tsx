@@ -16,7 +16,7 @@ export function ImageWithButtons() {
     const { bot } = useBotContext();
     const { navigate } = useRouter();
     const [title, setTitle] = React.useState('✈️');
-    const [isImageFromURL, setIsImageFromURL] = React.useState(true);
+    const [isImageFromURL, setIsImageFromURL] = React.useState(false);
 
     useText(({ payload }) => {
         setTitle(payload.text);

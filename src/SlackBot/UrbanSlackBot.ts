@@ -166,9 +166,25 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
             case 'urban-img': {
+                let image_url: string;
                 if (typeof message.data.image !== 'string') {
-                    // FIXME process not only string image
-                    throw new Error('Slack can process only image as string');
+                    // TODO describe types
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const uploadRes: any = await this.client.files.upload({
+                        file: message.data.image,
+                        filename: message.data.filename,
+                    });
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const sharedPublicURLRes: any = await this.client.files.sharedPublicURL({
+                        file: uploadRes.file.id,
+                    });
+
+                    const parsedPermalink = sharedPublicURLRes.file.permalink_public.split('-');
+                    const pubSecret = parsedPermalink[parsedPermalink.length - 1];
+
+                    image_url = sharedPublicURLRes.file.url_private + `?pub_secret=${pubSecret}`;
+                } else {
+                    image_url = message.data.image;
                 }
 
                 const blocks: KnownBlock[] = [
@@ -179,7 +195,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                             text: message.data.title ?? '',
                             emoji: true,
                         },
-                        image_url: message.data.image,
+                        image_url,
                         alt_text: message.data.alt ?? '',
                     },
                 ];
