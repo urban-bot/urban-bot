@@ -6,7 +6,8 @@ import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
 import { UrbanElementButtons } from '../global.d';
 
 export type ImageProps = UrbanMessageCommonData & {
-    src: string;
+    image: string | Buffer | NodeJS.ReadableStream;
+    filename?: string;
     title?: React.ReactNode;
     alt?: string;
     isNewMessageEveryRender?: boolean;
@@ -14,7 +15,7 @@ export type ImageProps = UrbanMessageCommonData & {
 };
 
 export function Image({
-    src,
+    image,
     title,
     buttons: buttonGroupElement,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
@@ -22,6 +23,7 @@ export function Image({
     disableNotification,
     replyToMessageId,
     forceReply,
+    filename,
     alt,
     ...otherProps
 }: ImageProps) {
@@ -59,7 +61,8 @@ export function Image({
                 buttons: formattedButtons,
                 title: formattedTitle,
                 alt,
-                src,
+                image,
+                filename,
                 ...otherProps,
             }}
         />
