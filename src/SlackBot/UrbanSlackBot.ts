@@ -70,6 +70,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
     client: WebClient;
     events: SlackEventAdapter;
     interactions: SlackMessageAdapter;
+    publicUrlMap: Map<Buffer | NodeJS.ReadableStream, string> = new Map();
 
     constructor({ signingSecret, port = 8080, token }: UrbanSlackBotProps) {
         this.client = new WebClient(token);
@@ -308,6 +309,11 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
 
     async getImageUrl(messageData: UrbanMessageImageData): Promise<string> {
         if (typeof messageData.image !== 'string') {
+            const savedPublicUrl = this.publicUrlMap.get(messageData.image);
+            if (savedPublicUrl !== undefined) {
+                return savedPublicUrl;
+            }
+
             // TODO describe types
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const uploadRes: any = await this.client.files.upload({
@@ -322,7 +328,11 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             const parsedPermalink = sharedPublicURLRes.file.permalink_public.split('-');
             const pubSecret = parsedPermalink[parsedPermalink.length - 1];
 
-            return sharedPublicURLRes.file.url_private + `?pub_secret=${pubSecret}`;
+            const publicUrl = sharedPublicURLRes.file.url_private + `?pub_secret=${pubSecret}`;
+
+            this.publicUrlMap.set(messageData.image, publicUrl);
+
+            return publicUrl;
         } else {
             return messageData.image;
         }
