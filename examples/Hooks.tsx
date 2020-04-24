@@ -18,7 +18,7 @@ import {
 } from '../src';
 
 export function Hooks() {
-    const [answer, setAnswer] = React.useState('');
+    const [answer, setAnswer] = React.useState('Please send anything');
 
     useAny(() => {
         console.log('calling after any type sending');
@@ -41,7 +41,7 @@ export function Hooks() {
     });
 
     useImage(() => {
-        setAnswer("You've sent a photo");
+        setAnswer("You've sent an image");
     });
 
     useLocation(({ payload }) => {
@@ -61,7 +61,7 @@ export function Hooks() {
     });
 
     useSticker(({ payload }) => {
-        setAnswer("You've sent a sticker " + payload.name);
+        setAnswer("You've sent a sticker " + payload.name + ' ' + payload.emoji);
     });
 
     useVoice(() => {
@@ -75,10 +75,6 @@ export function Hooks() {
     useDice(({ payload }) => {
         setAnswer("You've sent a dice " + payload.value);
     });
-
-    if (!answer) {
-        return null;
-    }
 
     return <Text isNewMessageEveryRender>{answer}</Text>;
 }
