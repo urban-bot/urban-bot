@@ -15,6 +15,7 @@ export function Router(props: RouterProps) {
     const [activePath, navigate] = React.useState('');
 
     useCommand(({ payload: { command } }) => {
+        // TODO navigate only if this path exist
         navigate(command);
     });
 
