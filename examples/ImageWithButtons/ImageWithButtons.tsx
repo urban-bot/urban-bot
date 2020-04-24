@@ -6,13 +6,15 @@ import { UrbanSlackBot } from '../../src/SlackBot/UrbanSlackBot';
 
 const imageByUrl =
     'https://upload.wikimedia.org/wikipedia/commons/3/32/Aeroflot_Tu-154B-2_CCCP-85396_ZRH_1982-6-20.png';
+// could be buffer or stream
 const imageByFile = fs.readFileSync(path.join(__dirname, 'an-24.jpg'));
+// const imageByFile = fs.createReadStream(path.join(__dirname, 'an-24.jpg'));
 
 export function ImageWithButtons() {
     const { bot } = useBotContext();
     const { navigate } = useRouter();
     const [title, setTitle] = React.useState('✈️');
-    const [isImageFromURL, setIsImageFromURL] = React.useState(false);
+    const [isImageFromURL, setIsImageFromURL] = React.useState(true);
 
     useText(({ payload }) => {
         setTitle(payload.text);
