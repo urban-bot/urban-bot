@@ -11,8 +11,8 @@ export function Queue() {
     };
 
     const deleteFirst = () => {
-        const [_first, ...newArray] = queue;
-        setQueue(newArray);
+        const [_first, ...newQueue] = queue;
+        setQueue(newQueue);
     };
 
     return (
