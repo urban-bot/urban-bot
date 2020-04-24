@@ -7,6 +7,7 @@ import { UrbanElementButtons } from '../global.d';
 
 export type ImageProps = UrbanMessageCommonData & {
     image: string | Buffer | NodeJS.ReadableStream;
+    filename?: string;
     title?: React.ReactNode;
     alt?: string;
     isNewMessageEveryRender?: boolean;
@@ -22,6 +23,7 @@ export function Image({
     disableNotification,
     replyToMessageId,
     forceReply,
+    filename,
     alt,
     ...otherProps
 }: ImageProps) {
@@ -60,6 +62,7 @@ export function Image({
                 title: formattedTitle,
                 alt,
                 image,
+                filename,
                 ...otherProps,
             }}
         />
