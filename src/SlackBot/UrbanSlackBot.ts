@@ -9,7 +9,7 @@ import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
 import { KnownBlock, Button, SectionBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
 import { UrbanEvent, UrbanEventAction, UrbanEventCommand } from '../types/Events';
-import { UrbanMessage, UrbanExistingMessage, UrbanButton } from '../types/Messages';
+import { UrbanMessage, UrbanExistingMessage, UrbanButton, UrbanMessageImageData } from '../types/Messages';
 import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext, SlackMessageMeta } from './types';
 
 type SLACK = 'SLACK';
@@ -166,26 +166,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
             case 'urban-img': {
-                let image_url: string;
-                if (typeof message.data.image !== 'string') {
-                    // TODO describe types
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    const uploadRes: any = await this.client.files.upload({
-                        file: message.data.image,
-                        filename: message.data.filename,
-                    });
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    const sharedPublicURLRes: any = await this.client.files.sharedPublicURL({
-                        file: uploadRes.file.id,
-                    });
-
-                    const parsedPermalink = sharedPublicURLRes.file.permalink_public.split('-');
-                    const pubSecret = parsedPermalink[parsedPermalink.length - 1];
-
-                    image_url = sharedPublicURLRes.file.url_private + `?pub_secret=${pubSecret}`;
-                } else {
-                    image_url = message.data.image;
-                }
+                const image_url = await this.getImageUrl(message.data);
 
                 const blocks: KnownBlock[] = [
                     {
@@ -244,7 +225,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         }
     }
 
-    updateMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
+    async updateMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
         switch (message.nodeName) {
             case 'urban-text': {
                 this.client.chat.update({
@@ -256,10 +237,8 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 break;
             }
             case 'urban-img': {
-                if (typeof message.data.image !== 'string') {
-                    // FIXME process not only string image
-                    throw new Error('Slack can process only image as string');
-                }
+                const image_url = await this.getImageUrl(message.data);
+
                 const blocks: KnownBlock[] = [
                     {
                         type: 'image',
@@ -268,7 +247,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                             text: message.data.title ?? '',
                             emoji: true,
                         },
-                        image_url: message.data.image,
+                        image_url,
                         alt_text: message.data.alt ?? '',
                     },
                 ];
@@ -325,5 +304,27 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
 
     deleteMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
         this.client.chat.delete({ channel: message.meta.channel, ts: message.meta.ts });
+    }
+
+    async getImageUrl(messageData: UrbanMessageImageData): Promise<string> {
+        if (typeof messageData.image !== 'string') {
+            // TODO describe types
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const uploadRes: any = await this.client.files.upload({
+                file: messageData.image,
+                filename: messageData.filename,
+            });
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const sharedPublicURLRes: any = await this.client.files.sharedPublicURL({
+                file: uploadRes.file.id,
+            });
+
+            const parsedPermalink = sharedPublicURLRes.file.permalink_public.split('-');
+            const pubSecret = parsedPermalink[parsedPermalink.length - 1];
+
+            return sharedPublicURLRes.file.url_private + `?pub_secret=${pubSecret}`;
+        } else {
+            return messageData.image;
+        }
     }
 }
