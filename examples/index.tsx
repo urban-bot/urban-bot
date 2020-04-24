@@ -1,40 +1,14 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Button, ButtonGroup, Router, Root, Text } from '../src';
+import { render, Route, Router, Root } from '../src';
 import { UrbanTelegramBot } from '../src/TelegramBot/UrbanTelegramBot';
 import { UrbanSlackBot } from '../src/SlackBot/UrbanSlackBot';
 import { TextExample } from './Text';
-import { HooksExample } from './hooks';
-import { ImageWithButtons } from './Image/ImageWithButtons';
+import { Hooks } from './Hooks';
+import { ImageWithButtons } from './ImageWithButtons/ImageWithButtons';
+import { Queue } from './Queue';
 
 dotenv.config();
-
-export function ArrayComponent() {
-    const [array, setArray] = React.useState(['0', '1', '2']);
-    const [index, setIndex] = React.useState(array.length);
-
-    const addLast = () => {
-        setArray([...array, String(index)]);
-        setIndex(index + 1);
-    };
-
-    const deleteFirst = () => {
-        const [_first, ...newArray] = array;
-        setArray(newArray);
-    };
-
-    return (
-        <>
-            <ButtonGroup title={<b>array</b>}>
-                <Button onClick={addLast}>Push</Button>
-                <Button onClick={deleteFirst}>Delete first</Button>
-            </ButtonGroup>
-            {array.map((value) => {
-                return <Text key={value}>{value}</Text>;
-            })}
-        </>
-    );
-}
 
 function App() {
     return (
@@ -45,11 +19,11 @@ function App() {
             <Route path="/text">
                 <TextExample />
             </Route>
-            <Route path="/array">
-                <ArrayComponent />
+            <Route path="/queue">
+                <Queue />
             </Route>
             <Route path="/hooks">
-                <HooksExample />
+                <Hooks />
             </Route>
         </Router>
     );
