@@ -5,7 +5,7 @@ import React from 'react';
 import { UrbanSlackBot } from '../../src/SlackBot/UrbanSlackBot';
 
 // FIXME make normal paths
-const photoAN = fs.readFileSync(path.join(__dirname, '../../../examples/Image', 'an-24.jpg'));
+const photoAN = fs.readFileSync(path.join(__dirname, '../../../examples/ImageWithButtons', 'an-24.jpg'));
 
 export function ImageWithButtons() {
     const { bot } = useBotContext();

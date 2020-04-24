@@ -17,7 +17,7 @@ import {
     useCommand,
 } from '../src';
 
-export function HooksExample() {
+export function Hooks() {
     const [answer, setAnswer] = React.useState('');
 
     useAny(() => {
