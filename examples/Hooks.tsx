@@ -17,8 +17,8 @@ import {
     useCommand,
 } from '../src';
 
-export function HooksExample() {
-    const [answer, setAnswer] = React.useState('');
+export function Hooks() {
+    const [answer, setAnswer] = React.useState('Please send anything');
 
     useAny(() => {
         console.log('calling after any type sending');
@@ -41,7 +41,7 @@ export function HooksExample() {
     });
 
     useImage(() => {
-        setAnswer("You've sent a photo");
+        setAnswer("You've sent an image");
     });
 
     useLocation(({ payload }) => {
@@ -61,7 +61,7 @@ export function HooksExample() {
     });
 
     useSticker(({ payload }) => {
-        setAnswer("You've sent a sticker " + payload.name);
+        setAnswer("You've sent a sticker " + payload.name + ' ' + payload.emoji);
     });
 
     useVoice(() => {
@@ -72,13 +72,10 @@ export function HooksExample() {
         setAnswer("You've sent an animation");
     });
 
+    // FIXME rename dice to random
     useDice(({ payload }) => {
         setAnswer("You've sent a dice " + payload.value);
     });
-
-    if (!answer) {
-        return null;
-    }
 
     return <Text isNewMessageEveryRender>{answer}</Text>;
 }

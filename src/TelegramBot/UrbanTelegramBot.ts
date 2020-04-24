@@ -22,7 +22,7 @@ import {
 } from '../types/Events';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
-import { formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
+import { EditMessageOptions, formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
 import { TelegramMessageMeta, TELEGRAM, TelegramPayload, TelegramBotMessage } from './types';
 
 export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, TelegramMessageMeta> {
@@ -370,7 +370,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
             case 'urban-img': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendPhoto(message.chat.id, message.data.src, {
+                return this.bot.sendPhoto(message.chat.id, message.data.image, {
                     ...params,
                     caption: message.data.title,
                 });
@@ -412,17 +412,33 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
                 };
 
                 const params = formatParamsForExistingMessage(message);
-
                 const media = {
                     type: 'photo',
-                    media: message.data.src,
                     caption: message.data.title,
                     parse_mode: 'parse_mode' in params ? params.parse_mode : undefined,
-                };
+                } as const;
 
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                this.bot.editMessageMedia(media, { ...params, ...metaToEdit });
+                if (typeof message.data.image !== 'string') {
+                    try {
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        const photoData = this.bot._formatSendData('photo', message.data.image);
+                        const { photo } = photoData[0];
+
+                        this.editMessageMedia(
+                            { ...media, media: `attach://photo` },
+                            { ...params, ...metaToEdit },
+                            { photo },
+                        );
+                    } catch (e) {
+                        console.error('Something wrong with edit img message.');
+                        console.error(e);
+                    }
+
+                    break;
+                }
+
+                this.editMessageMedia({ ...media, media: message.data.image }, { ...params, ...metaToEdit });
 
                 break;
             }
@@ -451,5 +467,13 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
 
     deleteMessage(message: UrbanExistingMessage<TelegramMessageMeta>) {
         this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
+    }
+
+    // FIXME this methods should be fixed in node-telegram-bot-api
+    editMessageMedia(media: TelegramBot.InputMedia, options: EditMessageOptions, formData?: unknown) {
+        const qs = { ...options, media: JSON.stringify(media) };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return this.bot._request('editMessageMedia', { qs, formData });
     }
 }

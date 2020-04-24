@@ -29,7 +29,8 @@ export type UrbanMessageText = UrbanMessageCommon & {
 
 export type UrbanMessageImageData = UrbanMessageCommonData & {
     title?: string;
-    src: string;
+    image: string | Buffer | NodeJS.ReadableStream;
+    filename?: string;
     buttons?: UrbanButton[];
     alt?: string;
 };

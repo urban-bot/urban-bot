@@ -9,7 +9,7 @@ import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
 import { KnownBlock, Button, SectionBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
 import { UrbanEvent, UrbanEventAction, UrbanEventCommand } from '../types/Events';
-import { UrbanMessage, UrbanExistingMessage, UrbanButton } from '../types/Messages';
+import { UrbanMessage, UrbanExistingMessage, UrbanButton, UrbanMessageImageData } from '../types/Messages';
 import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext, SlackMessageMeta } from './types';
 
 type SLACK = 'SLACK';
@@ -70,6 +70,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
     client: WebClient;
     events: SlackEventAdapter;
     interactions: SlackMessageAdapter;
+    publicUrlMap: Map<Buffer | NodeJS.ReadableStream, string> = new Map();
 
     constructor({ signingSecret, port = 8080, token }: UrbanSlackBotProps) {
         this.client = new WebClient(token);
@@ -166,6 +167,8 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
             case 'urban-img': {
+                const image_url = await this.getImageUrl(message.data);
+
                 const blocks: KnownBlock[] = [
                     {
                         type: 'image',
@@ -174,7 +177,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                             text: message.data.title ?? '',
                             emoji: true,
                         },
-                        image_url: message.data.src,
+                        image_url,
                         alt_text: message.data.alt ?? '',
                     },
                 ];
@@ -223,7 +226,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         }
     }
 
-    updateMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
+    async updateMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
         switch (message.nodeName) {
             case 'urban-text': {
                 this.client.chat.update({
@@ -235,6 +238,8 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 break;
             }
             case 'urban-img': {
+                const image_url = await this.getImageUrl(message.data);
+
                 const blocks: KnownBlock[] = [
                     {
                         type: 'image',
@@ -243,7 +248,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                             text: message.data.title ?? '',
                             emoji: true,
                         },
-                        image_url: message.data.src,
+                        image_url,
                         alt_text: message.data.alt ?? '',
                     },
                 ];
@@ -300,5 +305,36 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
 
     deleteMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
         this.client.chat.delete({ channel: message.meta.channel, ts: message.meta.ts });
+    }
+
+    async getImageUrl(messageData: UrbanMessageImageData): Promise<string> {
+        if (typeof messageData.image !== 'string') {
+            const savedPublicUrl = this.publicUrlMap.get(messageData.image);
+            if (savedPublicUrl !== undefined) {
+                return savedPublicUrl;
+            }
+
+            // TODO describe types
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const uploadRes: any = await this.client.files.upload({
+                file: messageData.image,
+                filename: messageData.filename,
+            });
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const sharedPublicURLRes: any = await this.client.files.sharedPublicURL({
+                file: uploadRes.file.id,
+            });
+
+            const parsedPermalink = sharedPublicURLRes.file.permalink_public.split('-');
+            const pubSecret = parsedPermalink[parsedPermalink.length - 1];
+
+            const publicUrl = sharedPublicURLRes.file.url_private + `?pub_secret=${pubSecret}`;
+
+            this.publicUrlMap.set(messageData.image, publicUrl);
+
+            return publicUrl;
+        } else {
+            return messageData.image;
+        }
     }
 }
