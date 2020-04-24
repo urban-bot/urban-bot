@@ -72,6 +72,7 @@ export function Hooks() {
         setAnswer("You've sent an animation");
     });
 
+    // FIXME rename dice to random
     useDice(({ payload }) => {
         setAnswer("You've sent a dice " + payload.value);
     });
