@@ -17,7 +17,7 @@ export function Queue() {
 
     return (
         <>
-            <ButtonGroup title={<b>Array</b>}>
+            <ButtonGroup title={<b>Queue</b>}>
                 <Button onClick={addLast}>Push</Button>
                 <Button onClick={deleteFirst}>Delete first</Button>
             </ButtonGroup>
