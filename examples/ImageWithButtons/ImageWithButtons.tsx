@@ -4,13 +4,9 @@ import { Button, ButtonGroup, Image, useBotContext, useRouter, useText } from '.
 import React from 'react';
 import { UrbanSlackBot } from '../../src/SlackBot/UrbanSlackBot';
 
-function getImageByURL() {
-    return 'https://upload.wikimedia.org/wikipedia/commons/3/32/Aeroflot_Tu-154B-2_CCCP-85396_ZRH_1982-6-20.png';
-}
-
-function getImageByFile() {
-    return fs.readFileSync(path.join(__dirname, 'an-24.jpg'));
-}
+const imageByUrl =
+    'https://upload.wikimedia.org/wikipedia/commons/3/32/Aeroflot_Tu-154B-2_CCCP-85396_ZRH_1982-6-20.png';
+const imageByFile = fs.readFileSync(path.join(__dirname, 'an-24.jpg'));
 
 export function ImageWithButtons() {
     const { bot } = useBotContext();
@@ -25,7 +21,7 @@ export function ImageWithButtons() {
     return (
         <>
             <Image
-                image={isImageFromURL ? getImageByURL() : getImageByFile()}
+                image={isImageFromURL ? imageByUrl : imageByFile}
                 title={bot.type !== UrbanSlackBot.TYPE ? <b>{title}</b> : title}
                 alt="planes"
                 buttons={
