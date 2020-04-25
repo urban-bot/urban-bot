@@ -77,10 +77,8 @@ export function useContact<Type, NativeEventPayload>(
     useSubscribe(callback, 'contact');
 }
 
-export function useDocument<Type, NativeEventPayload>(
-    callback: UrbanListenerByType<Type, NativeEventPayload, 'document'>,
-) {
-    useSubscribe(callback, 'document');
+export function useFile<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'file'>) {
+    useSubscribe(callback, 'file');
 }
 
 export function useInvoice<Type, NativeEventPayload>(

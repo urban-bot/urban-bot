@@ -6,7 +6,7 @@ import {
     usePoll,
     useImage,
     useLocation,
-    useDocument,
+    useFile,
     useContact,
     useAudio,
     useAny,
@@ -48,8 +48,8 @@ export function Hooks() {
         setAnswer("You've sent a location " + payload.latitude + ' ' + payload.longitude);
     });
 
-    useDocument(({ payload }) => {
-        setAnswer("You've sent a document " + payload.fileName);
+    useFile(({ payload }) => {
+        setAnswer("You've sent a file " + payload.fileName);
     });
 
     useContact(({ payload }) => {
