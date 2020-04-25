@@ -1,4 +1,4 @@
-import { UrbanChat, UrbanFrom, UrbanListener } from './index';
+import { UrbanChat, UrbanFile, UrbanFrom, UrbanListener } from './index';
 
 export type UrbanEventCommon<Type, NativeEventPayload> = {
     chat: UrbanChat;
@@ -112,7 +112,8 @@ export type UrbanEventLocation<Type, NativeEventPayload> = {
 export type UrbanEventImage<Type, NativeEventPayload> = {
     type: 'image';
     payload: {
-        fileIds: string[];
+        text?: string;
+        files: UrbanFile[];
     };
 } & UrbanEventCommon<Type, NativeEventPayload>;
 
