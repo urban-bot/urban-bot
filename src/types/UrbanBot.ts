@@ -1,13 +1,13 @@
-import { UrbanEvent } from './Events';
+import { UrbanNativeEvent, UrbanSyntheticEvent } from './Events';
 import { UrbanMessage, UrbanExistingMessage } from './Messages';
 
-export type ProcessUpdate<Type = unknown, NativeEventPayload = unknown> = (
-    event: UrbanEvent<Type, NativeEventPayload>,
+export type ProcessUpdate<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent> = (
+    event: UrbanSyntheticEvent<NativeEvent>,
 ) => void;
 
-export interface UrbanBot<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown> {
+export interface UrbanBot<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent, MessageMeta = unknown> {
     type: string;
-    processUpdate: ProcessUpdate<Type, NativeEventPayload>;
+    processUpdate: ProcessUpdate<NativeEvent>;
     sendMessage: (message: UrbanMessage) => Promise<MessageMeta>;
     updateMessage: (message: UrbanExistingMessage<MessageMeta>) => void;
     deleteMessage: (message: UrbanExistingMessage<MessageMeta>) => void;
