@@ -289,7 +289,12 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
                     ...common,
                     type: 'image',
                     payload: {
-                        fileIds: ctx.photo.map((photo) => photo.file_id),
+                        files: ctx.photo.map((photo) => ({
+                            id: photo.file_id,
+                            size: photo.file_size,
+                            width: photo.width,
+                            height: photo.height,
+                        })),
                     },
                 };
 

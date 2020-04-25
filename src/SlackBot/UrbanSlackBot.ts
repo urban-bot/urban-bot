@@ -8,7 +8,14 @@ import { UrbanBot } from '../types/UrbanBot';
 import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
 import { KnownBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
-import { UrbanEvent, UrbanEventAction, UrbanEventCommand } from '../types/Events';
+import {
+    UrbanEvent,
+    UrbanEventAction,
+    UrbanEventCommand,
+    UrbanEventCommon,
+    UrbanEventImage,
+    UrbanEventText,
+} from '../types/Events';
 import { UrbanMessage, UrbanExistingMessage, UrbanMessageImageData } from '../types/Messages';
 import {
     SlackActionContext,
@@ -18,7 +25,7 @@ import {
     SlackMessageMeta,
     SLACK,
 } from './types';
-import { formatMessage, formatButtons, formatTitle } from './format';
+import { formatButtons, formatTitle } from './format';
 
 const app = express();
 
@@ -89,13 +96,59 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             return;
         }
 
+        const common: UrbanEventCommon<SLACK, SlackMessageContext> = {
+            chat: {
+                id: ctx.channel,
+            },
+            from: {
+                id: ctx.user,
+            },
+            nativeEvent: {
+                type: UrbanSlackBot.TYPE,
+                payload: ctx,
+            },
+        };
+
+        if (ctx.files !== undefined) {
+            const files = ctx.files.map((file) => {
+                const type = file.mimetype.split('/')[0];
+
+                return {
+                    type,
+                    width: file.original_w,
+                    height: file.original_h,
+                    id: file.id,
+                    size: file.size,
+                };
+            });
+
+            if (files.every(({ type }) => type === 'image')) {
+                const adaptedContext: UrbanEventImage<SLACK, SlackMessageContext> = {
+                    ...common,
+                    type: 'image',
+                    payload: {
+                        text: ctx.text,
+                        files,
+                    },
+                };
+
+                return this.processUpdate(adaptedContext);
+            }
+        }
+
         if (ctx.subtype) {
             return;
         }
 
-        const data = formatMessage(ctx);
+        const adaptedContext: UrbanEventText<SLACK, SlackMessageContext> = {
+            ...common,
+            type: 'text',
+            payload: {
+                text: ctx.text,
+            },
+        };
 
-        return this.processUpdate(data);
+        return this.processUpdate(adaptedContext);
     };
 
     handleCommand = (req: express.Request, res: express.Response) => {
