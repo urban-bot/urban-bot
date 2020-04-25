@@ -23,10 +23,10 @@ import {
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { EditMessageOptions, formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
-import { TelegramMessageMeta, TelegramPayload, TelegramBotMessage } from './types';
+import { TelegramMessageMeta, TelegramPayload, TelegramBotMessage, TELEGRAM } from './types';
 
 type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
-    type: 'TELEGRAM';
+    type: TELEGRAM;
     payload: Payload;
 };
 

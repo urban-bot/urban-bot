@@ -18,7 +18,14 @@ import {
     UrbanSyntheticEventText,
 } from '../types/Events';
 import { UrbanMessage, UrbanExistingMessage, UrbanMessageImageData } from '../types/Messages';
-import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext, SlackMessageMeta } from './types';
+import {
+    SlackActionContext,
+    SlackMessageContext,
+    SlackPayload,
+    SlackCommandContext,
+    SlackMessageMeta,
+    SLACK,
+} from './types';
 import { formatButtons, formatTitle } from './format';
 import { UrbanFile } from '../types';
 
@@ -31,7 +38,7 @@ type UrbanSlackBotProps = {
 };
 
 type UrbanNativeEventSlack = {
-    type: 'SLACK';
+    type: SLACK;
     payload: SlackPayload;
 };
 
