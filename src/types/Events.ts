@@ -81,8 +81,8 @@ export type UrbanEventContact<Type, NativeEventPayload> = {
     };
 } & UrbanEventCommon<Type, NativeEventPayload>;
 
-export type UrbanEventDocument<Type, NativeEventPayload> = {
-    type: 'document';
+export type UrbanEventFile<Type, NativeEventPayload> = {
+    type: 'file';
     payload: {
         fileName?: string;
         fileSize?: number;
@@ -153,7 +153,7 @@ export type UrbanEvent<Type, NativeEventPayload> =
     | UrbanEventText<Type, NativeEventPayload>
     | UrbanEventPoll<Type, NativeEventPayload>
     | UrbanEventImage<Type, NativeEventPayload>
-    | UrbanEventDocument<Type, NativeEventPayload>
+    | UrbanEventFile<Type, NativeEventPayload>
     | UrbanEventContact<Type, NativeEventPayload>
     | UrbanEventSticker<Type, NativeEventPayload>
     | UrbanEventLocation<Type, NativeEventPayload>
@@ -177,8 +177,8 @@ export type UrbanEventByType<
     ? UrbanEventAudio<Type, NativeEventPayload>
     : T extends 'contact'
     ? UrbanEventContact<Type, NativeEventPayload>
-    : T extends 'document'
-    ? UrbanEventDocument<Type, NativeEventPayload>
+    : T extends 'file'
+    ? UrbanEventFile<Type, NativeEventPayload>
     : T extends 'invoice'
     ? UrbanEventInvoice<Type, NativeEventPayload>
     : T extends 'location'
