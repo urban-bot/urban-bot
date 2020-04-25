@@ -6,57 +6,21 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { UrbanBot } from '../types/UrbanBot';
 import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
-import { KnownBlock, Button, SectionBlock } from '@slack/types';
+import { KnownBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
 import { UrbanEvent, UrbanEventAction, UrbanEventCommand } from '../types/Events';
-import { UrbanMessage, UrbanExistingMessage, UrbanButton, UrbanMessageImageData } from '../types/Messages';
-import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext, SlackMessageMeta } from './types';
+import { UrbanMessage, UrbanExistingMessage, UrbanMessageImageData } from '../types/Messages';
+import {
+    SlackActionContext,
+    SlackMessageContext,
+    SlackPayload,
+    SlackCommandContext,
+    SlackMessageMeta,
+    SLACK,
+} from './types';
+import { formatMessage, formatButtons, formatTitle } from './format';
 
-type SLACK = 'SLACK';
 const app = express();
-
-function adaptMessage(message: SlackMessageContext): UrbanEvent<SLACK, SlackPayload> {
-    return {
-        type: 'text',
-        chat: {
-            id: message.channel,
-        },
-        from: {
-            id: message.user,
-        },
-        payload: {
-            text: message.text,
-        },
-        nativeEvent: {
-            type: 'SLACK',
-            payload: message,
-        },
-    };
-}
-
-function formatButtons(buttons: UrbanButton[]): Button[] {
-    return buttons.map((button) => {
-        return {
-            type: 'button',
-            text: {
-                type: 'plain_text',
-                text: button.text,
-                emoji: true,
-            },
-            value: button.id,
-        };
-    });
-}
-
-function formatTitle(title: string): SectionBlock {
-    return {
-        type: 'section',
-        text: {
-            type: 'mrkdwn',
-            text: title,
-        },
-    };
-}
 
 type UrbanSlackBotProps = {
     signingSecret: string;
@@ -129,7 +93,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             return;
         }
 
-        const data = adaptMessage(ctx);
+        const data = formatMessage(ctx);
 
         return this.processUpdate(data);
     };
