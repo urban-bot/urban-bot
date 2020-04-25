@@ -30,7 +30,7 @@ export type UrbanMessageText = UrbanMessageCommon & {
 export type UrbanMessageImageData = UrbanMessageCommonData & {
     title?: string;
     image: string | Buffer | NodeJS.ReadableStream;
-    filename?: string;
+    name?: string;
     buttons?: UrbanButton[];
     alt?: string;
 };
@@ -50,8 +50,26 @@ export type UrbanMessageButtons = UrbanMessageCommon & {
     data: UrbanMessageButtonsData;
 };
 
-export type UrbanMessage = UrbanMessageText | UrbanMessageImage | UrbanMessageButtons;
-export type UrbanMessageData = UrbanMessageTextData | UrbanMessageImageData | UrbanMessageButtonsData;
+export type UrbanMessageAudioData = UrbanMessageCommonData & {
+    title?: string;
+    audio: string | Buffer | NodeJS.ReadableStream;
+    name?: string;
+    buttons?: UrbanButton[];
+    duration?: number;
+    author?: string;
+};
+
+export type UrbanMessageAudio = UrbanMessageCommon & {
+    nodeName: 'urban-audio';
+    data: UrbanMessageAudioData;
+};
+
+export type UrbanMessage = UrbanMessageText | UrbanMessageImage | UrbanMessageButtons | UrbanMessageAudio;
+export type UrbanMessageData =
+    | UrbanMessageTextData
+    | UrbanMessageImageData
+    | UrbanMessageButtonsData
+    | UrbanMessageAudioData;
 
 export type UrbanExistingMessage<MessageMeta> = UrbanMessage & {
     meta: MessageMeta;

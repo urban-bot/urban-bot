@@ -361,7 +361,7 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const uploadRes: any = await this.client.files.upload({
                 file: messageData.image,
-                filename: messageData.filename,
+                filename: messageData.name,
             });
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const sharedPublicURLRes: any = await this.client.files.sharedPublicURL({
