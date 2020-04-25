@@ -1,32 +1,35 @@
 import { UrbanChat, UrbanFile, UrbanFrom, UrbanListener } from './index';
 
-export type UrbanEventCommon<Type, NativeEventPayload> = {
+export interface UrbanNativeEvent {
+    type: string;
+    payload?: unknown;
+}
+
+export interface UrbanSyntheticEventCommon<NativeEvent extends UrbanNativeEvent> {
     chat: UrbanChat;
-    nativeEvent?: NativeEvent<Type, NativeEventPayload>;
+    nativeEvent?: NativeEvent;
     from: UrbanFrom;
-};
+}
 
-export type NativeEvent<Type, NativeEventPayload> = {
-    type: Type;
-    payload?: NativeEventPayload;
-};
-
-export type UrbanEventAction<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventAction<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'action';
     payload: {
         actionId: string;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventCommand<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventCommand<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'command';
     payload: {
         command: string;
         text?: string;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventSticker<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventSticker<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'sticker';
     payload: {
         emoji?: string;
@@ -36,32 +39,36 @@ export type UrbanEventSticker<Type, NativeEventPayload> = {
         name?: string;
         size?: number;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventDice<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventDice<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'dice';
     payload: {
         value: number;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventText<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventText<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'text';
     payload: {
         text: string;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventAnimation<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventAnimation<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'animation';
     payload: {
         duration: number;
         fileName?: string;
         mimeType?: string;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventAudio<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventAudio<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'audio';
     payload: {
         duration: number;
@@ -69,9 +76,10 @@ export type UrbanEventAudio<Type, NativeEventPayload> = {
         title?: string;
         mimeType?: string;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventContact<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventContact<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'contact';
     payload: {
         phoneNumber: string;
@@ -79,17 +87,19 @@ export type UrbanEventContact<Type, NativeEventPayload> = {
         lastName?: string;
         userId?: number;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventFile<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventFile<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'file';
     payload: {
         text?: string;
         files: UrbanFile[];
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventInvoice<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventInvoice<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'invoice';
     payload: {
         title: string;
@@ -98,108 +108,111 @@ export type UrbanEventInvoice<Type, NativeEventPayload> = {
         currency: string;
         totalAmount: number;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventLocation<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventLocation<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'location';
     payload: {
         latitude: number;
         longitude: number;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventImage<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventImage<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'image';
     payload: {
         text?: string;
         files: UrbanFile[];
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventPoll<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventPoll<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'poll';
     payload: {
         id: string;
         question: string;
         options: Array<{ id?: string; text: string; count?: number }>;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventVideo<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventVideo<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'video';
     payload: {
         duration: number;
         fileId: string;
         fileSize?: number;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEventVoice<Type, NativeEventPayload> = {
+export interface UrbanSyntheticEventVoice<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'voice';
     payload: {
         duration: number;
     };
-} & UrbanEventCommon<Type, NativeEventPayload>;
+}
 
-export type UrbanEvent<Type, NativeEventPayload> =
-    | UrbanEventAction<Type, NativeEventPayload>
-    | UrbanEventVoice<Type, NativeEventPayload>
-    | UrbanEventCommand<Type, NativeEventPayload>
-    | UrbanEventInvoice<Type, NativeEventPayload>
-    | UrbanEventAnimation<Type, NativeEventPayload>
-    | UrbanEventAudio<Type, NativeEventPayload>
-    | UrbanEventVideo<Type, NativeEventPayload>
-    | UrbanEventText<Type, NativeEventPayload>
-    | UrbanEventPoll<Type, NativeEventPayload>
-    | UrbanEventImage<Type, NativeEventPayload>
-    | UrbanEventFile<Type, NativeEventPayload>
-    | UrbanEventContact<Type, NativeEventPayload>
-    | UrbanEventSticker<Type, NativeEventPayload>
-    | UrbanEventLocation<Type, NativeEventPayload>
-    | UrbanEventDice<Type, NativeEventPayload>;
+export type UrbanSyntheticEvent<NativeEvent extends UrbanNativeEvent> =
+    | UrbanSyntheticEventAction<NativeEvent>
+    | UrbanSyntheticEventVoice<NativeEvent>
+    | UrbanSyntheticEventCommand<NativeEvent>
+    | UrbanSyntheticEventInvoice<NativeEvent>
+    | UrbanSyntheticEventAnimation<NativeEvent>
+    | UrbanSyntheticEventAudio<NativeEvent>
+    | UrbanSyntheticEventVideo<NativeEvent>
+    | UrbanSyntheticEventText<NativeEvent>
+    | UrbanSyntheticEventPoll<NativeEvent>
+    | UrbanSyntheticEventImage<NativeEvent>
+    | UrbanSyntheticEventFile<NativeEvent>
+    | UrbanSyntheticEventContact<NativeEvent>
+    | UrbanSyntheticEventSticker<NativeEvent>
+    | UrbanSyntheticEventLocation<NativeEvent>
+    | UrbanSyntheticEventDice<NativeEvent>;
 
-export type UrbanEventByType<
-    Type,
-    NativeEventPayload,
-    T extends UrbanEvent<Type, NativeEventPayload>['type']
+export type UrbanSyntheticEventByType<
+    NativeEvent extends UrbanNativeEvent,
+    T extends UrbanSyntheticEvent<NativeEvent>['type']
 > = T extends 'text'
-    ? UrbanEventText<Type, NativeEventPayload>
+    ? UrbanSyntheticEventText<NativeEvent>
     : T extends 'command'
-    ? UrbanEventCommand<Type, NativeEventPayload>
+    ? UrbanSyntheticEventCommand<NativeEvent>
     : T extends 'pool'
-    ? UrbanEventPoll<Type, NativeEventPayload>
+    ? UrbanSyntheticEventPoll<NativeEvent>
     : T extends 'sticker'
-    ? UrbanEventSticker<Type, NativeEventPayload>
+    ? UrbanSyntheticEventSticker<NativeEvent>
     : T extends 'animation'
-    ? UrbanEventAnimation<Type, NativeEventPayload>
+    ? UrbanSyntheticEventAnimation<NativeEvent>
     : T extends 'audio'
-    ? UrbanEventAudio<Type, NativeEventPayload>
+    ? UrbanSyntheticEventAudio<NativeEvent>
     : T extends 'contact'
-    ? UrbanEventContact<Type, NativeEventPayload>
+    ? UrbanSyntheticEventContact<NativeEvent>
     : T extends 'file'
-    ? UrbanEventFile<Type, NativeEventPayload>
+    ? UrbanSyntheticEventFile<NativeEvent>
     : T extends 'invoice'
-    ? UrbanEventInvoice<Type, NativeEventPayload>
+    ? UrbanSyntheticEventInvoice<NativeEvent>
     : T extends 'location'
-    ? UrbanEventLocation<Type, NativeEventPayload>
+    ? UrbanSyntheticEventLocation<NativeEvent>
     : T extends 'image'
-    ? UrbanEventImage<Type, NativeEventPayload>
+    ? UrbanSyntheticEventImage<NativeEvent>
     : T extends 'poll'
-    ? UrbanEventPoll<Type, NativeEventPayload>
+    ? UrbanSyntheticEventPoll<NativeEvent>
     : T extends 'dice'
-    ? UrbanEventDice<Type, NativeEventPayload>
+    ? UrbanSyntheticEventDice<NativeEvent>
     : T extends 'voice'
-    ? UrbanEventVoice<Type, NativeEventPayload>
+    ? UrbanSyntheticEventVoice<NativeEvent>
     : T extends 'action'
-    ? UrbanEventAction<Type, NativeEventPayload>
+    ? UrbanSyntheticEventAction<NativeEvent>
     : T extends 'video'
-    ? UrbanEventVideo<Type, NativeEventPayload>
-    : UrbanEvent<Type, NativeEventPayload>;
+    ? UrbanSyntheticEventVideo<NativeEvent>
+    : UrbanSyntheticEvent<NativeEvent>;
 
 export type UrbanListenerByType<
-    Type,
-    NativeEventPayload,
-    T extends UrbanEvent<Type, NativeEventPayload>['type']
-> = UrbanListener<UrbanEventByType<Type, NativeEventPayload, T>>;
+    NativeEvent extends UrbanNativeEvent,
+    T extends UrbanSyntheticEvent<NativeEvent>['type']
+> = UrbanListener<UrbanSyntheticEventByType<NativeEvent, T>>;
 
-export type UrbanEventType<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>['type'];
+export type UrbanSyntheticEventType<NativeEvent extends UrbanNativeEvent> = UrbanSyntheticEvent<NativeEvent>['type'];
