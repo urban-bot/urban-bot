@@ -107,7 +107,7 @@ export class ManagerBot<NativeEvent extends UrbanNativeEvent, MessageMeta = unkn
         }
 
         return chatById.promiseQueue.next<MessageMeta>(() => {
-            return this.bot.sendMessage(message) as Promise<MessageMeta>;
+            return this.bot.sendMessage(message);
         });
     }
 
