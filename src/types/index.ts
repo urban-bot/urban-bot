@@ -9,6 +9,15 @@ export type UrbanFrom = {
     surname?: string;
 };
 
+export type UrbanFile = {
+    id?: string;
+    name?: string;
+    size?: number;
+    width?: number;
+    height?: number;
+    mimeType?: string;
+};
+
 export type UrbanParseMode = 'HTML' | 'markdown';
 
 export type UrbanListener<Event> = (event: Event) => unknown;
