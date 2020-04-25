@@ -33,7 +33,7 @@ export function Hooks() {
     });
 
     useVideo(({ payload }) => {
-        const name = payload.files[0]?.name ?? '';
+        const name = payload.files[0].name ?? '';
         setAnswer("You've sent a video " + name);
     });
 
@@ -42,7 +42,7 @@ export function Hooks() {
     });
 
     useImage(({ payload }) => {
-        const name = payload.files[0]?.name ?? '';
+        const name = payload.files[0].name ?? '';
         setAnswer("You've sent an image " + name);
     });
 
@@ -51,7 +51,7 @@ export function Hooks() {
     });
 
     useFile(({ payload }) => {
-        const name = payload.files[0]?.name ?? '';
+        const name = payload.files[0].name ?? '';
         setAnswer("You've sent a file " + name);
     });
 
@@ -60,7 +60,8 @@ export function Hooks() {
     });
 
     useAudio(({ payload }) => {
-        setAnswer("You've sent an audio " + payload.title);
+        const name = payload.files[0].name ?? '';
+        setAnswer("You've sent an audio " + name);
     });
 
     useSticker(({ payload }) => {
