@@ -315,9 +315,14 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
                     ...common,
                     type: 'video',
                     payload: {
-                        duration: ctx.video.duration,
-                        fileId: ctx.video.file_id,
-                        fileSize: ctx.video.file_size,
+                        files: [
+                            {
+                                duration: ctx.video.duration,
+                                id: ctx.video.file_id,
+                                size: ctx.video.file_size,
+                                mimeType: ctx.video.mime_type,
+                            },
+                        ],
                     },
                 };
 
