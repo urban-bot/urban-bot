@@ -128,9 +128,8 @@ export type UrbanEventPoll<Type, NativeEventPayload> = {
 export type UrbanEventVideo<Type, NativeEventPayload> = {
     type: 'video';
     payload: {
-        duration: number;
-        fileId: string;
-        fileSize?: number;
+        text?: string;
+        files: UrbanFile[];
     };
 } & UrbanEventCommon<Type, NativeEventPayload>;
 

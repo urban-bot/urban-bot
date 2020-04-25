@@ -32,16 +32,18 @@ export function Hooks() {
         setAnswer("You've sent a command " + payload.command);
     });
 
-    useVideo(() => {
-        setAnswer("You've sent a video");
+    useVideo(({ payload }) => {
+        const name = payload.files[0]?.name ?? '';
+        setAnswer("You've sent a video " + name);
     });
 
     usePoll(({ payload }) => {
         setAnswer("You've sent a poll " + payload.question);
     });
 
-    useImage(() => {
-        setAnswer("You've sent an image");
+    useImage(({ payload }) => {
+        const name = payload.files[0]?.name ?? '';
+        setAnswer("You've sent an image " + name);
     });
 
     useLocation(({ payload }) => {
@@ -49,7 +51,8 @@ export function Hooks() {
     });
 
     useFile(({ payload }) => {
-        setAnswer("You've sent a file " + payload.files[0]?.name ?? '');
+        const name = payload.files[0]?.name ?? '';
+        setAnswer("You've sent a file " + name);
     });
 
     useContact(({ payload }) => {

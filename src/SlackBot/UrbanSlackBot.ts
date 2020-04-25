@@ -8,15 +8,7 @@ import { UrbanBot } from '../types/UrbanBot';
 import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
 import { KnownBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
-import {
-    UrbanEvent,
-    UrbanEventAction,
-    UrbanEventCommand,
-    UrbanEventCommon,
-    UrbanEventFile,
-    UrbanEventImage,
-    UrbanEventText,
-} from '../types/Events';
+import { UrbanEvent, UrbanEventAction, UrbanEventCommand, UrbanEventCommon, UrbanEventText } from '../types/Events';
 import { UrbanMessage, UrbanExistingMessage, UrbanMessageImageData } from '../types/Messages';
 import {
     SlackActionContext,
@@ -123,31 +115,36 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 };
             });
 
-            const isAllImages = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'image');
-
-            if (isAllImages) {
-                const imageEvent: UrbanEventImage<SLACK, SlackMessageContext> = {
-                    ...common,
-                    type: 'image',
-                    payload: {
-                        text: ctx.text,
-                        files,
-                    },
-                };
-
-                this.processUpdate(imageEvent);
-            }
-
-            const fileEvent: UrbanEventFile<SLACK, SlackMessageContext> = {
+            const fileEvent = {
                 ...common,
-                type: 'file',
                 payload: {
                     text: ctx.text,
                     files,
                 },
-            };
+            } as const;
+            const isAllImages = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'image');
+            const isAllVideo = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'video');
 
-            return this.processUpdate(fileEvent);
+            if (isAllImages) {
+                this.processUpdate({
+                    type: 'image',
+                    ...fileEvent,
+                });
+            }
+
+            if (isAllVideo) {
+                this.processUpdate({
+                    type: 'video',
+                    ...fileEvent,
+                });
+            }
+
+            this.processUpdate({
+                ...fileEvent,
+                type: 'file',
+            });
+
+            return;
         }
 
         if (ctx.subtype) {
