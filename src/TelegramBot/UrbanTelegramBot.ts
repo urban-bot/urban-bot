@@ -192,14 +192,20 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
                     break;
                 }
 
+                const name = `${ctx.audio.performer ?? ''} ${ctx.audio.title ?? ''}`.trim();
                 const adaptedContext: UrbanEventAudio<TELEGRAM, TelegramBotMessage> = {
                     ...common,
                     type: 'audio',
                     payload: {
-                        duration: ctx.audio.duration,
-                        performer: ctx.audio.performer,
-                        title: ctx.audio.title,
-                        mimeType: ctx.audio.mime_type,
+                        files: [
+                            {
+                                duration: ctx.audio.duration,
+                                id: ctx.audio.file_id,
+                                size: ctx.audio.file_size,
+                                name,
+                                mimeType: ctx.audio.mime_type,
+                            },
+                        ],
                     },
                 };
 

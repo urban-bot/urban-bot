@@ -124,17 +124,21 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             } as const;
             const isAllImages = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'image');
             const isAllVideo = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'video');
+            const isAllAudio = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'audio');
 
             if (isAllImages) {
                 this.processUpdate({
                     type: 'image',
                     ...fileEvent,
                 });
-            }
-
-            if (isAllVideo) {
+            } else if (isAllVideo) {
                 this.processUpdate({
                     type: 'video',
+                    ...fileEvent,
+                });
+            } else if (isAllAudio) {
+                this.processUpdate({
+                    type: 'audio',
                     ...fileEvent,
                 });
             }

@@ -64,10 +64,7 @@ export type UrbanEventAnimation<Type, NativeEventPayload> = {
 export type UrbanEventAudio<Type, NativeEventPayload> = {
     type: 'audio';
     payload: {
-        duration: number;
-        performer?: string;
-        title?: string;
-        mimeType?: string;
+        files: UrbanFile[];
     };
 } & UrbanEventCommon<Type, NativeEventPayload>;
 
