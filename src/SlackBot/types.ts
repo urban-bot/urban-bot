@@ -19,6 +19,8 @@ import {
 } from '@slack/types';
 import { WebAPICallResult } from '@slack/web-api';
 
+export type SLACK = 'SLACK';
+
 export type SlackUser = {
     id: string;
     username: string;
