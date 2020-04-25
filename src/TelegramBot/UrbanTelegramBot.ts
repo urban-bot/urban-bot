@@ -234,9 +234,14 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
                     ...common,
                     type: 'file',
                     payload: {
-                        fileName: ctx.document.file_name,
-                        fileSize: ctx.document.file_size,
-                        mimeType: ctx.document.mime_type,
+                        files: [
+                            {
+                                id: ctx.document.file_id,
+                                name: ctx.document.file_name,
+                                size: ctx.document.file_size,
+                                mimeType: ctx.document.mime_type,
+                            },
+                        ],
                     },
                 };
 

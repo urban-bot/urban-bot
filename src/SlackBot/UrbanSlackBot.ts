@@ -13,6 +13,7 @@ import {
     UrbanEventAction,
     UrbanEventCommand,
     UrbanEventCommon,
+    UrbanEventFile,
     UrbanEventImage,
     UrbanEventText,
 } from '../types/Events';
@@ -26,6 +27,7 @@ import {
     SLACK,
 } from './types';
 import { formatButtons, formatTitle } from './format';
+import { UrbanFile } from '../types';
 
 const app = express();
 
@@ -110,20 +112,21 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         };
 
         if (ctx.files !== undefined) {
-            const files = ctx.files.map((file) => {
-                const type = file.mimetype.split('/')[0];
-
+            const files: UrbanFile[] = ctx.files.map((file) => {
                 return {
-                    type,
+                    mimeType: file.mimetype,
                     width: file.original_w,
                     height: file.original_h,
                     id: file.id,
                     size: file.size,
+                    name: file.name,
                 };
             });
 
-            if (files.every(({ type }) => type === 'image')) {
-                const adaptedContext: UrbanEventImage<SLACK, SlackMessageContext> = {
+            const isAllImages = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'image');
+
+            if (isAllImages) {
+                const imageEvent: UrbanEventImage<SLACK, SlackMessageContext> = {
                     ...common,
                     type: 'image',
                     payload: {
@@ -132,15 +135,26 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                     },
                 };
 
-                return this.processUpdate(adaptedContext);
+                this.processUpdate(imageEvent);
             }
+
+            const fileEvent: UrbanEventFile<SLACK, SlackMessageContext> = {
+                ...common,
+                type: 'file',
+                payload: {
+                    text: ctx.text,
+                    files,
+                },
+            };
+
+            return this.processUpdate(fileEvent);
         }
 
         if (ctx.subtype) {
             return;
         }
 
-        const adaptedContext: UrbanEventText<SLACK, SlackMessageContext> = {
+        const textEvent: UrbanEventText<SLACK, SlackMessageContext> = {
             ...common,
             type: 'text',
             payload: {
@@ -148,7 +162,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             },
         };
 
-        return this.processUpdate(adaptedContext);
+        return this.processUpdate(textEvent);
     };
 
     handleCommand = (req: express.Request, res: express.Response) => {
