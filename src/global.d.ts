@@ -2,11 +2,12 @@ import React from 'react';
 import { UrbanMessageTextData, UrbanMessageImageData, UrbanMessageButtonsData } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
 import { UrbanChat } from './types';
+import { UrbanNativeEvent } from './types/Events';
 
 export type Markup = { children: React.ReactNode };
 export type Link = Markup & { href: string };
-export type UrbanElement<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown> = {
-    $$managerBot: ManagerBot<Type, NativeEventPayload, MessageMeta>;
+export type UrbanElement<NativeEvent extends UrbanNativeEvent, MessageMeta = unknown> = {
+    $$managerBot: ManagerBot<NativeEvent, MessageMeta>;
     chat: UrbanChat;
     isNewMessageEveryRender?: boolean;
 };
