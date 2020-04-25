@@ -2,20 +2,21 @@ import React from 'react';
 import { ManagerBot } from './ManagerBot/ManagerBot';
 import { UrbanChat, UrbanFrom, UrbanParseMode } from './types';
 import { UrbanBot } from './types/UrbanBot';
+import { UrbanNativeEvent } from './types/Events';
 
-export type BotContextType<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown> = {
-    $$managerBot: ManagerBot<Type, NativeEventPayload, MessageMeta>;
+export type BotContextType<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent, MessageMeta = unknown> = {
+    $$managerBot: ManagerBot<NativeEvent, MessageMeta>;
     chat: UrbanChat;
     from?: UrbanFrom;
     isNewMessageEveryRender: boolean;
     parseMode: UrbanParseMode;
-    bot: UrbanBot<Type, NativeEventPayload, MessageMeta>;
+    bot: UrbanBot<NativeEvent, MessageMeta>;
 };
 
 export const BotContext = React.createContext(undefined);
 
-export function getBotContext<Type = unknown, NativeEventPayload = unknown, MessageMeta = unknown>() {
-    return (BotContext as unknown) as React.Context<BotContextType<Type, NativeEventPayload, MessageMeta>>;
+export function getBotContext<NativeEvent extends UrbanNativeEvent, MessageMeta = unknown>() {
+    return (BotContext as unknown) as React.Context<BotContextType<NativeEvent, MessageMeta>>;
 }
 
 export type RouterContext = {

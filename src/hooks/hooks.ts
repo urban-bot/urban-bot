@@ -1,10 +1,10 @@
 import React from 'react';
 import { getBotContext, RouterContext } from '../context';
 import { UrbanListener } from '../types';
-import { UrbanEvent, UrbanListenerByType } from '../types/Events';
+import { UrbanSyntheticEvent, UrbanListenerByType, UrbanNativeEvent } from '../types/Events';
 
-export function useBotContext<Type, NativeEventPayload, MessageMeta>() {
-    const BotContext = getBotContext<Type, NativeEventPayload, MessageMeta>();
+export function useBotContext<NativeEvent extends UrbanNativeEvent, MessageMeta>() {
+    const BotContext = getBotContext<NativeEvent, MessageMeta>();
     const botContext = React.useContext(BotContext);
 
     if (botContext === undefined) {
@@ -25,12 +25,11 @@ export function useRouter() {
 }
 
 function useSubscribe<
-    Type,
-    NativeEventPayload,
-    Event extends UrbanEvent<Type, NativeEventPayload> = UrbanEvent<Type, NativeEventPayload>,
+    NativeEvent extends UrbanNativeEvent,
+    Event extends UrbanSyntheticEvent<NativeEvent> = UrbanSyntheticEvent<NativeEvent>,
     MessageMeta = unknown
 >(callback: UrbanListener<Event>, event: Event['type'] | 'any') {
-    const { chat, $$managerBot } = useBotContext<Type, NativeEventPayload, MessageMeta>();
+    const { chat, $$managerBot } = useBotContext<NativeEvent, MessageMeta>();
 
     React.useEffect(() => {
         $$managerBot.on(event, callback, chat.id);
@@ -41,78 +40,80 @@ function useSubscribe<
     }, [callback, $$managerBot, event, chat]);
 }
 
-export function useAny<Type, NativeEventPayload>(callback: UrbanListener<UrbanEvent<Type, NativeEventPayload>>) {
+export function useAny<NativeEvent extends UrbanNativeEvent>(
+    callback: UrbanListener<UrbanSyntheticEvent<NativeEvent>>,
+) {
     useSubscribe(callback, 'any');
 }
 
-export function useText<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'text'>) {
+export function useText<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'text'>) {
     useSubscribe(callback, 'text');
 }
 
-export function useCommand<Type, NativeEventPayload>(
-    callback: UrbanListenerByType<Type, NativeEventPayload, 'command'>,
+export function useCommand<NativeEvent extends UrbanNativeEvent>(
+    callback: UrbanListenerByType<NativeEvent, 'command'>,
 ) {
     useSubscribe(callback, 'command');
 }
 
-export function useSticker<Type, NativeEventPayload>(
-    callback: UrbanListenerByType<Type, NativeEventPayload, 'sticker'>,
+export function useSticker<NativeEvent extends UrbanNativeEvent>(
+    callback: UrbanListenerByType<NativeEvent, 'sticker'>,
 ) {
     useSubscribe(callback, 'sticker');
 }
 
-export function useAnimation<Type, NativeEventPayload>(
-    callback: UrbanListenerByType<Type, NativeEventPayload, 'animation'>,
+export function useAnimation<NativeEvent extends UrbanNativeEvent>(
+    callback: UrbanListenerByType<NativeEvent, 'animation'>,
 ) {
     useSubscribe(callback, 'animation');
 }
 
-export function useAudio<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'audio'>) {
+export function useAudio<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'audio'>) {
     useSubscribe(callback, 'audio');
 }
 
-export function useContact<Type, NativeEventPayload>(
-    callback: UrbanListenerByType<Type, NativeEventPayload, 'contact'>,
+export function useContact<NativeEvent extends UrbanNativeEvent>(
+    callback: UrbanListenerByType<NativeEvent, 'contact'>,
 ) {
     useSubscribe(callback, 'contact');
 }
 
-export function useFile<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'file'>) {
+export function useFile<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'file'>) {
     useSubscribe(callback, 'file');
 }
 
-export function useInvoice<Type, NativeEventPayload>(
-    callback: UrbanListenerByType<Type, NativeEventPayload, 'invoice'>,
+export function useInvoice<NativeEvent extends UrbanNativeEvent>(
+    callback: UrbanListenerByType<NativeEvent, 'invoice'>,
 ) {
     useSubscribe(callback, 'invoice');
 }
 
-export function useLocation<Type, NativeEventPayload>(
-    callback: UrbanListenerByType<Type, NativeEventPayload, 'location'>,
+export function useLocation<NativeEvent extends UrbanNativeEvent>(
+    callback: UrbanListenerByType<NativeEvent, 'location'>,
 ) {
     useSubscribe(callback, 'location');
 }
 
-export function useImage<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'image'>) {
+export function useImage<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'image'>) {
     useSubscribe(callback, 'image');
 }
 
-export function usePoll<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'poll'>) {
+export function usePoll<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'poll'>) {
     useSubscribe(callback, 'poll');
 }
 
-export function useVideo<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'video'>) {
+export function useVideo<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'video'>) {
     useSubscribe(callback, 'video');
 }
 
-export function useVoice<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'voice'>) {
+export function useVoice<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'voice'>) {
     useSubscribe(callback, 'voice');
 }
 
-export function useDice<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'dice'>) {
+export function useDice<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'dice'>) {
     useSubscribe(callback, 'dice');
 }
 
-export function useAction<Type, NativeEventPayload>(callback: UrbanListenerByType<Type, NativeEventPayload, 'action'>) {
+export function useAction<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'action'>) {
     useSubscribe(callback, 'action');
 }
