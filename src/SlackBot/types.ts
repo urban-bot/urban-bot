@@ -272,7 +272,11 @@ export type SlackFile = {
     original_w?: number;
     original_h?: number;
     thumb_tiny?: string;
-    permalink?: string;
-    permalink_public?: string;
+    edit_link?: string;
+    preview?: string;
+    preview_highlight?: string;
+    lines?: number;
+    lines_more?: number;
+    preview_is_truncated?: boolean;
     has_rich_preview?: boolean;
 };

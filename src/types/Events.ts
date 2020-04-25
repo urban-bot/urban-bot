@@ -84,9 +84,8 @@ export type UrbanEventContact<Type, NativeEventPayload> = {
 export type UrbanEventFile<Type, NativeEventPayload> = {
     type: 'file';
     payload: {
-        fileName?: string;
-        fileSize?: number;
-        mimeType?: string;
+        text?: string;
+        files: UrbanFile[];
     };
 } & UrbanEventCommon<Type, NativeEventPayload>;
 

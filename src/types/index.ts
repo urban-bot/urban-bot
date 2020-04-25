@@ -11,9 +11,11 @@ export type UrbanFrom = {
 
 export type UrbanFile = {
     id?: string;
+    name?: string;
     size?: number;
     width?: number;
     height?: number;
+    mimeType?: string;
 };
 
 export type UrbanParseMode = 'HTML' | 'markdown';

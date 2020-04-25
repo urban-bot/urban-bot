@@ -49,7 +49,7 @@ export function Hooks() {
     });
 
     useFile(({ payload }) => {
-        setAnswer("You've sent a file " + payload.fileName);
+        setAnswer("You've sent a file " + payload.files[0]?.name ?? '');
     });
 
     useContact(({ payload }) => {
