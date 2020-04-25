@@ -141,12 +141,12 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                     type: 'audio',
                     ...fileEvent,
                 });
+            } else {
+                this.processUpdate({
+                    ...fileEvent,
+                    type: 'file',
+                });
             }
-
-            this.processUpdate({
-                ...fileEvent,
-                type: 'file',
-            });
 
             return;
         }
