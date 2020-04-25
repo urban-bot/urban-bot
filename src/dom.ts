@@ -1,9 +1,13 @@
 import { shallowEqual } from './utils/shallowEqual';
 import { UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
+import { UrbanNativeEvent } from './types/Events';
 
-export type UrbanNode<Type, NativeEventPayload, MessageMeta> = Omit<UrbanExistingMessage<MessageMeta>, 'meta'> & {
-    $$managerBot: ManagerBot<Type, NativeEventPayload, MessageMeta>;
+export type UrbanNode<NativeEvent extends UrbanNativeEvent, MessageMeta> = Omit<
+    UrbanExistingMessage<MessageMeta>,
+    'meta'
+> & {
+    $$managerBot: ManagerBot<NativeEvent, MessageMeta>;
     isNewMessageEveryRender?: boolean;
     meta?: Promise<MessageMeta>;
 };
@@ -12,12 +16,12 @@ export type UrbanNodeRoot = {
     nodeName: 'root';
 };
 
-type Props<Type, NativeEventPayload, MessageMeta> = Omit<UrbanNode<Type, NativeEventPayload, MessageMeta>, 'nodeName'>;
+type Props<NativeEvent extends UrbanNativeEvent, MessageMeta> = Omit<UrbanNode<NativeEvent, MessageMeta>, 'nodeName'>;
 
-export function createNode<Type, NativeEventPayload, MessageMeta>(
+export function createNode<NativeEvent extends UrbanNativeEvent, MessageMeta>(
     nodeName: UrbanMessageNodeName | 'root',
-    props?: Props<Type, NativeEventPayload, MessageMeta>,
-): UrbanNode<Type, NativeEventPayload, MessageMeta> | UrbanNodeRoot {
+    props?: Props<NativeEvent, MessageMeta>,
+): UrbanNode<NativeEvent, MessageMeta> | UrbanNodeRoot {
     if (props === undefined) {
         if (nodeName !== 'root') {
             throw new Error('props are necessary for every node');
@@ -36,12 +40,12 @@ export function createNode<Type, NativeEventPayload, MessageMeta>(
     return {
         ...node,
         data,
-    } as UrbanNode<Type, NativeEventPayload, MessageMeta>;
+    } as UrbanNode<NativeEvent, MessageMeta>;
 }
 
-export function appendChildNode<Type, NativeEventPayload, MessageMeta>(
-    _node: UrbanNode<Type, NativeEventPayload, MessageMeta> | UrbanNodeRoot,
-    childNode: UrbanNode<Type, NativeEventPayload, MessageMeta> | UrbanNodeRoot,
+export function appendChildNode<NativeEvent extends UrbanNativeEvent, MessageMeta>(
+    _node: UrbanNode<NativeEvent, MessageMeta> | UrbanNodeRoot,
+    childNode: UrbanNode<NativeEvent, MessageMeta> | UrbanNodeRoot,
 ) {
     if (childNode.nodeName === 'root') {
         return;
@@ -56,9 +60,9 @@ export function appendChildNode<Type, NativeEventPayload, MessageMeta>(
     childNode.meta = childNode.$$managerBot.sendMessage(message);
 }
 
-export function removeChildNode<Type, NativeEventPayload, MessageMeta>(
-    _node: UrbanNode<Type, NativeEventPayload, MessageMeta>,
-    removedNode: UrbanNode<Type, NativeEventPayload, MessageMeta>,
+export function removeChildNode<NativeEvent extends UrbanNativeEvent, MessageMeta>(
+    _node: UrbanNode<NativeEvent, MessageMeta>,
+    removedNode: UrbanNode<NativeEvent, MessageMeta>,
 ) {
     if (removedNode.isNewMessageEveryRender) {
         return;
@@ -80,12 +84,12 @@ export function removeChildNode<Type, NativeEventPayload, MessageMeta>(
     });
 }
 
-export function updateNode<Type, NativeEventPayload, MessageMeta>(
-    node: UrbanNode<Type, NativeEventPayload, MessageMeta>,
+export function updateNode<NativeEvent extends UrbanNativeEvent, MessageMeta>(
+    node: UrbanNode<NativeEvent, MessageMeta>,
     _updatePayload: unknown,
     _type: unknown,
-    oldProps: Props<Type, NativeEventPayload, MessageMeta>,
-    newProps: Props<Type, NativeEventPayload, MessageMeta>,
+    oldProps: Props<NativeEvent, MessageMeta>,
+    newProps: Props<NativeEvent, MessageMeta>,
 ) {
     if (!node.isNewMessageEveryRender && shallowEqual(oldProps, newProps)) {
         return;

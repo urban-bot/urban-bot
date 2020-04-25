@@ -9,23 +9,16 @@ import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
 import { KnownBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
 import {
-    UrbanEvent,
-    UrbanEventAction,
-    UrbanEventCommand,
-    UrbanEventCommon,
-    UrbanEventFile,
-    UrbanEventImage,
-    UrbanEventText,
+    UrbanSyntheticEvent,
+    UrbanSyntheticEventAction,
+    UrbanSyntheticEventCommand,
+    UrbanSyntheticEventCommon,
+    UrbanSyntheticEventFile,
+    UrbanSyntheticEventImage,
+    UrbanSyntheticEventText,
 } from '../types/Events';
 import { UrbanMessage, UrbanExistingMessage, UrbanMessageImageData } from '../types/Messages';
-import {
-    SlackActionContext,
-    SlackMessageContext,
-    SlackPayload,
-    SlackCommandContext,
-    SlackMessageMeta,
-    SLACK,
-} from './types';
+import { SlackActionContext, SlackMessageContext, SlackPayload, SlackCommandContext, SlackMessageMeta } from './types';
 import { formatButtons, formatTitle } from './format';
 import { UrbanFile } from '../types';
 
@@ -37,7 +30,12 @@ type UrbanSlackBotProps = {
     port?: number;
 };
 
-export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessageMeta> {
+type UrbanNativeEventSlack = {
+    type: 'SLACK';
+    payload: SlackPayload;
+};
+
+export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessageMeta> {
     static TYPE = 'SLACK' as const;
     type = UrbanSlackBot.TYPE;
     client: WebClient;
@@ -61,7 +59,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
         app.listen(port);
     }
 
-    processUpdate(_event: UrbanEvent<SLACK, SlackPayload>) {
+    processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventSlack>) {
         throw new Error('this method must be overridden');
     }
 
@@ -71,7 +69,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 return;
             }
 
-            const adaptedCtx: UrbanEventAction<SLACK, SlackPayload> = {
+            const adaptedCtx: UrbanSyntheticEventAction<UrbanNativeEventSlack> = {
                 type: 'action',
                 chat: {
                     id: ctx.channel.id,
@@ -98,7 +96,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             return;
         }
 
-        const common: UrbanEventCommon<SLACK, SlackMessageContext> = {
+        const common: UrbanSyntheticEventCommon<UrbanNativeEventSlack> = {
             chat: {
                 id: ctx.channel,
             },
@@ -126,7 +124,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             const isAllImages = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'image');
 
             if (isAllImages) {
-                const imageEvent: UrbanEventImage<SLACK, SlackMessageContext> = {
+                const imageEvent: UrbanSyntheticEventImage<UrbanNativeEventSlack> = {
                     ...common,
                     type: 'image',
                     payload: {
@@ -138,7 +136,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
                 this.processUpdate(imageEvent);
             }
 
-            const fileEvent: UrbanEventFile<SLACK, SlackMessageContext> = {
+            const fileEvent: UrbanSyntheticEventFile<UrbanNativeEventSlack> = {
                 ...common,
                 type: 'file',
                 payload: {
@@ -154,7 +152,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
             return;
         }
 
-        const textEvent: UrbanEventText<SLACK, SlackMessageContext> = {
+        const textEvent: UrbanSyntheticEventText<UrbanNativeEventSlack> = {
             ...common,
             type: 'text',
             payload: {
@@ -167,7 +165,7 @@ export class UrbanSlackBot implements UrbanBot<SLACK, SlackPayload, SlackMessage
 
     handleCommand = (req: express.Request, res: express.Response) => {
         const { channel_id, command, text, user_id, user_name } = req.body as SlackCommandContext;
-        const ctx: UrbanEventCommand<SLACK, SlackCommandContext> = {
+        const ctx: UrbanSyntheticEventCommand<UrbanNativeEventSlack> = {
             type: 'command',
             chat: {
                 id: channel_id,
