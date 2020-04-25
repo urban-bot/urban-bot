@@ -12,7 +12,7 @@ import {
     UrbanEventInvoice,
     UrbanEventCommand,
     UrbanEventSticker,
-    UrbanEventDocument,
+    UrbanEventFile,
     UrbanEventContact,
     UrbanEventAudio,
     UrbanEventAnimation,
@@ -40,7 +40,7 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
         this.bot.on('animation', (ctx) => this.handleMessage('animation', ctx));
         this.bot.on('audio', (ctx) => this.handleMessage('audio', ctx));
         this.bot.on('contact', (ctx) => this.handleMessage('contact', ctx));
-        this.bot.on('document', (ctx) => this.handleMessage('document', ctx));
+        this.bot.on('document', (ctx) => this.handleMessage('file', ctx));
         this.bot.on('invoice', (ctx) => this.handleMessage('invoice', ctx));
         this.bot.on('location', (ctx) => this.handleMessage('location', ctx));
         this.bot.on('photo', (ctx) => this.handleMessage('image', ctx));
@@ -225,18 +225,23 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
                 this.processUpdate(adaptedContext);
                 break;
             }
-            case 'document': {
+            case 'file': {
                 if (ctx.document === undefined) {
                     break;
                 }
 
-                const adaptedContext: UrbanEventDocument<TELEGRAM, TelegramBotMessage> = {
+                const adaptedContext: UrbanEventFile<TELEGRAM, TelegramBotMessage> = {
                     ...common,
-                    type: 'document',
+                    type: 'file',
                     payload: {
-                        fileName: ctx.document.file_name,
-                        fileSize: ctx.document.file_size,
-                        mimeType: ctx.document.mime_type,
+                        files: [
+                            {
+                                id: ctx.document.file_id,
+                                name: ctx.document.file_name,
+                                size: ctx.document.file_size,
+                                mimeType: ctx.document.mime_type,
+                            },
+                        ],
                     },
                 };
 
@@ -289,7 +294,12 @@ export class UrbanTelegramBot implements UrbanBot<TELEGRAM, TelegramPayload, Tel
                     ...common,
                     type: 'image',
                     payload: {
-                        fileIds: ctx.photo.map((photo) => photo.file_id),
+                        files: ctx.photo.map((photo) => ({
+                            id: photo.file_id,
+                            size: photo.file_size,
+                            width: photo.width,
+                            height: photo.height,
+                        })),
                     },
                 };
 
