@@ -23,7 +23,9 @@ function formatReplyMarkupForNewMessage(message: UrbanMessage) {
     }
 
     if (
-        (message.nodeName === 'urban-buttons' || message.nodeName === 'urban-img') &&
+        (message.nodeName === 'urban-buttons' ||
+            message.nodeName === 'urban-img' ||
+            message.nodeName === 'urban-audio') &&
         message.data.buttons !== undefined
     ) {
         const replyMarkup: TelegramBot.InlineKeyboardMarkup = {
@@ -40,7 +42,9 @@ function formatReplyMarkupForNewMessage(message: UrbanMessage) {
 
 function formatReplyMarkupForExistingMessage(message: UrbanMessage) {
     if (
-        (message.nodeName === 'urban-buttons' || message.nodeName === 'urban-img') &&
+        (message.nodeName === 'urban-buttons' ||
+            message.nodeName === 'urban-img' ||
+            message.nodeName === 'urban-audio') &&
         message.data.buttons !== undefined
     ) {
         const replyMarkup: TelegramBot.InlineKeyboardMarkup = {

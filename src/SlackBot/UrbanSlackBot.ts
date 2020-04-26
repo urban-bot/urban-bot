@@ -25,7 +25,7 @@ import {
     SLACK,
 } from './types';
 import { formatButtons, formatTitle } from './format';
-import { UrbanFile } from '../types';
+import { getTypeByMimeType } from './utils';
 
 const app = express();
 
@@ -115,7 +115,7 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
         };
 
         if (ctx.files !== undefined) {
-            const files: UrbanFile[] = ctx.files.map((file) => {
+            const files = ctx.files.map((file) => {
                 return {
                     mimeType: file.mimetype,
                     width: file.original_w,
@@ -133,9 +133,9 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
                     files,
                 },
             } as const;
-            const isAllImages = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'image');
-            const isAllVideo = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'video');
-            const isAllAudio = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'audio');
+            const isAllImages = files.every(({ mimeType }) => getTypeByMimeType(mimeType) === 'image');
+            const isAllVideo = files.every(({ mimeType }) => getTypeByMimeType(mimeType) === 'video');
+            const isAllAudio = files.every(({ mimeType }) => getTypeByMimeType(mimeType) === 'audio');
 
             if (isAllImages) {
                 this.processUpdate({
@@ -351,8 +351,8 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
     }
 
     async getImageUrl(messageData: UrbanMessageImageData): Promise<string> {
-        if (typeof messageData.image !== 'string') {
-            const savedPublicUrl = this.publicUrlMap.get(messageData.image);
+        if (typeof messageData.file !== 'string') {
+            const savedPublicUrl = this.publicUrlMap.get(messageData.file);
             if (savedPublicUrl !== undefined) {
                 return savedPublicUrl;
             }
@@ -360,8 +360,8 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
             // TODO describe types
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const uploadRes: any = await this.client.files.upload({
-                file: messageData.image,
-                filename: messageData.filename,
+                file: messageData.file,
+                filename: messageData.name,
             });
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const sharedPublicURLRes: any = await this.client.files.sharedPublicURL({
@@ -373,11 +373,11 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
 
             const publicUrl = sharedPublicURLRes.file.url_private + `?pub_secret=${pubSecret}`;
 
-            this.publicUrlMap.set(messageData.image, publicUrl);
+            this.publicUrlMap.set(messageData.file, publicUrl);
 
             return publicUrl;
         } else {
-            return messageData.image;
+            return messageData.file;
         }
     }
 }

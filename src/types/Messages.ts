@@ -29,8 +29,8 @@ export type UrbanMessageText = UrbanMessageCommon & {
 
 export type UrbanMessageImageData = UrbanMessageCommonData & {
     title?: string;
-    image: string | Buffer | NodeJS.ReadableStream;
-    filename?: string;
+    file: string | Buffer | NodeJS.ReadableStream;
+    name?: string;
     buttons?: UrbanButton[];
     alt?: string;
 };
@@ -50,11 +50,41 @@ export type UrbanMessageButtons = UrbanMessageCommon & {
     data: UrbanMessageButtonsData;
 };
 
-export type UrbanMessage = UrbanMessageText | UrbanMessageImage | UrbanMessageButtons;
-export type UrbanMessageData = UrbanMessageTextData | UrbanMessageImageData | UrbanMessageButtonsData;
+export type UrbanMessageAudioData = UrbanMessageCommonData & {
+    title?: string;
+    file: string | Buffer | NodeJS.ReadableStream;
+    name?: string;
+    buttons?: UrbanButton[];
+    duration?: number;
+    author?: string;
+};
 
-export type UrbanExistingMessage<MessageMeta> = UrbanMessage & {
+export type UrbanMessageAudio = UrbanMessageCommon & {
+    nodeName: 'urban-audio';
+    data: UrbanMessageAudioData;
+};
+
+export type UrbanMessage = UrbanMessageText | UrbanMessageImage | UrbanMessageButtons | UrbanMessageAudio;
+export type UrbanMessageData =
+    | UrbanMessageTextData
+    | UrbanMessageImageData
+    | UrbanMessageButtonsData
+    | UrbanMessageAudioData;
+
+type Meta<MessageMeta> = {
     meta: MessageMeta;
 };
+
+export type UrbanExistingMessage<MessageMeta> = UrbanMessage & Meta<MessageMeta>;
+
+export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMeta> = T extends 'urban-text'
+    ? UrbanMessageText & Meta<MessageMeta>
+    : T extends 'urban-buttons'
+    ? UrbanMessageButtons & Meta<MessageMeta>
+    : T extends 'urban-img'
+    ? UrbanMessageImage & Meta<MessageMeta>
+    : T extends 'urban-audio'
+    ? UrbanMessageAudio & Meta<MessageMeta>
+    : UrbanExistingMessage<MessageMeta>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];
