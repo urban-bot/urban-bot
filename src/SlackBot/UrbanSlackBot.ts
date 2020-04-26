@@ -4,7 +4,7 @@ import { createMessageAdapter } from '@slack/interactive-messages';
 import { WebClient } from '@slack/web-api';
 import express from 'express';
 import bodyParser from 'body-parser';
-import { UrbanBot } from '../types/UrbanBot';
+import { UrbanBotInstance } from '../types/UrbanBotInstance';
 import { SlackMessageAdapter } from '@slack/interactive-messages/dist/adapter';
 import { KnownBlock } from '@slack/types';
 import SlackEventAdapter from '@slack/events-api/dist/adapter';
@@ -40,7 +40,12 @@ type UrbanNativeEventSlack = {
     payload: SlackPayload;
 };
 
-export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessageMeta> {
+export type SlackBotType = {
+    NativeEvent: UrbanNativeEventSlack;
+    MessageMeta: SlackMessageMeta;
+};
+
+export class UrbanSlackBot implements UrbanBotInstance<SlackBotType> {
     static TYPE = 'SLACK' as const;
     type = UrbanSlackBot.TYPE;
     client: WebClient;
