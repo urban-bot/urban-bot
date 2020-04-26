@@ -45,7 +45,7 @@
         "eslint-plugin-react": "7.19.0",
         "eslint-plugin-react-hooks": "3.0.0",
         "husky": "4.2.5",
-        "jest": "^25.4.0",
+        "jest": "25.4.0",
         "lint-staged": "10.1.7",
         "nodemon": "2.0.3",
         "prettier": "2.0.5",
@@ -59,14 +59,14 @@
         "@slack/interactive-messages": "1.5.0",
         "@slack/web-api": "5.8.0",
         "body-parser": "1.19.0",
-        "easyvk": "^2.7.0",
+        "easyvk": "2.7.0",
         "express": "4.17.1",
         "ngrok": "3.2.7",
         "node-telegram-bot-api": "0.40.0",
         "react-reconciler": "0.25.1"
     },
     "peerDependencies": {
-        "react": "16.13.1"
+        "react": "^16.13.1"
     },
     "repository": {
         "type": "git",
