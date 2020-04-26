@@ -25,7 +25,7 @@ import {
     SLACK,
 } from './types';
 import { formatButtons, formatTitle } from './format';
-import { UrbanFile } from '../types';
+import { getTypeByMimeType } from './utils';
 
 const app = express();
 
@@ -115,7 +115,7 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
         };
 
         if (ctx.files !== undefined) {
-            const files: UrbanFile[] = ctx.files.map((file) => {
+            const files = ctx.files.map((file) => {
                 return {
                     mimeType: file.mimetype,
                     width: file.original_w,
@@ -133,9 +133,9 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
                     files,
                 },
             } as const;
-            const isAllImages = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'image');
-            const isAllVideo = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'video');
-            const isAllAudio = files.every(({ mimeType }) => mimeType?.split('/')[0] === 'audio');
+            const isAllImages = files.every(({ mimeType }) => getTypeByMimeType(mimeType) === 'image');
+            const isAllVideo = files.every(({ mimeType }) => getTypeByMimeType(mimeType) === 'video');
+            const isAllAudio = files.every(({ mimeType }) => getTypeByMimeType(mimeType) === 'audio');
 
             if (isAllImages) {
                 this.processUpdate({
