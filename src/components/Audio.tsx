@@ -31,6 +31,7 @@ export function Audio({
 }: AudioProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
+    // TODO remove duplicated code with Image
     let formattedButtons;
     if (buttonGroupElement !== undefined) {
         if (!React.Children.only(buttonGroupElement) && buttonGroupElement.type !== ButtonGroup) {
