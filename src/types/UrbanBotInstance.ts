@@ -5,7 +5,7 @@ export type ProcessUpdate<NativeEvent extends UrbanNativeEvent = UrbanNativeEven
     event: UrbanSyntheticEvent<NativeEvent>,
 ) => void;
 
-export interface UrbanBot<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent, MessageMeta = any> {
+export interface UrbanBot<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent, MessageMeta = unknown> {
     NativeEvent: NativeEvent;
     MessageMeta: MessageMeta;
 }
