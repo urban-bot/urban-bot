@@ -5,30 +5,33 @@ import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
 import { UrbanElementButtons } from '../global.d';
 
-export type ImageProps = UrbanMessageCommonData & {
+export type AudioProps = UrbanMessageCommonData & {
     file: string | Buffer | NodeJS.ReadableStream;
     name?: string;
     title?: React.ReactNode;
-    alt?: string;
     isNewMessageEveryRender?: boolean;
+    duration?: number;
+    author?: string;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
 };
 
-export function Image({
-    image,
-    title,
+export function Audio({
+    audio,
+    name,
+    author,
     buttons: buttonGroupElement,
+    disableNotification,
+    duration,
+    forceReply,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
     parseMode,
-    disableNotification,
     replyToMessageId,
-    forceReply,
-    name,
-    alt,
+    title,
     ...otherProps
-}: ImageProps) {
+}: AudioProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
+    // TODO remove duplicated code with Image
     let formattedButtons;
     if (buttonGroupElement !== undefined) {
         if (!React.Children.only(buttonGroupElement) && buttonGroupElement.type !== ButtonGroup) {
@@ -49,7 +52,7 @@ export function Image({
     const [formattedTitle, finalParseMode] = useFormatElement(title, parseMode);
 
     return (
-        <urban-img
+        <urban-audio
             $$managerBot={$$managerBot}
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
@@ -60,9 +63,10 @@ export function Image({
                 parseMode: finalParseMode,
                 buttons: formattedButtons,
                 title: formattedTitle,
-                alt,
-                image,
+                audio,
                 name,
+                duration,
+                author,
                 ...otherProps,
             }}
         />

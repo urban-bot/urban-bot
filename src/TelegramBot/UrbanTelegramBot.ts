@@ -21,9 +21,9 @@ import {
     UrbanSyntheticEventCommon,
 } from '../types/Events';
 import { UrbanBot } from '../types/UrbanBot';
-import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
+import { UrbanExistingMessage, UrbanExistingMessageByType, UrbanMessage } from '../types/Messages';
 import { EditMessageOptions, formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
-import { TelegramMessageMeta, TelegramPayload, TelegramBotMessage, TELEGRAM } from './types';
+import { TelegramMessageMeta, TelegramPayload, TelegramBotMessage, TELEGRAM, InputMediaAudio } from './types';
 
 type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
@@ -197,14 +197,20 @@ export class UrbanTelegramBot implements UrbanBot<UrbanNativeEventTelegram, Tele
                     break;
                 }
 
+                const name = `${ctx.audio.performer ?? ''} ${ctx.audio.title ?? ''}`.trim();
                 const adaptedContext: UrbanSyntheticEventAudio<UrbanNativeEventTelegram<TelegramBotMessage>> = {
                     ...common,
                     type: 'audio',
                     payload: {
-                        duration: ctx.audio.duration,
-                        performer: ctx.audio.performer,
-                        title: ctx.audio.title,
-                        mimeType: ctx.audio.mime_type,
+                        files: [
+                            {
+                                duration: ctx.audio.duration,
+                                id: ctx.audio.file_id,
+                                size: ctx.audio.file_size,
+                                name,
+                                mimeType: ctx.audio.mime_type,
+                            },
+                        ],
                     },
                 };
 
@@ -320,9 +326,14 @@ export class UrbanTelegramBot implements UrbanBot<UrbanNativeEventTelegram, Tele
                     ...common,
                     type: 'video',
                     payload: {
-                        duration: ctx.video.duration,
-                        fileId: ctx.video.file_id,
-                        fileSize: ctx.video.file_size,
+                        files: [
+                            {
+                                duration: ctx.video.duration,
+                                id: ctx.video.file_id,
+                                size: ctx.video.file_size,
+                                mimeType: ctx.video.mime_type,
+                            },
+                        ],
                     },
                 };
 
@@ -385,7 +396,7 @@ export class UrbanTelegramBot implements UrbanBot<UrbanNativeEventTelegram, Tele
             case 'urban-img': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendPhoto(message.chat.id, message.data.image, {
+                return this.bot.sendPhoto(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                 });
@@ -394,6 +405,17 @@ export class UrbanTelegramBot implements UrbanBot<UrbanNativeEventTelegram, Tele
                 const params = formatParamsForNewMessage(message);
 
                 return this.bot.sendMessage(message.chat.id, message.data.title, params);
+            }
+            case 'urban-audio': {
+                const params = formatParamsForNewMessage(message);
+
+                return this.bot.sendAudio(message.chat.id, message.data.file, {
+                    ...params,
+                    caption: message.data.title,
+                    duration: message.data.duration,
+                    performer: message.data.author,
+                    title: message.data.name,
+                });
             }
             default: {
                 throw new Error(
@@ -421,39 +443,12 @@ export class UrbanTelegramBot implements UrbanBot<UrbanNativeEventTelegram, Tele
                 break;
             }
             case 'urban-img': {
-                const metaToEdit = {
-                    chat_id: message.meta.chat.id,
-                    message_id: message.meta.message_id,
-                };
+                this.editMedia(message);
 
-                const params = formatParamsForExistingMessage(message);
-                const media = {
-                    type: 'photo',
-                    caption: message.data.title,
-                    parse_mode: 'parse_mode' in params ? params.parse_mode : undefined,
-                } as const;
-
-                if (typeof message.data.image !== 'string') {
-                    try {
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
-                        const photoData = this.bot._formatSendData('photo', message.data.image);
-                        const { photo } = photoData[0];
-
-                        this.editMessageMedia(
-                            { ...media, media: `attach://photo` },
-                            { ...params, ...metaToEdit },
-                            { photo },
-                        );
-                    } catch (e) {
-                        console.error('Something wrong with edit img message.');
-                        console.error(e);
-                    }
-
-                    break;
-                }
-
-                this.editMessageMedia({ ...media, media: message.data.image }, { ...params, ...metaToEdit });
+                break;
+            }
+            case 'urban-audio': {
+                this.editMedia(message);
 
                 break;
             }
@@ -484,8 +479,45 @@ export class UrbanTelegramBot implements UrbanBot<UrbanNativeEventTelegram, Tele
         this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 
+    editMedia(message: UrbanExistingMessageByType<'urban-img' | 'urban-audio', TelegramMessageMeta>) {
+        const metaToEdit = {
+            chat_id: message.meta.chat.id,
+            message_id: message.meta.message_id,
+        } as const;
+        const params = formatParamsForExistingMessage(message);
+        const type = message.nodeName === 'urban-img' ? 'photo' : 'audio';
+        const audioMedia =
+            message.nodeName === 'urban-audio'
+                ? { duration: message.data.duration, performer: message.data.author, title: message.data.name }
+                : {};
+        const media = {
+            type,
+            caption: message.data.title,
+            parse_mode: 'parse_mode' in params ? params.parse_mode : undefined,
+            ...audioMedia,
+        } as const;
+
+        if (typeof message.data.file !== 'string') {
+            try {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                const fileData = this.bot._formatSendData('file', message.data.file);
+                const { file } = fileData[0];
+
+                this.editMessageMedia({ ...media, media: `attach://file` }, { ...params, ...metaToEdit }, { file });
+            } catch (e) {
+                console.error('Something wrong with edit file message.');
+                console.error(e);
+            }
+
+            return;
+        }
+
+        this.editMessageMedia({ ...media, media: message.data.file }, { ...params, ...metaToEdit });
+    }
+
     // FIXME this methods should be fixed in node-telegram-bot-api
-    editMessageMedia(media: TelegramBot.InputMedia, options: EditMessageOptions, formData?: unknown) {
+    editMessageMedia(media: TelegramBot.InputMedia | InputMediaAudio, options: EditMessageOptions, formData?: unknown) {
         const qs = { ...options, media: JSON.stringify(media) };
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
