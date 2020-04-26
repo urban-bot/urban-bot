@@ -278,5 +278,8 @@ export type SlackFile = {
     lines?: number;
     lines_more?: number;
     preview_is_truncated?: boolean;
+    thumb_video?: string;
+    permalink?: string;
+    permalink_public?: string;
     has_rich_preview?: boolean;
 };

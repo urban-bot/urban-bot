@@ -71,10 +71,7 @@ export interface UrbanSyntheticEventAudio<NativeEvent extends UrbanNativeEvent>
     extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'audio';
     payload: {
-        duration: number;
-        performer?: string;
-        title?: string;
-        mimeType?: string;
+        files: UrbanFile[];
     };
 }
 
@@ -142,9 +139,8 @@ export interface UrbanSyntheticEventVideo<NativeEvent extends UrbanNativeEvent>
     extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'video';
     payload: {
-        duration: number;
-        fileId: string;
-        fileSize?: number;
+        text?: string;
+        files: UrbanFile[];
     };
 }
 

@@ -7,6 +7,7 @@ import { TextExample } from './Text';
 import { Hooks } from './Hooks';
 import { ImageWithButtons } from './ImageWithButtons/ImageWithButtons';
 import { Queue } from './Queue';
+import { AudioExample } from './Audio';
 
 dotenv.config();
 
@@ -24,6 +25,9 @@ function App() {
             </Route>
             <Route path="/hooks">
                 <Hooks />
+            </Route>
+            <Route path="/audio">
+                <AudioExample />
             </Route>
         </Router>
     );

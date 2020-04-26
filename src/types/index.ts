@@ -9,6 +9,7 @@ export type UrbanFrom = {
     surname?: string;
 };
 
+// TODO describe image,video,... separately and extends them from UrbanFile
 export type UrbanFile = {
     id?: string;
     name?: string;
@@ -16,6 +17,7 @@ export type UrbanFile = {
     width?: number;
     height?: number;
     mimeType?: string;
+    duration?: number;
 };
 
 export type UrbanParseMode = 'HTML' | 'markdown';
