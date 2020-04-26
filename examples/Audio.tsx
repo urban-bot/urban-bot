@@ -1,10 +1,10 @@
-import fs from 'fs';
-import path from 'path';
+// import fs from 'fs';
+// import path from 'path';
 import React from 'react';
 import { Button, ButtonGroup, useText } from '../src';
 import { Audio } from '../src/components/Audio';
 
-const audioByFile = fs.readFileSync(path.join(__dirname, 'audio.mp3'));
+// const audioByFile = fs.readFileSync(path.join(__dirname, 'audio.mp3'));
 
 export function AudioExample() {
     const [author, setAuthor] = React.useState('Some author');
@@ -15,7 +15,7 @@ export function AudioExample() {
 
     return (
         <Audio
-            file={audioByFile}
+            file={'urlToFile' /* || audioByFile */}
             title="There is the song"
             author={author}
             name="Some name"
