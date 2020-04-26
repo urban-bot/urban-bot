@@ -406,6 +406,17 @@ export class UrbanTelegramBot implements UrbanBot<UrbanNativeEventTelegram, Tele
 
                 return this.bot.sendMessage(message.chat.id, message.data.title, params);
             }
+            case 'urban-audio': {
+                const params = formatParamsForNewMessage(message);
+
+                return this.bot.sendAudio(message.chat.id, message.data.audio, {
+                    ...params,
+                    caption: message.data.title,
+                    duration: message.data.duration,
+                    performer: message.data.author,
+                    title: message.data.name,
+                });
+            }
             default: {
                 throw new Error(
                     `Tag '${
