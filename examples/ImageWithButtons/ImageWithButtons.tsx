@@ -23,7 +23,7 @@ export function ImageWithButtons() {
     return (
         <>
             <Image
-                image={isImageFromURL ? imageByUrl : imageByFile}
+                file={isImageFromURL ? imageByUrl : imageByFile}
                 title={bot.type !== UrbanSlackBot.TYPE ? <b>{title}</b> : title}
                 alt="planes"
                 buttons={

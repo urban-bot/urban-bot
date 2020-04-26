@@ -15,7 +15,7 @@ export function AudioExample() {
 
     return (
         <Audio
-            audio={audioByFile}
+            file={audioByFile}
             title="There is the song"
             author={author}
             name="Some name"

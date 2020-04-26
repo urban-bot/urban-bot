@@ -14,3 +14,10 @@ export type TelegramBotMessage = TelegramBot.Message & TelegramBotLostMessage;
 export type TelegramPayload = TelegramBotMessage | TelegramBot.CallbackQuery;
 
 export type TelegramMessageMeta = TelegramBotMessage;
+
+export type InputMediaAudio = TelegramBot.InputMediaBase & {
+    type: 'audio';
+    duration?: number;
+    performer?: string;
+    title?: string;
+};

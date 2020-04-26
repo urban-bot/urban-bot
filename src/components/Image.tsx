@@ -6,7 +6,7 @@ import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
 import { UrbanElementButtons } from '../global.d';
 
 export type ImageProps = UrbanMessageCommonData & {
-    image: string | Buffer | NodeJS.ReadableStream;
+    file: string | Buffer | NodeJS.ReadableStream;
     name?: string;
     title?: React.ReactNode;
     alt?: string;

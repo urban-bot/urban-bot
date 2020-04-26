@@ -351,8 +351,8 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
     }
 
     async getImageUrl(messageData: UrbanMessageImageData): Promise<string> {
-        if (typeof messageData.image !== 'string') {
-            const savedPublicUrl = this.publicUrlMap.get(messageData.image);
+        if (typeof messageData.file !== 'string') {
+            const savedPublicUrl = this.publicUrlMap.get(messageData.file);
             if (savedPublicUrl !== undefined) {
                 return savedPublicUrl;
             }
@@ -360,7 +360,7 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
             // TODO describe types
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const uploadRes: any = await this.client.files.upload({
-                file: messageData.image,
+                file: messageData.file,
                 filename: messageData.name,
             });
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -373,11 +373,11 @@ export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessa
 
             const publicUrl = sharedPublicURLRes.file.url_private + `?pub_secret=${pubSecret}`;
 
-            this.publicUrlMap.set(messageData.image, publicUrl);
+            this.publicUrlMap.set(messageData.file, publicUrl);
 
             return publicUrl;
         } else {
-            return messageData.image;
+            return messageData.file;
         }
     }
 }
