@@ -3,12 +3,12 @@ import { getBotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
 import { UrbanChat, UrbanFrom, UrbanParseMode } from '../types';
-import { UrbanBot, UrbanBotInstance } from '../types/UrbanBotInstance';
+import { UrbanBotType, UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
 import { MARKDOWN_MODE } from '../utils/formatMarkupLanguageElement';
 
-export type ChatProps<Bot extends UrbanBot> = {
-    bot: UrbanBotInstance<Bot>;
+export type ChatProps<Bot extends UrbanBotType> = {
+    bot: UrbanBot<Bot>;
     from?: UrbanFrom;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
@@ -18,7 +18,7 @@ export type ChatProps<Bot extends UrbanBot> = {
     key: string;
 };
 
-function Chat<Bot extends UrbanBot>({
+function Chat<Bot extends UrbanBotType>({
     bot,
     from,
     children,
@@ -41,8 +41,8 @@ function Chat<Bot extends UrbanBot>({
     );
 }
 
-export type RootProps<Bot extends UrbanBot> = {
-    bot: UrbanBotInstance<Bot>;
+export type RootProps<Bot extends UrbanBotType> = {
+    bot: UrbanBot<Bot>;
     children: React.ReactNode;
     timeToClearUserSession?: number;
     isNewMessageEveryRender?: boolean;
@@ -50,7 +50,7 @@ export type RootProps<Bot extends UrbanBot> = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function Root<Bot extends UrbanBot<any, any>>({
+export function Root<Bot extends UrbanBotType<any, any>>({
     children,
     bot,
     timeToClearUserSession = 1000 * 60 * 10,

@@ -1,9 +1,9 @@
 import { shallowEqual } from './utils/shallowEqual';
 import { UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanBot } from './types/UrbanBotInstance';
+import { UrbanBotType } from './types/UrbanBot';
 
-export type UrbanNode<Bot extends UrbanBot> = Omit<UrbanExistingMessage<Bot['MessageMeta']>, 'meta'> & {
+export type UrbanNode<Bot extends UrbanBotType> = Omit<UrbanExistingMessage<Bot['MessageMeta']>, 'meta'> & {
     $$managerBot: ManagerBot<Bot>;
     isNewMessageEveryRender?: boolean;
     meta?: Promise<Bot['MessageMeta']>;
@@ -13,9 +13,9 @@ export type UrbanNodeRoot = {
     nodeName: 'root';
 };
 
-type Props<Bot extends UrbanBot> = Omit<UrbanNode<Bot>, 'nodeName'>;
+type Props<Bot extends UrbanBotType> = Omit<UrbanNode<Bot>, 'nodeName'>;
 
-export function createNode<Bot extends UrbanBot>(
+export function createNode<Bot extends UrbanBotType>(
     nodeName: UrbanMessageNodeName | 'root',
     props?: Props<Bot>,
 ): UrbanNode<Bot> | UrbanNodeRoot {
@@ -40,7 +40,7 @@ export function createNode<Bot extends UrbanBot>(
     } as UrbanNode<Bot>;
 }
 
-export function appendChildNode<Bot extends UrbanBot>(
+export function appendChildNode<Bot extends UrbanBotType>(
     _node: UrbanNode<Bot> | UrbanNodeRoot,
     childNode: UrbanNode<Bot> | UrbanNodeRoot,
 ) {
@@ -57,7 +57,7 @@ export function appendChildNode<Bot extends UrbanBot>(
     childNode.meta = childNode.$$managerBot.sendMessage(message);
 }
 
-export function removeChildNode<Bot extends UrbanBot>(_node: UrbanNode<Bot>, removedNode: UrbanNode<Bot>) {
+export function removeChildNode<Bot extends UrbanBotType>(_node: UrbanNode<Bot>, removedNode: UrbanNode<Bot>) {
     if (removedNode.isNewMessageEveryRender) {
         return;
     }
@@ -78,7 +78,7 @@ export function removeChildNode<Bot extends UrbanBot>(_node: UrbanNode<Bot>, rem
     });
 }
 
-export function updateNode<Bot extends UrbanBot>(
+export function updateNode<Bot extends UrbanBotType>(
     node: UrbanNode<Bot>,
     _updatePayload: unknown,
     _type: unknown,

@@ -5,12 +5,12 @@ export type ProcessUpdate<NativeEvent extends UrbanNativeEvent = UrbanNativeEven
     event: UrbanSyntheticEvent<NativeEvent>,
 ) => void;
 
-export interface UrbanBot<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent, MessageMeta = unknown> {
+export interface UrbanBotType<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent, MessageMeta = unknown> {
     NativeEvent: NativeEvent;
     MessageMeta: MessageMeta;
 }
 
-export interface UrbanBotInstance<Bot extends UrbanBot> {
+export interface UrbanBot<Bot extends UrbanBotType> {
     type: Bot['NativeEvent']['type'];
     processUpdate: ProcessUpdate<Bot['NativeEvent']>;
     sendMessage: (message: UrbanMessage) => Promise<Bot['MessageMeta']>;

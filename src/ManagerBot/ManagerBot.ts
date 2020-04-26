@@ -1,6 +1,6 @@
 import { PromiseQueue } from './PromiseQueue';
 import EventEmitter from 'events';
-import { ProcessUpdate, UrbanBot, UrbanBotInstance } from '../types/UrbanBotInstance';
+import { ProcessUpdate, UrbanBotType, UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { UrbanListener } from '../types';
 import { UrbanSyntheticEvent } from '../types/Events';
@@ -10,11 +10,11 @@ type Chat = {
     promiseQueue: PromiseQueue;
 };
 
-export class ManagerBot<Bot extends UrbanBot> {
+export class ManagerBot<Bot extends UrbanBotType> {
     private chats = new Map<string, Chat>();
     private eventEmitter: EventEmitter;
 
-    constructor(private bot: UrbanBotInstance<Bot>) {
+    constructor(private bot: UrbanBot<Bot>) {
         this.eventEmitter = new EventEmitter();
 
         bot.processUpdate = this.processUpdate;
