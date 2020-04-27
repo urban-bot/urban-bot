@@ -40,7 +40,12 @@ type UrbanNativeEventSlack = {
     payload: SlackPayload;
 };
 
-export class UrbanSlackBot implements UrbanBot<UrbanNativeEventSlack, SlackMessageMeta> {
+export type SlackBotType = {
+    NativeEvent: UrbanNativeEventSlack;
+    MessageMeta: SlackMessageMeta;
+};
+
+export class UrbanSlackBot implements UrbanBot<SlackBotType> {
     static TYPE = 'SLACK' as const;
     type = UrbanSlackBot.TYPE;
     client: WebClient;

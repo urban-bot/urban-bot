@@ -20,17 +20,22 @@ import {
     UrbanSyntheticEventType,
     UrbanSyntheticEventCommon,
 } from '../types/Events';
-import { UrbanBot } from '../types/UrbanBot';
+import { UrbanBotType, UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanExistingMessageByType, UrbanMessage } from '../types/Messages';
 import { EditMessageOptions, formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
 import { TelegramMessageMeta, TelegramPayload, TelegramBotMessage, TELEGRAM, InputMediaAudio } from './types';
 
-type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
+export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
     payload: Payload;
 };
 
-export class UrbanTelegramBot implements UrbanBot<UrbanNativeEventTelegram, TelegramMessageMeta> {
+export type TelegramBotType = UrbanBotType & {
+    NativeEvent: UrbanNativeEventTelegram;
+    MessageMeta: TelegramMessageMeta;
+};
+
+export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanTelegramBot.TYPE;
 

@@ -1,26 +1,26 @@
 import { PromiseQueue } from './PromiseQueue';
 import EventEmitter from 'events';
-import { ProcessUpdate, UrbanBot } from '../types/UrbanBot';
+import { ProcessUpdate, UrbanBotType, UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { UrbanListener } from '../types';
-import { UrbanNativeEvent, UrbanSyntheticEvent } from '../types/Events';
+import { UrbanSyntheticEvent } from '../types/Events';
 
 type Chat = {
     eventEmitter: EventEmitter;
     promiseQueue: PromiseQueue;
 };
 
-export class ManagerBot<NativeEvent extends UrbanNativeEvent, MessageMeta = unknown> {
+export class ManagerBot<Bot extends UrbanBotType> {
     private chats = new Map<string, Chat>();
     private eventEmitter: EventEmitter;
 
-    constructor(private bot: UrbanBot<NativeEvent, MessageMeta>) {
+    constructor(private bot: UrbanBot<Bot>) {
         this.eventEmitter = new EventEmitter();
 
         bot.processUpdate = this.processUpdate;
     }
 
-    processUpdate: ProcessUpdate<NativeEvent> = (event) => {
+    processUpdate: ProcessUpdate<Bot['NativeEvent']> = (event) => {
         this.eventEmitter.emit('any', event);
         this.eventEmitter.emit(event.type, event);
 
@@ -43,7 +43,7 @@ export class ManagerBot<NativeEvent extends UrbanNativeEvent, MessageMeta = unkn
         this.chats.delete(id);
     }
 
-    on<Event extends UrbanSyntheticEvent<NativeEvent> = UrbanSyntheticEvent<NativeEvent>>(
+    on<Event extends UrbanSyntheticEvent<Bot['NativeEvent']> = UrbanSyntheticEvent<Bot['NativeEvent']>>(
         eventName: Event['type'] | 'any',
         listener: UrbanListener<Event>,
         chatId?: string,
@@ -62,7 +62,7 @@ export class ManagerBot<NativeEvent extends UrbanNativeEvent, MessageMeta = unkn
         }
     }
 
-    emit<Event extends UrbanSyntheticEvent<NativeEvent> = UrbanSyntheticEvent<NativeEvent>>(
+    emit<Event extends UrbanSyntheticEvent<Bot['NativeEvent']> = UrbanSyntheticEvent<Bot['NativeEvent']>>(
         eventName: Event['type'] | 'any',
         event: Event,
         chatId?: string,
@@ -82,7 +82,7 @@ export class ManagerBot<NativeEvent extends UrbanNativeEvent, MessageMeta = unkn
         }
     }
 
-    removeListener<Event extends UrbanSyntheticEvent<NativeEvent> = UrbanSyntheticEvent<NativeEvent>>(
+    removeListener<Event extends UrbanSyntheticEvent<Bot['NativeEvent']> = UrbanSyntheticEvent<Bot['NativeEvent']>>(
         eventName: Event['type'] | 'any',
         listener: UrbanListener<Event>,
         chatId?: string,
@@ -99,23 +99,23 @@ export class ManagerBot<NativeEvent extends UrbanNativeEvent, MessageMeta = unkn
         }
     }
 
-    sendMessage(message: UrbanMessage): Promise<MessageMeta> {
+    sendMessage(message: UrbanMessage): Promise<Bot['MessageMeta']> {
         const chatById = this.chats.get(message.chat.id);
 
         if (chatById === undefined) {
             throw new Error('Specify chatId via managerBot.addChat(chatId) to sendMessage for specific chat');
         }
 
-        return chatById.promiseQueue.next<MessageMeta>(() => {
+        return chatById.promiseQueue.next<Bot['MessageMeta']>(() => {
             return this.bot.sendMessage(message);
         });
     }
 
-    updateMessage(message: UrbanExistingMessage<MessageMeta>) {
+    updateMessage(message: UrbanExistingMessage<Bot['MessageMeta']>) {
         return this.bot.updateMessage(message);
     }
 
-    deleteMessage(message: UrbanExistingMessage<MessageMeta>) {
+    deleteMessage(message: UrbanExistingMessage<Bot['MessageMeta']>) {
         return this.bot.deleteMessage(message);
     }
 }
