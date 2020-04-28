@@ -24,48 +24,48 @@ export function Hooks() {
         console.log('calling after any type sending');
     });
 
-    useText(({ payload }) => {
-        setAnswer("You've sent a text " + payload.text);
+    useText(({ text }) => {
+        setAnswer("You've sent a text " + text);
     });
 
-    useCommand(({ payload }) => {
-        setAnswer("You've sent a command " + payload.command);
+    useCommand(({ command }) => {
+        setAnswer("You've sent a command " + command);
     });
 
-    useVideo(({ payload }) => {
-        const name = payload.files[0].name ?? '';
+    useVideo(({ files }) => {
+        const name = files[0].name ?? '';
         setAnswer("You've sent a video " + name);
     });
 
-    usePoll(({ payload }) => {
-        setAnswer("You've sent a poll " + payload.question);
+    usePoll(({ question }) => {
+        setAnswer("You've sent a poll " + question);
     });
 
-    useImage(({ payload }) => {
-        const name = payload.files[0].name ?? '';
+    useImage(({ files }) => {
+        const name = files[0].name ?? '';
         setAnswer("You've sent an image " + name);
     });
 
-    useLocation(({ payload }) => {
-        setAnswer("You've sent a location " + payload.latitude + ' ' + payload.longitude);
+    useLocation(({ latitude, longitude }) => {
+        setAnswer("You've sent a location " + latitude + ' ' + longitude);
     });
 
-    useFile(({ payload }) => {
-        const name = payload.files[0].name ?? '';
+    useFile(({ files }) => {
+        const name = files[0].name ?? '';
         setAnswer("You've sent a file " + name);
     });
 
-    useContact(({ payload }) => {
-        setAnswer(`You've sent a contact ${payload.firstName} ${payload.lastName ?? ''}`);
+    useContact(({ firstName, lastName }) => {
+        setAnswer(`You've sent a contact ${firstName} ${lastName ?? ''}`);
     });
 
-    useAudio(({ payload }) => {
-        const name = payload.files[0].name ?? '';
+    useAudio(({ files }) => {
+        const name = files[0].name ?? '';
         setAnswer("You've sent an audio " + name);
     });
 
-    useSticker(({ payload }) => {
-        setAnswer("You've sent a sticker " + payload.name + ' ' + payload.emoji);
+    useSticker(({ name, emoji }) => {
+        setAnswer("You've sent a sticker " + name + ' ' + emoji);
     });
 
     useVoice(() => {
@@ -77,8 +77,8 @@ export function Hooks() {
     });
 
     // FIXME rename dice to random
-    useDice(({ payload }) => {
-        setAnswer("You've sent a dice " + payload.value);
+    useDice(({ value }) => {
+        setAnswer("You've sent a dice " + value);
     });
 
     return <Text isNewMessageEveryRender>{answer}</Text>;

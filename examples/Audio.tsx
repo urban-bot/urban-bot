@@ -8,8 +8,8 @@ import { Button, ButtonGroup, useText, Audio } from '../src';
 export function AudioExample() {
     const [author, setAuthor] = React.useState('Some author');
 
-    useText(({ payload }) => {
-        setAuthor(payload.text);
+    useText(({ text }) => {
+        setAuthor(text);
     });
 
     return (

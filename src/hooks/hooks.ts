@@ -1,7 +1,14 @@
 import React from 'react';
 import { getBotContext, RouterContext } from '../context';
 import { UrbanListener } from '../types';
-import { UrbanSyntheticEvent, UrbanListenerByType, UrbanNativeEvent } from '../types/Events';
+import {
+    UrbanSyntheticEvent,
+    UrbanListenerByType,
+    UrbanNativeEvent,
+    UrbanSyntheticEventType,
+    SpreadCallback,
+    SpreadUrbanListenerByType,
+} from '../types/Events';
 import { UrbanBotType } from '../types/UrbanBot';
 
 export function useBotContext<Bot extends UrbanBotType>() {
@@ -40,80 +47,112 @@ function useSubscribe<
     }, [callback, $$managerBot, event, chat]);
 }
 
+export function useSubscribeWithSpreadPayload<
+    NativeEvent extends UrbanNativeEvent,
+    EventType extends UrbanSyntheticEventType<NativeEvent>,
+    Event extends Parameters<UrbanListenerByType<NativeEvent, EventType>>[0]
+>(callback: SpreadCallback<NativeEvent, Event>, eventType: EventType) {
+    useSubscribe<UrbanBotType, Event>((event) => {
+        const { payload, ...other } = event;
+        callback({
+            ...other,
+            ...payload,
+        });
+    }, eventType);
+}
+
 export function useAny<NativeEvent extends UrbanNativeEvent>(
     callback: UrbanListener<UrbanSyntheticEvent<NativeEvent>>,
 ) {
-    useSubscribe(callback, 'any');
+    useSubscribe(callback, 'any'); // TODO: rewrite to useSubscribeWithSpreadPayload
 }
 
-export function useText<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'text'>) {
-    useSubscribe(callback, 'text');
+export function useText<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'text'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'text');
 }
 
 export function useCommand<NativeEvent extends UrbanNativeEvent>(
-    callback: UrbanListenerByType<NativeEvent, 'command'>,
+    callback: SpreadUrbanListenerByType<NativeEvent, 'command'>,
 ) {
-    useSubscribe(callback, 'command');
+    useSubscribeWithSpreadPayload(callback, 'command');
 }
 
 export function useSticker<NativeEvent extends UrbanNativeEvent>(
-    callback: UrbanListenerByType<NativeEvent, 'sticker'>,
+    callback: SpreadUrbanListenerByType<NativeEvent, 'sticker'>,
 ) {
-    useSubscribe(callback, 'sticker');
+    useSubscribeWithSpreadPayload(callback, 'sticker');
 }
 
 export function useAnimation<NativeEvent extends UrbanNativeEvent>(
-    callback: UrbanListenerByType<NativeEvent, 'animation'>,
+    callback: SpreadUrbanListenerByType<NativeEvent, 'animation'>,
 ) {
-    useSubscribe(callback, 'animation');
+    useSubscribeWithSpreadPayload(callback, 'animation');
 }
 
-export function useAudio<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'audio'>) {
-    useSubscribe(callback, 'audio');
+export function useAudio<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'audio'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'audio');
 }
 
 export function useContact<NativeEvent extends UrbanNativeEvent>(
-    callback: UrbanListenerByType<NativeEvent, 'contact'>,
+    callback: SpreadUrbanListenerByType<NativeEvent, 'contact'>,
 ) {
-    useSubscribe(callback, 'contact');
+    useSubscribeWithSpreadPayload(callback, 'contact');
 }
 
-export function useFile<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'file'>) {
-    useSubscribe(callback, 'file');
+export function useFile<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'file'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'file');
 }
 
 export function useInvoice<NativeEvent extends UrbanNativeEvent>(
-    callback: UrbanListenerByType<NativeEvent, 'invoice'>,
+    callback: SpreadUrbanListenerByType<NativeEvent, 'invoice'>,
 ) {
-    useSubscribe(callback, 'invoice');
+    useSubscribeWithSpreadPayload(callback, 'invoice');
 }
 
 export function useLocation<NativeEvent extends UrbanNativeEvent>(
-    callback: UrbanListenerByType<NativeEvent, 'location'>,
+    callback: SpreadUrbanListenerByType<NativeEvent, 'location'>,
 ) {
-    useSubscribe(callback, 'location');
+    useSubscribeWithSpreadPayload(callback, 'location');
 }
 
-export function useImage<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'image'>) {
-    useSubscribe(callback, 'image');
+export function useImage<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'image'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'image');
 }
 
-export function usePoll<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'poll'>) {
-    useSubscribe(callback, 'poll');
+export function usePoll<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'poll'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'poll');
 }
 
-export function useVideo<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'video'>) {
-    useSubscribe(callback, 'video');
+export function useVideo<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'video'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'video');
 }
 
-export function useVoice<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'voice'>) {
-    useSubscribe(callback, 'voice');
+export function useVoice<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'voice'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'voice');
 }
 
-export function useDice<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'dice'>) {
-    useSubscribe(callback, 'dice');
+export function useDice<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'dice'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'dice');
 }
 
-export function useAction<NativeEvent extends UrbanNativeEvent>(callback: UrbanListenerByType<NativeEvent, 'action'>) {
-    useSubscribe(callback, 'action');
+export function useAction<NativeEvent extends UrbanNativeEvent>(
+    callback: SpreadUrbanListenerByType<NativeEvent, 'action'>,
+) {
+    useSubscribeWithSpreadPayload(callback, 'action');
 }
