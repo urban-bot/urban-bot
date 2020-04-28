@@ -15,16 +15,16 @@ export type ImageProps = UrbanMessageCommonData & {
 };
 
 export function Image({
-    image,
+    file,
     title,
+    alt,
+    name,
     buttons: buttonGroupElement,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
     parseMode,
     disableNotification,
     replyToMessageId,
     forceReply,
-    name,
-    alt,
     ...otherProps
 }: ImageProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
@@ -45,7 +45,7 @@ export function Image({
                 buttons: formattedButtons,
                 title: formattedTitle,
                 alt,
-                image,
+                file,
                 name,
                 ...otherProps,
             }}

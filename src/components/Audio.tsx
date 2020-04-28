@@ -16,17 +16,17 @@ export type AudioProps = UrbanMessageCommonData & {
 };
 
 export function Audio({
-    audio,
+    file,
     name,
     author,
-    buttons: buttonGroupElement,
-    disableNotification,
+    title,
     duration,
-    forceReply,
+    buttons: buttonGroupElement,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
+    disableNotification,
+    forceReply,
     parseMode,
     replyToMessageId,
-    title,
     ...otherProps
 }: AudioProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
@@ -46,7 +46,7 @@ export function Audio({
                 parseMode: finalParseMode,
                 buttons: formattedButtons,
                 title: formattedTitle,
-                audio,
+                file,
                 name,
                 duration,
                 author,
