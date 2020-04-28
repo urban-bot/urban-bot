@@ -243,14 +243,28 @@ export class UrbanSlackBot implements UrbanBot<SlackBotType> {
                     text: message.data.title ?? '',
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
-            case 'urban-video': {
+            case 'urban-audio': {
                 if (typeof message.data.file === 'string') {
-                    throw new Error('Abrakadabra');
+                    throw new Error("urban-bot/slack doesn't support audio file as string");
                 }
 
                 return (this.client.files.upload({
                     file: message.data.file,
                     channels: message.chat.id,
+                    filename: message.data.name,
+                    title: message.data.title,
+                }) as unknown) as Promise<SlackMessageMeta>;
+            }
+            case 'urban-video': {
+                if (typeof message.data.file === 'string') {
+                    throw new Error("urban-bot/slack doesn't support video file as string");
+                }
+
+                return (this.client.files.upload({
+                    file: message.data.file,
+                    channels: message.chat.id,
+                    filename: message.data.name,
+                    title: message.data.title,
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
             case 'urban-buttons': {
