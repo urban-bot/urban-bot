@@ -2,8 +2,8 @@ import React from 'react';
 import { useBotContext } from '../hooks/hooks';
 import { useFormattedText } from '../hooks/useFormattedText';
 import { UrbanMessageCommonData } from '../types/Messages';
-import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
-import { UrbanElementButtons } from '../global.d';
+import { ButtonGroupProps } from './ButtonGroup';
+import { useFormattedButtons } from '../hooks/useFormattedButtons';
 
 export type ImageProps = UrbanMessageCommonData & {
     file: string | Buffer | NodeJS.ReadableStream;
@@ -29,24 +29,8 @@ export function Image({
 }: ImageProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
-    let formattedButtons;
-    if (buttonGroupElement !== undefined) {
-        if (!React.Children.only(buttonGroupElement) && buttonGroupElement.type !== ButtonGroup) {
-            throw new Error('Pass only one ButtonGroup component to buttons');
-        }
-
-        const buttonsElementChildren = buttonGroupElement.type(buttonGroupElement.props);
-
-        if (buttonsElementChildren === null) {
-            throw new Error('ButtonGroup component should return children');
-        }
-
-        const { data } = buttonsElementChildren.props as UrbanElementButtons;
-
-        formattedButtons = data.buttons;
-    }
-
     const [formattedTitle, finalParseMode] = useFormattedText(title, parseMode);
+    const formattedButtons = useFormattedButtons(buttonGroupElement);
 
     return (
         <urban-img
