@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { UrbanMessage } from '../types/Messages';
+import { UrbanExistingMessageByType, UrbanMessage } from '../types/Messages';
 import TelegramBot from 'node-telegram-bot-api';
-import { UrbanParseMode } from '../types/index';
+import { UrbanParseMode } from '../types';
 
 export type EditMessageOptions =
     | TelegramBot.EditMessageTextOptions
@@ -102,4 +102,45 @@ export function formatParamsForExistingMessage(message: UrbanMessage): EditMessa
     params.reply_markup = formatReplyMarkupForExistingMessage(message);
 
     return params;
+}
+
+export function getTelegramMedia(
+    message: UrbanExistingMessageByType<'urban-img' | 'urban-audio' | 'urban-video'>,
+    parseMode: TelegramBot.ParseMode | undefined,
+) {
+    const common = {
+        caption: message.data.title,
+        parse_mode: parseMode,
+    } as const;
+
+    switch (message.nodeName) {
+        case 'urban-img': {
+            return {
+                ...common,
+                type: 'photo',
+            } as const;
+        }
+        case 'urban-audio': {
+            return {
+                ...common,
+                type: 'audio',
+                duration: message.data.duration,
+                performer: message.data.author,
+                title: message.data.name,
+            } as const;
+        }
+        case 'urban-video': {
+            return {
+                ...common,
+                type: 'video',
+                duration: message.data.duration,
+                height: message.data.height,
+                width: message.data.width,
+            } as const;
+        }
+        default: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            throw new Error((message as any).nodeName + ' doesn\t support');
+        }
+    }
 }

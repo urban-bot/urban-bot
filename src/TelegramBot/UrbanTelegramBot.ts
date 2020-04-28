@@ -22,7 +22,12 @@ import {
 } from '../types/Events';
 import { UrbanBotType, UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanExistingMessageByType, UrbanMessage } from '../types/Messages';
-import { EditMessageOptions, formatParamsForExistingMessage, formatParamsForNewMessage } from './format';
+import {
+    EditMessageOptions,
+    formatParamsForExistingMessage,
+    formatParamsForNewMessage,
+    getTelegramMedia,
+} from './format';
 import { TelegramMessageMeta, TelegramPayload, TelegramBotMessage, TELEGRAM, InputMediaAudio } from './types';
 
 export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
@@ -468,6 +473,11 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
 
                 break;
             }
+            case 'urban-video': {
+                this.editMedia(message);
+
+                break;
+            }
             case 'urban-buttons': {
                 const metaToEdit = {
                     chat_id: message.meta.chat.id,
@@ -495,23 +505,13 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
         this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 
-    editMedia(message: UrbanExistingMessageByType<'urban-img' | 'urban-audio', TelegramMessageMeta>) {
+    editMedia(message: UrbanExistingMessageByType<'urban-img' | 'urban-audio' | 'urban-video', TelegramMessageMeta>) {
         const metaToEdit = {
             chat_id: message.meta.chat.id,
             message_id: message.meta.message_id,
         } as const;
         const params = formatParamsForExistingMessage(message);
-        const type = message.nodeName === 'urban-img' ? 'photo' : 'audio';
-        const audioMedia =
-            message.nodeName === 'urban-audio'
-                ? { duration: message.data.duration, performer: message.data.author, title: message.data.name }
-                : {};
-        const media = {
-            type,
-            caption: message.data.title,
-            parse_mode: 'parse_mode' in params ? params.parse_mode : undefined,
-            ...audioMedia,
-        } as const;
+        const media = getTelegramMedia(message, 'parse_mode' in params ? params.parse_mode : undefined);
 
         if (typeof message.data.file !== 'string') {
             try {

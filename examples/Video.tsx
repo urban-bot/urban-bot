@@ -1,15 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 import React from 'react';
-import { Button, ButtonGroup, Video } from '../src';
+import { Button, ButtonGroup, useText, Video } from '../src';
 
 const videoByFile = fs.readFileSync(path.join(__dirname, 'video.mp4'));
 
 export function VideoExample() {
+    const [title, setTitle] = React.useState('There is the video');
+
+    useText(({ payload }) => {
+        setTitle(payload.text);
+    });
+
     return (
         <Video
             file={videoByFile}
-            title="There is the video"
+            title={title}
             buttons={
                 <ButtonGroup>
                     <Button

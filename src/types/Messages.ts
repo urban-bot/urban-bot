@@ -97,9 +97,9 @@ type Meta<MessageMeta> = {
     meta: MessageMeta;
 };
 
-export type UrbanExistingMessage<MessageMeta> = UrbanMessage & Meta<MessageMeta>;
+export type UrbanExistingMessage<MessageMeta = unknown> = UrbanMessage & Meta<MessageMeta>;
 
-export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMeta> = T extends 'urban-text'
+export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMeta = unknown> = T extends 'urban-text'
     ? UrbanMessageText & Meta<MessageMeta>
     : T extends 'urban-buttons'
     ? UrbanMessageButtons & Meta<MessageMeta>
