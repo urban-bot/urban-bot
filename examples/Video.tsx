@@ -8,8 +8,8 @@ const videoByFile = fs.readFileSync(path.join(__dirname, 'video.mp4'));
 export function VideoExample() {
     const [title, setTitle] = React.useState('There is the video');
 
-    useText(({ payload }) => {
-        setTitle(payload.text);
+    useText(({ text }) => {
+        setTitle(text);
     });
 
     return (
