@@ -64,7 +64,7 @@ export function useSubscribeWithSpreadPayload<
 export function useAny<NativeEvent extends UrbanNativeEvent>(
     callback: UrbanListener<UrbanSyntheticEvent<NativeEvent>>,
 ) {
-    useSubscribe(callback, 'any');
+    useSubscribe(callback, 'any'); // TODO: rewrite to useSubscribeWithSpreadPayload
 }
 
 export function useText<NativeEvent extends UrbanNativeEvent>(
