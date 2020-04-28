@@ -422,6 +422,17 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     title: message.data.name,
                 });
             }
+            case 'urban-video': {
+                const params = formatParamsForNewMessage(message);
+
+                return this.bot.sendVideo(message.chat.id, message.data.file, {
+                    ...params,
+                    caption: message.data.title,
+                    duration: message.data.duration,
+                    width: message.data.width,
+                    height: message.data.height,
+                });
+            }
             default: {
                 throw new Error(
                     `Tag '${

@@ -1,8 +1,7 @@
 // import fs from 'fs';
 // import path from 'path';
 import React from 'react';
-import { Button, ButtonGroup, useText } from '../src';
-import { Audio } from '../src/components/Audio';
+import { Button, ButtonGroup, useText, Audio } from '../src';
 
 // const audioByFile = fs.readFileSync(path.join(__dirname, 'audio.mp3'));
 
