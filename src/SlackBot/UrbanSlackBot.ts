@@ -243,6 +243,16 @@ export class UrbanSlackBot implements UrbanBot<SlackBotType> {
                     text: message.data.title ?? '',
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
+            case 'urban-video': {
+                if (typeof message.data.file === 'string') {
+                    throw new Error('Abrakadabra');
+                }
+
+                return (this.client.files.upload({
+                    file: message.data.file,
+                    channels: message.chat.id,
+                }) as unknown) as Promise<SlackMessageMeta>;
+            }
             case 'urban-buttons': {
                 const elements = formatButtons(message.data.buttons);
 
