@@ -16,8 +16,8 @@ export function ImageWithButtons() {
     const [title, setTitle] = React.useState('✈️');
     const [isImageFromURL, setIsImageFromURL] = React.useState(true);
 
-    useText(({ payload }) => {
-        setTitle(payload.text);
+    useText(({ text }) => {
+        setTitle(text);
     });
 
     return (

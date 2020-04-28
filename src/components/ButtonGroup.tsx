@@ -27,7 +27,7 @@ export function ButtonGroup({
     const [formattedTitle, finalParseMode] = useFormatElement(title, parseMode);
 
     useAction((ctx) => {
-        const { actionId } = ctx.payload;
+        const { actionId } = ctx;
 
         const button = buttons.find(({ id }) => {
             return actionId === id;
