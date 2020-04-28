@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBotContext, useAction } from '../hooks/hooks';
 import { formatButtonElement } from '../utils/formatButtonElement';
-import { useFormatElement } from '../hooks/useFormatElement';
+import { useFormattedText } from '../hooks/useFormattedText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { OtherProps } from '../types/common';
 
@@ -24,7 +24,7 @@ export function ButtonGroup({
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     const buttons = formatButtonElement(children);
-    const [formattedTitle, finalParseMode] = useFormatElement(title, parseMode);
+    const [formattedTitle, finalParseMode] = useFormattedText(title, parseMode);
 
     useAction((ctx) => {
         const { actionId } = ctx.payload;

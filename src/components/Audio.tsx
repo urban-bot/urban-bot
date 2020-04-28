@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
-import { useFormatElement } from '../hooks/useFormatElement';
+import { useFormattedText } from '../hooks/useFormattedText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroup, ButtonGroupProps } from './ButtonGroup';
 import { UrbanElementButtons } from '../global.d';
@@ -49,7 +49,7 @@ export function Audio({
         formattedButtons = data.buttons;
     }
 
-    const [formattedTitle, finalParseMode] = useFormatElement(title, parseMode);
+    const [formattedTitle, finalParseMode] = useFormattedText(title, parseMode);
 
     return (
         <urban-audio
