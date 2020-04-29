@@ -85,7 +85,13 @@ export function updateNode<Bot extends UrbanBotType>(
     oldProps: Props<Bot>,
     newProps: Props<Bot>,
 ) {
-    if (!node.isNewMessageEveryRender && shallowEqual(oldProps, newProps)) {
+    const { data: oldPropsData, ...oldPropsWithoutData } = oldProps;
+    const { data: newPropsData, ...newPropsWithoutData } = newProps;
+    if (
+        !node.isNewMessageEveryRender &&
+        shallowEqual(oldPropsWithoutData, newPropsWithoutData) &&
+        shallowEqual(oldPropsData, newPropsData)
+    ) {
         return;
     }
 
