@@ -219,12 +219,12 @@ export type UrbanListenerByNativeEvent<NativeEvent extends UrbanNativeEvent> = U
 
 export type SpreadField<T, K extends keyof T> = Omit<T, K> & T[K];
 
-export type SpreadCallback<
+export type UrbanListenerByNativeEventWithSpreadPayload<
     NativeEvent extends UrbanNativeEvent,
     Event extends Parameters<UrbanListenerByNativeEvent<NativeEvent>>[0]
 > = (event: SpreadField<Event, 'payload'>) => unknown;
 
-export type SpreadUrbanListenerByType<
+export type UrbanListenerByTypeWithSpreadPayload<
     NativeEvent extends UrbanNativeEvent,
     EventType extends UrbanSyntheticEvent<NativeEvent>['type']
-> = SpreadCallback<NativeEvent, UrbanSyntheticEventByType<NativeEvent, EventType>>;
+> = UrbanListenerByNativeEventWithSpreadPayload<NativeEvent, UrbanSyntheticEventByType<NativeEvent, EventType>>;
