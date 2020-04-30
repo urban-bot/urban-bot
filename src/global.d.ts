@@ -20,6 +20,7 @@ export type UrbanElement<NativeEvent extends UrbanNativeEvent, MessageMeta = unk
 export type UrbanElementText = UrbanElement & { data: UrbanMessageTextData };
 export type UrbanElementImage = UrbanElement & { data: UrbanMessageImageData };
 export type UrbanElementAudio = UrbanElement & { data: UrbanMessageAudioData };
+export type UrbanElementVideo = UrbanElement & { data: UrbanMessageVideoData };
 export type UrbanElementButtons = UrbanElement & { data: UrbanMessageButtonsData };
 
 declare global {
@@ -29,6 +30,7 @@ declare global {
             'urban-img': UrbanElementImage;
             'urban-audio': UrbanElementAudio;
             'urban-buttons': UrbanElementButtons;
+            'urban-video': UrbanElementVideo;
             b: Markup;
             i: Markup;
             u: Markup;

@@ -1,23 +1,21 @@
 // import fs from 'fs';
 // import path from 'path';
 import React from 'react';
-import { Button, ButtonGroup, useText, Audio } from '../src';
+import { Button, ButtonGroup, useText, Video } from '../src';
 
-// const audioByFile = fs.readFileSync(path.join(__dirname, 'audio.mp3'));
+// const videoByFile = fs.readFileSync(path.join(__dirname, 'video.mp4'));
 
-export function AudioExample() {
-    const [author, setAuthor] = React.useState('Some author');
+export function VideoExample() {
+    const [title, setTitle] = React.useState('There is the video');
 
     useText(({ text }) => {
-        setAuthor(text);
+        setTitle(text);
     });
 
     return (
-        <Audio
-            file={'urlToFile' /* || audioByFile */}
-            title="There is the song"
-            author={author}
-            name="Some name"
+        <Video
+            file={'link-to-file' /* || videoByFile */}
+            title={title}
             buttons={
                 <ButtonGroup>
                     <Button

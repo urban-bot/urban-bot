@@ -1,4 +1,4 @@
-import { UrbanChat, UrbanParseMode } from './index';
+import { UrbanChat, UrbanFileFormat, UrbanParseMode } from './index';
 import { OtherProps } from './common';
 
 export type UrbanButton = {
@@ -29,7 +29,7 @@ export type UrbanMessageText = UrbanMessageCommon & {
 
 export type UrbanMessageImageData = UrbanMessageCommonData & {
     title?: string;
-    file: string | Buffer | NodeJS.ReadableStream;
+    file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[];
     alt?: string;
@@ -52,7 +52,7 @@ export type UrbanMessageButtons = UrbanMessageCommon & {
 
 export type UrbanMessageAudioData = UrbanMessageCommonData & {
     title?: string;
-    file: string | Buffer | NodeJS.ReadableStream;
+    file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[];
     duration?: number;
@@ -64,20 +64,42 @@ export type UrbanMessageAudio = UrbanMessageCommon & {
     data: UrbanMessageAudioData;
 };
 
-export type UrbanMessage = UrbanMessageText | UrbanMessageImage | UrbanMessageButtons | UrbanMessageAudio;
+export type UrbanMessageVideoData = UrbanMessageCommonData & {
+    title?: string;
+    file: UrbanFileFormat;
+    name?: string;
+    buttons?: UrbanButton[];
+    duration?: number;
+    width?: number;
+    height?: number;
+    author?: string;
+};
+
+export type UrbanMessageVideo = UrbanMessageCommon & {
+    nodeName: 'urban-video';
+    data: UrbanMessageVideoData;
+};
+
+export type UrbanMessage =
+    | UrbanMessageText
+    | UrbanMessageImage
+    | UrbanMessageButtons
+    | UrbanMessageAudio
+    | UrbanMessageVideo;
 export type UrbanMessageData =
     | UrbanMessageTextData
     | UrbanMessageImageData
     | UrbanMessageButtonsData
-    | UrbanMessageAudioData;
+    | UrbanMessageAudioData
+    | UrbanMessageVideoData;
 
 type Meta<MessageMeta> = {
     meta: MessageMeta;
 };
 
-export type UrbanExistingMessage<MessageMeta> = UrbanMessage & Meta<MessageMeta>;
+export type UrbanExistingMessage<MessageMeta = unknown> = UrbanMessage & Meta<MessageMeta>;
 
-export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMeta> = T extends 'urban-text'
+export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMeta = unknown> = T extends 'urban-text'
     ? UrbanMessageText & Meta<MessageMeta>
     : T extends 'urban-buttons'
     ? UrbanMessageButtons & Meta<MessageMeta>
@@ -85,6 +107,8 @@ export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMe
     ? UrbanMessageImage & Meta<MessageMeta>
     : T extends 'urban-audio'
     ? UrbanMessageAudio & Meta<MessageMeta>
+    : T extends 'urban-video'
+    ? UrbanMessageVideo & Meta<MessageMeta>
     : UrbanExistingMessage<MessageMeta>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];
