@@ -4,9 +4,10 @@ import { useFormattedText } from '../hooks/useFormattedText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
 import { useFormattedButtons } from '../hooks/useFormattedButtons';
+import { UrbanFileFormat } from '../types';
 
 export type AudioProps = UrbanMessageCommonData & {
-    file: string | Buffer | NodeJS.ReadableStream;
+    file: UrbanFileFormat;
     name?: string;
     title?: React.ReactNode;
     isNewMessageEveryRender?: boolean;

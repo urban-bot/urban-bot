@@ -1,4 +1,4 @@
-import { UrbanChat, UrbanParseMode } from './index';
+import { UrbanChat, UrbanFileFormat, UrbanParseMode } from './index';
 import { OtherProps } from './common';
 
 export type UrbanButton = {
@@ -29,7 +29,7 @@ export type UrbanMessageText = UrbanMessageCommon & {
 
 export type UrbanMessageImageData = UrbanMessageCommonData & {
     title?: string;
-    file: string | Buffer | NodeJS.ReadableStream;
+    file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[];
     alt?: string;
@@ -52,7 +52,7 @@ export type UrbanMessageButtons = UrbanMessageCommon & {
 
 export type UrbanMessageAudioData = UrbanMessageCommonData & {
     title?: string;
-    file: string | Buffer | NodeJS.ReadableStream;
+    file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[];
     duration?: number;
@@ -66,7 +66,7 @@ export type UrbanMessageAudio = UrbanMessageCommon & {
 
 export type UrbanMessageVideoData = UrbanMessageCommonData & {
     title?: string;
-    file: string | Buffer | NodeJS.ReadableStream;
+    file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[];
     duration?: number;
