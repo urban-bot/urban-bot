@@ -20,6 +20,8 @@ export type UrbanFile = {
     duration?: number;
 };
 
+export type UrbanFileFormat = string | Buffer | NodeJS.ReadableStream;
+
 export type UrbanParseMode = 'HTML' | 'markdown';
 
 export type UrbanListener<Event> = (event: Event) => unknown;

@@ -2,6 +2,8 @@ import { render } from './render';
 import { Router, Route } from './components/Router';
 import { Text } from './components/Text';
 import { Image } from './components/Image';
+import { Audio } from './components/Audio';
+import { Video } from './components/Video';
 import { ButtonGroup, Button } from './components/ButtonGroup';
 import { Root } from './components/Root';
 import { getBotContext, RouterContext } from './context';
@@ -35,6 +37,8 @@ export {
     useCommand,
     Text,
     Image,
+    Audio,
+    Video,
     ButtonGroup,
     useBotContext,
     useRouter,

@@ -6,37 +6,41 @@ import { ButtonGroupProps } from './ButtonGroup';
 import { useFormattedButtons } from '../hooks/useFormattedButtons';
 import { UrbanFileFormat } from '../types';
 
-export type AudioProps = UrbanMessageCommonData & {
+export type VideoProps = UrbanMessageCommonData & {
     file: UrbanFileFormat;
     name?: string;
     title?: React.ReactNode;
-    isNewMessageEveryRender?: boolean;
     duration?: number;
     author?: string;
+    width?: number;
+    height?: number;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
+    isNewMessageEveryRender?: boolean;
 };
 
-export function Audio({
+export function Video({
     file,
     name,
     author,
-    title,
-    duration,
+    height,
+    width,
     buttons: buttonGroupElement,
-    isNewMessageEveryRender: isNewMessageEveryRenderProp,
     disableNotification,
+    duration,
     forceReply,
+    isNewMessageEveryRender: isNewMessageEveryRenderProp,
     parseMode,
     replyToMessageId,
+    title,
     ...otherProps
-}: AudioProps) {
+}: VideoProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     const [formattedTitle, finalParseMode] = useFormattedText(title, parseMode);
     const formattedButtons = useFormattedButtons(buttonGroupElement);
 
     return (
-        <urban-audio
+        <urban-video
             $$managerBot={$$managerBot}
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
@@ -51,6 +55,8 @@ export function Audio({
                 name,
                 duration,
                 author,
+                height,
+                width,
                 ...otherProps,
             }}
         />
