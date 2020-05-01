@@ -83,6 +83,7 @@ export type UrbanMessageVideo = UrbanMessageCommon & {
 export type UrbanMessageFileData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
+    buttons?: UrbanButton[];
 };
 
 export type UrbanMessageFile = UrbanMessageCommon & {
