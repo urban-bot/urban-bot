@@ -80,6 +80,16 @@ export type UrbanMessageVideo = UrbanMessageCommon & {
     data: UrbanMessageVideoData;
 };
 
+export type UrbanMessageFileData = UrbanMessageCommonData & {
+    title?: string;
+    file: UrbanFileFormat;
+};
+
+export type UrbanMessageFile = UrbanMessageCommon & {
+    nodeName: 'urban-file';
+    data: UrbanMessageFileData;
+};
+
 export type UrbanMessage =
     | UrbanMessageText
     | UrbanMessageImage
@@ -109,6 +119,8 @@ export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMe
     ? UrbanMessageAudio & Meta<MessageMeta>
     : T extends 'urban-video'
     ? UrbanMessageVideo & Meta<MessageMeta>
+    : T extends 'urban-file'
+    ? UrbanMessageFile & Meta<MessageMeta>
     : UrbanExistingMessage<MessageMeta>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];

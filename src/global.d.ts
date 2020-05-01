@@ -4,6 +4,7 @@ import {
     UrbanMessageImageData,
     UrbanMessageButtonsData,
     UrbanMessageAudioData,
+    UrbanMessageFileData,
 } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
 import { UrbanChat } from './types';
@@ -22,6 +23,7 @@ export type UrbanElementImage = UrbanElement & { data: UrbanMessageImageData };
 export type UrbanElementAudio = UrbanElement & { data: UrbanMessageAudioData };
 export type UrbanElementVideo = UrbanElement & { data: UrbanMessageVideoData };
 export type UrbanElementButtons = UrbanElement & { data: UrbanMessageButtonsData };
+export type UrbanElementFile = UrbanElement & { data: UrbanMessageFileData };
 
 declare global {
     namespace JSX {
@@ -31,6 +33,7 @@ declare global {
             'urban-audio': UrbanElementAudio;
             'urban-buttons': UrbanElementButtons;
             'urban-video': UrbanElementVideo;
+            'urban-file': UrbanElementFile;
             b: Markup;
             i: Markup;
             u: Markup;
