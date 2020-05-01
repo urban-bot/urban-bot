@@ -303,7 +303,7 @@ export class UrbanSlackBot implements UrbanBot<SlackBotType> {
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' does not exist. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
+                    }' does not exist. Please don't use it with slack bot or add this logic to urban-bot/slack.`,
                 );
             }
         }
@@ -380,7 +380,7 @@ export class UrbanSlackBot implements UrbanBot<SlackBotType> {
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' does not exist. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
+                    }' does not exist. Please don't use it with slack bot or add this logic to urban-bot/slack.`,
                 );
             }
         }

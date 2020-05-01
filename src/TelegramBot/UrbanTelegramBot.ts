@@ -458,7 +458,7 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                    }' does not exist. Please don't use it with telegram bot or add this logic to urban-bot/telegram.`,
                 );
             }
         }
@@ -515,7 +515,7 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' does not exist. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
+                    }' does not exist. Please don't use it with telegram bot or add this logic to urban-bot/telegram.`,
                 );
             }
         }
