@@ -21,3 +21,8 @@ export type InputMediaAudio = TelegramBot.InputMediaBase & {
     performer?: string;
     title?: string;
 };
+
+export type InputMediaFile = TelegramBot.InputMediaBase & {
+    type: 'document';
+    title?: string;
+};
