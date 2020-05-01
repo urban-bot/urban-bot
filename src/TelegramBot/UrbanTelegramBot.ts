@@ -28,7 +28,14 @@ import {
     formatParamsForNewMessage,
     getTelegramMedia,
 } from './format';
-import { TelegramMessageMeta, TelegramPayload, TelegramBotMessage, TELEGRAM, InputMediaAudio } from './types';
+import {
+    TelegramMessageMeta,
+    TelegramPayload,
+    TelegramBotMessage,
+    TELEGRAM,
+    InputMediaAudio,
+    InputMediaFile,
+} from './types';
 
 export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
@@ -438,6 +445,14 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     height: message.data.height,
                 });
             }
+            case 'urban-file': {
+                const params = formatParamsForNewMessage(message);
+
+                return this.bot.sendDocument(message.chat.id, message.data.file, {
+                    ...params,
+                    caption: message.data.title,
+                });
+            }
             default: {
                 throw new Error(
                     `Tag '${
@@ -478,6 +493,11 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
 
                 break;
             }
+            case 'urban-file': {
+                this.editMedia(message);
+
+                break;
+            }
             case 'urban-buttons': {
                 const metaToEdit = {
                     chat_id: message.meta.chat.id,
@@ -505,7 +525,12 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
         this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 
-    editMedia(message: UrbanExistingMessageByType<'urban-img' | 'urban-audio' | 'urban-video', TelegramMessageMeta>) {
+    editMedia(
+        message: UrbanExistingMessageByType<
+            'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file',
+            TelegramMessageMeta
+        >,
+    ) {
         const metaToEdit = {
             chat_id: message.meta.chat.id,
             message_id: message.meta.message_id,
@@ -533,7 +558,11 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
     }
 
     // FIXME this methods should be fixed in node-telegram-bot-api
-    editMessageMedia(media: TelegramBot.InputMedia | InputMediaAudio, options: EditMessageOptions, formData?: unknown) {
+    editMessageMedia(
+        media: TelegramBot.InputMedia | InputMediaAudio | InputMediaFile,
+        options: EditMessageOptions,
+        formData?: unknown,
+    ) {
         const qs = { ...options, media: JSON.stringify(media) };
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

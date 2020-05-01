@@ -9,6 +9,7 @@ import { ImageWithButtons } from './ImageWithButtons/ImageWithButtons';
 import { Queue } from './Queue';
 import { AudioExample } from './Audio';
 import { VideoExample } from './Video';
+import { FileExample } from './File';
 
 dotenv.config();
 
@@ -32,6 +33,9 @@ function App() {
             </Route>
             <Route path="/video">
                 <VideoExample />
+            </Route>
+            <Route path="/file">
+                <FileExample />
             </Route>
         </Router>
     );
