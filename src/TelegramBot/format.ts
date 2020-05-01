@@ -107,7 +107,7 @@ export function formatParamsForExistingMessage(message: UrbanMessage): EditMessa
 }
 
 export function getTelegramMedia(
-    message: UrbanExistingMessageByType<'urban-img' | 'urban-audio' | 'urban-video'>,
+    message: UrbanExistingMessageByType<'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file'>,
     parseMode: TelegramBot.ParseMode | undefined,
 ) {
     const common = {
@@ -138,6 +138,12 @@ export function getTelegramMedia(
                 duration: message.data.duration,
                 height: message.data.height,
                 width: message.data.width,
+            } as const;
+        }
+        case 'urban-file': {
+            return {
+                ...common,
+                type: 'document',
             } as const;
         }
         default: {
