@@ -438,6 +438,14 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     height: message.data.height,
                 });
             }
+            case 'urban-file': {
+                const params = formatParamsForNewMessage(message);
+
+                return this.bot.sendDocument(message.chat.id, message.data.file, {
+                    ...params,
+                    caption: message.data.title,
+                });
+            }
             default: {
                 throw new Error(
                     `Tag '${

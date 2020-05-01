@@ -95,13 +95,15 @@ export type UrbanMessage =
     | UrbanMessageImage
     | UrbanMessageButtons
     | UrbanMessageAudio
-    | UrbanMessageVideo;
+    | UrbanMessageVideo
+    | UrbanMessageFile;
 export type UrbanMessageData =
     | UrbanMessageTextData
     | UrbanMessageImageData
     | UrbanMessageButtonsData
     | UrbanMessageAudioData
-    | UrbanMessageVideoData;
+    | UrbanMessageVideoData
+    | UrbanMessageFileData;
 
 type Meta<MessageMeta> = {
     meta: MessageMeta;
