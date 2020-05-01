@@ -3,7 +3,7 @@
 import React from 'react';
 import { Button, ButtonGroup, File } from '../src';
 
-// const file = fs.createReadStream(path.join(__dirname, 'Audio.js'));
+// const file = fs.createReadStream(path.join(__dirname, 'file.doc'));
 
 export function FileExample() {
     return (
