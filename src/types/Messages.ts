@@ -107,6 +107,7 @@ export type UrbanMessagePollData = UrbanMessageCommonData & {
     parseMode?: UrbanParseMode;
     activeSeconds?: number;
     closeTime?: number;
+    buttons?: UrbanButton[];
 };
 
 export type UrbanMessagePoll = UrbanMessageCommon & {

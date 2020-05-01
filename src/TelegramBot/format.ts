@@ -26,6 +26,7 @@ function formatReplyMarkupForNewMessage(message: UrbanMessage) {
         (message.nodeName === 'urban-buttons' ||
             message.nodeName === 'urban-img' ||
             message.nodeName === 'urban-file' ||
+            message.nodeName === 'urban-poll' ||
             message.nodeName === 'urban-audio') &&
         message.data.buttons !== undefined
     ) {
@@ -46,6 +47,7 @@ function formatReplyMarkupForExistingMessage(message: UrbanMessage) {
         (message.nodeName === 'urban-buttons' ||
             message.nodeName === 'urban-img' ||
             message.nodeName === 'urban-file' ||
+            message.nodeName === 'urban-poll' ||
             message.nodeName === 'urban-audio') &&
         message.data.buttons !== undefined
     ) {
