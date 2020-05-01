@@ -6,6 +6,11 @@ export type UrbanButton = {
     id?: string;
 };
 
+export type UrbanOption = {
+    text: string;
+    id?: string;
+};
+
 export type UrbanMessageCommon = {
     chat: UrbanChat;
 };
@@ -93,7 +98,7 @@ export type UrbanMessageFile = UrbanMessageCommon & {
 
 export type UrbanMessagePollData = UrbanMessageCommonData & {
     question: string;
-    options: string[];
+    options: UrbanOption[];
     isAnonymous?: boolean;
     type?: string;
     withMultipleAnswers?: boolean;

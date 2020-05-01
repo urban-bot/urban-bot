@@ -1,15 +1,17 @@
 import React from 'react';
-import { useBotContext } from '../hooks/hooks';
+import { useAction, useBotContext } from '../hooks/hooks';
 import { useFormattedText } from '../hooks/useFormattedText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
 import { useFormattedButtons } from '../hooks/useFormattedButtons';
+import { OtherProps } from '../types/common';
+import { formatOptionElement } from '../utils/formatOptionElement';
 
 export type PollProps = UrbanMessageCommonData & {
+    question: string;
+    children: React.ReactElement<OptionProps> | React.ReactElement<OptionProps>[];
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
     isNewMessageEveryRender?: boolean;
-    question: string;
-    options: string[];
     isAnonymous?: boolean;
     type?: string;
     withMultipleAnswers?: boolean;
@@ -23,7 +25,7 @@ export function Poll({
     buttons: buttonGroupElement,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
     question,
-    options,
+    children,
     isAnonymous,
     type,
     withMultipleAnswers,
@@ -42,6 +44,17 @@ export function Poll({
     const [formattedQuestion, finalParseMode] = useFormattedText(question, parseMode);
     const [formattedExplanation] = useFormattedText(explanation, parseMode);
     const formattedButtons = useFormattedButtons(buttonGroupElement);
+    const options = formatOptionElement(children);
+
+    useAction((ctx) => {
+        const { actionId } = ctx;
+
+        const option = options.find(({ id }) => {
+            return actionId === id;
+        });
+
+        option?.onClick?.(ctx);
+    });
 
     return (
         <urban-poll
@@ -67,4 +80,15 @@ export function Poll({
             }}
         />
     );
+}
+
+export type OptionProps = OtherProps & {
+    children: string;
+    // FIXME describe type for onClick?
+    onClick?: (...args: unknown[]) => unknown;
+    id?: string;
+};
+
+export function Option(_props: OptionProps) {
+    return null;
 }

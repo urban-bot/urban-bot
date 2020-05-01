@@ -10,6 +10,7 @@ import { Queue } from './Queue';
 import { AudioExample } from './Audio';
 import { VideoExample } from './Video';
 import { FileExample } from './File';
+import { PollExample } from './Poll';
 
 dotenv.config();
 
@@ -36,6 +37,9 @@ function App() {
             </Route>
             <Route path="/file">
                 <FileExample />
+            </Route>
+            <Route path="/poll">
+                <PollExample />
             </Route>
         </Router>
     );
