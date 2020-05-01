@@ -16,7 +16,7 @@ export function formatOptionElement(
 ): FormattedOption[] {
     return React.Children.map(element, (child) => {
         if (child.type !== Option) {
-            throw new Error('Please use only Button components inside ButtonGroup.');
+            throw new Error('Please use only Option components inside Poll.');
         }
 
         const { children: text, onClick, id = getRandomId(), ...other } = child.props;
