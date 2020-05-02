@@ -120,6 +120,7 @@ export type UrbanMessageContactData = UrbanMessageCommonData & {
     firstName?: string;
     lastName?: string;
     vCard?: string;
+    username?: string;
     buttons?: UrbanButton[];
 };
 
