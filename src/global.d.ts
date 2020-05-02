@@ -7,6 +7,7 @@ import {
     UrbanMessageFileData,
     UrbanMessagePollData,
     UrbanMessageVideoData,
+    UrbanMessageContactData,
 } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
 import { UrbanChat } from './types';
@@ -27,6 +28,7 @@ export type UrbanElementVideo = UrbanElement & { data: UrbanMessageVideoData };
 export type UrbanElementButtons = UrbanElement & { data: UrbanMessageButtonsData };
 export type UrbanElementFile = UrbanElement & { data: UrbanMessageFileData };
 export type UrbanElementPoll = UrbanElement & { data: UrbanMessagePollData };
+export type UrbanElementContact = UrbanElement & { data: UrbanMessageContactData };
 
 declare global {
     namespace JSX {
@@ -38,6 +40,7 @@ declare global {
             'urban-video': UrbanElementVideo;
             'urban-file': UrbanElementFile;
             'urban-poll': UrbanElementPoll;
+            'urban-contact': UrbanElementContact;
             b: Markup;
             i: Markup;
             u: Markup;

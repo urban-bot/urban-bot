@@ -3,11 +3,11 @@ import { Button, ButtonGroup, Text } from '../src';
 
 export function Queue() {
     const [queue, setQueue] = React.useState(['0', '1', '2']);
-    const [last, setLast] = React.useState(queue.length);
+    const queueLength = React.useRef(queue.length);
 
     const addLast = () => {
-        setQueue([...queue, String(last)]);
-        setLast(last + 1);
+        setQueue([...queue, String(queueLength.current)]);
+        queueLength.current++;
     };
 
     const deleteFirst = () => {

@@ -6,6 +6,7 @@ import { Audio } from './components/Audio';
 import { Video } from './components/Video';
 import { File } from './components/File';
 import { Poll, Option } from './components/Poll';
+import { Contact } from './components/Contact';
 import { ButtonGroup, Button } from './components/ButtonGroup';
 import { Root } from './components/Root';
 import { getBotContext, RouterContext } from './context';
@@ -44,6 +45,7 @@ export {
     File,
     Poll,
     Option,
+    Contact,
     ButtonGroup,
     useBotContext,
     useRouter,
