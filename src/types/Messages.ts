@@ -6,6 +6,11 @@ export type UrbanButton = {
     id?: string;
 };
 
+export type UrbanOption = {
+    text: string;
+    id?: string;
+};
+
 export type UrbanMessageCommon = {
     chat: UrbanChat;
 };
@@ -91,20 +96,41 @@ export type UrbanMessageFile = UrbanMessageCommon & {
     data: UrbanMessageFileData;
 };
 
+export type UrbanMessagePollData = UrbanMessageCommonData & {
+    question: string;
+    options: UrbanOption[];
+    isAnonymous?: boolean;
+    type?: string;
+    withMultipleAnswers?: boolean;
+    rightOption?: string | number;
+    explanation?: string;
+    parseMode?: UrbanParseMode;
+    activeSeconds?: number;
+    closeTime?: number;
+    buttons?: UrbanButton[];
+};
+
+export type UrbanMessagePoll = UrbanMessageCommon & {
+    nodeName: 'urban-poll';
+    data: UrbanMessagePollData;
+};
+
 export type UrbanMessage =
     | UrbanMessageText
     | UrbanMessageImage
     | UrbanMessageButtons
     | UrbanMessageAudio
     | UrbanMessageVideo
-    | UrbanMessageFile;
+    | UrbanMessageFile
+    | UrbanMessagePoll;
 export type UrbanMessageData =
     | UrbanMessageTextData
     | UrbanMessageImageData
     | UrbanMessageButtonsData
     | UrbanMessageAudioData
     | UrbanMessageVideoData
-    | UrbanMessageFileData;
+    | UrbanMessageFileData
+    | UrbanMessagePollData;
 
 type Meta<MessageMeta> = {
     meta: MessageMeta;
@@ -124,6 +150,8 @@ export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMe
     ? UrbanMessageVideo & Meta<MessageMeta>
     : T extends 'urban-file'
     ? UrbanMessageFile & Meta<MessageMeta>
+    : T extends 'urban-poll'
+    ? UrbanMessagePoll & Meta<MessageMeta>
     : UrbanExistingMessage<MessageMeta>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];

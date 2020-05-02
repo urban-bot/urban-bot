@@ -5,11 +5,12 @@ import { UrbanTelegramBot } from '../src/TelegramBot/UrbanTelegramBot';
 import { UrbanSlackBot } from '../src/SlackBot/UrbanSlackBot';
 import { TextExample } from './Text';
 import { Hooks } from './Hooks';
-import { ImageWithButtons } from './ImageWithButtons/ImageWithButtons';
+import { ImageExample } from './ImageExample/ImageExample';
 import { Queue } from './Queue';
 import { AudioExample } from './Audio';
 import { VideoExample } from './Video';
 import { FileExample } from './File';
+import { PollExample } from './Poll';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ function App() {
     return (
         <Router>
             <Route path="/start">
-                <ImageWithButtons />
+                <ImageExample />
             </Route>
             <Route path="/text">
                 <TextExample />
@@ -36,6 +37,9 @@ function App() {
             </Route>
             <Route path="/file">
                 <FileExample />
+            </Route>
+            <Route path="/poll">
+                <PollExample />
             </Route>
         </Router>
     );
