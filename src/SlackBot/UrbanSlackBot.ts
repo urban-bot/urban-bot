@@ -306,7 +306,9 @@ export class UrbanSlackBot implements UrbanBot<SlackBotType> {
                     text:
                         withRightSpaceIfExist(firstName) +
                         withRightSpaceIfExist(lastName) +
+                        '\n' +
                         withRightSpaceIfExist(username) +
+                        '\n' +
                         withRightSpaceIfExist(String(phoneNumber)),
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
