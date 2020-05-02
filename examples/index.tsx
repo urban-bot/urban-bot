@@ -12,6 +12,7 @@ import { VideoExample } from './Video';
 import { FileExample } from './File';
 import { PollExample } from './Poll';
 import { AnimationExample } from './Animation';
+import { ContactExample } from './Contact';
 
 dotenv.config();
 
@@ -41,6 +42,9 @@ function App() {
             </Route>
             <Route path="/poll">
                 <PollExample />
+            </Route>
+            <Route path="/contact">
+                <ContactExample />
             </Route>
             <Route path="/animation">
                 <AnimationExample />

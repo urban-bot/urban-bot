@@ -471,6 +471,22 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     caption: message.data.title,
                 });
             }
+            case 'urban-contact': {
+                const params = formatParamsForNewMessage(message);
+
+                return this.bot.sendContact(
+                    message.chat.id,
+                    String(message.data.phoneNumber),
+                    message.data.firstName ?? '',
+                    {
+                        ...params,
+                        last_name: message.data.lastName,
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore @types/node-telegram-bot-api doesn't have vcard type
+                        vcard: message.data.vCard,
+                    },
+                );
+            }
             case 'urban-poll': {
                 const params = formatParamsForNewMessage(message);
                 const options = message.data.options.map(({ text }) => text);

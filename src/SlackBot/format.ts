@@ -24,3 +24,7 @@ export function formatTitle(title: string): SectionBlock {
         },
     };
 }
+
+export function withRightSpaceIfExist(text: string | undefined) {
+    return text ? `${text} ` : '';
+}
