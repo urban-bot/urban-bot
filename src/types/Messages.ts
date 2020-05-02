@@ -115,6 +115,19 @@ export type UrbanMessagePoll = UrbanMessageCommon & {
     data: UrbanMessagePollData;
 };
 
+export type UrbanMessageContactData = UrbanMessageCommonData & {
+    phoneNumber?: string | number;
+    firstName?: string;
+    lastName?: string;
+    vCard?: string;
+    buttons?: UrbanButton[];
+};
+
+export type UrbanMessageContact = UrbanMessageCommon & {
+    nodeName: 'urban-contact';
+    data: UrbanMessageContactData;
+};
+
 export type UrbanMessage =
     | UrbanMessageText
     | UrbanMessageImage
@@ -122,7 +135,8 @@ export type UrbanMessage =
     | UrbanMessageAudio
     | UrbanMessageVideo
     | UrbanMessageFile
-    | UrbanMessagePoll;
+    | UrbanMessagePoll
+    | UrbanMessageContact;
 export type UrbanMessageData =
     | UrbanMessageTextData
     | UrbanMessageImageData
@@ -130,7 +144,8 @@ export type UrbanMessageData =
     | UrbanMessageAudioData
     | UrbanMessageVideoData
     | UrbanMessageFileData
-    | UrbanMessagePollData;
+    | UrbanMessagePollData
+    | UrbanMessageContactData;
 
 type Meta<MessageMeta> = {
     meta: MessageMeta;
@@ -152,6 +167,8 @@ export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMe
     ? UrbanMessageFile & Meta<MessageMeta>
     : T extends 'urban-poll'
     ? UrbanMessagePoll & Meta<MessageMeta>
+    : T extends 'urban-contact'
+    ? UrbanMessageContact & Meta<MessageMeta>
     : UrbanExistingMessage<MessageMeta>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];
