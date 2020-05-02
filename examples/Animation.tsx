@@ -1,9 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Button, ButtonGroup, Animation, useText } from '../src';
 
-const animationByFile = fs.readFileSync(path.join(__dirname, 'roboHare.gif'));
+function readFile(fileName: string) {
+    try {
+        return fs.readFileSync(path.join(__dirname, fileName));
+    } catch (error) {
+        return undefined;
+    }
+}
 
 export function AnimationExample() {
     const [title, setTitle] = React.useState('There is the animation');
@@ -11,6 +17,12 @@ export function AnimationExample() {
     useText(({ text }) => {
         setTitle(text);
     });
+
+    const animationByFile = useMemo(() => readFile('roboHare.gif'), []);
+
+    if (!animationByFile) {
+        return null;
+    }
 
     return (
         <Animation
