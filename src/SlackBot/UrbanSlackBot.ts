@@ -24,7 +24,7 @@ import {
     SlackMessageMeta,
     SLACK,
 } from './types';
-import { formatButtons, formatTitle } from './format';
+import { formatButtons, formatTitle, withRightSpaceIfExist } from './format';
 import { getTypeByMimeType } from './utils';
 
 const app = express();
@@ -296,6 +296,18 @@ export class UrbanSlackBot implements UrbanBot<SlackBotType> {
                     channel: message.chat.id,
                     blocks,
                     text: message.data.title,
+                }) as unknown) as Promise<SlackMessageMeta>;
+            }
+            case 'urban-contact': {
+                const { firstName, lastName, username, phoneNumber } = message.data;
+
+                return (this.client.chat.postMessage({
+                    channel: message.chat.id,
+                    text:
+                        withRightSpaceIfExist(firstName) +
+                        withRightSpaceIfExist(lastName) +
+                        withRightSpaceIfExist(username) +
+                        withRightSpaceIfExist(String(phoneNumber)),
                 }) as unknown) as Promise<SlackMessageMeta>;
             }
             default: {
