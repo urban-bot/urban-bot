@@ -11,7 +11,6 @@ export type AnimationProps = UrbanMessageCommonData & {
     name?: string;
     title?: React.ReactNode;
     duration?: number;
-    author?: string;
     width?: number;
     height?: number;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
@@ -20,7 +19,6 @@ export type AnimationProps = UrbanMessageCommonData & {
 export function Animation({
     file,
     name,
-    author,
     height,
     width,
     buttons: buttonGroupElement,
@@ -53,7 +51,6 @@ export function Animation({
                 file,
                 name,
                 duration,
-                author,
                 height,
                 width,
                 ...otherProps,
