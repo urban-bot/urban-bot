@@ -453,6 +453,27 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     caption: message.data.title,
                 });
             }
+            case 'urban-poll': {
+                const params = formatParamsForNewMessage(message);
+                const options = message.data.options.map(({ text }) => text);
+
+                return (
+                    this.bot
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore @types/node-telegram-bot-api doesn't have sendPoll type
+                        .sendPoll(message.chat.id, message.data.question, options, {
+                            ...params,
+                            is_anonymous: message.data.isAnonymous,
+                            type: message.data.type,
+                            allows_multiple_answers: message.data.withMultipleAnswers,
+                            correct_option_id: message.data.rightOption,
+                            explanation: message.data.explanation,
+                            explanation_parse_mode: params.parse_mode,
+                            open_period: message.data.activeSeconds,
+                            close_date: message.data.closeTime,
+                        })
+                );
+            }
             default: {
                 throw new Error(
                     `Tag '${

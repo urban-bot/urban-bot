@@ -5,6 +5,8 @@ import {
     UrbanMessageButtonsData,
     UrbanMessageAudioData,
     UrbanMessageFileData,
+    UrbanMessagePollData,
+    UrbanMessageVideoData,
 } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
 import { UrbanChat } from './types';
@@ -12,7 +14,7 @@ import { UrbanNativeEvent } from './types/Events';
 
 export type Markup = { children: React.ReactNode };
 export type Link = Markup & { href: string };
-export type UrbanElement<NativeEvent extends UrbanNativeEvent, MessageMeta = unknown> = {
+export type UrbanElement<NativeEvent extends UrbanNativeEvent = unknown, MessageMeta = unknown> = {
     $$managerBot: ManagerBot<NativeEvent, MessageMeta>;
     chat: UrbanChat;
     isNewMessageEveryRender?: boolean;
@@ -24,6 +26,7 @@ export type UrbanElementAudio = UrbanElement & { data: UrbanMessageAudioData };
 export type UrbanElementVideo = UrbanElement & { data: UrbanMessageVideoData };
 export type UrbanElementButtons = UrbanElement & { data: UrbanMessageButtonsData };
 export type UrbanElementFile = UrbanElement & { data: UrbanMessageFileData };
+export type UrbanElementPoll = UrbanElement & { data: UrbanMessagePollData };
 
 declare global {
     namespace JSX {
@@ -34,6 +37,7 @@ declare global {
             'urban-buttons': UrbanElementButtons;
             'urban-video': UrbanElementVideo;
             'urban-file': UrbanElementFile;
+            'urban-poll': UrbanElementPoll;
             b: Markup;
             i: Markup;
             u: Markup;
