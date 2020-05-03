@@ -8,5 +8,5 @@ export function LocationExample() {
         setLatitude(Number(text));
     });
 
-    return <Location latitude={latitude} longitude={77.608548} activeSeconds={500} />;
+    return <Location latitude={latitude} longitude={77.608548} livePeriod={500} />;
 }

@@ -8,7 +8,7 @@ import { useFormattedButtons } from '../hooks/useFormattedButtons';
 export type LocationProps = UrbanMessageCommonData & {
     latitude: number;
     longitude: number;
-    activeSeconds?: number;
+    livePeriod?: number;
     title?: React.ReactNode;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
     isNewMessageEveryRender?: boolean;
@@ -17,7 +17,7 @@ export type LocationProps = UrbanMessageCommonData & {
 export function Location({
     latitude,
     longitude,
-    activeSeconds,
+    livePeriod,
     title,
     buttons: buttonGroupElement,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
@@ -40,7 +40,7 @@ export function Location({
             data={{
                 latitude,
                 longitude,
-                activeSeconds,
+                livePeriod,
                 title: formattedTitle,
                 buttons: formattedButtons,
                 parseMode: finalParseMode,

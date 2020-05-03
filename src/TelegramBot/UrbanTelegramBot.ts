@@ -478,7 +478,7 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     ...params,
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore @types/node-telegram-bot-api bug. live_period is existed
-                    live_period: message.data.activeSeconds,
+                    live_period: message.data.livePeriod,
                 });
             }
             case 'urban-media': {
@@ -548,7 +548,7 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                             correct_option_id: message.data.rightOption,
                             explanation: message.data.explanation,
                             explanation_parse_mode: params.parse_mode,
-                            open_period: message.data.activeSeconds,
+                            open_period: message.data.livePeriod,
                             close_date: message.data.closeTime,
                         })
                 );
