@@ -80,15 +80,30 @@ export type UrbanMessageVideoData = UrbanMessageCommonData & {
     author?: string;
 };
 
+export type UrbanMessageAnimationData = UrbanMessageCommonData & {
+    title?: string;
+    file: UrbanFileFormat;
+    name?: string;
+    buttons?: UrbanButton[];
+    duration?: number;
+    width?: number;
+    height?: number;
+};
+
 export type UrbanMessageVideo = UrbanMessageCommon & {
     nodeName: 'urban-video';
     data: UrbanMessageVideoData;
+};
+export type UrbanMessageAnimation = UrbanMessageCommon & {
+    nodeName: 'urban-animation';
+    data: UrbanMessageAnimationData;
 };
 
 export type UrbanMessageFileData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     buttons?: UrbanButton[];
+    name?: string;
 };
 
 export type UrbanMessageFile = UrbanMessageCommon & {
@@ -137,6 +152,7 @@ export type UrbanMessage =
     | UrbanMessageVideo
     | UrbanMessageFile
     | UrbanMessagePoll
+    | UrbanMessageAnimation
     | UrbanMessageContact;
 export type UrbanMessageData =
     | UrbanMessageTextData
@@ -144,6 +160,7 @@ export type UrbanMessageData =
     | UrbanMessageButtonsData
     | UrbanMessageAudioData
     | UrbanMessageVideoData
+    | UrbanMessageAnimationData
     | UrbanMessageFileData
     | UrbanMessagePollData
     | UrbanMessageContactData;
@@ -164,6 +181,8 @@ export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMe
     ? UrbanMessageAudio & Meta<MessageMeta>
     : T extends 'urban-video'
     ? UrbanMessageVideo & Meta<MessageMeta>
+    : T extends 'urban-animation'
+    ? UrbanMessageAnimation & Meta<MessageMeta>
     : T extends 'urban-file'
     ? UrbanMessageFile & Meta<MessageMeta>
     : T extends 'urban-poll'

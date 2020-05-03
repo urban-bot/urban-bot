@@ -35,6 +35,7 @@ import {
     TELEGRAM,
     InputMediaAudio,
     InputMediaFile,
+    InputMediaAnimation,
 } from './types';
 
 export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
@@ -445,6 +446,23 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     height: message.data.height,
                 });
             }
+            case 'urban-animation': {
+                const params = formatParamsForNewMessage(message);
+
+                return (
+                    this.bot
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore @types/node-telegram-bot-api doesn't have sendAnimation type
+                        .sendAnimation(message.chat.id, message.data.file, {
+                            ...params,
+                            file_name: message.data.name,
+                            caption: message.data.title,
+                            duration: message.data.duration,
+                            width: message.data.width,
+                            height: message.data.height,
+                        })
+                );
+            }
             case 'urban-file': {
                 const params = formatParamsForNewMessage(message);
 
@@ -530,6 +548,11 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
 
                 break;
             }
+            case 'urban-animation': {
+                this.editMedia(message);
+
+                break;
+            }
             case 'urban-file': {
                 this.editMedia(message);
 
@@ -564,7 +587,7 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
 
     editMedia(
         message: UrbanExistingMessageByType<
-            'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file',
+            'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file' | 'urban-animation',
             TelegramMessageMeta
         >,
     ) {
@@ -596,7 +619,7 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
 
     // FIXME this methods should be fixed in node-telegram-bot-api
     editMessageMedia(
-        media: TelegramBot.InputMedia | InputMediaAudio | InputMediaFile,
+        media: TelegramBot.InputMedia | InputMediaAudio | InputMediaAnimation | InputMediaFile,
         options: EditMessageOptions,
         formData?: unknown,
     ) {

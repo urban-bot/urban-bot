@@ -7,6 +7,7 @@ import {
     UrbanMessageFileData,
     UrbanMessagePollData,
     UrbanMessageVideoData,
+    UrbanMessageAnimationData,
     UrbanMessageContactData,
 } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
@@ -28,6 +29,7 @@ export type UrbanElementVideo = UrbanElement & { data: UrbanMessageVideoData };
 export type UrbanElementButtons = UrbanElement & { data: UrbanMessageButtonsData };
 export type UrbanElementFile = UrbanElement & { data: UrbanMessageFileData };
 export type UrbanElementPoll = UrbanElement & { data: UrbanMessagePollData };
+export type UrbanElementAnimation = UrbanElement & { data: UrbanMessageAnimationData };
 export type UrbanElementContact = UrbanElement & { data: UrbanMessageContactData };
 
 declare global {
@@ -40,6 +42,7 @@ declare global {
             'urban-video': UrbanElementVideo;
             'urban-file': UrbanElementFile;
             'urban-poll': UrbanElementPoll;
+            'urban-animation': UrbanElementAnimation;
             'urban-contact': UrbanElementContact;
             b: Markup;
             i: Markup;

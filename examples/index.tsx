@@ -11,6 +11,7 @@ import { AudioExample } from './Audio';
 import { VideoExample } from './Video';
 import { FileExample } from './File';
 import { PollExample } from './Poll';
+import { AnimationExample } from './Animation';
 import { ContactExample } from './Contact';
 
 dotenv.config();
@@ -45,25 +46,31 @@ function App() {
             <Route path="/contact">
                 <ContactExample />
             </Route>
+            <Route path="/animation">
+                <AnimationExample />
+            </Route>
         </Router>
     );
 }
+if (process.env.TELEGRAM_TOKEN_DEV) {
+    const urbanTelegramBot = new UrbanTelegramBot(process.env.TELEGRAM_TOKEN_DEV as string, {
+        polling: true,
+    });
+    render(
+        <Root bot={urbanTelegramBot} parseMode="HTML">
+            <App />
+        </Root>,
+    );
+}
+if (process.env.SLACK_SIGNING_SECRET && process.env.SLACK_TOKEN) {
+    const urbanSlackBot = new UrbanSlackBot({
+        signingSecret: process.env.SLACK_SIGNING_SECRET as string,
+        token: process.env.SLACK_TOKEN as string,
+    });
 
-const urbanTelegramBot = new UrbanTelegramBot(process.env.TELEGRAM_TOKEN_DEV as string, {
-    polling: true,
-});
-render(
-    <Root bot={urbanTelegramBot} parseMode="HTML">
-        <App />
-    </Root>,
-);
-
-const urbanSlackBot = new UrbanSlackBot({
-    signingSecret: process.env.SLACK_SIGNING_SECRET as string,
-    token: process.env.SLACK_TOKEN as string,
-});
-render(
-    <Root bot={urbanSlackBot}>
-        <App />
-    </Root>,
-);
+    render(
+        <Root bot={urbanSlackBot}>
+            <App />
+        </Root>,
+    );
+}

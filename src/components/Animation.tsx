@@ -6,45 +6,53 @@ import { ButtonGroupProps } from './ButtonGroup';
 import { useFormattedButtons } from '../hooks/useFormattedButtons';
 import { UrbanFileFormat } from '../types';
 
-export type FileProps = UrbanMessageCommonData & {
+export type AnimationProps = UrbanMessageCommonData & {
     file: UrbanFileFormat;
+    name?: string;
     title?: React.ReactNode;
+    duration?: number;
+    width?: number;
+    height?: number;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
     isNewMessageEveryRender?: boolean;
-    name?: string;
 };
-
-export function File({
+export function Animation({
     file,
-    title,
     name,
+    height,
+    width,
     buttons: buttonGroupElement,
-    isNewMessageEveryRender: isNewMessageEveryRenderProp,
     disableNotification,
+    duration,
     forceReply,
+    isNewMessageEveryRender: isNewMessageEveryRenderProp,
     parseMode,
     replyToMessageId,
+    title,
     ...otherProps
-}: FileProps) {
+}: AnimationProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
     const [formattedTitle, finalParseMode] = useFormattedText(title, parseMode);
     const formattedButtons = useFormattedButtons(buttonGroupElement);
 
     return (
-        <urban-file
+        <urban-animation
             $$managerBot={$$managerBot}
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             data={{
-                file,
-                name,
-                title: formattedTitle,
-                buttons: formattedButtons,
-                parseMode: finalParseMode,
                 disableNotification,
                 replyToMessageId,
                 forceReply,
+                parseMode: finalParseMode,
+                buttons: formattedButtons,
+                title: formattedTitle,
+                file,
+                name,
+                duration,
+                height,
+                width,
                 ...otherProps,
             }}
         />
