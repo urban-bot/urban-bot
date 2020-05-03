@@ -1,6 +1,6 @@
 {
     "name": "urban-bot",
-    "version": "0.0.1-aplha.11",
+    "version": "0.0.1-aplha.12",
     "description": "universal messenger bot creator",
     "files": [
         "dist/**/*"
@@ -52,7 +52,8 @@
         "react": "16.13.1",
         "rimraf": "3.0.2",
         "ts-jest": "25.4.0",
-        "typescript": "3.8.3"
+        "typescript": "3.8.3",
+        "ngrok": "3.2.7"
     },
     "dependencies": {
         "@slack/events-api": "2.3.2",
@@ -61,7 +62,6 @@
         "body-parser": "1.19.0",
         "easyvk": "2.7.0",
         "express": "4.17.1",
-        "ngrok": "3.2.7",
         "node-telegram-bot-api": "0.40.0",
         "react-reconciler": "0.25.1"
     },
