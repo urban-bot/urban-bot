@@ -13,6 +13,7 @@ import { FileExample } from './File';
 import { PollExample } from './Poll';
 import { AnimationExample } from './Animation';
 import { ContactExample } from './Contact';
+import { MediaExample } from './Media';
 
 dotenv.config();
 
@@ -48,6 +49,9 @@ function App() {
             </Route>
             <Route path="/animation">
                 <AnimationExample />
+            </Route>
+            <Route path="/media">
+                <MediaExample />
             </Route>
         </Router>
     );
