@@ -146,7 +146,7 @@ export type UrbanMessageContact = UrbanMessageCommon & {
 };
 
 export type UrbanMessageMediaData = UrbanMessageCommonData & {
-    files: Array<Omit<UrbanMessageImageData, 'buttons'> | Omit<UrbanMessageVideoData, 'buttons'>>;
+    files: Array<(UrbanMessageImageData & { type: 'image' }) | (UrbanMessageVideoData & { type: 'video' })>;
 };
 
 export type UrbanMessageMedia = UrbanMessageCommon & {

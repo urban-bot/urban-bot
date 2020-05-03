@@ -471,6 +471,41 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     caption: message.data.title,
                 });
             }
+            case 'urban-media': {
+                const params = formatParamsForNewMessage(message);
+
+                const media = message.data.files.map((fileData) => {
+                    const { type, file, title, ...other } = fileData;
+                    const common = {
+                        media: file,
+                        parse_mode: message.data.parseMode,
+                        caption: title,
+                        ...other,
+                    } as const;
+
+                    switch (type) {
+                        case 'image': {
+                            return {
+                                type: 'photo',
+                                ...common,
+                            } as const;
+                        }
+                        case 'video': {
+                            return {
+                                type: 'video',
+                                ...common,
+                            } as const;
+                        }
+                        default: {
+                            throw new Error(`urban-media type '${type}' doesn't support`);
+                        }
+                    }
+                });
+
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore @types/node-telegram-bot-api bug. file could be not only string
+                return this.bot.sendMediaGroup(message.chat.id, media, params);
+            }
             case 'urban-contact': {
                 const params = formatParamsForNewMessage(message);
 

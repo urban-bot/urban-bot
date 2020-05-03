@@ -1,6 +1,5 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
-// import { useFormattedText } from '../hooks/useFormattedText';
 import { UrbanMessageMediaData } from '../types/Messages';
 
 export type MediaProps = UrbanMessageMediaData & {
@@ -18,9 +17,7 @@ export function Media({
 }: MediaProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
-    // const [formattedTitle, finalParseMode] = useFormattedText(title, parseMode);
-    // const formattedButtons = useFormattedButtons(buttonGroupElement);
-
+    // TODO add format files title
     return (
         <urban-media
             $$managerBot={$$managerBot}
