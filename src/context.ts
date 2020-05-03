@@ -8,7 +8,7 @@ export type BotContextType<Bot extends UrbanBotType> = {
     chat: UrbanChat;
     from?: UrbanFrom;
     isNewMessageEveryRender: boolean;
-    parseMode: UrbanParseMode;
+    parseMode?: UrbanParseMode;
     bot: UrbanBot<Bot>;
 };
 

@@ -12,7 +12,7 @@ export type ChatProps<Bot extends UrbanBotType> = {
     from?: UrbanFrom;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
-    parseMode: UrbanParseMode;
+    parseMode?: UrbanParseMode;
     $$managerBot: ManagerBot<Bot>;
     children: React.ReactNode;
     key: string;
@@ -55,7 +55,7 @@ export function Root<Bot extends UrbanBotType<any, any>>({
     bot,
     timeToClearUserSession = 1000 * 60 * 10,
     isNewMessageEveryRender = false,
-    parseMode = MARKDOWN_MODE,
+    parseMode,
 }: RootProps<Bot>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map());
