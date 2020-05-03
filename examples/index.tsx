@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import React from 'react';
 import { render, Route, Router, Root } from '../src';
-import { UrbanTelegramBot } from '../src/TelegramBot/UrbanTelegramBot';
+import { UrbanTelegramBot } from 'urban-bot-telegram';
 import { UrbanSlackBot } from '../src/SlackBot/UrbanSlackBot';
 import { TextExample } from './Text';
 import { Hooks } from './Hooks';
