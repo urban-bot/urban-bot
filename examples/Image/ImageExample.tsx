@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { Button, ButtonGroup, Image, useBotContext, useRouter, useText } from '../../src';
 import React from 'react';
-import { UrbanSlackBot } from '../../src/SlackBot/UrbanSlackBot';
+import { UrbanSlackBot } from 'urban-bot-slack';
 
 const imageByUrl =
     'https://upload.wikimedia.org/wikipedia/commons/3/32/Aeroflot_Tu-154B-2_CCCP-85396_ZRH_1982-6-20.png';
