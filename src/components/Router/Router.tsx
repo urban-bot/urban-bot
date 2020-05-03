@@ -17,12 +17,12 @@ export function Router(props: RouterProps) {
     });
 
     const childrenArray = React.Children.toArray(props.children) as React.ReactElement<RouteProps>[];
-    const child = childrenArray.filter((child) => {
+    const child = childrenArray.find((child) => {
         if (child.type !== Route) {
             throw new Error('Pass only Route component to Router');
         }
 
-        return matchRoute(activePath, { path: child.props.path, regex: child.props.regex });
+        return matchRoute(activePath, { pattern: child.props.path });
     });
 
     return <RouterContext.Provider value={{ activePath, navigate }}>{child}</RouterContext.Provider>;

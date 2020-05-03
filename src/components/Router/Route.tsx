@@ -1,8 +1,7 @@
 import React from 'react';
 
 export type RouteProps = {
-    path: string;
-    regex?: boolean;
+    path: string | RegExp;
     children: React.ReactNode;
 };
 

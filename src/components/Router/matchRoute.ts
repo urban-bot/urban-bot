@@ -1,15 +1,15 @@
-type PatchOptions = { regex?: boolean; path?: string };
+type PatchOptions = { pattern?: string | RegExp };
 
 export const matchRoute = (pathname: string, options: PatchOptions) => {
-    const { regex = false, path } = options;
+    const { pattern } = options;
 
-    if (!path) {
+    if (!pattern) {
         return true;
     }
 
-    if (regex) {
-        return new RegExp(`^${path}`).exec(pathname);
+    if (pattern instanceof RegExp) {
+        return pattern.exec(pathname);
     }
 
-    return path === pathname;
+    return pattern === pathname;
 };
