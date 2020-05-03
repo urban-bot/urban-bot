@@ -80,6 +80,11 @@ export type UrbanMessageVideoData = UrbanMessageCommonData & {
     author?: string;
 };
 
+export type UrbanMessageVideo = UrbanMessageCommon & {
+    nodeName: 'urban-video';
+    data: UrbanMessageVideoData;
+};
+
 export type UrbanMessageAnimationData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
@@ -90,10 +95,6 @@ export type UrbanMessageAnimationData = UrbanMessageCommonData & {
     height?: number;
 };
 
-export type UrbanMessageVideo = UrbanMessageCommon & {
-    nodeName: 'urban-video';
-    data: UrbanMessageVideoData;
-};
 export type UrbanMessageAnimation = UrbanMessageCommon & {
     nodeName: 'urban-animation';
     data: UrbanMessageAnimationData;
@@ -144,6 +145,15 @@ export type UrbanMessageContact = UrbanMessageCommon & {
     data: UrbanMessageContactData;
 };
 
+export type UrbanMessageMediaData = UrbanMessageCommonData & {
+    files: Array<Omit<UrbanMessageImageData, 'buttons'> | Omit<UrbanMessageVideoData, 'buttons'>>;
+};
+
+export type UrbanMessageMedia = UrbanMessageCommon & {
+    nodeName: 'urban-media';
+    data: UrbanMessageMediaData;
+};
+
 export type UrbanMessage =
     | UrbanMessageText
     | UrbanMessageImage
@@ -153,7 +163,8 @@ export type UrbanMessage =
     | UrbanMessageFile
     | UrbanMessagePoll
     | UrbanMessageAnimation
-    | UrbanMessageContact;
+    | UrbanMessageContact
+    | UrbanMessageMedia;
 export type UrbanMessageData =
     | UrbanMessageTextData
     | UrbanMessageImageData
@@ -163,7 +174,8 @@ export type UrbanMessageData =
     | UrbanMessageAnimationData
     | UrbanMessageFileData
     | UrbanMessagePollData
-    | UrbanMessageContactData;
+    | UrbanMessageContactData
+    | UrbanMessageMediaData;
 
 type Meta<MessageMeta> = {
     meta: MessageMeta;
@@ -189,6 +201,8 @@ export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMe
     ? UrbanMessagePoll & Meta<MessageMeta>
     : T extends 'urban-contact'
     ? UrbanMessageContact & Meta<MessageMeta>
+    : T extends 'urban-media'
+    ? UrbanMessageMedia & Meta<MessageMeta>
     : UrbanExistingMessage<MessageMeta>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];
