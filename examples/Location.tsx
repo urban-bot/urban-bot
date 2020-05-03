@@ -1,6 +1,12 @@
 import React from 'react';
-import { Location } from '../src';
+import { Location, useText } from '../src';
 
 export function LocationExample() {
-    return <Location latitude={60.734539} longitude={77.608548} />;
+    const [latitude, setLatitude] = React.useState(60.734539);
+
+    useText(({ text }) => {
+        setLatitude(Number(text));
+    });
+
+    return <Location latitude={latitude} longitude={77.608548} activeSeconds={500} />;
 }

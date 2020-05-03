@@ -478,7 +478,7 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     ...params,
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore @types/node-telegram-bot-api bug. live_period is existed
-                    live_period: message.data.live_period,
+                    live_period: message.data.activeSeconds,
                 });
             }
             case 'urban-media': {
@@ -612,6 +612,21 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                 const params = formatParamsForExistingMessage(message);
 
                 this.bot.editMessageText(message.data.title, { ...params, ...metaToEdit });
+
+                break;
+            }
+            case 'urban-location': {
+                const metaToEdit = {
+                    chat_id: message.meta.chat.id,
+                    message_id: message.meta.message_id,
+                };
+
+                const params = formatParamsForExistingMessage(message);
+
+                this.bot.editMessageLiveLocation(message.data.latitude, message.data.longitude, {
+                    ...params,
+                    ...metaToEdit,
+                });
 
                 break;
             }
