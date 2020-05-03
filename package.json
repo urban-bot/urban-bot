@@ -1,11 +1,12 @@
 {
     "name": "urban-bot",
-    "version": "0.0.1-aplha.12",
+    "version": "0.0.1-aplha.14",
     "description": "universal messenger bot creator",
     "files": [
-        "dist/**/*"
+        "dist/src/**/*"
     ],
-    "main": "dist/index.js",
+    "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts",
     "scripts": {
         "build": "rimraf dist && tsc",
         "start": "nodemon",
