@@ -274,6 +274,19 @@ export class UrbanSlackBot implements UrbanBot<SlackBotType> {
 
                 return (this.client.files.upload({
                     file: message.data.file,
+                    filename: message.data.name,
+                    channels: message.chat.id,
+                    title: message.data.title,
+                }) as unknown) as Promise<SlackMessageMeta>;
+            }
+            case 'urban-animation': {
+                if (typeof message.data.file === 'string') {
+                    throw new Error("urban-bot/slack doesn't support animation file as string");
+                }
+
+                return (this.client.files.upload({
+                    file: message.data.file,
+                    filename: message.data.name,
                     channels: message.chat.id,
                     title: message.data.title,
                 }) as unknown) as Promise<SlackMessageMeta>;

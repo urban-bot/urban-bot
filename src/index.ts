@@ -2,6 +2,7 @@ import { render } from './render';
 import { Router, Route } from './components/Router';
 import { Text } from './components/Text';
 import { Image } from './components/Image';
+import { Animation } from './components/Animation';
 import { Audio } from './components/Audio';
 import { Video } from './components/Video';
 import { File } from './components/File';
@@ -38,6 +39,7 @@ export {
     Button,
     useText,
     useCommand,
+    Animation,
     Text,
     Image,
     Audio,

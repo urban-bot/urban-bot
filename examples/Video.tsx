@@ -20,7 +20,7 @@ export function VideoExample() {
                 <ButtonGroup>
                     <Button
                         onClick={() => {
-                            console.log('audio');
+                            console.log('video');
                         }}
                     >
                         Button

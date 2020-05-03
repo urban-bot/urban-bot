@@ -26,3 +26,9 @@ export type InputMediaFile = TelegramBot.InputMediaBase & {
     type: 'document';
     title?: string;
 };
+
+export type InputMediaAnimation = TelegramBot.InputMediaBase & {
+    type: 'animation';
+    duration?: number;
+    title?: string;
+};
