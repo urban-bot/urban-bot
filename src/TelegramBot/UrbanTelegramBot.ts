@@ -471,6 +471,16 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     caption: message.data.title,
                 });
             }
+            case 'urban-location': {
+                const params = formatParamsForNewMessage(message);
+
+                return this.bot.sendLocation(message.chat.id, message.data.latitude, message.data.longitude, {
+                    ...params,
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore @types/node-telegram-bot-api bug. live_period is existed
+                    live_period: message.data.live_period,
+                });
+            }
             case 'urban-media': {
                 const params = formatParamsForNewMessage(message);
 
