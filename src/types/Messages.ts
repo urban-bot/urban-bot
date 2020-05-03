@@ -158,6 +158,7 @@ export type UrbanMessageLocationData = UrbanMessageCommonData & {
     latitude: number;
     longitude: number;
     buttons?: UrbanButton[];
+    title?: string;
 };
 
 export type UrbanMessageLocation = UrbanMessageCommon & {
