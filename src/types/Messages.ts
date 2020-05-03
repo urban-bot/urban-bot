@@ -88,8 +88,6 @@ export type UrbanMessageAnimationData = UrbanMessageCommonData & {
     duration?: number;
     width?: number;
     height?: number;
-    author?: string;
-    fileName?: string;
 };
 
 export type UrbanMessageVideo = UrbanMessageCommon & {
@@ -105,6 +103,7 @@ export type UrbanMessageFileData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     buttons?: UrbanButton[];
+    name?: string;
 };
 
 export type UrbanMessageFile = UrbanMessageCommon & {

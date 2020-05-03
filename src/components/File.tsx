@@ -11,11 +11,13 @@ export type FileProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
     isNewMessageEveryRender?: boolean;
+    name?: string;
 };
 
 export function File({
     file,
     title,
+    name,
     buttons: buttonGroupElement,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
     disableNotification,
@@ -36,6 +38,7 @@ export function File({
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             data={{
                 file,
+                name,
                 title: formattedTitle,
                 buttons: formattedButtons,
                 parseMode: finalParseMode,
