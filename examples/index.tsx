@@ -14,6 +14,7 @@ import { PollExample } from './Poll';
 import { AnimationExample } from './Animation';
 import { ContactExample } from './Contact';
 import { MediaExample } from './Media';
+import { LocationExample } from './Location';
 
 dotenv.config();
 
@@ -52,6 +53,9 @@ function App() {
             </Route>
             <Route path="/media">
                 <MediaExample />
+            </Route>
+            <Route path="/location">
+                <LocationExample />
             </Route>
         </Router>
     );

@@ -471,6 +471,16 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                     caption: message.data.title,
                 });
             }
+            case 'urban-location': {
+                const params = formatParamsForNewMessage(message);
+
+                return this.bot.sendLocation(message.chat.id, message.data.latitude, message.data.longitude, {
+                    ...params,
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore @types/node-telegram-bot-api bug. live_period is existed
+                    live_period: message.data.livePeriod,
+                });
+            }
             case 'urban-media': {
                 const params = formatParamsForNewMessage(message);
 
@@ -538,7 +548,7 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                             correct_option_id: message.data.rightOption,
                             explanation: message.data.explanation,
                             explanation_parse_mode: params.parse_mode,
-                            open_period: message.data.activeSeconds,
+                            open_period: message.data.livePeriod,
                             close_date: message.data.closeTime,
                         })
                 );
@@ -602,6 +612,21 @@ export class UrbanTelegramBot implements UrbanBot<TelegramBotType> {
                 const params = formatParamsForExistingMessage(message);
 
                 this.bot.editMessageText(message.data.title, { ...params, ...metaToEdit });
+
+                break;
+            }
+            case 'urban-location': {
+                const metaToEdit = {
+                    chat_id: message.meta.chat.id,
+                    message_id: message.meta.message_id,
+                };
+
+                const params = formatParamsForExistingMessage(message);
+
+                this.bot.editMessageLiveLocation(message.data.latitude, message.data.longitude, {
+                    ...params,
+                    ...metaToEdit,
+                });
 
                 break;
             }

@@ -10,6 +10,7 @@ import {
     UrbanMessageAnimationData,
     UrbanMessageContactData,
     UrbanMessageMediaData,
+    UrbanMessageLocationData,
 } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
 import { UrbanChat } from './types';
@@ -33,6 +34,7 @@ export type UrbanElementPoll = UrbanElement & { data: UrbanMessagePollData };
 export type UrbanElementAnimation = UrbanElement & { data: UrbanMessageAnimationData };
 export type UrbanElementContact = UrbanElement & { data: UrbanMessageContactData };
 export type UrbanElementMedia = UrbanElement & { data: UrbanMessageMediaData };
+export type UrbanElementLocation = UrbanElement & { data: UrbanMessageLocationData };
 
 declare global {
     namespace JSX {
@@ -47,6 +49,7 @@ declare global {
             'urban-animation': UrbanElementAnimation;
             'urban-contact': UrbanElementContact;
             'urban-media': UrbanElementMedia;
+            'urban-location': UrbanElementLocation;
             b: Markup;
             i: Markup;
             u: Markup;

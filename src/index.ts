@@ -9,6 +9,7 @@ import { File } from './components/File';
 import { Poll, Option } from './components/Poll';
 import { Contact } from './components/Contact';
 import { Media } from './components/Media';
+import { Location } from './components/Location';
 import { ButtonGroup, Button } from './components/ButtonGroup';
 import { Root } from './components/Root';
 import { getBotContext, RouterContext } from './context';
@@ -50,6 +51,7 @@ export {
     Option,
     Contact,
     Media,
+    Location,
     ButtonGroup,
     useBotContext,
     useRouter,

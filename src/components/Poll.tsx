@@ -17,7 +17,7 @@ export type PollProps = UrbanMessageCommonData & {
     withMultipleAnswers?: boolean;
     rightOption?: string | number;
     explanation?: React.ReactChild;
-    activeSeconds?: number;
+    livePeriod?: number;
     closeTime?: number;
 };
 
@@ -31,7 +31,7 @@ export function Poll({
     withMultipleAnswers,
     rightOption,
     explanation,
-    activeSeconds,
+    livePeriod,
     closeTime,
     disableNotification,
     forceReply,
@@ -69,7 +69,7 @@ export function Poll({
                 withMultipleAnswers,
                 rightOption,
                 explanation: formattedExplanation,
-                activeSeconds,
+                livePeriod,
                 closeTime,
                 disableNotification,
                 replyToMessageId,

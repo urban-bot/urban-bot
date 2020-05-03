@@ -121,7 +121,7 @@ export type UrbanMessagePollData = UrbanMessageCommonData & {
     rightOption?: string | number;
     explanation?: string;
     parseMode?: UrbanParseMode;
-    activeSeconds?: number;
+    livePeriod?: number;
     closeTime?: number;
     buttons?: UrbanButton[];
 };
@@ -154,6 +154,19 @@ export type UrbanMessageMedia = UrbanMessageCommon & {
     data: UrbanMessageMediaData;
 };
 
+export type UrbanMessageLocationData = UrbanMessageCommonData & {
+    latitude: number;
+    longitude: number;
+    livePeriod?: number;
+    buttons?: UrbanButton[];
+    title?: string;
+};
+
+export type UrbanMessageLocation = UrbanMessageCommon & {
+    nodeName: 'urban-location';
+    data: UrbanMessageLocationData;
+};
+
 export type UrbanMessage =
     | UrbanMessageText
     | UrbanMessageImage
@@ -164,6 +177,7 @@ export type UrbanMessage =
     | UrbanMessagePoll
     | UrbanMessageAnimation
     | UrbanMessageContact
+    | UrbanMessageLocation
     | UrbanMessageMedia;
 export type UrbanMessageData =
     | UrbanMessageTextData
@@ -175,6 +189,7 @@ export type UrbanMessageData =
     | UrbanMessageFileData
     | UrbanMessagePollData
     | UrbanMessageContactData
+    | UrbanMessageLocationData
     | UrbanMessageMediaData;
 
 type Meta<MessageMeta> = {
@@ -203,6 +218,8 @@ export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMe
     ? UrbanMessageContact & Meta<MessageMeta>
     : T extends 'urban-media'
     ? UrbanMessageMedia & Meta<MessageMeta>
+    : T extends 'urban-location'
+    ? UrbanMessageLocation & Meta<MessageMeta>
     : UrbanExistingMessage<MessageMeta>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];
