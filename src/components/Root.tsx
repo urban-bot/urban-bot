@@ -5,7 +5,6 @@ import { ManagerBot } from '../ManagerBot/ManagerBot';
 import { UrbanChat, UrbanFrom, UrbanParseMode } from '../types';
 import { UrbanBotType, UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
-import { MARKDOWN_MODE } from '../utils/formatMarkupLanguageElement';
 
 export type ChatProps<Bot extends UrbanBotType> = {
     bot: UrbanBot<Bot>;
