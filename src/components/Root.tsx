@@ -53,7 +53,7 @@ export type RootProps<Bot extends UrbanBotType> = {
 export function Root<Bot extends UrbanBotType<any, any>>({
     children,
     bot,
-    timeToClearUserSession = 1000 * 60 * 10,
+    timeToClearUserSession = 1000 * 60 * 60 * 72,
     isNewMessageEveryRender = false,
     parseMode,
 }: RootProps<Bot>) {
