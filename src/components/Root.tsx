@@ -44,7 +44,7 @@ function Chat<Bot extends UrbanBotType>({
 export type RootProps<Bot extends UrbanBotType> = {
     bot: UrbanBot<Bot>;
     children: React.ReactNode;
-    timeToClearUserSession?: number;
+    sessionTime?: number;
     isNewMessageEveryRender?: boolean;
     parseMode?: UrbanParseMode;
 };
@@ -53,7 +53,7 @@ export type RootProps<Bot extends UrbanBotType> = {
 export function Root<Bot extends UrbanBotType<any, any>>({
     children,
     bot,
-    timeToClearUserSession = 1000 * 60 * 60 * 72,
+    sessionTime = 60 * 60 * 72,
     isNewMessageEveryRender = false,
     parseMode,
 }: RootProps<Bot>) {
@@ -98,7 +98,7 @@ export function Root<Bot extends UrbanBotType<any, any>>({
                 chatsRef.current.delete(chatId);
                 $$managerBot.deleteChat(chatId);
                 setChats(new Map(chatsRef.current));
-            }, timeToClearUserSession);
+            }, sessionTime * 1000);
         }
 
         $$managerBot.on('any', handler);
@@ -106,7 +106,7 @@ export function Root<Bot extends UrbanBotType<any, any>>({
         return () => {
             $$managerBot.removeListener('any', handler);
         };
-    }, [$$managerBot, timeToClearUserSession, children, isNewMessageEveryRender, bot, parseMode]);
+    }, [$$managerBot, sessionTime, children, isNewMessageEveryRender, bot, parseMode]);
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
