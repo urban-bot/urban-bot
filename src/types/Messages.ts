@@ -48,6 +48,7 @@ export type UrbanMessageImage = UrbanMessageCommon & {
 export type UrbanMessageButtonsData = UrbanMessageCommonData & {
     title: string;
     buttons: UrbanButton[] | UrbanButton[][];
+    isReply: boolean;
 };
 
 export type UrbanMessageButtons = UrbanMessageCommon & {
