@@ -4,6 +4,7 @@ import { OtherProps } from './common';
 export type UrbanButton = {
     text: string;
     id?: string;
+    url?: string;
 };
 
 export type UrbanOption = {

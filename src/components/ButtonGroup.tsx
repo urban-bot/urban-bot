@@ -63,6 +63,7 @@ export type ButtonProps = OtherProps & {
     onClick?: (...args: unknown[]) => unknown;
     children: string;
     id?: string;
+    url?: string;
 };
 
 export function Button(_props: ButtonProps) {

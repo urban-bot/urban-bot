@@ -6,7 +6,7 @@ export function ButtonsExample() {
     return (
         <ButtonGroup title="Buttons">
             <Button onClick={() => console.log('Click first button')}>First button</Button>
-            <Button onClick={() => console.log('Click second button')}>Second button</Button>
+            <Button url="https://github.com/urban-bot/urban-bot">Link</Button>
         </ButtonGroup>
     );
 }
