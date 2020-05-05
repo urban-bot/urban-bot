@@ -2,6 +2,7 @@
 import React from 'react';
 import { formatButtonElement } from './formatButtonElement';
 import { Button } from '../components/ButtonGroup';
+import { flatten } from 'array-flatten';
 
 describe('formatButtonElement', () => {
     it('return right response for one button', () => {
@@ -50,14 +51,14 @@ describe('formatButtonElement', () => {
             </Button>
         );
 
-        expect(formatButtonElement(element)[0].customProp).toBe(customProp);
+        expect(flatten(formatButtonElement(element))[0].customProp).toBe(customProp);
     });
 
     it('add random id by default', () => {
         const text = 'test name';
         const element = <Button onClick={() => {}}>{text}</Button>;
 
-        expect(formatButtonElement(element)[0].id).toEqual(expect.any(String));
+        expect(flatten(formatButtonElement(element))[0].id).toEqual(expect.any(String));
     });
 
     it('throw error if passed not Button', () => {
