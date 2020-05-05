@@ -4,11 +4,12 @@ import { formatButtonElement } from '../utils/formatButtonElement';
 import { useFormattedText } from '../hooks/useFormattedText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { OtherProps } from '../types/common';
+import { flatten } from 'array-flatten';
 
 export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
     isNewMessageEveryRender?: boolean;
-    children: React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[];
+    children: React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[] | React.ReactElement<ButtonProps>[][];
 };
 
 export function ButtonGroup({
@@ -29,7 +30,7 @@ export function ButtonGroup({
     useAction((ctx) => {
         const { actionId } = ctx;
 
-        const button = buttons.find(({ id }) => {
+        const button = flatten(buttons).find(({ id }) => {
             return actionId === id;
         });
 

@@ -56,6 +56,7 @@
         "urban-bot-slack": "0.0.1-aplha.1"
     },
     "dependencies": {
+        "array-flatten": "^3.0.0",
         "react-reconciler": "0.25.1"
     },
     "peerDependencies": {

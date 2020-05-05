@@ -36,7 +36,7 @@ export type UrbanMessageImageData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     name?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
     alt?: string;
 };
 
@@ -47,7 +47,7 @@ export type UrbanMessageImage = UrbanMessageCommon & {
 
 export type UrbanMessageButtonsData = UrbanMessageCommonData & {
     title: string;
-    buttons: UrbanButton[];
+    buttons: UrbanButton[] | UrbanButton[][];
 };
 
 export type UrbanMessageButtons = UrbanMessageCommon & {
@@ -59,7 +59,7 @@ export type UrbanMessageAudioData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     name?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
     duration?: number;
     author?: string;
 };
@@ -73,7 +73,7 @@ export type UrbanMessageVideoData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     name?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
     duration?: number;
     width?: number;
     height?: number;
@@ -89,7 +89,7 @@ export type UrbanMessageAnimationData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     name?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
     duration?: number;
     width?: number;
     height?: number;
@@ -103,7 +103,7 @@ export type UrbanMessageAnimation = UrbanMessageCommon & {
 export type UrbanMessageFileData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
     name?: string;
 };
 
@@ -123,7 +123,7 @@ export type UrbanMessagePollData = UrbanMessageCommonData & {
     parseMode?: UrbanParseMode;
     livePeriod?: number;
     closeTime?: number;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
 };
 
 export type UrbanMessagePoll = UrbanMessageCommon & {
@@ -137,7 +137,7 @@ export type UrbanMessageContactData = UrbanMessageCommonData & {
     lastName?: string;
     vCard?: string;
     username?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
 };
 
 export type UrbanMessageContact = UrbanMessageCommon & {
@@ -158,7 +158,7 @@ export type UrbanMessageLocationData = UrbanMessageCommonData & {
     latitude: number;
     longitude: number;
     livePeriod?: number;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
     title?: string;
 };
 
