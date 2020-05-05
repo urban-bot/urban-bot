@@ -15,6 +15,7 @@ import { AnimationExample } from './Animation';
 import { ContactExample } from './Contact';
 import { MediaExample } from './Media';
 import { LocationExample } from './Location';
+import { ButtonsExample, ReplyButtonsExample, MatrixButtonsExample } from './ButtonGroup';
 
 dotenv.config();
 
@@ -26,6 +27,15 @@ function App() {
             </Route>
             <Route path="/text">
                 <TextExample />
+            </Route>
+            <Route path="/buttons">
+                <ButtonsExample />
+            </Route>
+            <Route path="/reply_buttons">
+                <ReplyButtonsExample />
+            </Route>
+            <Route path="/matrix_buttons">
+                <MatrixButtonsExample />
             </Route>
             <Route path="/queue">
                 <Queue />

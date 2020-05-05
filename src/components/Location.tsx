@@ -43,6 +43,7 @@ export function Location({
                 livePeriod,
                 title: formattedTitle,
                 buttons: formattedButtons,
+                isReplyButtons: buttonGroupElement?.props.isReplyButtons,
                 parseMode: finalParseMode,
                 disableNotification,
                 replyToMessageId,

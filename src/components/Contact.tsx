@@ -43,6 +43,7 @@ export function Contact({
                 lastName,
                 vCard,
                 buttons: formattedButtons,
+                isReplyButtons: buttonGroupElement?.props.isReplyButtons,
                 disableNotification,
                 replyToMessageId,
                 forceReply,

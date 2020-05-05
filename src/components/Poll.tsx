@@ -76,6 +76,7 @@ export function Poll({
                 forceReply,
                 parseMode: finalParseMode,
                 buttons: formattedButtons,
+                isReplyButtons: buttonGroupElement?.props.isReplyButtons,
                 ...otherProps,
             }}
         />

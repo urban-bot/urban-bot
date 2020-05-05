@@ -37,6 +37,7 @@ export type UrbanMessageImageData = UrbanMessageCommonData & {
     file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     alt?: string;
 };
 
@@ -48,7 +49,7 @@ export type UrbanMessageImage = UrbanMessageCommon & {
 export type UrbanMessageButtonsData = UrbanMessageCommonData & {
     title: string;
     buttons: UrbanButton[] | UrbanButton[][];
-    isReply: boolean;
+    isReplyButtons: boolean;
 };
 
 export type UrbanMessageButtons = UrbanMessageCommon & {
@@ -61,6 +62,7 @@ export type UrbanMessageAudioData = UrbanMessageCommonData & {
     file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     duration?: number;
     author?: string;
 };
@@ -75,6 +77,7 @@ export type UrbanMessageVideoData = UrbanMessageCommonData & {
     file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     duration?: number;
     width?: number;
     height?: number;
@@ -91,6 +94,7 @@ export type UrbanMessageAnimationData = UrbanMessageCommonData & {
     file: UrbanFileFormat;
     name?: string;
     buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     duration?: number;
     width?: number;
     height?: number;
@@ -105,6 +109,7 @@ export type UrbanMessageFileData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     name?: string;
 };
 
@@ -125,6 +130,7 @@ export type UrbanMessagePollData = UrbanMessageCommonData & {
     livePeriod?: number;
     closeTime?: number;
     buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
 };
 
 export type UrbanMessagePoll = UrbanMessageCommon & {
@@ -139,6 +145,7 @@ export type UrbanMessageContactData = UrbanMessageCommonData & {
     vCard?: string;
     username?: string;
     buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
 };
 
 export type UrbanMessageContact = UrbanMessageCommon & {
@@ -160,6 +167,7 @@ export type UrbanMessageLocationData = UrbanMessageCommonData & {
     longitude: number;
     livePeriod?: number;
     buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     title?: string;
 };
 

@@ -8,7 +8,7 @@ import { flatten } from 'array-flatten';
 
 export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
-    isReply?: boolean;
+    isReplyButtons?: boolean;
     isNewMessageEveryRender?: boolean;
     children: React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[] | React.ReactElement<ButtonProps>[][];
 };
@@ -21,7 +21,7 @@ export function ButtonGroup({
     disableNotification,
     replyToMessageId,
     forceReply,
-    isReply = false,
+    isReplyButtons = false,
     ...otherProps
 }: ButtonGroupProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
@@ -51,7 +51,7 @@ export function ButtonGroup({
                 parseMode: finalParseMode,
                 buttons,
                 title: formattedTitle,
-                isReply,
+                isReplyButtons,
                 ...otherProps,
             }}
         />
