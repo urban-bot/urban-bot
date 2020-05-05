@@ -19,7 +19,8 @@ export function ReplyButtonsExample() {
     });
 
     return (
-        <ButtonGroup isNewMessageEveryRender title={text} isReplyButtons>
+        <ButtonGroup title={text} isReplyButtons>
+            <Button>Echo</Button>
             <Button>/text</Button>
         </ButtonGroup>
     );
