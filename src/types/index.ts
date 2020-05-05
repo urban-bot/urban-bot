@@ -6,7 +6,7 @@ export type UrbanFrom = {
     id?: string;
     username?: string;
     firstName?: string;
-    surname?: string;
+    lastName?: string;
 };
 
 // TODO describe image,video,... separately and extends them from UrbanFile
