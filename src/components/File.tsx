@@ -41,6 +41,7 @@ export function File({
                 name,
                 title: formattedTitle,
                 buttons: formattedButtons,
+                isReplyButtons: buttonGroupElement?.props.isReplyButtons,
                 parseMode: finalParseMode,
                 disableNotification,
                 replyToMessageId,
