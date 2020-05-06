@@ -47,6 +47,7 @@ export function Animation({
                 forceReply,
                 parseMode: finalParseMode,
                 buttons: formattedButtons,
+                isReplyButtons: buttonGroupElement?.props.isReplyButtons,
                 title: formattedTitle,
                 file,
                 name,

@@ -1,9 +1,10 @@
 import { UrbanChat, UrbanFileFormat, UrbanParseMode } from './index';
 import { OtherProps } from './common';
 
-export type UrbanButton = {
+export type UrbanButton = OtherProps & {
     text: string;
     id?: string;
+    url?: string;
 };
 
 export type UrbanOption = {
@@ -36,7 +37,8 @@ export type UrbanMessageImageData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     name?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     alt?: string;
 };
 
@@ -47,7 +49,8 @@ export type UrbanMessageImage = UrbanMessageCommon & {
 
 export type UrbanMessageButtonsData = UrbanMessageCommonData & {
     title: string;
-    buttons: UrbanButton[];
+    buttons: UrbanButton[] | UrbanButton[][];
+    isReplyButtons: boolean;
 };
 
 export type UrbanMessageButtons = UrbanMessageCommon & {
@@ -59,7 +62,8 @@ export type UrbanMessageAudioData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     name?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     duration?: number;
     author?: string;
 };
@@ -73,27 +77,30 @@ export type UrbanMessageVideoData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     name?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     duration?: number;
     width?: number;
     height?: number;
     author?: string;
 };
 
+export type UrbanMessageVideo = UrbanMessageCommon & {
+    nodeName: 'urban-video';
+    data: UrbanMessageVideoData;
+};
+
 export type UrbanMessageAnimationData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
     name?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     duration?: number;
     width?: number;
     height?: number;
 };
 
-export type UrbanMessageVideo = UrbanMessageCommon & {
-    nodeName: 'urban-video';
-    data: UrbanMessageVideoData;
-};
 export type UrbanMessageAnimation = UrbanMessageCommon & {
     nodeName: 'urban-animation';
     data: UrbanMessageAnimationData;
@@ -102,7 +109,8 @@ export type UrbanMessageAnimation = UrbanMessageCommon & {
 export type UrbanMessageFileData = UrbanMessageCommonData & {
     title?: string;
     file: UrbanFileFormat;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
     name?: string;
 };
 
@@ -120,9 +128,10 @@ export type UrbanMessagePollData = UrbanMessageCommonData & {
     rightOption?: string | number;
     explanation?: string;
     parseMode?: UrbanParseMode;
-    activeSeconds?: number;
+    livePeriod?: number;
     closeTime?: number;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
 };
 
 export type UrbanMessagePoll = UrbanMessageCommon & {
@@ -136,12 +145,36 @@ export type UrbanMessageContactData = UrbanMessageCommonData & {
     lastName?: string;
     vCard?: string;
     username?: string;
-    buttons?: UrbanButton[];
+    buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
 };
 
 export type UrbanMessageContact = UrbanMessageCommon & {
     nodeName: 'urban-contact';
     data: UrbanMessageContactData;
+};
+
+export type UrbanMessageMediaData = UrbanMessageCommonData & {
+    files: Array<(UrbanMessageImageData & { type: 'image' }) | (UrbanMessageVideoData & { type: 'video' })>;
+};
+
+export type UrbanMessageMedia = UrbanMessageCommon & {
+    nodeName: 'urban-media';
+    data: UrbanMessageMediaData;
+};
+
+export type UrbanMessageLocationData = UrbanMessageCommonData & {
+    latitude: number;
+    longitude: number;
+    livePeriod?: number;
+    buttons?: UrbanButton[] | UrbanButton[][];
+    isReplyButtons?: boolean;
+    title?: string;
+};
+
+export type UrbanMessageLocation = UrbanMessageCommon & {
+    nodeName: 'urban-location';
+    data: UrbanMessageLocationData;
 };
 
 export type UrbanMessage =
@@ -153,7 +186,9 @@ export type UrbanMessage =
     | UrbanMessageFile
     | UrbanMessagePoll
     | UrbanMessageAnimation
-    | UrbanMessageContact;
+    | UrbanMessageContact
+    | UrbanMessageLocation
+    | UrbanMessageMedia;
 export type UrbanMessageData =
     | UrbanMessageTextData
     | UrbanMessageImageData
@@ -163,7 +198,9 @@ export type UrbanMessageData =
     | UrbanMessageAnimationData
     | UrbanMessageFileData
     | UrbanMessagePollData
-    | UrbanMessageContactData;
+    | UrbanMessageContactData
+    | UrbanMessageLocationData
+    | UrbanMessageMediaData;
 
 type Meta<MessageMeta> = {
     meta: MessageMeta;
@@ -189,6 +226,10 @@ export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMe
     ? UrbanMessagePoll & Meta<MessageMeta>
     : T extends 'urban-contact'
     ? UrbanMessageContact & Meta<MessageMeta>
+    : T extends 'urban-media'
+    ? UrbanMessageMedia & Meta<MessageMeta>
+    : T extends 'urban-location'
+    ? UrbanMessageLocation & Meta<MessageMeta>
     : UrbanExistingMessage<MessageMeta>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];

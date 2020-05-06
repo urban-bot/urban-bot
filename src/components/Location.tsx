@@ -1,49 +1,50 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
+import { useFormattedText } from '../hooks/useFormattedText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
 import { useFormattedButtons } from '../hooks/useFormattedButtons';
 
-export type ContactProps = UrbanMessageCommonData & {
-    phoneNumber?: string | number;
-    username?: string;
-    firstName?: string;
-    lastName?: string;
-    vCard?: string;
-    isNewMessageEveryRender?: boolean;
+export type LocationProps = UrbanMessageCommonData & {
+    latitude: number;
+    longitude: number;
+    livePeriod?: number;
+    title?: React.ReactNode;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
+    isNewMessageEveryRender?: boolean;
 };
 
-export function Contact({
-    phoneNumber,
-    username,
-    firstName,
-    lastName,
-    vCard,
+export function Location({
+    latitude,
+    longitude,
+    livePeriod,
+    title,
     buttons: buttonGroupElement,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
     disableNotification,
     forceReply,
+    parseMode,
     replyToMessageId,
     ...otherProps
-}: ContactProps) {
+}: LocationProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
+    const [formattedTitle, finalParseMode] = useFormattedText(title, parseMode);
     const formattedButtons = useFormattedButtons(buttonGroupElement);
 
     return (
-        <urban-contact
+        <urban-location
             $$managerBot={$$managerBot}
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             data={{
-                phoneNumber,
-                username,
-                firstName,
-                lastName,
-                vCard,
+                latitude,
+                longitude,
+                livePeriod,
+                title: formattedTitle,
                 buttons: formattedButtons,
                 isReplyButtons: buttonGroupElement?.props.isReplyButtons,
+                parseMode: finalParseMode,
                 disableNotification,
                 replyToMessageId,
                 forceReply,

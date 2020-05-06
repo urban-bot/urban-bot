@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 import React from 'react';
 import { render, Route, Router, Root } from '../src';
-import { UrbanTelegramBot } from '../src/TelegramBot/UrbanTelegramBot';
-import { UrbanSlackBot } from '../src/SlackBot/UrbanSlackBot';
+import { UrbanTelegramBot } from 'urban-bot-telegram';
+import { UrbanSlackBot } from 'urban-bot-slack';
 import { TextExample } from './Text';
 import { Hooks } from './Hooks';
-import { ImageExample } from './Image/ImageExample';
+import { ImageExample } from './Image';
 import { Queue } from './Queue';
 import { AudioExample } from './Audio';
 import { VideoExample } from './Video';
@@ -13,6 +13,9 @@ import { FileExample } from './File';
 import { PollExample } from './Poll';
 import { AnimationExample } from './Animation';
 import { ContactExample } from './Contact';
+import { MediaExample } from './Media';
+import { LocationExample } from './Location';
+import { ButtonsExample, ReplyButtonsExample, MatrixButtonsExample } from './ButtonGroup';
 
 dotenv.config();
 
@@ -24,6 +27,15 @@ function App() {
             </Route>
             <Route path="/text">
                 <TextExample />
+            </Route>
+            <Route path="/buttons">
+                <ButtonsExample />
+            </Route>
+            <Route path="/reply_buttons">
+                <ReplyButtonsExample />
+            </Route>
+            <Route path="/matrix_buttons">
+                <MatrixButtonsExample />
             </Route>
             <Route path="/queue">
                 <Queue />
@@ -48,6 +60,12 @@ function App() {
             </Route>
             <Route path="/animation">
                 <AnimationExample />
+            </Route>
+            <Route path="/media">
+                <MediaExample />
+            </Route>
+            <Route path="/location">
+                <LocationExample />
             </Route>
         </Router>
     );

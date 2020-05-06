@@ -8,6 +8,8 @@ import { Video } from './components/Video';
 import { File } from './components/File';
 import { Poll, Option } from './components/Poll';
 import { Contact } from './components/Contact';
+import { Media } from './components/Media';
+import { Location } from './components/Location';
 import { ButtonGroup, Button } from './components/ButtonGroup';
 import { Root } from './components/Root';
 import { getBotContext, RouterContext } from './context';
@@ -48,6 +50,8 @@ export {
     Poll,
     Option,
     Contact,
+    Media,
+    Location,
     ButtonGroup,
     useBotContext,
     useRouter,
@@ -69,3 +73,5 @@ export {
     RouterContext,
     useAction,
 };
+
+export * from './types';

@@ -5,14 +5,13 @@ import { ManagerBot } from '../ManagerBot/ManagerBot';
 import { UrbanChat, UrbanFrom, UrbanParseMode } from '../types';
 import { UrbanBotType, UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
-import { MARKDOWN_MODE } from '../utils/formatMarkupLanguageElement';
 
 export type ChatProps<Bot extends UrbanBotType> = {
     bot: UrbanBot<Bot>;
     from?: UrbanFrom;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
-    parseMode: UrbanParseMode;
+    parseMode?: UrbanParseMode;
     $$managerBot: ManagerBot<Bot>;
     children: React.ReactNode;
     key: string;
@@ -44,7 +43,7 @@ function Chat<Bot extends UrbanBotType>({
 export type RootProps<Bot extends UrbanBotType> = {
     bot: UrbanBot<Bot>;
     children: React.ReactNode;
-    timeToClearUserSession?: number;
+    sessionTime?: number;
     isNewMessageEveryRender?: boolean;
     parseMode?: UrbanParseMode;
 };
@@ -53,9 +52,9 @@ export type RootProps<Bot extends UrbanBotType> = {
 export function Root<Bot extends UrbanBotType<any, any>>({
     children,
     bot,
-    timeToClearUserSession = 1000 * 60 * 10,
+    sessionTime = 60 * 60 * 72,
     isNewMessageEveryRender = false,
-    parseMode = MARKDOWN_MODE,
+    parseMode,
 }: RootProps<Bot>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map());
@@ -98,7 +97,7 @@ export function Root<Bot extends UrbanBotType<any, any>>({
                 chatsRef.current.delete(chatId);
                 $$managerBot.deleteChat(chatId);
                 setChats(new Map(chatsRef.current));
-            }, timeToClearUserSession);
+            }, sessionTime * 1000);
         }
 
         $$managerBot.on('any', handler);
@@ -106,7 +105,7 @@ export function Root<Bot extends UrbanBotType<any, any>>({
         return () => {
             $$managerBot.removeListener('any', handler);
         };
-    }, [$$managerBot, timeToClearUserSession, children, isNewMessageEveryRender, bot, parseMode]);
+    }, [$$managerBot, sessionTime, children, isNewMessageEveryRender, bot, parseMode]);
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {
