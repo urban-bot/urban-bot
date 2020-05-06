@@ -1,9 +1,11 @@
 import React from 'react';
-import { ButtonGroup } from '..';
+import { ButtonGroup } from '../index';
 import { UrbanElementButtons } from '../global.d';
 import { ButtonGroupProps } from '../components/ButtonGroup';
 
-export function useFormattedButtons(buttonGroupElement: React.FunctionComponentElement<ButtonGroupProps> | undefined) {
+export function getButtonsByButtonGroup(
+    buttonGroupElement: React.FunctionComponentElement<ButtonGroupProps> | undefined,
+) {
     if (buttonGroupElement === undefined) {
         return undefined;
     }

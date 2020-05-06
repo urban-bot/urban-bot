@@ -2,7 +2,7 @@ import React from 'react';
 import { useBotContext } from '../hooks/hooks';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
-import { useFormattedButtons } from '../hooks/useFormattedButtons';
+import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 
 export type ContactProps = UrbanMessageCommonData & {
     phoneNumber?: string | number;
@@ -29,7 +29,7 @@ export function Contact({
 }: ContactProps) {
     const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
 
-    const formattedButtons = useFormattedButtons(buttonGroupElement);
+    const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
 
     return (
         <urban-contact

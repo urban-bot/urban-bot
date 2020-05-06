@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAction, useBotContext } from '../hooks/hooks';
-import { useFormattedText } from '../hooks/useFormattedText';
+import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
-import { useFormattedButtons } from '../hooks/useFormattedButtons';
+import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 import { OtherProps } from '../types/common';
 import { formatOptionElement } from '../utils/formatOptionElement';
 
@@ -39,11 +39,17 @@ export function Poll({
     replyToMessageId,
     ...otherProps
 }: PollProps) {
-    const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
+    const {
+        $$managerBot,
+        isNewMessageEveryRender: isNewMessageEveryRenderContext,
+        chat,
+        parseMode: parseModeContext,
+    } = useBotContext();
 
-    const [formattedQuestion, finalParseMode] = useFormattedText(question, parseMode);
-    const [formattedExplanation] = useFormattedText(explanation, parseMode);
-    const formattedButtons = useFormattedButtons(buttonGroupElement);
+    const finalParseMode = parseMode ?? parseModeContext;
+    const formattedQuestion = formatText(question, finalParseMode);
+    const formattedExplanation = formatText(explanation, finalParseMode);
+    const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
     const options = formatOptionElement(children);
 
     useAction((ctx) => {
