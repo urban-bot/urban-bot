@@ -3,7 +3,7 @@ import { useBotContext } from '../hooks/hooks';
 import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
-import { useFormattedButtons } from '../hooks/useFormattedButtons';
+import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 
 export type LocationProps = UrbanMessageCommonData & {
     latitude: number;
@@ -36,7 +36,7 @@ export function Location({
 
     const finalParseMode = parseMode ?? parseModeContext;
     const formattedTitle = formatText(title, finalParseMode);
-    const formattedButtons = useFormattedButtons(buttonGroupElement);
+    const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
 
     return (
         <urban-location

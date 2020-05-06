@@ -3,7 +3,7 @@ import { useAction, useBotContext } from '../hooks/hooks';
 import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
-import { useFormattedButtons } from '../hooks/useFormattedButtons';
+import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 import { OtherProps } from '../types/common';
 import { formatOptionElement } from '../utils/formatOptionElement';
 
@@ -49,7 +49,7 @@ export function Poll({
     const finalParseMode = parseMode ?? parseModeContext;
     const formattedQuestion = formatText(question, finalParseMode);
     const formattedExplanation = formatText(explanation, finalParseMode);
-    const formattedButtons = useFormattedButtons(buttonGroupElement);
+    const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
     const options = formatOptionElement(children);
 
     useAction((ctx) => {

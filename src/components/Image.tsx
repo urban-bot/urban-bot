@@ -3,7 +3,7 @@ import { useBotContext } from '../hooks/hooks';
 import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
-import { useFormattedButtons } from '../hooks/useFormattedButtons';
+import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 import { UrbanFileFormat } from '../types';
 
 export type ImageProps = UrbanMessageCommonData & {
@@ -37,7 +37,7 @@ export function Image({
 
     const finalParseMode = parseMode ?? parseModeContext;
     const formattedTitle = formatText(title, finalParseMode);
-    const formattedButtons = useFormattedButtons(buttonGroupElement);
+    const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
 
     return (
         <urban-img
