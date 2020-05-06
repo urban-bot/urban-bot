@@ -46,6 +46,7 @@ export function Audio({
                 forceReply,
                 parseMode: finalParseMode,
                 buttons: formattedButtons,
+                isReplyButtons: buttonGroupElement?.props.isReplyButtons,
                 title: formattedTitle,
                 file,
                 name,

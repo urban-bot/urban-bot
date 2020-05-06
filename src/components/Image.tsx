@@ -42,6 +42,7 @@ export function Image({
                 disableNotification,
                 replyToMessageId,
                 forceReply,
+                isReplyButtons: buttonGroupElement?.props.isReplyButtons,
                 parseMode: finalParseMode,
                 buttons: formattedButtons,
                 title: formattedTitle,

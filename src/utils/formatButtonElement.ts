@@ -7,7 +7,7 @@ type FormattedButton = OtherProps & {
     id: string;
     text: string;
     // FIXME describe type for onClick?
-    onClick: (...args: unknown[]) => unknown;
+    onClick?: (...args: unknown[]) => unknown;
 };
 
 export function formatButtonElement(
