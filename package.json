@@ -1,6 +1,6 @@
 {
     "name": "urban-bot",
-    "version": "0.0.1-aplha.19",
+    "version": "0.0.1-aplha.20",
     "description": "universal messenger bot creator",
     "files": [
         "dist/src/**/*"
