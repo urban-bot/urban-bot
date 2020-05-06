@@ -55,7 +55,7 @@ function App() {
             <Route path="/poll">
                 <PollExample />
             </Route>
-            <Route path="/contact">
+            <Route path={new RegExp('/contact*')}>
                 <ContactExample />
             </Route>
             <Route path="/animation">
