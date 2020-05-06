@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
-import { useFormattedText } from '../hooks/useFormattedText';
+import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 
 export type TextProps = UrbanMessageCommonData & {
@@ -19,9 +19,15 @@ export function Text({
     forceReply,
     ...otherProps
 }: TextProps) {
-    const { $$managerBot, isNewMessageEveryRender: isNewMessageEveryRenderContext, chat } = useBotContext();
+    const {
+        $$managerBot,
+        isNewMessageEveryRender: isNewMessageEveryRenderContext,
+        chat,
+        parseMode: parseModeContext,
+    } = useBotContext();
 
-    const [formattedText, finalParseMode] = useFormattedText(children, parseMode);
+    const finalParseMode = parseMode ?? parseModeContext;
+    const formattedText = formatText(children, finalParseMode);
 
     return (
         <urban-text
