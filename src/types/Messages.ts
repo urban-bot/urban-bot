@@ -1,7 +1,7 @@
 import { UrbanChat, UrbanFileFormat, UrbanParseMode } from './index';
 import { OtherProps } from './common';
 
-export type UrbanButton = {
+export type UrbanButton = OtherProps & {
     text: string;
     id?: string;
     url?: string;
