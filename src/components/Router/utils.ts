@@ -1,24 +1,21 @@
 import React from 'react';
 import { Route, RouteProps } from './Route';
 
-type PatchOptions = { pattern?: string | RegExp };
-
-export const matchRoute = (pathname: string, options: PatchOptions) => {
-    const { pattern } = options;
+export const matchRoute = (path: string, pattern: string | RegExp) => {
     if (!pattern) {
         return true;
     }
 
     if (pattern instanceof RegExp) {
-        return pattern.test(pathname);
+        return pattern.test(path);
     }
 
-    return pattern === pathname;
+    return pattern === path;
 };
 
-export const matchChild = (url: string) => (child: React.ReactElement<RouteProps>) => {
+export const matchChild = (path: string) => (child: React.ReactElement<RouteProps>) => {
     if (child.type !== Route) {
         throw new Error('Pass only Route component to Router');
     }
-    return matchRoute(url, { pattern: child.props.path });
+    return matchRoute(path, child.props.path);
 };
