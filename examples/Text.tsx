@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, useBotContext } from '../src';
-import { UrbanTelegramBot } from 'urban-bot-telegram';
+import { UrbanBotTelegram } from 'urban-bot-telegram';
 
 const someCode = `function sum2() {
     return 2 + 2;
@@ -25,7 +25,7 @@ export function TextExample() {
             <br />
             <s>Strikethrough text</s>
             <br />
-            {bot.type !== UrbanTelegramBot.TYPE ? (
+            {bot.type !== UrbanBotTelegram.TYPE ? (
                 <>
                     <q>quote</q>
                     <br />
