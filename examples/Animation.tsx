@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import React, { useMemo } from 'react';
-import { Button, ButtonGroup, Animation, useText } from '../src';
+import { Animation } from '../src';
 
 function readFile(fileName: string) {
     try {
@@ -12,34 +12,11 @@ function readFile(fileName: string) {
 }
 
 export function AnimationExample() {
-    const [title, setTitle] = React.useState('There is the animation');
-
-    useText(({ text }) => {
-        setTitle(text);
-    });
-
     const animationByFile = useMemo(() => readFile('roboHare.gif'), []);
 
     if (!animationByFile) {
         return null;
     }
 
-    return (
-        <Animation
-            file={animationByFile /* || animationByFile */}
-            title={title}
-            name={'fileName'}
-            buttons={
-                <ButtonGroup>
-                    <Button
-                        onClick={() => {
-                            console.log('animation');
-                        }}
-                    >
-                        Button
-                    </Button>
-                </ButtonGroup>
-            }
-        />
-    );
+    return <Animation file={animationByFile} title="There is the animation" name="File Name" />;
 }
