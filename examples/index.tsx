@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import React from 'react';
 import { render, Route, Router, Root } from '../src';
-import { UrbanTelegramBot } from 'urban-bot-telegram';
-import { UrbanSlackBot } from 'urban-bot-slack';
+import { UrbanBotTelegram } from 'urban-bot-telegram';
+import { UrbanBotSlack } from 'urban-bot-slack';
 import { TextExample } from './Text';
 import { Hooks } from './Hooks';
 import { ImageExample } from './Image';
@@ -71,23 +71,23 @@ function App() {
     );
 }
 if (process.env.TELEGRAM_TOKEN_DEV) {
-    const urbanTelegramBot = new UrbanTelegramBot(process.env.TELEGRAM_TOKEN_DEV as string, {
+    const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN_DEV as string, {
         polling: true,
     });
     render(
-        <Root bot={urbanTelegramBot} parseMode="HTML">
+        <Root bot={urbanBotTelegram} parseMode="HTML">
             <App />
         </Root>,
     );
 }
 if (process.env.SLACK_SIGNING_SECRET && process.env.SLACK_TOKEN) {
-    const urbanSlackBot = new UrbanSlackBot({
+    const urbanBotSlack = new UrbanBotSlack({
         signingSecret: process.env.SLACK_SIGNING_SECRET as string,
         token: process.env.SLACK_TOKEN as string,
     });
 
     render(
-        <Root bot={urbanSlackBot}>
+        <Root bot={urbanBotSlack}>
             <App />
         </Root>,
     );
