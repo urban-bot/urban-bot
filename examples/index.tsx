@@ -5,7 +5,7 @@ import { UrbanTelegramBot } from 'urban-bot-telegram';
 import { UrbanSlackBot } from 'urban-bot-slack';
 import { TextExample } from './Text';
 import { Hooks } from './Hooks';
-import { ImageExample } from './ImageExample';
+import { ImageExample } from './Image';
 import { Queue } from './Queue';
 import { AudioExample } from './Audio';
 import { VideoExample } from './Video';
