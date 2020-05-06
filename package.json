@@ -52,8 +52,8 @@
         "rimraf": "3.0.2",
         "ts-jest": "25.4.0",
         "typescript": "3.8.3",
-        "urban-bot-telegram": "0.0.1-aplha.1",
-        "urban-bot-slack": "0.0.1-aplha.1"
+        "urban-bot-telegram": "^0.0.1-aplha.3",
+        "urban-bot-slack": "^0.0.1-aplha.1"
     },
     "dependencies": {
         "array-flatten": "^3.0.0",
