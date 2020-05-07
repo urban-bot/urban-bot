@@ -68,7 +68,7 @@ function App() {
                 <LocationExample />
             </Route>
             <Route path="/notification">
-                <Notification interval={2}>
+                <Notification intervalSeconds={2}>
                     <Text>Ping every two second</Text>
                 </Notification>
             </Route>

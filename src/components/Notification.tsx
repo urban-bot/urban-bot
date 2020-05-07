@@ -3,16 +3,16 @@ import { useInterval } from '../hooks/useInterval';
 
 export type NotificationProps = {
     children: React.ReactNode;
-    interval: number;
+    intervalSeconds: number;
 };
 
-export function Notification({ children, interval }: NotificationProps) {
+export function Notification({ children, intervalSeconds }: NotificationProps) {
     const [isActive, setIsActive] = React.useState(false);
 
     useInterval(() => {
         setIsActive(true);
         setIsActive(false);
-    }, interval);
+    }, intervalSeconds);
 
     if (!isActive) {
         return null;
