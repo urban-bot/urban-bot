@@ -2,13 +2,12 @@ import React from 'react';
 import { getBotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
-import { UrbanChat, UrbanFrom, UrbanParseMode } from '../types';
+import { UrbanChat, UrbanParseMode } from '../types';
 import { UrbanBotType, UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
 
 export type ChatProps<Bot extends UrbanBotType> = {
     bot: UrbanBot<Bot>;
-    from?: UrbanFrom;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
     parseMode?: UrbanParseMode;
@@ -19,7 +18,6 @@ export type ChatProps<Bot extends UrbanBotType> = {
 
 function Chat<Bot extends UrbanBotType>({
     bot,
-    from,
     children,
     isNewMessageEveryRender,
     chat,
@@ -33,7 +31,7 @@ function Chat<Bot extends UrbanBotType>({
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore key exists
             key={chat.id}
-            value={{ bot, from, isNewMessageEveryRender, chat, parseMode, $$managerBot }}
+            value={{ bot, isNewMessageEveryRender, chat, parseMode, $$managerBot }}
         >
             <ErrorBoundary>{children}</ErrorBoundary>
         </BotContext.Provider>
@@ -69,7 +67,7 @@ export function Root<Bot extends UrbanBotType<any, any>>({
 
     React.useEffect(() => {
         function handler(message: UrbanSyntheticEvent<Bot['NativeEvent']>) {
-            const { from, chat } = message;
+            const { chat } = message;
             const { id: chatId } = chat;
 
             if (!chatsRef.current.has(chatId)) {
@@ -78,7 +76,6 @@ export function Root<Bot extends UrbanBotType<any, any>>({
                     <Chat<Bot>
                         bot={bot}
                         $$managerBot={$$managerBot}
-                        from={from}
                         key={chatId}
                         isNewMessageEveryRender={isNewMessageEveryRender}
                         chat={chat}

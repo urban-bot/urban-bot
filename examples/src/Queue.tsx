@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonGroup, Text } from '../src';
+import { Button, ButtonGroup, Text } from 'urban-bot';
 
 export function Queue() {
     const [queue, setQueue] = React.useState(['0', '1', '2']);

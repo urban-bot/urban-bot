@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Router, Root, Notification, Text } from '../src';
+import { render, Route, Router, Root, Notification, Text } from 'urban-bot';
 import { UrbanBotTelegram } from 'urban-bot-telegram';
 import { UrbanBotSlack } from 'urban-bot-slack';
 import { TextExample } from './Text';

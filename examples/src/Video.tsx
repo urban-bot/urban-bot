@@ -1,7 +1,7 @@
 // import fs from 'fs';
 // import path from 'path';
 import React from 'react';
-import { Video } from '../src';
+import { Video } from 'urban-bot';
 
 // const videoByFile = fs.readFileSync(path.join(__dirname, 'video.mp4'));
 

@@ -1,7 +1,7 @@
 // import fs from 'fs';
 // import path from 'path';
 import React from 'react';
-import { File } from '../src';
+import { File } from 'urban-bot';
 
 // const file = fs.createReadStream(path.join(__dirname, 'file.doc'));
 
