@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Image, useRouter, useText } from '../src';
+import { Button, ButtonGroup, Image, useRouter, useText } from 'urban-bot';
 import React from 'react';
 
 const imageByUrl =

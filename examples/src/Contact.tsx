@@ -1,5 +1,5 @@
 import React from 'react';
-import { Contact } from '../src';
+import { Contact } from 'urban-bot';
 
 export function ContactExample() {
     return <Contact firstName="German" phoneNumber="+79999999999" />;
