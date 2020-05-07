@@ -18,5 +18,13 @@ export function Notification({ children, interval }: NotificationProps) {
         return null;
     }
 
-    return <>{children}</>;
+    const childrenArray = React.Children.toArray(children) as React.ReactElement<{ [key: string]: unknown }>[];
+
+    return (
+        <>
+            {childrenArray.map((element) => {
+                return React.cloneElement(element, { ...element.props, isNewMessageEveryRender: true });
+            })}
+        </>
+    );
 }

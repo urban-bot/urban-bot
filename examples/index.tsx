@@ -69,7 +69,7 @@ function App() {
             </Route>
             <Route path="/notification">
                 <Notification interval={2}>
-                    <Text isNewMessageEveryRender>Ping</Text>
+                    <Text>Ping every two second</Text>
                 </Notification>
             </Route>
         </Router>
