@@ -1,5 +1,5 @@
 import React from 'react';
-import { Location, useText } from '../src';
+import { Location, useText } from 'urban-bot';
 
 export function LocationExample() {
     const [latitude, setLatitude] = React.useState(60.734539);

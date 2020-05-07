@@ -1,12 +1,11 @@
 import React from 'react';
 import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanChat, UrbanFrom, UrbanParseMode } from './types';
+import { UrbanChat, UrbanParseMode } from './types';
 import { UrbanBotType, UrbanBot } from './types/UrbanBot';
 
 export type BotContextType<Bot extends UrbanBotType> = {
     $$managerBot: ManagerBot<Bot>;
     chat: UrbanChat;
-    from?: UrbanFrom;
     isNewMessageEveryRender: boolean;
     parseMode?: UrbanParseMode;
     bot: UrbanBot<Bot>;

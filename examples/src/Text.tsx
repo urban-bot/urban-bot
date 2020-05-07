@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, useBotContext } from '../src';
+import { Text, useBotContext } from 'urban-bot';
 import { UrbanBotTelegram } from 'urban-bot-telegram';
 
 const someCode = `function sum2() {

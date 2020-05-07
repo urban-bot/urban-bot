@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import React, { useMemo } from 'react';
-import { Animation } from '../src';
+import { Animation } from 'urban-bot';
 
 function readFile(fileName: string) {
     try {
