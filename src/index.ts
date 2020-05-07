@@ -10,6 +10,7 @@ import { Poll, Option } from './components/Poll';
 import { Contact } from './components/Contact';
 import { Media } from './components/Media';
 import { Location } from './components/Location';
+import { Notification } from './components/Notification';
 import { ButtonGroup, Button } from './components/ButtonGroup';
 import { Root } from './components/Root';
 import { getBotContext, RouterContext } from './context';
@@ -52,6 +53,7 @@ export {
     Contact,
     Media,
     Location,
+    Notification,
     ButtonGroup,
     useBotContext,
     useRouter,

@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Router, Root } from '../src';
+import { render, Route, Router, Root, Notification, Text } from '../src';
 import { UrbanBotTelegram } from 'urban-bot-telegram';
 import { UrbanBotSlack } from 'urban-bot-slack';
 import { TextExample } from './Text';
@@ -66,6 +66,11 @@ function App() {
             </Route>
             <Route path="/location">
                 <LocationExample />
+            </Route>
+            <Route path="/notification">
+                <Notification intervalSeconds={2}>
+                    <Text>Ping every two second</Text>
+                </Notification>
             </Route>
         </Router>
     );

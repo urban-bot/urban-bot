@@ -1,3 +1,4 @@
+// TODO describe more
 export type UrbanChat = {
     id: string;
 };
