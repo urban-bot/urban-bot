@@ -52,7 +52,7 @@ export type RootProps<Bot extends UrbanBotType> = {
 export function Root<Bot extends UrbanBotType<any, any>>({
     children,
     bot,
-    sessionTime = 60 * 60 * 72,
+    sessionTime = 60 * 60 * 24 * 7,
     isNewMessageEveryRender = false,
     parseMode,
 }: RootProps<Bot>) {
