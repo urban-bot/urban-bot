@@ -3,6 +3,7 @@ Universal messenger bot creator based on React
 
 
 ## Simple example
+![](files/urban-bot.gif)
 ```javascript
 import React from 'react';
 import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from 'urban-bot';
