@@ -1,8 +1,12 @@
 # Urban Bot
-Universal messenger bot creator based on React
+Universal chatbot library based on React.
 
+### Installation
+```
+$ npm i urban-bot urban-bot-telegram react
+```
 
-## Simple example
+### Simple example
 ![](files/urban-bot.gif)
 ```javascript
 import React from 'react';
