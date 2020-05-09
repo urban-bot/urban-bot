@@ -37,9 +37,9 @@
         "typescript": "3.8.3"
     },
     "dependencies": {
-        "urban-bot": "^0.0.1-aplha.21",
-        "urban-bot-slack": "^0.0.1-aplha.2",
-        "urban-bot-telegram": "^0.0.1-aplha.4"
+        "urban-bot": "^0.0.1-aplha.22",
+        "urban-bot-slack": "^0.0.1-aplha.3",
+        "urban-bot-telegram": "^0.0.1-aplha.5"
     },
     "engines": {
         "node": ">=10.0.0"
