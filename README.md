@@ -7,7 +7,7 @@ $ npm i urban-bot urban-bot-telegram react
 ```
 
 ## Simple example
-![](files/urban-bot.gif)
+![](files/telegram-gif.gif)
 ![](files/slack-gif.gif)
 ```javascript
 import React from 'react';
@@ -58,7 +58,7 @@ function App() {
 render(
     <Root
         bot={
-            new UrbanBotTelegram(token, {
+            new UrbanBotTelegram(telegramToken, {
                 polling: true,
             })
         }
@@ -67,4 +67,16 @@ render(
     </Root>
 );
 
+render(
+    <Root
+        bot={
+            new UrbanBotSlack({
+                signingSecret: slackSigningSecret,
+                token: slackToken,
+            })
+        }
+    >
+        <App />
+    </Root>
+);
 ```
