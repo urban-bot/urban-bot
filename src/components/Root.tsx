@@ -3,11 +3,12 @@ import { getBotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
 import { UrbanChat, UrbanParseMode } from '../types';
-import { UrbanBotType, UrbanBot } from '../types/UrbanBot';
+import { UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
+import { BotMetaByBot } from '../hooks/hooks';
 
-export type ChatProps<Bot extends UrbanBotType> = {
-    bot: UrbanBot<Bot>;
+export type ChatProps<Bot extends UrbanBot> = {
+    bot: Bot;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
     parseMode?: UrbanParseMode;
@@ -16,7 +17,7 @@ export type ChatProps<Bot extends UrbanBotType> = {
     key: string;
 };
 
-function Chat<Bot extends UrbanBotType>({
+function Chat<Bot extends UrbanBot>({
     bot,
     children,
     isNewMessageEveryRender,
@@ -38,16 +39,15 @@ function Chat<Bot extends UrbanBotType>({
     );
 }
 
-export type RootProps<Bot extends UrbanBotType> = {
-    bot: UrbanBot<Bot>;
+export type RootProps<Bot extends UrbanBot> = {
+    bot: Bot;
     children: React.ReactNode;
     sessionTimeSeconds?: number;
     isNewMessageEveryRender?: boolean;
     parseMode?: UrbanParseMode;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function Root<Bot extends UrbanBotType<any, any>>({
+export function Root<Bot extends UrbanBot>({
     children,
     bot,
     sessionTimeSeconds = 60 * 60 * 24 * 7,
@@ -61,12 +61,12 @@ export function Root<Bot extends UrbanBotType<any, any>>({
 
     const timeoutIdsRef = React.useRef<{ [key: string]: NodeJS.Timer }>({});
 
-    const [firstMessage, setFirstMessage] = React.useState<UrbanSyntheticEvent<Bot['NativeEvent']>>();
+    const [firstMessage, setFirstMessage] = React.useState<UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>>();
 
     const $$managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
     React.useEffect(() => {
-        function handler(message: UrbanSyntheticEvent<Bot['NativeEvent']>) {
+        function handler(message: UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>) {
             const { chat } = message;
             const { id: chatId } = chat;
 
