@@ -1,7 +1,7 @@
 {
     "name": "urban-bot",
     "version": "0.0.1-aplha.24",
-    "description": "universal messenger bot creator",
+    "description": "Universal chatbot library based on React",
     "files": [
         "dist/**/*"
     ],
@@ -18,6 +18,7 @@
     },
     "keywords": [
         "bot",
+        "chatbot",
         "telegram",
         "slack",
         "messenger",
