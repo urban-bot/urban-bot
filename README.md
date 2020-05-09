@@ -8,6 +8,7 @@ $ npm i urban-bot urban-bot-telegram react
 
 ## Simple example
 ![](files/urban-bot.gif)
+![](files/slack-gif.gif)
 ```javascript
 import React from 'react';
 import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from 'urban-bot';
