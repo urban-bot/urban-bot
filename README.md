@@ -13,6 +13,7 @@ $ npm i urban-bot urban-bot-telegram react
 import React from 'react';
 import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from 'urban-bot';
 import { UrbanBotTelegram } from 'urban-bot-telegram';
+import { UrbanBotSlack } from 'urban-bot-slack';
 
 function Echo() {
     const [text, setText] = React.useState('Say something');
