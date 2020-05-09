@@ -202,13 +202,13 @@ export type UrbanMessageData =
     | UrbanMessageLocationData
     | UrbanMessageMediaData;
 
-type Meta<MessageMeta> = {
+type Meta<MessageMeta = any> = {
     meta: MessageMeta;
 };
 
-export type UrbanExistingMessage<MessageMeta = unknown> = UrbanMessage & Meta<MessageMeta>;
+export type UrbanExistingMessage<MessageMeta = any> = UrbanMessage & Meta<MessageMeta>;
 
-export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMeta = unknown> = T extends 'urban-text'
+export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMeta = any> = T extends 'urban-text'
     ? UrbanMessageText & Meta<MessageMeta>
     : T extends 'urban-buttons'
     ? UrbanMessageButtons & Meta<MessageMeta>

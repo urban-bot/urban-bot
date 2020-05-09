@@ -1,6 +1,6 @@
 import { UrbanChat, UrbanFile, UrbanFrom, UrbanListener } from './index';
 
-export interface UrbanNativeEvent<Type = string, Payload = unknown> {
+export interface UrbanNativeEvent<Type = any, Payload = any> {
     type: Type;
     payload?: Payload;
 }
