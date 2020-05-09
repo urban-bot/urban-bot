@@ -1,3 +1,8 @@
+<div align="center">
+
+[![npm package](https://img.shields.io/npm/v/urban-bot?logo=npm&style=flat-square)](https://www.npmjs.org/package/urban-bot)
+![Build](https://github.com/urban-bot/urban-bot/workflows/Node.js%20CI/badge.svg)
+
 # Urban Bot
 Universal chatbot library based on React.
 
