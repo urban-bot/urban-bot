@@ -4,9 +4,15 @@
 
 Universal chatbot library based on React.
 
+* **Declarative.** You don't need to know any messenger API, just write simple react components.
+* **Multiplatform.** Write once, launch any messenger.
+* **Reusable.** Easy share logic between different chatbots or just use common parts.
+* **Session.** All data is unique for every user, so just write an app as if it is client-side rendering.
+* **Types.** Full typescript support.
+
 ## Installation
 ```
-$ npm i urban-bot urban-bot-telegram react
+$ npm i urban-bot react urban-bot-(slack|telegram|...)
 ```
 
 ## Simple example
