@@ -5,15 +5,15 @@ export type ProcessUpdate<NativeEvent extends UrbanNativeEvent = UrbanNativeEven
     event: UrbanSyntheticEvent<NativeEvent>,
 ) => void;
 
-export interface UrbanBotType<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent, MessageMeta = unknown> {
+export interface UrbanBotMeta<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent, MessageMeta = unknown> {
     NativeEvent: NativeEvent;
     MessageMeta: MessageMeta;
 }
 
-export interface UrbanBot<Bot extends UrbanBotType> {
-    type: Bot['NativeEvent']['type'];
-    processUpdate: ProcessUpdate<Bot['NativeEvent']>;
-    sendMessage: (message: UrbanMessage) => Promise<Bot['MessageMeta']>;
-    updateMessage: (message: UrbanExistingMessage<Bot['MessageMeta']>) => void;
-    deleteMessage: (message: UrbanExistingMessage<Bot['MessageMeta']>) => void;
+export interface UrbanBot<Metadata extends UrbanBotMeta = UrbanBotMeta> {
+    type: Metadata['NativeEvent']['type'];
+    processUpdate: ProcessUpdate<Metadata['NativeEvent']>;
+    sendMessage: (message: UrbanMessage) => Promise<Metadata['MessageMeta']>;
+    updateMessage: (message: UrbanExistingMessage<Metadata['MessageMeta']>) => void;
+    deleteMessage: (message: UrbanExistingMessage<Metadata['MessageMeta']>) => void;
 }

@@ -1,21 +1,22 @@
 import { shallowEqual } from './utils/shallowEqual';
 import { UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanBotType } from './types/UrbanBot';
+import { UrbanBot } from './types/UrbanBot';
+import { BotMetaByBot } from './hooks/hooks';
 
-export type UrbanNode<Bot extends UrbanBotType> = Omit<UrbanExistingMessage<Bot['MessageMeta']>, 'meta'> & {
+export type UrbanNode<Bot extends UrbanBot> = Omit<UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>, 'meta'> & {
     $$managerBot: ManagerBot<Bot>;
     isNewMessageEveryRender?: boolean;
-    meta?: Promise<Bot['MessageMeta']>;
+    meta?: Promise<BotMetaByBot<Bot>['MessageMeta']>;
 };
 
 export type UrbanNodeRoot = {
     nodeName: 'root';
 };
 
-type Props<Bot extends UrbanBotType> = Omit<UrbanNode<Bot>, 'nodeName'>;
+type Props<Bot extends UrbanBot> = Omit<UrbanNode<Bot>, 'nodeName'>;
 
-export function createNode<Bot extends UrbanBotType>(
+export function createNode<Bot extends UrbanBot>(
     nodeName: UrbanMessageNodeName | 'root',
     props?: Props<Bot>,
 ): UrbanNode<Bot> | UrbanNodeRoot {
@@ -40,7 +41,7 @@ export function createNode<Bot extends UrbanBotType>(
     } as UrbanNode<Bot>;
 }
 
-export function appendChildNode<Bot extends UrbanBotType>(
+export function appendChildNode<Bot extends UrbanBot>(
     _node: UrbanNode<Bot> | UrbanNodeRoot,
     childNode: UrbanNode<Bot> | UrbanNodeRoot,
 ) {
@@ -57,7 +58,7 @@ export function appendChildNode<Bot extends UrbanBotType>(
     childNode.meta = childNode.$$managerBot.sendMessage(message);
 }
 
-export function removeChildNode<Bot extends UrbanBotType>(_node: UrbanNode<Bot>, removedNode: UrbanNode<Bot>) {
+export function removeChildNode<Bot extends UrbanBot>(_node: UrbanNode<Bot>, removedNode: UrbanNode<Bot>) {
     if (removedNode.isNewMessageEveryRender) {
         return;
     }
@@ -72,13 +73,13 @@ export function removeChildNode<Bot extends UrbanBotType>(_node: UrbanNode<Bot>,
             chat: removedNode.chat,
             data: removedNode.data,
             meta,
-        } as UrbanExistingMessage<Bot['MessageMeta']>;
+        } as UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>;
 
         removedNode.$$managerBot.deleteMessage(message);
     });
 }
 
-export function updateNode<Bot extends UrbanBotType>(
+export function updateNode<Bot extends UrbanBot>(
     node: UrbanNode<Bot>,
     _updatePayload: unknown,
     _type: unknown,
@@ -115,7 +116,7 @@ export function updateNode<Bot extends UrbanBotType>(
         }
 
         node.meta.then((meta) => {
-            const existingMessage: UrbanExistingMessage<Bot['MessageMeta']> = {
+            const existingMessage: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']> = {
                 ...message,
                 meta,
             };
