@@ -2,3 +2,4 @@ node_modules
 dist
 *.jpg
 *.gif
+examples
