@@ -12,7 +12,7 @@ type RouterProps = {
     withInitializeCommands?: boolean;
 };
 
-export function Router({ children, withInitializeCommands = true }: RouterProps) {
+export function Router({ children, withInitializeCommands = false }: RouterProps) {
     const { bot } = useBotContext();
     const [activePath, navigate] = React.useState('');
     const childrenArray = React.Children.toArray(children) as React.ReactElement<RouteProps>[];
