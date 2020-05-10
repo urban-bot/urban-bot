@@ -22,52 +22,52 @@ dotenv.config();
 function App() {
     return (
         <Router>
-            <Route path="/start">
+            <Route path="/start" description="start">
                 <ImageExample />
             </Route>
-            <Route path="/text">
+            <Route path="/text" description="text">
                 <TextExample />
             </Route>
-            <Route path="/buttons">
+            <Route path="/buttons" description="buttons">
                 <ButtonsExample />
             </Route>
-            <Route path="/reply_buttons">
+            <Route path="/reply_buttons" description="reply_buttons">
                 <ReplyButtonsExample />
             </Route>
-            <Route path="/matrix_buttons">
+            <Route path="/matrix_buttons" description="matrix_buttons">
                 <MatrixButtonsExample />
             </Route>
-            <Route path="/queue">
+            <Route path="/queue" description="queue">
                 <Queue />
             </Route>
-            <Route path="/hooks">
+            <Route path="/hooks" description="hooks">
                 <Hooks />
             </Route>
-            <Route path="/audio">
+            <Route path="/audio" description="audio">
                 <AudioExample />
             </Route>
-            <Route path="/video">
+            <Route path="/video" description="video">
                 <VideoExample />
             </Route>
-            <Route path="/file">
+            <Route path="/file" description="file">
                 <FileExample />
             </Route>
-            <Route path="/poll">
+            <Route path="/poll" description="poll">
                 <PollExample />
             </Route>
             <Route path={new RegExp('/contact*')}>
                 <ContactExample />
             </Route>
-            <Route path="/animation">
+            <Route path="/animation" description="animation">
                 <AnimationExample />
             </Route>
-            <Route path="/media">
+            <Route path="/media" description="media">
                 <MediaExample />
             </Route>
-            <Route path="/location">
+            <Route path="/location" description="location">
                 <LocationExample />
             </Route>
-            <Route path="/notification">
+            <Route path="/notification" description="notification">
                 <Notification intervalSeconds={2}>
                     <Text>Ping every two second</Text>
                 </Notification>

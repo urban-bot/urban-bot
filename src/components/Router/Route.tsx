@@ -2,6 +2,7 @@ import React from 'react';
 
 export type RouteProps = {
     path: string | RegExp;
+    description?: string;
     children: React.ReactNode;
 };
 

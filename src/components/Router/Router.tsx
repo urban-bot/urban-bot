@@ -1,18 +1,41 @@
 import React from 'react';
-import { useCommand } from '../../hooks/hooks';
+import { useBotContext, useCommand } from '../../hooks/hooks';
 import { RouterContext } from '../../context';
 import { RouteProps } from './Route';
 import { matchChild } from './utils';
+import { UrbanCommand } from '../../types';
+
+let isCommandsInitialized = false;
 
 type RouterProps = {
     children: React.ReactElement<RouteProps> | React.ReactElement<RouteProps>[];
+    withInitializeCommands?: boolean;
 };
 
-// TODO: add another hooks instead of useCommand
-// TODO
-export function Router(props: RouterProps) {
+export function Router({ children, withInitializeCommands = true }: RouterProps) {
+    const { bot } = useBotContext();
     const [activePath, navigate] = React.useState('');
-    const childrenArray = React.Children.toArray(props.children) as React.ReactElement<RouteProps>[];
+    const childrenArray = React.Children.toArray(children) as React.ReactElement<RouteProps>[];
+
+    React.useEffect(() => {
+        if (!withInitializeCommands || isCommandsInitialized) {
+            return;
+        }
+
+        const commands = childrenArray
+            .map((routes) => {
+                return {
+                    command: routes.props.path,
+                    description: routes.props.description,
+                };
+            })
+            .filter(({ command }) => typeof command === 'string' && command[0] === '/') as UrbanCommand[];
+
+        bot.initializeCommands?.(commands).then(() => {
+            isCommandsInitialized = true;
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useCommand(({ command }) => {
         if (childrenArray.some(matchChild(command))) {
