@@ -11,6 +11,9 @@ Universal chatbot library based on React.
 * **Types.** Full typescript support.
 
 ## Installation
+Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter).
+
+Or install manually:
 ```
 $ npm i react urban-bot urban-bot-(slack|telegram|...)
 ```
