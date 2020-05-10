@@ -12,7 +12,7 @@ Universal chatbot library based on React.
 
 ## Installation
 ```
-$ npm i urban-bot react urban-bot-(slack|telegram|...)
+$ npm i react urban-bot urban-bot-(slack|telegram|...)
 ```
 
 ## Simple example
