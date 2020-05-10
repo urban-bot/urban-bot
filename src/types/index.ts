@@ -34,6 +34,11 @@ export type UrbanParseMode = 'HTML' | 'markdown';
 
 export type UrbanListener<Event> = (event: Event) => unknown;
 
+export type UrbanCommand = {
+    command: string;
+    description?: string;
+};
+
 export * from './common';
 export * from './Events';
 export * from './Messages';
