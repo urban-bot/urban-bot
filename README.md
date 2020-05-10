@@ -7,7 +7,7 @@ Universal chatbot library based on React.
 * **Declarative.** You don't need to know any messenger API, just write simple react components.
 * **Multiplatform.** Write once, launch any messenger.
 * **Reusable.** Easy share logic between different chatbots or just use common parts.
-* **Session.** All components are unique for every user, so just write an app as if it is client-side rendering.
+* **Session.** All components are unique for every user, so just write your app as if it is client-side rendering.
 * **Types.** Full typescript support.
 
 ## Installation
