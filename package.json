@@ -5,6 +5,8 @@
   "scripts": {
     "start": "lerna run start --stream --parallel",
     "lint": "lerna run lint  --stream --parallel",
+    "test": "lerna run test  --stream --parallel",
+    "build": "lerna run build --stream",
     "lint:fix": "lerna run lint:fix  --stream --parallel",
     "typecheck": "lerna run typecheck  --stream --parallel"
   },
