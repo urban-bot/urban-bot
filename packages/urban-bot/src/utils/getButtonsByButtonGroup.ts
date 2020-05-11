@@ -1,6 +1,6 @@
 import React from 'react';
-import { ButtonGroup } from '../index';
-import { UrbanElementButtons } from '../global';
+import { ButtonGroup } from '../components/ButtonGroup';
+import { UrbanElementButtons } from '../global.d';
 import { ButtonGroupProps } from '../components/ButtonGroup';
 
 export function getButtonsByButtonGroup(
