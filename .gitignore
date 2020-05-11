@@ -4,3 +4,4 @@ node_modules
 dist
 coverage
 tsconfig.tsbuildinfo
+yarn-error.log
