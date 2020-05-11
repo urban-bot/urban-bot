@@ -25,9 +25,9 @@ $ npm i react @urban-bot/core @urban-bot/(telegram/slack|...)
 ![](files/slack-gif.gif)
 ```javascript
 import React from 'react';
-import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from 'urban-bot';
-import { UrbanBotTelegram } from 'urban-bot-telegram';
-import { UrbanBotSlack } from 'urban-bot-slack';
+import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from '@urban-bot/core';
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+import { UrbanBotSlack } from '@urban-bot/slack';
 
 function Echo() {
     const [text, setText] = React.useState('Say something');
