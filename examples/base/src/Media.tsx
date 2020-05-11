@@ -1,7 +1,7 @@
 // import fs from 'fs';
 // import path from 'path';
 import React from 'react';
-import { Media } from 'urban-bot';
+import { Media } from '@urban-bot/core';
 
 // const imageByFile = fs.readFileSync(path.join(__dirname, 'an-24.jpg'));
 // const videoByFile = fs.readFileSync(path.join(__dirname, 'video1.mp4'));

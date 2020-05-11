@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React from 'react';
-import { ButtonGroup, Button, useText } from 'urban-bot';
+import { ButtonGroup, Button, useText } from '@urban-bot/core';
 
 export function ButtonsExample() {
     return (
