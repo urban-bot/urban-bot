@@ -25,7 +25,8 @@
   },
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "engines": {
     "node": ">=10.0.0"
