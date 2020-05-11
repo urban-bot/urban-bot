@@ -1,9 +1,9 @@
-import { UrbanButton } from 'urban-bot';
+import { UrbanButton } from '@urban-bot/core';
 import { Button, SectionBlock } from '@slack/types';
 
 export function formatButtons(buttons: UrbanButton[] | UrbanButton[][]): Button[] {
     if (Array.isArray(buttons[0])) {
-        throw new Error('Please provide flat buttons structure to urban-bot-slack');
+        throw new Error('Please provide flat buttons structure to @urban-bot/slack');
     }
 
     return (buttons as UrbanButton[]).map((button) => {
