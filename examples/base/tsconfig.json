@@ -1,5 +1,5 @@
 {
-    "extends": "../tsconfig.json",
+    "extends": "../../packages/urban-bot/tsconfig.json",
     "compilerOptions": {
         "declaration": false,
         "outDir": "dist" /* Redirect output structure to the directory. */,

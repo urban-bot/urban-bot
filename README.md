@@ -10,7 +10,7 @@ Universal chatbot library based on [React](https://github.com/facebook/react).
 * **Session.** App renders unique for every chat, so just write your app as if it is client-side rendering.
 * **Types.** Full typescript support.
 
-Currently, the library is under active development and has an alpha version status. But you can help us if you try to use it and understand conception. It is really easy if you have already known React. All available example [components](https://github.com/urban-bot/urban-bot/tree/master/examples/src) and [hooks](https://github.com/urban-bot/urban-bot/blob/master/examples/src/Hooks.tsx).
+Currently, the library is under active development and has an alpha version status. But you can help us if you try to use it and understand conception. It is really easy if you have already known React. All available example [components](https://github.com/urban-bot/urban-bot/tree/master/examples/base/src) and [hooks](https://github.com/urban-bot/urban-bot/blob/master/examples/base/src/Hooks.tsx).
 
 ## Installation
 Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter).

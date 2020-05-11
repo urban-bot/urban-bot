@@ -1,18 +1,18 @@
 {
-    "name": "urban-bot-examples",
-    "private": true,
-    "description": "urban bot examples",
+    "name": "urban-bot-base-example",
+    "version": "0.0.1-alpha.25",
+    "description": "urban bot base example",
     "files": [
         "dist/**/*"
     ],
     "main": "dist/index.js",
     "scripts": {
         "build": "rimraf dist && tsc",
-        "start": "rimraf dist && nodemon",
+        "start": "nodemon",
         "typecheck": "tsc --noEmit",
-        "test": "jest",
         "lint": "eslint \"./src/**\"",
-        "lint:fix": "npm run lint -- --fix"
+        "lint:fix": "npm run lint -- --fix",
+        "precommit": "lint-staged"
     },
     "authors": [
         "ledamint",
@@ -34,12 +34,16 @@
         "eslint-plugin-react-hooks": "3.0.0",
         "nodemon": "2.0.3",
         "rimraf": "3.0.2",
-        "typescript": "3.8.3"
+        "typescript": "3.8.3",
+        "lint-staged": "10.1.7",
+        "prettier": "2.0.5"
     },
+
     "dependencies": {
-        "urban-bot": "0.0.1-aplha.24",
-        "urban-bot-slack": "^0.0.1-aplha.4",
-        "urban-bot-telegram": "^0.0.1-aplha.6"
+        "react": "16.13.1",
+        "urban-bot": "0.0.1-alpha.25",
+        "urban-bot-slack": "0.0.1-alpha.25",
+        "urban-bot-telegram": "0.0.1-alpha.25"
     },
     "engines": {
         "node": ">=10.0.0"
