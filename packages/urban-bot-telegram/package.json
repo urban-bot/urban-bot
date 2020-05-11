@@ -58,7 +58,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:urban-bot/urban-bot-telegram.git"
+    "url": "https://github.com/urban-bot/urban-bot.git",
+    "directory": "packages/urban-bot-telegram"
   },
   "engines": {
     "node": ">=10.0.0"

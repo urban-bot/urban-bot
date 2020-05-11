@@ -38,7 +38,6 @@
         "lint-staged": "10.1.7",
         "prettier": "2.0.5"
     },
-
     "dependencies": {
         "react": "16.13.1",
         "@urban-bot/core": "0.0.1",
@@ -47,5 +46,10 @@
     },
     "engines": {
         "node": ">=10.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/urban-bot/urban-bot.git",
+        "directory": "examples/base"
     }
 }
