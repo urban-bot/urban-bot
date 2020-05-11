@@ -12,7 +12,8 @@
         "typecheck": "tsc --noEmit",
         "test": "jest",
         "lint": "eslint \"./src/**\"",
-        "lint:fix": "npm run lint -- --fix"
+        "lint:fix": "npm run lint -- --fix",
+        "precommit": "lint-staged"
     },
     "authors": [
         "ledamint",
@@ -37,6 +38,7 @@
         "typescript": "3.8.3"
     },
     "dependencies": {
+        "react": "16.13.1",
         "urban-bot": "0.0.1-alpha.25",
         "urban-bot-slack": "0.0.1-alpha.25",
         "urban-bot-telegram": "0.0.1-alpha.25"
