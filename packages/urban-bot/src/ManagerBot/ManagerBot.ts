@@ -1,5 +1,5 @@
 import { PromiseQueue } from './PromiseQueue';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { ProcessUpdate, UrbanBot } from '../types/UrbanBot';
 import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { UrbanListener } from '../types';
