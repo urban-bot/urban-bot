@@ -51,12 +51,25 @@ describe('formatMarkupLanguageElement', () => {
             );
         });
 
-        it('throw error if tag does not process', async () => {
+        it('throw error if tag does not exist', async () => {
             expect(() =>
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
                 formatMarkupLanguageElement(<not-exist-tag>text</not-exist-tag>, HTML_MODE),
             ).toThrowErrorMatchingSnapshot();
+
+            expect(() => {
+                function Text() {
+                    return null;
+                }
+                return formatMarkupLanguageElement(
+                    // eslint-disable-next-line
+                    // @ts-ignore
+                    // eslint-disable-next-line
+                    <Text />,
+                    HTML_MODE,
+                );
+            }).toThrowErrorMatchingSnapshot();
         });
 
         test('react fragment', () => {

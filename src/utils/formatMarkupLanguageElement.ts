@@ -53,7 +53,9 @@ function formatHTMLElement(element: React.ReactElement<React.PropsWithChildren<u
             return `<a href="${href}">${text}</a>`;
         }
         default: {
-            throw new Error(`tag ${element.type} does not exist`);
+            const tag = typeof element.type === 'function' ? element.type.name : element.type;
+
+            throw new Error(`tag '${tag}' does not exist`);
         }
     }
 }
@@ -108,11 +110,12 @@ function formatMarkdownElement(element: React.ReactElement, text: string): strin
             return `<${href}|${text}>`;
         }
         default: {
-            throw new Error(`tag ${element.type} does not exist`);
+            const tag = typeof element.type === 'function' ? element.type.name : element.type;
+
+            throw new Error(`tag '${tag}' does not exist`);
         }
     }
 }
-
 export function formatMarkupLanguageElement(
     element: React.ReactNode,
     parseMode?: typeof HTML_MODE | typeof MARKDOWN_MODE,
