@@ -25,7 +25,7 @@ function App() {
             <Route path="/start" description="start">
                 <ImageExample />
             </Route>
-            <Route path="/123" description="text">
+            <Route path="/text" description="text">
                 <TextExample />
             </Route>
             <Route path="/buttons" description="buttons">
