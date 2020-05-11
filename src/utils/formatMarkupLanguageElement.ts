@@ -55,7 +55,7 @@ function formatHTMLElement(element: React.ReactElement<React.PropsWithChildren<u
         default: {
             const tag = typeof element.type === 'function' ? element.type.name : element.type;
 
-            throw new Error(`tag '${tag}' does not exist`);
+            throw new Error(`Can't format tag '${tag}'. Please use only <b>, <i>, ...`);
         }
     }
 }
@@ -112,7 +112,7 @@ function formatMarkdownElement(element: React.ReactElement, text: string): strin
         default: {
             const tag = typeof element.type === 'function' ? element.type.name : element.type;
 
-            throw new Error(`tag '${tag}' does not exist`);
+            throw new Error(`Can't format tag '${tag}'. Please use only <b>, <i>, ...`);
         }
     }
 }
