@@ -11,14 +11,29 @@ function formatHTMLElement(element: React.ReactElement<React.PropsWithChildren<u
         case 'b': {
             return `<b>${text}</b>`;
         }
+        case 'strong': {
+            return `<strong>${text}</strong>`;
+        }
         case 'i': {
             return `<i>${text}</i>`;
+        }
+        case 'em': {
+            return `<em>${text}</em>`;
         }
         case 'u': {
             return `<u>${text}</u>`;
         }
+        case 'ins': {
+            return `<ins>${text}</ins>`;
+        }
         case 's': {
             return `<s>${text}</s>`;
+        }
+        case 'strike': {
+            return `<strike>${text}</strike>`;
+        }
+        case 'del': {
+            return `<del>${text}</del>`;
         }
         case 'q': {
             return `<q>${text}</q>`;
@@ -38,7 +53,9 @@ function formatHTMLElement(element: React.ReactElement<React.PropsWithChildren<u
             return `<a href="${href}">${text}</a>`;
         }
         default: {
-            throw new Error(`tag ${element.type} does not exist`);
+            const tag = typeof element.type === 'function' ? element.type.name : element.type;
+
+            throw new Error(`Can't format tag '${tag}'. Please use only <b>, <i>, ...`);
         }
     }
 }
@@ -51,13 +68,28 @@ function formatMarkdownElement(element: React.ReactElement, text: string): strin
         case 'b': {
             return `*${text}*`;
         }
+        case 'strong': {
+            return `*${text}*`;
+        }
         case 'i': {
+            return `_${text}_`;
+        }
+        case 'em': {
             return `_${text}_`;
         }
         case 'u': {
             return text;
         }
+        case 'ins': {
+            return text;
+        }
         case 's': {
+            return `~${text}~`;
+        }
+        case 'strike': {
+            return `~${text}~`;
+        }
+        case 'del': {
             return `~${text}~`;
         }
         case 'q': {
@@ -78,11 +110,12 @@ function formatMarkdownElement(element: React.ReactElement, text: string): strin
             return `<${href}|${text}>`;
         }
         default: {
-            throw new Error(`tag ${element.type} does not exist`);
+            const tag = typeof element.type === 'function' ? element.type.name : element.type;
+
+            throw new Error(`Can't format tag '${tag}'. Please use only <b>, <i>, ...`);
         }
     }
 }
-
 export function formatMarkupLanguageElement(
     element: React.ReactNode,
     parseMode?: typeof HTML_MODE | typeof MARKDOWN_MODE,

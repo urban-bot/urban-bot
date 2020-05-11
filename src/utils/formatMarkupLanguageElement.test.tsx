@@ -10,18 +10,23 @@ describe('formatMarkupLanguageElement', () => {
 
         test('bold', () => {
             expect(formatMarkupLanguageElement(<b>text</b>, HTML_MODE)).toBe('<b>text</b>');
+            expect(formatMarkupLanguageElement(<strong>text</strong>, HTML_MODE)).toBe('<strong>text</strong>');
         });
 
         test('italic', () => {
             expect(formatMarkupLanguageElement(<i>text</i>, HTML_MODE)).toBe('<i>text</i>');
+            expect(formatMarkupLanguageElement(<em>text</em>, HTML_MODE)).toBe('<em>text</em>');
         });
 
         test('underscore', () => {
             expect(formatMarkupLanguageElement(<u>text</u>, HTML_MODE)).toBe('<u>text</u>');
+            expect(formatMarkupLanguageElement(<ins>text</ins>, HTML_MODE)).toBe('<ins>text</ins>');
         });
 
         test('strikethrough', () => {
             expect(formatMarkupLanguageElement(<s>text</s>, HTML_MODE)).toBe('<s>text</s>');
+            expect(formatMarkupLanguageElement(<strike>text</strike>, HTML_MODE)).toBe('<strike>text</strike>');
+            expect(formatMarkupLanguageElement(<del>text</del>, HTML_MODE)).toBe('<del>text</del>');
         });
 
         test('code', () => {
@@ -46,12 +51,19 @@ describe('formatMarkupLanguageElement', () => {
             );
         });
 
-        it('throw error if tag does not process', async () => {
+        it('throw error if tag does not exist', async () => {
             expect(() =>
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
                 formatMarkupLanguageElement(<not-exist-tag>text</not-exist-tag>, HTML_MODE),
             ).toThrowErrorMatchingSnapshot();
+
+            expect(() => {
+                function Text() {
+                    return null;
+                }
+                return formatMarkupLanguageElement(<Text />, HTML_MODE);
+            }).toThrowErrorMatchingSnapshot();
         });
 
         test('react fragment', () => {
@@ -165,18 +177,23 @@ describe('formatMarkupLanguageElement', () => {
 
         test('bold', () => {
             expect(formatMarkupLanguageElement(<b>text</b>, MARKDOWN_MODE)).toBe('*text*');
+            expect(formatMarkupLanguageElement(<strong>text</strong>, MARKDOWN_MODE)).toBe('*text*');
         });
 
         test('italic', () => {
             expect(formatMarkupLanguageElement(<i>text</i>, MARKDOWN_MODE)).toBe('_text_');
+            expect(formatMarkupLanguageElement(<em>text</em>, MARKDOWN_MODE)).toBe('_text_');
         });
 
         test('underscore', () => {
             expect(formatMarkupLanguageElement(<u>text</u>, MARKDOWN_MODE)).toBe('text');
+            expect(formatMarkupLanguageElement(<ins>text</ins>, MARKDOWN_MODE)).toBe('text');
         });
 
         test('strikethrough', () => {
             expect(formatMarkupLanguageElement(<s>text</s>, MARKDOWN_MODE)).toBe('~text~');
+            expect(formatMarkupLanguageElement(<strike>text</strike>, MARKDOWN_MODE)).toBe('~text~');
+            expect(formatMarkupLanguageElement(<del>text</del>, MARKDOWN_MODE)).toBe('~text~');
         });
 
         test('code', () => {

@@ -51,9 +51,14 @@ declare global {
             'urban-media': UrbanElementMedia;
             'urban-location': UrbanElementLocation;
             b: Markup;
+            strong: Markup;
             i: Markup;
+            em: Markup;
             u: Markup;
+            ins: Markup;
             s: Markup;
+            strike: Markup;
+            del: Markup;
             code: Markup;
             pre: Markup;
             q: Markup;
