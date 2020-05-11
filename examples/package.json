@@ -35,7 +35,8 @@
         "eslint-plugin-react-hooks": "3.0.0",
         "nodemon": "2.0.3",
         "rimraf": "3.0.2",
-        "typescript": "3.8.3"
+        "typescript": "3.8.3",
+        "lint-staged": "10.1.7"
     },
     "dependencies": {
         "react": "16.13.1",
