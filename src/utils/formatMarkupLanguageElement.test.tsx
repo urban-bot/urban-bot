@@ -62,13 +62,7 @@ describe('formatMarkupLanguageElement', () => {
                 function Text() {
                     return null;
                 }
-                return formatMarkupLanguageElement(
-                    // eslint-disable-next-line
-                    // @ts-ignore
-                    // eslint-disable-next-line
-                    <Text />,
-                    HTML_MODE,
-                );
+                return formatMarkupLanguageElement(<Text />, HTML_MODE);
             }).toThrowErrorMatchingSnapshot();
         });
 
