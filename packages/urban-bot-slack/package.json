@@ -9,7 +9,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "start": "rimraf dist && tsc --watch",
+    "start": "tsc --watch",
     "test": "jest --passWithNoTests",
     "lint": "eslint \"./src/**\"",
     "lint:fix": "npm run lint -- --fix",
