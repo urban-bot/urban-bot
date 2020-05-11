@@ -1,7 +1,7 @@
 // import fs from 'fs';
 // import path from 'path';
 import React from 'react';
-import { Audio } from 'urban-bot';
+import { Audio } from '@urban-bot/core';
 
 // const audioByFile = fs.readFileSync(path.join(__dirname, 'audio.mp3'));
 

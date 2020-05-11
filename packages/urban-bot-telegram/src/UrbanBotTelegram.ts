@@ -25,7 +25,7 @@ import {
     UrbanExistingMessageByType,
     UrbanMessage,
     UrbanCommand,
-} from 'urban-bot';
+} from '@urban-bot/core';
 import {
     EditMessageOptions,
     formatParamsForExistingMessage,
@@ -576,7 +576,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' is not supported. Please don't use it with telegram bot or add this logic to urban-bot/telegram.`,
+                    }' is not supported. Please don't use it with telegram bot or add this logic to @urban-bot/telegram.`,
                 );
             }
         }
@@ -657,7 +657,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' is not supported to update the message for urban-bot/telegram. You could send a new message every time for this tag.`,
+                    }' is not supported to update the message for @urban-bot/telegram. You could send a new message every time for this tag.`,
                 );
             }
         }

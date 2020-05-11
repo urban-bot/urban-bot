@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import React from 'react';
-import { render, Route, Router, Root, Notification, Text } from 'urban-bot';
-import { UrbanBotTelegram } from 'urban-bot-telegram';
-import { UrbanBotSlack } from 'urban-bot-slack';
+import { render, Route, Router, Root, Notification, Text } from '@urban-bot/core';
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+import { UrbanBotSlack } from '@urban-bot/slack';
 import { TextExample } from './Text';
 import { Hooks } from './Hooks';
 import { ImageExample } from './Image';
@@ -25,7 +25,7 @@ function App() {
             <Route path="/start" description="start">
                 <ImageExample />
             </Route>
-            <Route path="/text" description="text">
+            <Route path="/123" description="text">
                 <TextExample />
             </Route>
             <Route path="/buttons" description="buttons">
