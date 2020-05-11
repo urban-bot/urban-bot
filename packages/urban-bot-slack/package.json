@@ -1,6 +1,6 @@
 {
-  "name": "urban-bot-slack",
-  "version": "0.0.1-alpha.25",
+  "name": "@urban-bot/slack",
+  "version": "0.0.1",
   "description": "Create Slack chatbot with urban-bot",
   "files": [
     "dist/**/*"
@@ -13,7 +13,7 @@
     "test": "jest --passWithNoTests",
     "lint": "eslint \"./src/**\"",
     "lint:fix": "npm run lint -- --fix",
-    "my-publish": "npm run build && npm publish",
+    "my-publish": "npm run build && npm publish --access public",
     "typecheck": "tsc --noEmit",
     "precommit": "lint-staged"
   },
@@ -50,7 +50,7 @@
     "ts-jest": "25.4.0",
     "typescript": "3.8.3",
     "ngrok": "3.2.7",
-    "urban-bot": "0.0.1-alpha.25"
+    "@urban-bot/core": "0.0.1"
   },
   "dependencies": {
     "@slack/types": "1.5.0",
@@ -61,7 +61,7 @@
     "express": "4.17.1"
   },
   "peerDependencies": {
-    "urban-bot": "0.0.1-alpha.25"
+    "@urban-bot/core": "0.0.1"
   },
   "repository": {
     "type": "git",
