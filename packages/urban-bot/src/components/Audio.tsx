@@ -1,10 +1,11 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
-import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
 import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 import { UrbanFileFormat } from '../types';
+import { getDefaultParseMode } from '../specific';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export type AudioProps = UrbanMessageCommonData & {
     file: UrbanFileFormat;
@@ -35,10 +36,15 @@ export function Audio({
         isNewMessageEveryRender: isNewMessageEveryRenderContext,
         chat,
         parseMode: parseModeContext,
+        bot,
     } = useBotContext();
 
-    const finalParseMode = parseMode ?? parseModeContext;
-    const formattedTitle = formatText(title, finalParseMode);
+    let finalParseMode = parseMode ?? parseModeContext;
+    if (React.isValidElement(title) || Array.isArray(title)) {
+        finalParseMode = finalParseMode ?? getDefaultParseMode(bot.type);
+    }
+    const formattedTitle = formatMarkupLanguageElement(title, finalParseMode);
+
     const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
 
     return (

@@ -1,10 +1,11 @@
 import React from 'react';
 import { useBotContext, useAction } from '../hooks/hooks';
 import { formatButtonElement } from '../utils/formatButtonElement';
-import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { OtherProps } from '../types/common';
 import { flatten } from 'array-flatten';
+import { getDefaultParseMode } from '../specific';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
@@ -29,11 +30,16 @@ export function ButtonGroup({
         isNewMessageEveryRender: isNewMessageEveryRenderContext,
         chat,
         parseMode: parseModeContext,
+        bot,
     } = useBotContext();
 
     const buttons = formatButtonElement(children);
-    const finalParseMode = parseMode ?? parseModeContext;
-    const formattedTitle = formatText(title, finalParseMode);
+
+    let finalParseMode = parseMode ?? parseModeContext;
+    if (React.isValidElement(title) || Array.isArray(title)) {
+        finalParseMode = finalParseMode ?? getDefaultParseMode(bot.type);
+    }
+    const formattedTitle = formatMarkupLanguageElement(title, finalParseMode);
 
     useAction((ctx) => {
         const { actionId } = ctx;

@@ -1,9 +1,10 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
-import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
 import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
+import { getDefaultParseMode } from '../specific';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export type LocationProps = UrbanMessageCommonData & {
     latitude: number;
@@ -32,10 +33,15 @@ export function Location({
         isNewMessageEveryRender: isNewMessageEveryRenderContext,
         chat,
         parseMode: parseModeContext,
+        bot,
     } = useBotContext();
 
-    const finalParseMode = parseMode ?? parseModeContext;
-    const formattedTitle = formatText(title, finalParseMode);
+    let finalParseMode = parseMode ?? parseModeContext;
+    if (React.isValidElement(title) || Array.isArray(title)) {
+        finalParseMode = finalParseMode ?? getDefaultParseMode(bot.type);
+    }
+    const formattedTitle = formatMarkupLanguageElement(title, finalParseMode);
+
     const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
 
     return (
