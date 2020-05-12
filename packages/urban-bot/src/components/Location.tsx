@@ -3,7 +3,6 @@ import { useBotContext } from '../hooks/hooks';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
 import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
-import { getDefaultParseMode } from '../specific';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export type LocationProps = UrbanMessageCommonData & {
@@ -38,7 +37,7 @@ export function Location({
 
     let finalParseMode = parseMode ?? parseModeContext;
     if (React.isValidElement(title) || Array.isArray(title)) {
-        finalParseMode = finalParseMode ?? getDefaultParseMode(bot.type);
+        finalParseMode = finalParseMode ?? bot.defaultParseMode;
     }
     const formattedTitle = formatMarkupLanguageElement(title, finalParseMode);
 

@@ -4,7 +4,6 @@ import { formatButtonElement } from '../utils/formatButtonElement';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { OtherProps } from '../types/common';
 import { flatten } from 'array-flatten';
-import { getDefaultParseMode } from '../specific';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export type ButtonGroupProps = UrbanMessageCommonData & {
@@ -37,7 +36,7 @@ export function ButtonGroup({
 
     let finalParseMode = parseMode ?? parseModeContext;
     if (React.isValidElement(title) || Array.isArray(title)) {
-        finalParseMode = finalParseMode ?? getDefaultParseMode(bot.type);
+        finalParseMode = finalParseMode ?? bot.defaultParseMode;
     }
     const formattedTitle = formatMarkupLanguageElement(title, finalParseMode);
 

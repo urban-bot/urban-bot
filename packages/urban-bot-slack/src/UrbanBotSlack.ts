@@ -13,6 +13,7 @@ import {
     UrbanSyntheticEventCommand,
     UrbanSyntheticEventCommon,
     UrbanSyntheticEventText,
+    UrbanParseMode,
 } from '@urban-bot/core';
 import { KnownBlock } from '@slack/types';
 
@@ -48,6 +49,7 @@ export type SlackBotMeta = {
 export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
     static TYPE = 'SLACK' as const;
     type = UrbanBotSlack.TYPE;
+    defaultParseMode: UrbanParseMode = 'markdown';
     client: WebClient;
     events: ReturnType<typeof createEventAdapter>;
     interactions: ReturnType<typeof createMessageAdapter>;

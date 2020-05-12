@@ -1,7 +1,6 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
 import { UrbanMessageCommonData } from '../types/Messages';
-import { getDefaultParseMode } from '../specific';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 
 export type TextProps = UrbanMessageCommonData & {
@@ -30,7 +29,7 @@ export function Text({
 
     let finalParseMode = parseMode ?? parseModeContext;
     if (React.isValidElement(children) || Array.isArray(children)) {
-        finalParseMode = finalParseMode ?? getDefaultParseMode(bot.type);
+        finalParseMode = finalParseMode ?? bot.defaultParseMode;
     }
     const formattedText = formatMarkupLanguageElement(children, finalParseMode);
 
