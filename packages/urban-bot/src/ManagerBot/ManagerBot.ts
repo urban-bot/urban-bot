@@ -17,7 +17,7 @@ export class ManagerBot<Bot extends UrbanBot = any> {
     private chats = new Map<string, Chat>();
     private eventEmitter: EventEmitter;
 
-    constructor(private bot: Bot) {
+    constructor(private bot: Bot, private debounceDelay = 50) {
         this.eventEmitter = new EventEmitter();
 
         bot.processUpdate = this.processUpdate;
@@ -42,7 +42,10 @@ export class ManagerBot<Bot extends UrbanBot = any> {
         this.chats.set(id, {
             promiseQueue: new PromiseQueue(),
             eventEmitter: new EventEmitter(),
-            updateMessage: debounce((message: UrbanExistingMessage) => this.bot.updateMessage(message), 50),
+            updateMessage: debounce(
+                (message: UrbanExistingMessage) => this.bot.updateMessage(message),
+                this.debounceDelay,
+            ),
         });
     }
 
