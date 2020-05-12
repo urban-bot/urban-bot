@@ -1,5 +1,5 @@
 import React from 'react';
-import { createNode } from './dom';
+import { createNode } from './node';
 import { reactReconciler } from './reconciler';
 
 export function render(reactElement: React.ReactElement, callback: () => void | null | undefined = () => null) {
