@@ -1,5 +1,5 @@
 import ReactReconciler from 'react-reconciler';
-import { createNode, appendChildNode, removeChildNode, updateNode } from './dom';
+import { createNode, appendChildNode, removeChildNode, updateNode } from './node';
 
 const rootHostContext = {};
 const childHostContext = {};
