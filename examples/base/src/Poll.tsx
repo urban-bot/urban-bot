@@ -1,5 +1,5 @@
 import React from 'react';
-import { Poll, Option } from 'urban-bot';
+import { Poll, Option } from '@urban-bot/core';
 
 export function PollExample() {
     return (

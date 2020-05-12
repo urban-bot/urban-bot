@@ -1,4 +1,4 @@
-[![npm package](https://img.shields.io/npm/v/urban-bot?logo=npm&style=flat-square)](https://www.npmjs.org/package/urban-bot)
+[![npm package](https://img.shields.io/npm/v/@urban-bot/core?logo=npm&style=flat-square)](https://www.npmjs.com/package/@urban-bot/core)
 ![Build](https://github.com/urban-bot/urban-bot/workflows/Node.js%20CI/badge.svg)
 # Urban Bot
 
@@ -17,7 +17,7 @@ Please use our zero configuration [starter](https://github.com/urban-bot/urban-b
 
 Or install manually:
 ```
-$ npm i react urban-bot urban-bot-(slack|telegram|...)
+$ npm i react @urban-bot/core @urban-bot/(telegram/slack|...)
 ```
 
 ## Simple example
@@ -25,9 +25,9 @@ $ npm i react urban-bot urban-bot-(slack|telegram|...)
 ![](files/slack-gif.gif)
 ```javascript
 import React from 'react';
-import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from 'urban-bot';
-import { UrbanBotTelegram } from 'urban-bot-telegram';
-import { UrbanBotSlack } from 'urban-bot-slack';
+import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from '@urban-bot/core';
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+import { UrbanBotSlack } from '@urban-bot/slack';
 
 function Echo() {
     const [text, setText] = React.useState('Say something');

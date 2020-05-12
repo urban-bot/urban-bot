@@ -1,6 +1,6 @@
 {
-    "name": "urban-bot",
-    "version": "0.0.1-alpha.25",
+    "name": "@urban-bot/core",
+    "version": "0.0.1",
     "description": "Universal chatbot library based on React",
     "files": [
         "dist/**/*"
@@ -13,7 +13,7 @@
         "test": "jest",
         "lint": "eslint \"./src/**\"",
         "lint:fix": "npm run lint -- --fix",
-        "my-publish": "npm run build && npm publish",
+        "my-publish": "npm run build && npm publish --access public",
         "typecheck": "tsc --noEmit",
         "precommit": "lint-staged"
     },
@@ -60,7 +60,8 @@
     },
     "repository": {
         "type": "git",
-        "url": "git@github.com:urban-bot/urban-bot.git"
+        "url": "git@github.com:urban-bot/urban-bot.git",
+        "directory": "packages/urban-bot"
     },
     "engines": {
         "node": ">=10.0.0"

@@ -15,7 +15,7 @@ import {
     useAnimation,
     useDice,
     useCommand,
-} from 'urban-bot';
+} from '@urban-bot/core';
 
 export function Hooks() {
     const [answer, setAnswer] = React.useState('Please send anything');

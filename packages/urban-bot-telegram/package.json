@@ -1,6 +1,6 @@
 {
-  "name": "urban-bot-telegram",
-  "version": "0.0.1-alpha.25",
+  "name": "@urban-bot/telegram",
+  "version": "0.0.1",
   "description": "Create Telegram chatbot with urban-bot",
   "files": [
     "dist/**/*"
@@ -13,7 +13,7 @@
     "test": "jest --passWithNoTests",
     "lint": "eslint \"./src/**\"",
     "lint:fix": "npm run lint -- --fix",
-    "my-publish": "npm run build && npm publish",
+    "my-publish": "npm run build && npm publish --access public",
     "typecheck": "tsc --noEmit",
     "precommit": "lint-staged"
   },
@@ -47,18 +47,19 @@
     "rimraf": "3.0.2",
     "ts-jest": "25.4.0",
     "typescript": "3.8.3",
-    "urban-bot": "0.0.1-alpha.25"
+    "@urban-bot/core": "0.0.1"
   },
   "dependencies": {
     "@types/node-telegram-bot-api": "0.40.3",
     "node-telegram-bot-api": "0.40.0"
   },
   "peerDependencies": {
-    "urban-bot": "0.0.1-alpha.25"
+    "@urban-bot/core": "0.0.1"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:urban-bot/urban-bot-telegram.git"
+    "url": "https://github.com/urban-bot/urban-bot.git",
+    "directory": "packages/urban-bot-telegram"
   },
   "engines": {
     "node": ">=10.0.0"
