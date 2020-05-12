@@ -5,7 +5,7 @@ import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { UrbanListener } from '../types';
 import { UrbanSyntheticEvent } from '../types/Events';
 import { BotMetaByBot } from '../hooks/hooks';
-import { debounce } from 'lodash';
+import debounce from 'lodash.debounce';
 
 type Chat = {
     eventEmitter: EventEmitter;
