@@ -12,7 +12,7 @@ export function Notification({ children, intervalSeconds }: NotificationProps) {
     useInterval(() => {
         setIsActive(true);
         setIsActive(false);
-    }, intervalSeconds);
+    }, intervalSeconds * 1000);
 
     if (!isActive) {
         return null;
