@@ -6,6 +6,7 @@ import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 import { OtherProps } from '../types/common';
 import { formatOptionElement } from '../utils/formatOptionElement';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { getParseMode } from '../utils/getParseMode';
 
 export type PollProps = UrbanMessageCommonData & {
     question: string;
@@ -47,10 +48,9 @@ export function Poll({
         bot,
     } = useBotContext();
 
-    let finalParseMode = parseMode ?? parseModeContext;
-    if (React.isValidElement(question) || React.isValidElement(explanation)) {
-        finalParseMode = finalParseMode ?? bot.defaultParseMode;
-    }
+    const finalParseModeQuestion = getParseMode(question, parseMode, parseModeContext, bot.defaultParseMode);
+    const finalParseModeExplanation = getParseMode(explanation, parseMode, parseModeContext, bot.defaultParseMode);
+    const finalParseMode = finalParseModeQuestion ?? finalParseModeExplanation;
     const formattedQuestion = formatMarkupLanguageElement(question, finalParseMode);
     const formattedExplanation = formatMarkupLanguageElement(explanation, finalParseMode);
 

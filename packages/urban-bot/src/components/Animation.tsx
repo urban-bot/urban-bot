@@ -5,6 +5,7 @@ import { ButtonGroupProps } from './ButtonGroup';
 import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 import { UrbanFileFormat } from '../types';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { getParseMode } from '../utils/getParseMode';
 
 export type AnimationProps = UrbanMessageCommonData & {
     file: UrbanFileFormat;
@@ -39,10 +40,7 @@ export function Animation({
         bot,
     } = useBotContext();
 
-    let finalParseMode = parseMode ?? parseModeContext;
-    if (React.isValidElement(title) || Array.isArray(title)) {
-        finalParseMode = finalParseMode ?? bot.defaultParseMode;
-    }
+    const finalParseMode = getParseMode(title, parseMode, parseModeContext, bot.defaultParseMode);
     const formattedTitle = formatMarkupLanguageElement(title, finalParseMode);
 
     const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
