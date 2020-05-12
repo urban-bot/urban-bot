@@ -13,7 +13,7 @@ import {
     UrbanSyntheticEventCommand,
     UrbanSyntheticEventCommon,
     UrbanSyntheticEventText,
-} from 'urban-bot';
+} from '@urban-bot/core';
 import { KnownBlock } from '@slack/types';
 
 import {
@@ -258,7 +258,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             }
             case 'urban-audio': {
                 if (typeof message.data.file === 'string') {
-                    throw new Error("urban-bot/slack doesn't support audio file as string");
+                    throw new Error("@urban-bot/slack doesn't support audio file as string");
                 }
 
                 return (this.client.files.upload({
@@ -270,7 +270,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             }
             case 'urban-video': {
                 if (typeof message.data.file === 'string') {
-                    throw new Error("urban-bot/slack doesn't support video file as string");
+                    throw new Error("@urban-bot/slack doesn't support video file as string");
                 }
 
                 return (this.client.files.upload({
@@ -282,7 +282,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             }
             case 'urban-file': {
                 if (typeof message.data.file === 'string') {
-                    throw new Error("urban-bot/slack doesn't support video file as string");
+                    throw new Error("@urban-bot/slack doesn't support video file as string");
                 }
 
                 return (this.client.files.upload({
@@ -294,7 +294,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             }
             case 'urban-animation': {
                 if (typeof message.data.file === 'string') {
-                    throw new Error("urban-bot/slack doesn't support animation file as string");
+                    throw new Error("@urban-bot/slack doesn't support animation file as string");
                 }
 
                 return (this.client.files.upload({
@@ -343,7 +343,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' is not supported. Please don't use it with slack bot or add this logic to urban-bot/slack.`,
+                    }' is not supported. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
                 );
             }
         }
@@ -363,7 +363,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             case 'urban-img': {
                 if (typeof message.data.file !== 'string') {
                     throw new Error(
-                        'Provide urban-img file as string if you want to edit the image message. urban-bot/slack',
+                        'Provide urban-img file as string if you want to edit the image message. @urban-bot/slack',
                     );
                 }
 
@@ -424,7 +424,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' is not supported to update the message for urban-bot/slack. You could send a new message every time for this tag.`,
+                    }' is not supported to update the message for @urban-bot/slack. You could send a new message every time for this tag.`,
                 );
             }
         }

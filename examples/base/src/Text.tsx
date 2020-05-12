@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, useBotContext } from 'urban-bot';
-import { UrbanBotTelegram } from 'urban-bot-telegram';
+import { Text, useBotContext } from '@urban-bot/core';
+import { UrbanBotTelegram } from '@urban-bot/telegram';
 
 const someCode = `function sum2() {
     return 2 + 2;
