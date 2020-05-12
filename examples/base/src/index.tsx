@@ -80,7 +80,7 @@ if (process.env.TELEGRAM_TOKEN_DEV) {
         polling: true,
     });
     render(
-        <Root bot={urbanBotTelegram} parseMode="HTML">
+        <Root bot={urbanBotTelegram}>
             <App />
         </Root>,
     );

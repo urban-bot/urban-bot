@@ -1,10 +1,11 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
-import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { ButtonGroupProps } from './ButtonGroup';
 import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 import { UrbanFileFormat } from '../types';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { getParseMode } from '../utils/getParseMode';
 
 export type VideoProps = UrbanMessageCommonData & {
     file: UrbanFileFormat;
@@ -39,10 +40,12 @@ export function Video({
         isNewMessageEveryRender: isNewMessageEveryRenderContext,
         chat,
         parseMode: parseModeContext,
+        bot,
     } = useBotContext();
 
-    const finalParseMode = parseMode ?? parseModeContext;
-    const formattedTitle = formatText(title, finalParseMode);
+    const finalParseMode = getParseMode(title, parseMode, parseModeContext, bot.defaultParseMode);
+    const formattedTitle = formatMarkupLanguageElement(title, finalParseMode);
+
     const formattedButtons = getButtonsByButtonGroup(buttonGroupElement);
 
     return (
