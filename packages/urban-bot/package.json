@@ -34,6 +34,7 @@
         "@types/jest": "25.2.1",
         "@types/react": "16.9.34",
         "@types/react-reconciler": "0.18.0",
+        "@types/lodash": "4.14.150",
         "@typescript-eslint/eslint-plugin": "2.29.0",
         "@typescript-eslint/parser": "2.29.0",
         "eslint": "6.8.0",
@@ -49,7 +50,8 @@
         "react": "16.13.1",
         "rimraf": "3.0.2",
         "ts-jest": "25.4.0",
-        "typescript": "3.8.3"
+        "typescript": "3.8.3",
+        "lodash": "4.17.15"
     },
     "dependencies": {
         "array-flatten": "3.0.0",

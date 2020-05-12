@@ -5,13 +5,15 @@ import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { UrbanListener } from '../types';
 import { UrbanSyntheticEvent } from '../types/Events';
 import { BotMetaByBot } from '../hooks/hooks';
+import { debounce } from 'lodash';
 
 type Chat = {
     eventEmitter: EventEmitter;
     promiseQueue: PromiseQueue;
+    updateMessage: UrbanBot['updateMessage'];
 };
 
-export class ManagerBot<Bot extends UrbanBot> {
+export class ManagerBot<Bot extends UrbanBot = any> {
     private chats = new Map<string, Chat>();
     private eventEmitter: EventEmitter;
 
@@ -37,7 +39,11 @@ export class ManagerBot<Bot extends UrbanBot> {
     };
 
     addChat(id: string) {
-        this.chats.set(id, { promiseQueue: new PromiseQueue(), eventEmitter: new EventEmitter() });
+        this.chats.set(id, {
+            promiseQueue: new PromiseQueue(),
+            eventEmitter: new EventEmitter(),
+            updateMessage: debounce((message: UrbanExistingMessage) => this.bot.updateMessage(message), 50),
+        });
     }
 
     deleteChat(id: string) {
@@ -113,7 +119,13 @@ export class ManagerBot<Bot extends UrbanBot> {
     }
 
     updateMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
-        return this.bot.updateMessage(message);
+        const chatById = this.chats.get(message.chat.id);
+
+        if (chatById === undefined) {
+            throw new Error('Specify chatId via managerBot.addChat(chatId) to updateMessage for specific chat');
+        }
+
+        chatById.updateMessage(message);
     }
 
     deleteMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
