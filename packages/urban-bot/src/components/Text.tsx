@@ -1,7 +1,8 @@
 import React from 'react';
 import { useBotContext } from '../hooks/hooks';
-import { formatText } from '../utils/formatText';
 import { UrbanMessageCommonData } from '../types/Messages';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { getParseMode } from '../utils/getParseMode';
 
 export type TextProps = UrbanMessageCommonData & {
     disableWebPagePreview?: boolean;
@@ -24,10 +25,11 @@ export function Text({
         isNewMessageEveryRender: isNewMessageEveryRenderContext,
         chat,
         parseMode: parseModeContext,
+        bot,
     } = useBotContext();
 
-    const finalParseMode = parseMode ?? parseModeContext;
-    const formattedText = formatText(children, finalParseMode);
+    const finalParseMode = getParseMode(children, parseMode, parseModeContext, bot.defaultParseMode);
+    const formattedText = formatMarkupLanguageElement(children, finalParseMode);
 
     return (
         <urban-text

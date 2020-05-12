@@ -25,6 +25,7 @@ import {
     UrbanExistingMessageByType,
     UrbanMessage,
     UrbanCommand,
+    UrbanParseMode,
 } from '@urban-bot/core';
 import {
     EditMessageOptions,
@@ -54,6 +55,7 @@ export type TelegramBotType = UrbanBotMeta & {
 export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanBotTelegram.TYPE;
+    defaultParseMode: UrbanParseMode = 'HTML';
 
     bot: TelegramBot;
 
