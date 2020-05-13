@@ -17,7 +17,7 @@ Please use our zero configuration [starter](https://github.com/urban-bot/urban-b
 
 Or install manually:
 ```
-$ npm i react @urban-bot/core @urban-bot/(telegram/slack|...)
+$ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/slack
 ```
 
 ## Simple example
