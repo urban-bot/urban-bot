@@ -10,7 +10,7 @@ import debounce from 'lodash.debounce';
 type Chat = {
     eventEmitter: EventEmitter;
     promiseQueue: PromiseQueue;
-    updateMessage: UrbanBot['updateMessage'];
+    updateMessage: Function;
 };
 
 export class ManagerBot<Bot extends UrbanBot = any> {
@@ -39,13 +39,24 @@ export class ManagerBot<Bot extends UrbanBot = any> {
     };
 
     addChat(id: string) {
+        let updateMessage;
+        if (this.bot.updateMessage !== undefined) {
+            updateMessage = debounce(
+                (message: UrbanExistingMessage) => this.bot.updateMessage?.(message),
+                this.debounceDelay,
+            );
+        } else {
+            updateMessage = () => {
+                throw new Error(
+                    `'${this.bot.type}' doesn't support updating message. Provide isNewMessageEveryRender prop to Root component`,
+                );
+            };
+        }
+
         this.chats.set(id, {
             promiseQueue: new PromiseQueue(),
             eventEmitter: new EventEmitter(),
-            updateMessage: debounce(
-                (message: UrbanExistingMessage) => this.bot.updateMessage(message),
-                this.debounceDelay,
-            ),
+            updateMessage,
         });
     }
 
@@ -132,6 +143,12 @@ export class ManagerBot<Bot extends UrbanBot = any> {
     }
 
     deleteMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
+        if (this.bot.deleteMessage === undefined) {
+            throw new Error(
+                `'${this.bot.type}' doesn't support deleting message. Provide isNewMessageEveryRender prop to Root component`,
+            );
+        }
+
         return this.bot.deleteMessage(message);
     }
 }
