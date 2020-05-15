@@ -1,35 +1,24 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import {
-    UrbanBot,
-    UrbanMessage,
-    UrbanExistingMessage,
-    UrbanSyntheticEvent,
-    UrbanSyntheticEventAction,
-    UrbanSyntheticEventCommand,
-    UrbanSyntheticEventCommon,
-    UrbanSyntheticEventText,
-    UrbanParseMode,
-} from '@urban-bot/core';
+import { UrbanBot, UrbanMessage, UrbanSyntheticEvent, UrbanParseMode } from '@urban-bot/core';
 
 import express from 'express';
 import bodyParser from 'body-parser';
 import crypto from 'crypto';
-import path from 'path';
 import GraphAPi from './graph-api';
 import config from './config';
-const app = express();
+import { FacebookPayload } from './types';
 
 const { urlencoded, json } = bodyParser;
 
-type FACEBOOK = 'FACEBOOK';
+export type FACEBOOK = 'FACEBOOK';
 
-type UrbanNativeEventFacebook = {
+export type UrbanNativeEventFacebook = {
     type: FACEBOOK;
-    payload?: any;
+    payload?: FacebookPayload;
 };
 
 export type FacebookBotMeta = {
-    NativeEvent: any;
+    NativeEvent: UrbanNativeEventFacebook;
     MessageMeta: any;
 };
 
@@ -40,26 +29,15 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
     client = GraphAPi;
 
     constructor() {
-        // Parse application/x-www-form-urlencoded
+        const app = express();
+
         app.use(
             urlencoded({
                 extended: true,
             }),
         );
 
-        // Parse application/json. Verify that callback came from Facebook
         app.use(json({ verify: verifyRequestSignature }));
-
-        // Serving static files in Express
-        app.use(express.static(path.join(path.resolve(), 'public')));
-
-        // Set template engine in Express
-        app.set('view engine', 'ejs');
-
-        // Respond with index file when a GET request is made to the homepage
-        app.get('/', function (_req, res) {
-            res.render('index');
-        });
 
         // Adds support for GET requests to our webhook
         app.get('/webhook', (req, res) => {
@@ -83,56 +61,77 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         });
 
         // Creates the endpoint for your webhook
-        app.post('/webhook', (req: any, res: any) => {
-            // {
-            //     object: 'page',
-            //         entry: [
-            //     { id: '101620374895957', time: 1589389931083, messaging: [Array] }
-            // ]
-            // }
+        app.post('/webhook', (req, res) => {
+            const payload = req.body as FacebookPayload;
 
-            console.log("app.post('/webhook'");
-
-            const text = req.body.entry[0].messaging[0].message.text;
-            const id = req.body.entry[0].messaging[0].sender.id;
-
+            const id = payload.entry[0].messaging[0].sender.id;
+            const { text, attachments } = payload.entry[0].messaging[0].message;
             const common = {
                 chat: { id },
                 nativeEvent: {
                     type: UrbanBotFacebook.TYPE,
-                    payload: req.body,
+                    payload,
                 },
                 from: { id },
             } as const;
 
-            if (text[0] === '/') {
-                this.processUpdate({
+            if (attachments) {
+                const files = attachments.map(({ type, payload }) => ({
+                    type,
+                    ...payload,
+                }));
+
+                const fileEvent = {
                     ...common,
-                    type: 'command',
-                    payload: { command: text },
-                });
+                    payload: {
+                        text,
+                        files,
+                    },
+                } as const;
+                const isAllImages = files.every(({ type }) => type === 'image');
+                const isAllVideo = files.every(({ type }) => type === 'video');
+                const isAllAudio = files.every(({ type }) => type === 'audio');
+
+                if (isAllImages) {
+                    this.processUpdate({
+                        type: 'image',
+                        ...fileEvent,
+                    });
+                } else if (isAllVideo) {
+                    this.processUpdate({
+                        type: 'video',
+                        ...fileEvent,
+                    });
+                } else if (isAllAudio) {
+                    this.processUpdate({
+                        type: 'audio',
+                        ...fileEvent,
+                    });
+                } else {
+                    this.processUpdate({
+                        ...fileEvent,
+                        type: 'file',
+                    });
+                }
             } else {
-                this.processUpdate({
-                    ...common,
-                    type: 'text',
-                    payload: { text },
-                });
+                if (text !== undefined) {
+                    if (text[0] === '/') {
+                        this.processUpdate({
+                            ...common,
+                            type: 'command',
+                            payload: { command: text },
+                        });
+                    } else {
+                        this.processUpdate({
+                            ...common,
+                            type: 'text',
+                            payload: { text },
+                        });
+                    }
+                }
             }
 
-            res.send(200);
-
-            // [
-            //     {
-            //         sender: { id: '2788977971213143' },
-            //         recipient: { id: '101620374895957' },
-            //         timestamp: 1589389930959,
-            //         message: {
-            //             mid: 'm_bvP1mc06HROKvH7_i9DaxO18whnUqYz0XnFxIsQbSUdjSf3MTJ25fylAS-9NhuzX63z1UxwzZ4BpMq3OxeP7fg',
-            //             text: '234',
-            //             nlp: [Object]
-            //         }
-            //     }
-            // ]
+            res.sendStatus(200);
         });
 
         // Verify that the callback came from Facebook.
@@ -197,11 +196,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     message: { text: message.data.text },
                 };
 
-                const res = await GraphAPi.callSendAPI(requestBody);
-
-                console.log(res);
-
-                return res;
+                return GraphAPi.callSendAPI(requestBody);
             }
             default: {
                 throw new Error(

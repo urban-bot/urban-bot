@@ -210,8 +210,8 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
                 payload: req.body,
             },
         };
-        res.send();
-        return this.processUpdate(ctx);
+        this.processUpdate(ctx);
+        res.sendStatus(200);
     };
 
     async sendMessage(message: UrbanMessage): Promise<SlackMessageMeta> {
