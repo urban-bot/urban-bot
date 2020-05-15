@@ -9,51 +9,40 @@
  */
 
 /* eslint-disable @typescript-eslint/camelcase */
-const request = require('request'),
-    camelCase = require('camelcase'),
-    config = require('./config');
+import requestPromise from 'request-promise';
+import request from 'request';
+import camelCase from 'camelcase';
+import config from './config';
 
-module.exports = class GraphAPi {
+export class GraphAPi {
     static callSendAPI(requestBody) {
         // Send the HTTP request to the Messenger Platform
-        request(
-            {
-                uri: `${config.mPlatfom}/me/messages`,
-                qs: {
-                    access_token: config.pageAccesToken,
-                },
-                method: 'POST',
-                json: requestBody,
+        return requestPromise({
+            uri: `${config.mPlatfom}/me/messages`,
+            qs: {
+                access_token: config.pageAccesToken,
             },
-            (error) => {
-                if (error) {
-                    console.error('Unable to send message:', error);
-                }
-            },
-        );
+            method: 'POST',
+            json: requestBody,
+        }).catch((error) => {
+            console.error('Unable to send message:', error);
+        });
     }
 
     static callMessengerProfileAPI(requestBody) {
         // Send the HTTP request to the Messenger Profile API
 
         console.log(`Setting Messenger Profile for app ${config.appId}`);
-        request(
-            {
-                uri: `${config.mPlatfom}/me/messenger_profile`,
-                qs: {
-                    access_token: config.pageAccesToken,
-                },
-                method: 'POST',
-                json: requestBody,
+        return requestPromise({
+            uri: `${config.mPlatfom}/me/messenger_profile`,
+            qs: {
+                access_token: config.pageAccesToken,
             },
-            (error, _res, body) => {
-                if (!error) {
-                    console.log('Request sent:', body);
-                } else {
-                    console.error('Unable to send message:', error);
-                }
-            },
-        );
+            method: 'POST',
+            json: requestBody,
+        }).catch((error) => {
+            console.error('Unable to send message:', error);
+        });
     }
 
     static callSubscriptionsAPI(customFields) {
@@ -72,27 +61,20 @@ module.exports = class GraphAPi {
 
         console.log(fields);
 
-        request(
-            {
-                uri: `${config.mPlatfom}/${config.appId}/subscriptions`,
-                qs: {
-                    access_token: config.appId + '|' + config.appSecret,
-                    object: 'page',
-                    callback_url: config.webhookUrl,
-                    verify_token: config.verifyToken,
-                    fields: fields,
-                    include_values: 'true',
-                },
-                method: 'POST',
+        return requestPromise({
+            uri: `${config.mPlatfom}/${config.appId}/subscriptions`,
+            qs: {
+                access_token: config.appId + '|' + config.appSecret,
+                object: 'page',
+                callback_url: config.webhookUrl,
+                verify_token: config.verifyToken,
+                fields: fields,
+                include_values: 'true',
             },
-            (error, _res, body) => {
-                if (!error) {
-                    console.log('Request sent:', body);
-                } else {
-                    console.error('Unable to send message:', error);
-                }
-            },
-        );
+            method: 'POST',
+        }).catch((error) => {
+            console.error('Unable to send message:', error);
+        });
     }
 
     static callSubscribedApps(customFields) {
@@ -111,21 +93,16 @@ module.exports = class GraphAPi {
 
         console.log(fields);
 
-        request(
-            {
-                uri: `${config.mPlatfom}/${config.pageId}/subscribed_apps`,
-                qs: {
-                    access_token: config.pageAccesToken,
-                    subscribed_fields: fields,
-                },
-                method: 'POST',
+        return requestPromise({
+            uri: `${config.mPlatfom}/${config.pageId}/subscribed_apps`,
+            qs: {
+                access_token: config.pageAccesToken,
+                subscribed_fields: fields,
             },
-            (error) => {
-                if (error) {
-                    console.error('Unable to send message:', error);
-                }
-            },
-        );
+            method: 'POST',
+        }).catch((error) => {
+            console.error('Unable to send message:', error);
+        });
     }
 
     static async getUserProfile(senderPsid) {
@@ -267,23 +244,16 @@ module.exports = class GraphAPi {
         // https://developers.facebook.com/docs/graph-api/reference/page/nlp_configs/
 
         console.log(`Enable Built-in NLP for Page ${config.pageId}`);
-        request(
-            {
-                uri: `${config.mPlatfom}/me/nlp_configs`,
-                qs: {
-                    access_token: config.pageAccesToken,
-                    nlp_enabled: true,
-                },
-                method: 'POST',
+        requestPromise({
+            uri: `${config.mPlatfom}/me/nlp_configs`,
+            qs: {
+                access_token: config.pageAccesToken,
+                nlp_enabled: true,
             },
-            (error, _res, body) => {
-                if (!error) {
-                    console.log('Request sent:', body);
-                } else {
-                    console.error('Unable to activate built-in NLP:', error);
-                }
-            },
-        );
+            method: 'POST',
+        }).catch((error) => {
+            console.error('Unable to activate built-in NLP:', error);
+        });
     }
 
     static callFBAEventsAPI(senderPsid, eventName) {
@@ -305,19 +275,12 @@ module.exports = class GraphAPi {
         };
 
         // Send the HTTP request to the Activities API
-        request(
-            {
-                uri: `${config.mPlatfom}/${config.appId}/activities`,
-                method: 'POST',
-                form: requestBody,
-            },
-            (error) => {
-                if (!error) {
-                    console.log(`FBA event '${eventName}'`);
-                } else {
-                    console.error(`Unable to send FBA event '${eventName}':` + error);
-                }
-            },
-        );
+        return requestPromise({
+            uri: `${config.mPlatfom}/${config.appId}/activities`,
+            method: 'POST',
+            form: requestBody,
+        }).catch((error) => {
+            console.error(`Unable to send FBA event '${eventName}':` + error);
+        });
     }
 };

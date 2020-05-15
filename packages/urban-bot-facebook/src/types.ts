@@ -69,7 +69,7 @@ export type FacebookMessage = {
     nlp?: FacebookNLP;
 };
 
-export type FacebookMessageMeta = {
+export type FacebookMessaging = {
     sender: { id: string };
     recipient: { id: string };
     timestamp: number;
@@ -79,7 +79,7 @@ export type FacebookMessageMeta = {
 export type FacebookEntry = {
     id: string;
     time: number;
-    messaging: FacebookMessageMeta[];
+    messaging: FacebookMessaging[];
 };
 
 export type FacebookEventType = 'page' | string;
@@ -87,4 +87,9 @@ export type FacebookEventType = 'page' | string;
 export type FacebookPayload = {
     object: FacebookEventType;
     entry: FacebookEntry[];
+};
+
+export type FacebookMessageMeta = {
+    recipient_id: string;
+    message_id: string;
 };

@@ -4,9 +4,9 @@ import { UrbanBot, UrbanMessage, UrbanSyntheticEvent, UrbanParseMode } from '@ur
 import express from 'express';
 import bodyParser from 'body-parser';
 import crypto from 'crypto';
-import GraphAPi from './graph-api';
+import { GraphAPi } from './graph-api';
 import config from './config';
-import { FacebookPayload } from './types';
+import { FacebookMessageMeta, FacebookPayload } from './types';
 
 const { urlencoded, json } = bodyParser;
 
@@ -19,7 +19,7 @@ export type UrbanNativeEventFacebook = {
 
 export type FacebookBotMeta = {
     NativeEvent: UrbanNativeEventFacebook;
-    MessageMeta: any;
+    MessageMeta: FacebookMessageMeta;
 };
 
 export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
@@ -61,10 +61,8 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             res.sendStatus(200);
         });
 
-        // Check if all environment variables are set
         config.checkEnvVariables();
 
-        // listen for requests :)
         app.listen(config.port, function () {
             console.log('Your app is listening on port ' + config.port);
 
@@ -159,7 +157,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         }
     }
 
-    async sendMessage(message: UrbanMessage): Promise<any> {
+    async sendMessage(message: UrbanMessage): Promise<FacebookMessageMeta> {
         switch (message.nodeName) {
             case 'urban-text': {
                 const requestBody = {
