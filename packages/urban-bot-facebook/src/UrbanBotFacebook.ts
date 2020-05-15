@@ -4,7 +4,7 @@ import { UrbanBot, UrbanMessage, UrbanSyntheticEvent, UrbanParseMode } from '@ur
 import express from 'express';
 import bodyParser from 'body-parser';
 import crypto from 'crypto';
-import { GraphAPi } from './graph-api';
+import { GraphAPI } from './GraphAPI';
 import config from './config';
 import { FacebookMessageMeta, FacebookPayload } from './types';
 
@@ -26,7 +26,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
     static TYPE: FACEBOOK = 'FACEBOOK';
     type: FACEBOOK = UrbanBotFacebook.TYPE;
     defaultParseMode: UrbanParseMode = 'markdown';
-    client = GraphAPi;
+    client = GraphAPI;
 
     constructor() {
         const app = express();
@@ -167,7 +167,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     message: { text: message.data.text },
                 };
 
-                return GraphAPi.callSendAPI(requestBody);
+                return GraphAPI.callSendAPI(requestBody);
             }
             default: {
                 throw new Error(

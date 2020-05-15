@@ -14,7 +14,7 @@ import request from 'request';
 import camelCase from 'camelcase';
 import config from './config';
 
-export class GraphAPi {
+export class GraphAPI {
     static callSendAPI(requestBody) {
         // Send the HTTP request to the Messenger Platform
         return requestPromise({
