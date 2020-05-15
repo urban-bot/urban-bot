@@ -37,7 +37,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             }),
         );
 
-        app.use(json({ verify: verifyRequestSignature }));
+        app.use(json({ verify: this.verifyRequestSignature }));
 
         app.get('/webhook', (req, res) => {
             const mode = req.query['hub.mode'];
@@ -60,24 +60,6 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             this.handleMessage(payload);
             res.sendStatus(200);
         });
-
-        function verifyRequestSignature(req: any, _res: any, buf: any) {
-            const signature = req.headers['x-hub-signature'];
-
-            if (!signature) {
-                console.log("Couldn't validate the signature.");
-            } else {
-                const elements = signature.split('=');
-                const signatureHash = elements[1];
-                const expectedHash = crypto
-                    .createHmac('sha1', config.appSecret as string)
-                    .update(buf)
-                    .digest('hex');
-                if (signatureHash != expectedHash) {
-                    throw new Error("Couldn't validate the request signature.");
-                }
-            }
-        }
 
         // Check if all environment variables are set
         config.checkEnvVariables();
@@ -196,6 +178,24 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                         (message as any).nodeName
                     }' is not supported. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
                 );
+            }
+        }
+    }
+
+    verifyRequestSignature(req: any, _res: any, buf: any) {
+        const signature = req.headers['x-hub-signature'];
+
+        if (!signature) {
+            console.log("Couldn't validate the signature.");
+        } else {
+            const elements = signature.split('=');
+            const signatureHash = elements[1];
+            const expectedHash = crypto
+                .createHmac('sha1', config.appSecret as string)
+                .update(buf)
+                .digest('hex');
+            if (signatureHash != expectedHash) {
+                throw new Error("Couldn't validate the request signature.");
             }
         }
     }
