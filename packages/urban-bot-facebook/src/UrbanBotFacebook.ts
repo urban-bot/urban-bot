@@ -39,102 +39,28 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
 
         app.use(json({ verify: verifyRequestSignature }));
 
-        // Adds support for GET requests to our webhook
         app.get('/webhook', (req, res) => {
-            // Parse the query params
             const mode = req.query['hub.mode'];
             const token = req.query['hub.verify_token'];
             const challenge = req.query['hub.challenge'];
 
-            // Checks if a token and mode is in the query string of the request
             if (mode && token) {
-                // Checks the mode and token sent is correct
                 if (mode === 'subscribe' && token === config.verifyToken) {
-                    // Responds with the challenge token from the request
                     console.log('WEBHOOK_VERIFIED');
                     res.status(200).send(challenge);
                 } else {
-                    // Responds with '403 Forbidden' if verify tokens do not match
                     res.sendStatus(403);
                 }
             }
         });
 
-        // Creates the endpoint for your webhook
         app.post('/webhook', (req, res) => {
             const payload = req.body as FacebookPayload;
 
-            const id = payload.entry[0].messaging[0].sender.id;
-            const { text, attachments } = payload.entry[0].messaging[0].message;
-            const common = {
-                chat: { id },
-                nativeEvent: {
-                    type: UrbanBotFacebook.TYPE,
-                    payload,
-                },
-                from: { id },
-            } as const;
-
-            if (attachments) {
-                const files = attachments.map(({ type, payload }) => ({
-                    type,
-                    ...payload,
-                }));
-
-                const fileEvent = {
-                    ...common,
-                    payload: {
-                        text,
-                        files,
-                    },
-                } as const;
-                const isAllImages = files.every(({ type }) => type === 'image');
-                const isAllVideo = files.every(({ type }) => type === 'video');
-                const isAllAudio = files.every(({ type }) => type === 'audio');
-
-                if (isAllImages) {
-                    this.processUpdate({
-                        type: 'image',
-                        ...fileEvent,
-                    });
-                } else if (isAllVideo) {
-                    this.processUpdate({
-                        type: 'video',
-                        ...fileEvent,
-                    });
-                } else if (isAllAudio) {
-                    this.processUpdate({
-                        type: 'audio',
-                        ...fileEvent,
-                    });
-                } else {
-                    this.processUpdate({
-                        ...fileEvent,
-                        type: 'file',
-                    });
-                }
-            } else {
-                if (text !== undefined) {
-                    if (text[0] === '/') {
-                        this.processUpdate({
-                            ...common,
-                            type: 'command',
-                            payload: { command: text },
-                        });
-                    } else {
-                        this.processUpdate({
-                            ...common,
-                            type: 'text',
-                            payload: { text },
-                        });
-                    }
-                }
-            }
-
+            this.handleMessage(payload);
             res.sendStatus(200);
         });
 
-        // Verify that the callback came from Facebook.
         function verifyRequestSignature(req: any, _res: any, buf: any) {
             const signature = req.headers['x-hub-signature'];
 
@@ -182,9 +108,74 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         throw new Error('this method must be overridden');
     }
 
-    handleMessage = () => {
-        // return this.processUpdate(textEvent);
-    };
+    handleMessage(payload: FacebookPayload) {
+        const id = payload.entry[0].messaging[0].sender.id;
+        const { text, attachments } = payload.entry[0].messaging[0].message;
+        const common = {
+            chat: { id },
+            nativeEvent: {
+                type: UrbanBotFacebook.TYPE,
+                payload,
+            },
+            from: { id },
+        } as const;
+
+        if (attachments) {
+            const files = attachments.map(({ type, payload }) => ({
+                type,
+                ...payload,
+            }));
+
+            const fileEvent = {
+                ...common,
+                payload: {
+                    text,
+                    files,
+                },
+            } as const;
+            const isAllImages = files.every(({ type }) => type === 'image');
+            const isAllVideo = files.every(({ type }) => type === 'video');
+            const isAllAudio = files.every(({ type }) => type === 'audio');
+
+            if (isAllImages) {
+                this.processUpdate({
+                    type: 'image',
+                    ...fileEvent,
+                });
+            } else if (isAllVideo) {
+                this.processUpdate({
+                    type: 'video',
+                    ...fileEvent,
+                });
+            } else if (isAllAudio) {
+                this.processUpdate({
+                    type: 'audio',
+                    ...fileEvent,
+                });
+            } else {
+                this.processUpdate({
+                    ...fileEvent,
+                    type: 'file',
+                });
+            }
+        } else {
+            if (text !== undefined) {
+                if (text[0] === '/') {
+                    this.processUpdate({
+                        ...common,
+                        type: 'command',
+                        payload: { command: text },
+                    });
+                } else {
+                    this.processUpdate({
+                        ...common,
+                        type: 'text',
+                        payload: { text },
+                    });
+                }
+            }
+        }
+    }
 
     async sendMessage(message: UrbanMessage): Promise<any> {
         switch (message.nodeName) {
