@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import { GraphAPI } from './GraphAPI';
 import config from './config';
 import { FacebookMessageMeta, FacebookPayload } from './types';
+import { flatten } from 'array-flatten';
 
 const { urlencoded, json } = bodyParser;
 
@@ -57,7 +58,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         app.post('/webhook', (req, res) => {
             const payload = req.body as FacebookPayload;
 
-            this.handleMessage(payload);
+            this.handleEvent(payload);
             res.sendStatus(200);
         });
 
@@ -88,9 +89,9 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         throw new Error('this method must be overridden');
     }
 
-    handleMessage(payload: FacebookPayload) {
-        const id = payload.entry[0].messaging[0].sender.id;
-        const { text, attachments } = payload.entry[0].messaging[0].message;
+    handleEvent(payload: FacebookPayload) {
+        const { message, sender, postback } = payload.entry[0].messaging[0];
+        const { id } = sender;
         const common = {
             chat: { id },
             nativeEvent: {
@@ -100,58 +101,73 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             from: { id },
         } as const;
 
-        if (attachments) {
-            const files = attachments.map(({ type, payload }) => ({
-                type,
-                ...payload,
-            }));
-
-            const fileEvent = {
+        if (postback) {
+            this.processUpdate({
                 ...common,
+                type: 'action',
                 payload: {
-                    text,
-                    files,
+                    actionId: postback.payload,
                 },
-            } as const;
-            const isAllImages = files.every(({ type }) => type === 'image');
-            const isAllVideo = files.every(({ type }) => type === 'video');
-            const isAllAudio = files.every(({ type }) => type === 'audio');
+            });
 
-            if (isAllImages) {
-                this.processUpdate({
-                    type: 'image',
-                    ...fileEvent,
-                });
-            } else if (isAllVideo) {
-                this.processUpdate({
-                    type: 'video',
-                    ...fileEvent,
-                });
-            } else if (isAllAudio) {
-                this.processUpdate({
-                    type: 'audio',
-                    ...fileEvent,
-                });
-            } else {
-                this.processUpdate({
-                    ...fileEvent,
-                    type: 'file',
-                });
-            }
-        } else {
-            if (text !== undefined) {
-                if (text[0] === '/') {
+            return;
+        }
+
+        if (message) {
+            const { text, attachments } = message;
+            if (attachments) {
+                const files = attachments.map(({ type, payload }) => ({
+                    type,
+                    ...payload,
+                }));
+
+                const fileEvent = {
+                    ...common,
+                    payload: {
+                        text,
+                        files,
+                    },
+                } as const;
+                const isAllImages = files.every(({ type }) => type === 'image');
+                const isAllVideo = files.every(({ type }) => type === 'video');
+                const isAllAudio = files.every(({ type }) => type === 'audio');
+
+                if (isAllImages) {
                     this.processUpdate({
-                        ...common,
-                        type: 'command',
-                        payload: { command: text },
+                        type: 'image',
+                        ...fileEvent,
+                    });
+                } else if (isAllVideo) {
+                    this.processUpdate({
+                        type: 'video',
+                        ...fileEvent,
+                    });
+                } else if (isAllAudio) {
+                    this.processUpdate({
+                        type: 'audio',
+                        ...fileEvent,
                     });
                 } else {
                     this.processUpdate({
-                        ...common,
-                        type: 'text',
-                        payload: { text },
+                        ...fileEvent,
+                        type: 'file',
                     });
+                }
+            } else {
+                if (text !== undefined) {
+                    if (text[0] === '/') {
+                        this.processUpdate({
+                            ...common,
+                            type: 'command',
+                            payload: { command: text },
+                        });
+                    } else {
+                        this.processUpdate({
+                            ...common,
+                            type: 'text',
+                            payload: { text },
+                        });
+                    }
                 }
             }
         }
@@ -165,6 +181,36 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                         id: message.chat.id,
                     },
                     message: { text: message.data.text },
+                };
+
+                return GraphAPI.callSendAPI(requestBody);
+            }
+            case 'urban-buttons': {
+                const requestBody = {
+                    recipient: {
+                        id: message.chat.id,
+                    },
+                    message: {
+                        attachment: {
+                            type: 'template',
+                            payload: {
+                                template_type: 'button',
+                                text: message.data.title,
+                                buttons: flatten(message.data.buttons).map((button) => {
+                                    if (button.url !== undefined) {
+                                        return {
+                                            type: 'web_url',
+                                            title: button.text,
+                                            url: button.url,
+                                            messenger_extensions: true,
+                                        };
+                                    }
+
+                                    return { type: 'postback', title: button.text, payload: button.id };
+                                }),
+                            },
+                        },
+                    },
                 };
 
                 return GraphAPI.callSendAPI(requestBody);

@@ -69,11 +69,17 @@ export type FacebookMessage = {
     nlp?: FacebookNLP;
 };
 
+export type FacebookPostback = {
+    title: string;
+    payload: string;
+};
+
 export type FacebookMessaging = {
     sender: { id: string };
     recipient: { id: string };
     timestamp: number;
-    message: FacebookMessage;
+    message?: FacebookMessage;
+    postback?: FacebookPostback;
 };
 
 export type FacebookEntry = {
