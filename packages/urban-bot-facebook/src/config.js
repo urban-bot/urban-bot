@@ -22,7 +22,7 @@ module.exports = {
     // Page and Application information
     pageId: process.env.PAGE_ID,
     appId: process.env.APP_ID,
-    pageAccesToken: process.env.PAGE_ACCESS_TOKEN,
+    pageAccessToken: process.env.PAGE_ACCESS_TOKEN,
     appSecret: process.env.APP_SECRET,
     verifyToken: process.env.VERIFY_TOKEN,
 

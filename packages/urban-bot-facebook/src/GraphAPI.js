@@ -10,7 +10,6 @@
 
 /* eslint-disable @typescript-eslint/camelcase */
 import requestPromise from 'request-promise';
-import request from 'request';
 import camelCase from 'camelcase';
 import config from './config';
 
@@ -19,7 +18,7 @@ export class GraphAPI {
         return requestPromise({
             uri: `${config.mPlatfom}/me/messages`,
             qs: {
-                access_token: config.pageAccesToken,
+                access_token: config.pageAccessToken,
             },
             method: 'POST',
             json: requestBody,
@@ -35,7 +34,7 @@ export class GraphAPI {
         return requestPromise({
             uri: `${config.mPlatfom}/me/messenger_profile`,
             qs: {
-                access_token: config.pageAccesToken,
+                access_token: config.pageAccessToken,
             },
             method: 'POST',
             json: requestBody,
@@ -90,12 +89,10 @@ export class GraphAPI {
             fields = fields + ', ' + customFields;
         }
 
-        console.log(fields);
-
         return requestPromise({
             uri: `${config.mPlatfom}/${config.pageId}/subscribed_apps`,
             qs: {
-                access_token: config.pageAccesToken,
+                access_token: config.pageAccessToken,
                 subscribed_fields: fields,
             },
             method: 'POST',
@@ -126,10 +123,10 @@ export class GraphAPI {
             let body = [];
 
             // Send the HTTP request to the Graph API
-            request({
+            return requestPromise({
                 uri: `${config.mPlatfom}/${senderPsid}`,
                 qs: {
-                    access_token: config.pageAccesToken,
+                    access_token: config.pageAccessToken,
                     fields: 'first_name, last_name, gender, locale, timezone',
                 },
                 method: 'GET',
@@ -158,83 +155,32 @@ export class GraphAPI {
     }
 
     static getPersonaAPI() {
-        return new Promise(function (resolve, reject) {
-            let body = [];
-
-            // Send the POST request to the Personas API
-            console.log(`Fetching personas for app ${config.appId}`);
-
-            request({
-                uri: `${config.mPlatfom}/me/personas`,
-                qs: {
-                    access_token: config.pageAccesToken,
-                },
-                method: 'GET',
-            })
-                .on('response', function (response) {
-                    // console.log(response.statusCode);
-
-                    if (response.statusCode !== 200) {
-                        reject(Error(response.statusCode));
-                    }
-                })
-                .on('data', function (chunk) {
-                    body.push(chunk);
-                })
-                .on('error', function (error) {
-                    console.error('Unable to fetch personas:' + error);
-                    reject(Error('Network Error'));
-                })
-                .on('end', () => {
-                    body = Buffer.concat(body).toString();
-                    // console.log(JSON.parse(body));
-
-                    resolve(JSON.parse(body).data);
-                });
+        return requestPromise({
+            uri: `${config.mPlatfom}/me/personas`,
+            qs: {
+                access_token: config.pageAccessToken,
+            },
+            method: 'GET',
+        }).catch((error) => {
+            console.error('Unable to fetch personas:' + error);
         });
     }
 
     static postPersonaAPI(name, profile_picture_url) {
-        let body = [];
+        const requestBody = {
+            name,
+            profile_picture_url,
+        };
 
-        return new Promise(function (resolve, reject) {
-            // Send the POST request to the Personas API
-            console.log(`Creating a Persona for app ${config.appId}`);
-
-            const requestBody = {
-                name: name,
-                profile_picture_url: profile_picture_url,
-            };
-
-            request({
-                uri: `${config.mPlatfom}/me/personas`,
-                qs: {
-                    access_token: config.pageAccesToken,
-                },
-                method: 'POST',
-                json: requestBody,
-            })
-                .on('response', function (response) {
-                    // console.log(response.statusCode);
-                    if (response.statusCode !== 200) {
-                        reject(Error(response.statusCode));
-                    }
-                })
-                .on('data', function (chunk) {
-                    body.push(chunk);
-                })
-                .on('error', function (error) {
-                    console.error('Unable to create a persona:', error);
-                    reject(Error('Network Error'));
-                })
-                .on('end', () => {
-                    body = Buffer.concat(body).toString();
-                    // console.log(JSON.parse(body));
-
-                    resolve(JSON.parse(body).id);
-                });
+        return requestPromise({
+            uri: `${config.mPlatfom}/me/personas`,
+            qs: {
+                access_token: config.pageAccessToken,
+            },
+            method: 'POST',
+            json: requestBody,
         }).catch((error) => {
-            console.error('Unable to create a persona:', error, body);
+            console.error('Unable to create a persona', error);
         });
     }
 
@@ -243,10 +189,10 @@ export class GraphAPI {
         // https://developers.facebook.com/docs/graph-api/reference/page/nlp_configs/
 
         console.log(`Enable Built-in NLP for Page ${config.pageId}`);
-        requestPromise({
+        return requestPromise({
             uri: `${config.mPlatfom}/me/nlp_configs`,
             qs: {
-                access_token: config.pageAccesToken,
+                access_token: config.pageAccessToken,
                 nlp_enabled: true,
             },
             method: 'POST',
