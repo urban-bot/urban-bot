@@ -71,7 +71,9 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
         this.events.on('message', this.handleMessage);
         this.interactions.action(/.*/, this.handleAction);
 
-        app.listen(port);
+        app.listen(port, () => {
+            console.log('@urban-bot/slack has started');
+        });
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventSlack>) {

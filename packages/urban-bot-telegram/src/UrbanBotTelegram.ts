@@ -85,6 +85,8 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
                 return;
             }
         });
+
+        console.log('@urban-bot/telegram has started');
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventTelegram>) {
