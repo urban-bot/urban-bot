@@ -87,21 +87,32 @@ if (process.env.TELEGRAM_TOKEN_DEV) {
         </Root>,
     );
 }
-// if (process.env.SLACK_SIGNING_SECRET && process.env.SLACK_TOKEN) {
-//     const urbanBotSlack = new UrbanBotSlack({
-//         signingSecret: process.env.SLACK_SIGNING_SECRET as string,
-//         token: process.env.SLACK_TOKEN as string,
-//     });
-//
-//     render(
-//         <Root bot={urbanBotSlack}>
-//             <App />
-//         </Root>,
-//     );
-// }
+if (process.env.SLACK_SIGNING_SECRET && process.env.SLACK_TOKEN) {
+    const urbanBotSlack = new UrbanBotSlack({
+        signingSecret: process.env.SLACK_SIGNING_SECRET as string,
+        token: process.env.SLACK_TOKEN as string,
+    });
 
-render(
-    <Root bot={new UrbanBotFacebook()} isNewMessageEveryRender>
-        <App />
-    </Root>,
-);
+    render(
+        <Root bot={urbanBotSlack}>
+            <App />
+        </Root>,
+    );
+}
+
+if (process.env.APP_SECRET && process.env.PAGE_ACCESS_TOKEN && process.env.VERIFY_TOKEN) {
+    render(
+        <Root
+            bot={
+                new UrbanBotFacebook({
+                    appSecret: process.env.APP_SECRET,
+                    pageAccessToken: process.env.PAGE_ACCESS_TOKEN,
+                    verifyToken: process.env.VERIFY_TOKEN,
+                })
+            }
+            isNewMessageEveryRender
+        >
+            <App />
+        </Root>,
+    );
+}

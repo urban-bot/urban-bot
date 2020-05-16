@@ -1468,6 +1468,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/bluebird@*":
+  version "3.5.31"
+  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.31.tgz#d17fa0ec242b51c3db302481c557ce3813bf45cb"
+  integrity sha512-0PKlnDIxOh3xJHwJpVONR2PP11LhdM+QYiLJGLIbzMqRwLAPxN6lQar2RpdRhfIEh/HjVMgMdhHWJA0CgC5X6w==
+
 "@types/body-parser@*":
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.0.tgz#0685b3c47eb3006ffed117cdd55164b61f80538f"
@@ -1711,6 +1716,14 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/request-promise@4.1.46":
+  version "4.1.46"
+  resolved "https://registry.yarnpkg.com/@types/request-promise/-/request-promise-4.1.46.tgz#37df6efae984316dfbfbbe8fcda37f3ba52822f2"
+  integrity sha512-3Thpj2Va5m0ji3spaCk8YKrjkZyZc6RqUVOphA0n/Xet66AW/AiOAs5vfXhQIL5NmkaO7Jnun7Nl9NEjJ2zBaw==
+  dependencies:
+    "@types/bluebird" "*"
+    "@types/request" "*"
 
 "@types/request@*", "@types/request@^2.48.2":
   version "2.48.4"
@@ -7833,7 +7846,7 @@ request-promise@4.2.5, request-promise@^4.2.2:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@2.88.2, request@^2.83.0, request@^2.88.0:
+request@^2.83.0, request@^2.88.0:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==

@@ -32,6 +32,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "25.2.1",
+    "@types/request-promise": "4.1.46",
     "@types/express": "4.17.6",
     "@typescript-eslint/eslint-plugin": "2.29.0",
     "@typescript-eslint/parser": "2.29.0",
@@ -54,7 +55,6 @@
     "@urban-bot/core": "0.0.1"
   },
   "dependencies": {
-    "dotenv": "8.2.0",
     "request-promise": "4.2.5",
     "camelcase": "6.0.0",
     "express": "4.17.1",

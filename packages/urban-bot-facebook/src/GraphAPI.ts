@@ -8,17 +8,20 @@
  * https://developers.facebook.com/docs/messenger-platform/getting-started/sample-apps/original-coast-clothing
  */
 
-/* eslint-disable @typescript-eslint/camelcase */
 import requestPromise from 'request-promise';
 import camelCase from 'camelcase';
-import config from './config';
+import { FacebookOptions } from './UrbanBotFacebook';
 
 export class GraphAPI {
-    static callSendAPI(requestBody) {
+    constructor(public options: FacebookOptions) {
+        this.options = options;
+    }
+
+    callSendAPI(requestBody: any) {
         return requestPromise({
-            uri: `${config.mPlatfom}/me/messages`,
+            uri: `${this.options.apiUrl}/me/messages`,
             qs: {
-                access_token: config.pageAccessToken,
+                access_token: this.options.pageAccessToken,
             },
             method: 'POST',
             json: requestBody,
@@ -27,14 +30,14 @@ export class GraphAPI {
         });
     }
 
-    static callMessengerProfileAPI(requestBody) {
+    callMessengerProfileAPI(requestBody: any) {
         // Send the HTTP request to the Messenger Profile API
 
-        console.log(`Setting Messenger Profile for app ${config.appId}`);
+        console.log(`Setting Messenger Profile for app ${this.options.appId}`);
         return requestPromise({
-            uri: `${config.mPlatfom}/me/messenger_profile`,
+            uri: `${this.options.apiUrl}/me/messenger_profile`,
             qs: {
-                access_token: config.pageAccessToken,
+                access_token: this.options.pageAccessToken,
             },
             method: 'POST',
             json: requestBody,
@@ -43,12 +46,12 @@ export class GraphAPI {
         });
     }
 
-    static callSubscriptionsAPI(customFields) {
+    callSubscriptionsAPI(customFields: any) {
         // Send the HTTP request to the Subscriptions Edge to configure your webhook
         // You can use the Graph API's /{app-id}/subscriptions edge to configure and
         // manage your app's Webhooks product
         // https://developers.facebook.com/docs/graph-api/webhooks/subscriptions-edge
-        console.log(`Setting app ${config.appId} callback url to ${config.webhookUrl}`);
+        console.log(`Setting app ${this.options.appId} callback url to ${this.options.webhookUrl}`);
 
         let fields = 'messages, messaging_postbacks, messaging_optins, \
       message_deliveries, messaging_referrals';
@@ -60,12 +63,12 @@ export class GraphAPI {
         console.log(fields);
 
         return requestPromise({
-            uri: `${config.mPlatfom}/${config.appId}/subscriptions`,
+            uri: `${this.options.apiUrl}/${this.options.appId}/subscriptions`,
             qs: {
-                access_token: config.appId + '|' + config.appSecret,
+                access_token: this.options.appId + '|' + this.options.appSecret,
                 object: 'page',
-                callback_url: config.webhookUrl,
-                verify_token: config.verifyToken,
+                callback_url: this.options.webhookUrl,
+                verify_token: this.options.verifyToken,
                 fields: fields,
                 include_values: 'true',
             },
@@ -75,12 +78,12 @@ export class GraphAPI {
         });
     }
 
-    static callSubscribedApps(customFields) {
+    callSubscribedApps(customFields: any) {
         // Send the HTTP request to subscribe an app for Webhooks for Pages
         // You can use the Graph API's /{page-id}/subscribed_apps edge to configure
         // and manage your pages subscriptions
         // https://developers.facebook.com/docs/graph-api/reference/page/subscribed_apps
-        console.log(`Subscribing app ${config.appId} to page ${config.pageId}`);
+        console.log(`Subscribing app ${this.options.appId} to page ${this.options.pageId}`);
 
         let fields = 'messages, messaging_postbacks, messaging_optins, \
       message_deliveries, messaging_referrals';
@@ -90,9 +93,9 @@ export class GraphAPI {
         }
 
         return requestPromise({
-            uri: `${config.mPlatfom}/${config.pageId}/subscribed_apps`,
+            uri: `${this.options.apiUrl}/${this.options.pageId}/subscribed_apps`,
             qs: {
-                access_token: config.pageAccessToken,
+                access_token: this.options.pageAccessToken,
                 subscribed_fields: fields,
             },
             method: 'POST',
@@ -101,9 +104,9 @@ export class GraphAPI {
         });
     }
 
-    static async getUserProfile(senderPsid) {
+    async getUserProfile(senderPsid: any) {
         try {
-            const userProfile = await this.callUserProfileAPI(senderPsid);
+            const userProfile = (await this.callUserProfileAPI(senderPsid)) as any;
 
             for (const key in userProfile) {
                 const camelizedKey = camelCase(key);
@@ -118,47 +121,24 @@ export class GraphAPI {
         }
     }
 
-    static callUserProfileAPI(senderPsid) {
-        return new Promise(function (resolve, reject) {
-            let body = [];
-
-            // Send the HTTP request to the Graph API
-            return requestPromise({
-                uri: `${config.mPlatfom}/${senderPsid}`,
-                qs: {
-                    access_token: config.pageAccessToken,
-                    fields: 'first_name, last_name, gender, locale, timezone',
-                },
-                method: 'GET',
-            })
-                .on('response', function (response) {
-                    // console.log(response.statusCode);
-
-                    if (response.statusCode !== 200) {
-                        reject(Error(response.statusCode));
-                    }
-                })
-                .on('data', function (chunk) {
-                    body.push(chunk);
-                })
-                .on('error', function (error) {
-                    console.error('Unable to fetch profile:' + error);
-                    reject(Error('Network Error'));
-                })
-                .on('end', () => {
-                    body = Buffer.concat(body).toString();
-                    // console.log(JSON.parse(body));
-
-                    resolve(JSON.parse(body));
-                });
+    callUserProfileAPI(senderPsid: any) {
+        return requestPromise({
+            uri: `${this.options.apiUrl}/${senderPsid}`,
+            qs: {
+                access_token: this.options.pageAccessToken,
+                fields: 'first_name, last_name, gender, locale, timezone',
+            },
+            method: 'GET',
+        }).catch((error) => {
+            console.error('Unable to fetch profile:' + error);
         });
     }
 
-    static getPersonaAPI() {
+    getPersonaAPI() {
         return requestPromise({
-            uri: `${config.mPlatfom}/me/personas`,
+            uri: `${this.options.apiUrl}/me/personas`,
             qs: {
-                access_token: config.pageAccessToken,
+                access_token: this.options.pageAccessToken,
             },
             method: 'GET',
         }).catch((error) => {
@@ -166,16 +146,16 @@ export class GraphAPI {
         });
     }
 
-    static postPersonaAPI(name, profile_picture_url) {
+    postPersonaAPI(name: string, profile_picture_url: string) {
         const requestBody = {
             name,
             profile_picture_url,
         };
 
         return requestPromise({
-            uri: `${config.mPlatfom}/me/personas`,
+            uri: `${this.options.apiUrl}/me/personas`,
             qs: {
-                access_token: config.pageAccessToken,
+                access_token: this.options.pageAccessToken,
             },
             method: 'POST',
             json: requestBody,
@@ -184,15 +164,15 @@ export class GraphAPI {
         });
     }
 
-    static callNLPConfigsAPI() {
+    callNLPConfigsAPI() {
         // Send the HTTP request to the Built-in NLP Configs API
         // https://developers.facebook.com/docs/graph-api/reference/page/nlp_configs/
 
-        console.log(`Enable Built-in NLP for Page ${config.pageId}`);
+        console.log(`Enable Built-in NLP for Page ${this.options.pageId}`);
         return requestPromise({
-            uri: `${config.mPlatfom}/me/nlp_configs`,
+            uri: `${this.options.apiUrl}/me/nlp_configs`,
             qs: {
-                access_token: config.pageAccessToken,
+                access_token: this.options.pageAccessToken,
                 nlp_enabled: true,
             },
             method: 'POST',
@@ -201,7 +181,7 @@ export class GraphAPI {
         });
     }
 
-    static callFBAEventsAPI(senderPsid, eventName) {
+    callFBAEventsAPI(senderPsid: any, eventName: any) {
         // Construct the message body
         const requestBody = {
             event: 'CUSTOM_APP_EVENTS',
@@ -215,13 +195,13 @@ export class GraphAPI {
             advertiser_tracking_enabled: 1,
             application_tracking_enabled: 1,
             extinfo: JSON.stringify(['mb1']),
-            page_id: config.pageId,
+            page_id: this.options.pageId,
             page_scoped_user_id: senderPsid,
         };
 
         // Send the HTTP request to the Activities API
         return requestPromise({
-            uri: `${config.mPlatfom}/${config.appId}/activities`,
+            uri: `${this.options.apiUrl}/${this.options.appId}/activities`,
             method: 'POST',
             form: requestBody,
         }).catch((error) => {

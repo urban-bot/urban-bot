@@ -5,7 +5,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import crypto from 'crypto';
 import { GraphAPI } from './GraphAPI';
-import config from './config';
 import { FacebookMessageMeta, FacebookPayload } from './types';
 import { formatGenericTemplate, formatReplyButtons } from './format';
 
@@ -23,14 +22,47 @@ export type FacebookBotMeta = {
     MessageMeta: FacebookMessageMeta;
 };
 
+export type FacebookOptions = {
+    pageAccessToken: string;
+    // Your App secret can be found in App Dashboard -> Seetings -> Basic
+    appSecret: string;
+    // A random string that is used for the webhook verification request
+    verifyToken?: string;
+    pageId?: string;
+    appId?: string;
+    // URL where you host this code
+    webhookUrl?: string;
+    apiUrl?: string;
+    apiUrlVersion?: string;
+    port?: number;
+};
+
+const defaultOptions: Partial<FacebookOptions> = {
+    apiUrl: 'https://graph.facebook.com',
+    apiUrlVersion: 'v3.2',
+    port: 8080,
+};
+
 export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
     static TYPE: FACEBOOK = 'FACEBOOK';
     type: FACEBOOK = UrbanBotFacebook.TYPE;
     defaultParseMode: UrbanParseMode = 'markdown';
-    client = GraphAPI;
+    client: GraphAPI;
+    options: FacebookOptions;
 
-    constructor() {
+    constructor(options: FacebookOptions) {
         const app = express();
+
+        if (!('pageAccessToken' in options)) {
+            throw new Error(`Provide pageAccessToken to @urban-bot/facebook options`);
+        }
+
+        if (!('appSecret' in options)) {
+            throw new Error(`Provide appSecret to @urban-bot/facebook options`);
+        }
+
+        this.options = { ...defaultOptions, ...options };
+        this.client = new GraphAPI(this.options);
 
         app.use(
             urlencoded({
@@ -46,7 +78,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             const challenge = req.query['hub.challenge'];
 
             if (mode && token) {
-                if (mode === 'subscribe' && token === config.verifyToken) {
+                if (mode === 'subscribe' && token === this.options.verifyToken) {
                     console.log('WEBHOOK_VERIFIED');
                     res.status(200).send(challenge);
                 } else {
@@ -62,14 +94,12 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             res.sendStatus(200);
         });
 
-        config.checkEnvVariables();
-
-        app.listen(config.port, function () {
+        app.listen(this.options.port, () => {
             console.log('@urban-bot/facebook has started');
 
-            if (config.pageId) {
+            if (this.options.pageId !== undefined) {
                 console.log('Test your app by messaging:');
-                console.log('https://m.me/' + config.pageId);
+                console.log('https://m.me/' + this.options.pageId);
             }
         });
     }
@@ -178,7 +208,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     message: { text: message.data.text },
                 };
 
-                return GraphAPI.callSendAPI(requestBody);
+                return this.client.callSendAPI(requestBody);
             }
             case 'urban-buttons': {
                 let requestBody;
@@ -204,7 +234,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     };
                 }
 
-                return GraphAPI.callSendAPI(requestBody);
+                return this.client.callSendAPI(requestBody);
             }
             case 'urban-img': {
                 if (typeof message.data.file !== 'string') {
@@ -229,7 +259,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     },
                 };
 
-                return GraphAPI.callSendAPI(requestBody);
+                return this.client.callSendAPI(requestBody);
             }
             case 'urban-audio': {
                 if (typeof message.data.file !== 'string') {
@@ -249,7 +279,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     },
                 };
 
-                return GraphAPI.callSendAPI(requestBody);
+                return this.client.callSendAPI(requestBody);
             }
             case 'urban-video': {
                 if (typeof message.data.file !== 'string') {
@@ -269,7 +299,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     },
                 };
 
-                return GraphAPI.callSendAPI(requestBody);
+                return this.client.callSendAPI(requestBody);
             }
             case 'urban-file': {
                 if (typeof message.data.file !== 'string') {
@@ -289,7 +319,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     },
                 };
 
-                return GraphAPI.callSendAPI(requestBody);
+                return this.client.callSendAPI(requestBody);
             }
             default: {
                 throw new Error(
@@ -302,7 +332,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         }
     }
 
-    verifyRequestSignature(req: any, _res: any, buf: any) {
+    verifyRequestSignature = (req: any, _res: any, buf: any) => {
         const signature = req.headers['x-hub-signature'];
 
         if (!signature) {
@@ -310,13 +340,10 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         } else {
             const elements = signature.split('=');
             const signatureHash = elements[1];
-            const expectedHash = crypto
-                .createHmac('sha1', config.appSecret as string)
-                .update(buf)
-                .digest('hex');
+            const expectedHash = crypto.createHmac('sha1', this.options.appSecret).update(buf).digest('hex');
             if (signatureHash != expectedHash) {
                 throw new Error("Couldn't validate the request signature.");
             }
         }
-    }
+    };
 }
