@@ -73,6 +73,7 @@ export type ButtonProps = OtherProps & {
     children: string;
     id?: string;
     url?: string;
+    phoneNumber?: string | number;
 };
 
 export function Button(_props: ButtonProps) {

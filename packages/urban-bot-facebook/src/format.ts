@@ -23,6 +23,14 @@ export function formatButtons(buttons: UrbanButton[] | UrbanButton[][]) {
             };
         }
 
+        if (button.phoneNumber !== undefined) {
+            return {
+                type: 'phone_number',
+                title: button.text,
+                payload: button.phoneNumber,
+            };
+        }
+
         return { type: 'postback', title: button.text, payload: button.id };
     });
 }

@@ -5,6 +5,7 @@ export type UrbanButton = OtherProps & {
     text: string;
     id?: string;
     url?: string;
+    phoneNumber?: string | number;
 };
 
 export type UrbanOption = {
