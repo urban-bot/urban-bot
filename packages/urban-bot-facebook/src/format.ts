@@ -31,7 +31,11 @@ export function formatButtons(buttons: UrbanButton[] | UrbanButton[][]) {
             };
         }
 
-        return { type: 'postback', title: button.text, payload: button.id };
+        if (button.type === undefined) {
+            return { type: 'postback', title: button.text, payload: button.id };
+        }
+
+        return button;
     });
 }
 
