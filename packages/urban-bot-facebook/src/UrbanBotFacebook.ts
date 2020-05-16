@@ -208,7 +208,8 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             }
             case 'urban-img': {
                 if (typeof message.data.file !== 'string') {
-                    throw new Error('@urban-bot/facebook support file only as string');
+                    // TODO add file from file system support
+                    throw new Error('@urban-bot/facebook support image file only as string');
                 }
 
                 if (message.data.isReplyButtons) {
@@ -227,6 +228,72 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                             buttons: message.data.buttons,
                             image_url: message.data.file,
                         }),
+                    },
+                };
+
+                return GraphAPI.callSendAPI(requestBody);
+            }
+            case 'urban-audio': {
+                if (typeof message.data.file !== 'string') {
+                    throw new Error('@urban-bot/facebook support audio file only as string');
+                }
+
+                const requestBody = {
+                    recipient: {
+                        id: message.chat.id,
+                    },
+                    message: {
+                        attachment: {
+                            type: 'audio',
+                            payload: {
+                                url: message.data.file,
+                                is_reusable: message.data.is_reusable,
+                            },
+                        },
+                    },
+                };
+
+                return GraphAPI.callSendAPI(requestBody);
+            }
+            case 'urban-video': {
+                if (typeof message.data.file !== 'string') {
+                    throw new Error('@urban-bot/facebook support video file only as string');
+                }
+
+                const requestBody = {
+                    recipient: {
+                        id: message.chat.id,
+                    },
+                    message: {
+                        attachment: {
+                            type: 'video',
+                            payload: {
+                                url: message.data.file,
+                                is_reusable: message.data.is_reusable,
+                            },
+                        },
+                    },
+                };
+
+                return GraphAPI.callSendAPI(requestBody);
+            }
+            case 'urban-file': {
+                if (typeof message.data.file !== 'string') {
+                    throw new Error('@urban-bot/facebook support file only as string');
+                }
+
+                const requestBody = {
+                    recipient: {
+                        id: message.chat.id,
+                    },
+                    message: {
+                        attachment: {
+                            type: 'file',
+                            payload: {
+                                url: message.data.file,
+                                is_reusable: message.data.is_reusable,
+                            },
+                        },
                     },
                 };
 
