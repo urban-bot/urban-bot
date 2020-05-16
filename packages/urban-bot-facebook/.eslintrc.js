@@ -31,6 +31,7 @@ module.exports = {
         '@typescript-eslint/no-use-before-define': 0,
         '@typescript-eslint/explicit-function-return-type': 0,
         '@typescript-eslint/no-empty-function': 0,
+        '@typescript-eslint/camelcase': 0,
     },
     settings: {
         'import/resolver': {

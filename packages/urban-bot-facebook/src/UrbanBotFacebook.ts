@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import { GraphAPI } from './GraphAPI';
 import config from './config';
 import { FacebookMessageMeta, FacebookPayload } from './types';
-import { flatten } from 'array-flatten';
+import { formatButtons } from './format';
 
 const { urlencoded, json } = bodyParser;
 
@@ -196,18 +196,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                             payload: {
                                 template_type: 'button',
                                 text: message.data.title,
-                                buttons: flatten(message.data.buttons).map((button) => {
-                                    if (button.url !== undefined) {
-                                        return {
-                                            type: 'web_url',
-                                            title: button.text,
-                                            url: button.url,
-                                            messenger_extensions: true,
-                                        };
-                                    }
-
-                                    return { type: 'postback', title: button.text, payload: button.id };
-                                }),
+                                buttons: formatButtons(message.data.buttons),
                             },
                         },
                     },
