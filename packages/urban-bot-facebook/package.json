@@ -52,7 +52,7 @@
     "@urban-bot/core": "0.0.1"
   },
   "peerDependencies": {
-    "@urban-bot/core": "0.0.1"
+    "@urban-bot/core": "^0.0.1"
   },
   "dependencies": {
     "request-promise": "4.2.5",
