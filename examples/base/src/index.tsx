@@ -78,7 +78,7 @@ function App() {
 }
 
 if (process.env.TELEGRAM_TOKEN) {
-    const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN as string, {
+    const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN, {
         polling: true,
     });
     render(
@@ -89,8 +89,8 @@ if (process.env.TELEGRAM_TOKEN) {
 }
 if (process.env.SLACK_SIGNING_SECRET && process.env.SLACK_TOKEN) {
     const urbanBotSlack = new UrbanBotSlack({
-        signingSecret: process.env.SLACK_SIGNING_SECRET as string,
-        token: process.env.SLACK_TOKEN as string,
+        signingSecret: process.env.SLACK_SIGNING_SECRET,
+        token: process.env.SLACK_TOKEN,
     });
 
     render(
