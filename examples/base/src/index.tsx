@@ -77,8 +77,8 @@ function App() {
     );
 }
 
-if (process.env.TELEGRAM_TOKEN_DEV) {
-    const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN_DEV as string, {
+if (process.env.TELEGRAM_TOKEN) {
+    const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN as string, {
         polling: true,
     });
     render(
@@ -100,14 +100,14 @@ if (process.env.SLACK_SIGNING_SECRET && process.env.SLACK_TOKEN) {
     );
 }
 
-if (process.env.APP_SECRET && process.env.PAGE_ACCESS_TOKEN && process.env.VERIFY_TOKEN) {
+if (process.env.FACEBOOK_APP_SECRET && process.env.FACEBOOK_PAGE_ACCESS_TOKEN && process.env.FACEBOOK_VERIFY_TOKEN) {
     render(
         <Root
             bot={
                 new UrbanBotFacebook({
-                    appSecret: process.env.APP_SECRET,
-                    pageAccessToken: process.env.PAGE_ACCESS_TOKEN,
-                    verifyToken: process.env.VERIFY_TOKEN,
+                    appSecret: process.env.FACEBOOK_APP_SECRET,
+                    pageAccessToken: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
+                    verifyToken: process.env.FACEBOOK_VERIFY_TOKEN,
                 })
             }
             isNewMessageEveryRender
