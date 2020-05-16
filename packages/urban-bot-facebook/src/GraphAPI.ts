@@ -13,9 +13,7 @@ import camelCase from 'camelcase';
 import { FacebookOptions } from './UrbanBotFacebook';
 
 export class GraphAPI {
-    constructor(public options: FacebookOptions) {
-        this.options = options;
-    }
+    constructor(public options: FacebookOptions) {}
 
     callSendAPI(requestBody: any) {
         return requestPromise({
