@@ -283,4 +283,4 @@ export class GraphAPI {
             console.error(`Unable to send FBA event '${eventName}':` + error);
         });
     }
-};
+}
