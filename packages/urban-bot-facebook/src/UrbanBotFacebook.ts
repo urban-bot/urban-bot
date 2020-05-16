@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import { GraphAPI } from './GraphAPI';
 import config from './config';
 import { FacebookMessageMeta, FacebookPayload } from './types';
-import { formatButtons } from './format';
+import { formatGenericTemplate, formatReplyButtons } from './format';
 
 const { urlencoded, json } = bodyParser;
 
@@ -175,21 +175,34 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                 return GraphAPI.callSendAPI(requestBody);
             }
             case 'urban-buttons': {
-                const requestBody = {
+                const common = {
                     recipient: {
                         id: message.chat.id,
                     },
-                    message: {
-                        attachment: {
-                            type: 'template',
-                            payload: {
-                                template_type: 'button',
-                                text: message.data.title,
-                                buttons: formatButtons(message.data.buttons),
-                            },
+                } as const;
+
+                let requestBody;
+                if (message.data.isReplyButtons) {
+                    requestBody = {
+                        ...common,
+                        message: {
+                            text: message.data.title,
+                            quick_replies: formatReplyButtons(message.data.buttons),
                         },
-                    },
-                };
+                    };
+                } else {
+                    const subtitle = typeof message.data.subtitle === 'string' ? message.data.subtitle : undefined;
+                    requestBody = {
+                        ...common,
+                        message: {
+                            attachment: formatGenericTemplate({
+                                title: message.data.title,
+                                subtitle,
+                                buttons: message.data.buttons,
+                            }),
+                        },
+                    };
+                }
 
                 return GraphAPI.callSendAPI(requestBody);
             }
@@ -198,25 +211,22 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                     throw new Error('@urban-bot/facebook support file only as string');
                 }
 
+                if (message.data.isReplyButtons) {
+                    throw new Error("@urban-bot/facebook Don't use isReplyButtons with Image component");
+                }
+
+                const subtitle = typeof message.data.subtitle === 'string' ? message.data.subtitle : undefined;
                 const requestBody = {
                     recipient: {
                         id: message.chat.id,
                     },
                     message: {
-                        attachment: {
-                            type: 'template',
-                            payload: {
-                                template_type: 'generic',
-                                elements: [
-                                    {
-                                        title: message.data.title,
-                                        subtitle: message.data.subtitle,
-                                        image_url: message.data.file,
-                                        buttons: message.data.buttons ? formatButtons(message.data.buttons) : undefined,
-                                    },
-                                ],
-                            },
-                        },
+                        attachment: formatGenericTemplate({
+                            title: message.data.title,
+                            subtitle,
+                            buttons: message.data.buttons,
+                            image_url: message.data.file,
+                        }),
                     },
                 };
 
