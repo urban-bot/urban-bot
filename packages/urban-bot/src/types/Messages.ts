@@ -22,6 +22,7 @@ export type UrbanMessageCommonData = OtherProps & {
     disableNotification?: boolean;
     replyToMessageId?: string;
     forceReply?: boolean;
+    personaId?: number | string;
 };
 
 export type UrbanMessageTextData = UrbanMessageCommonData & {

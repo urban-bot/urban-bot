@@ -163,24 +163,24 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
     }
 
     async sendMessage(message: UrbanMessage): Promise<FacebookMessageMeta> {
+        const common = {
+            recipient: {
+                id: message.chat.id,
+            },
+            tag: message.data.tag,
+            persona_id: message.data.personaId,
+        } as const;
+
         switch (message.nodeName) {
             case 'urban-text': {
                 const requestBody = {
-                    recipient: {
-                        id: message.chat.id,
-                    },
+                    ...common,
                     message: { text: message.data.text },
                 };
 
                 return GraphAPI.callSendAPI(requestBody);
             }
             case 'urban-buttons': {
-                const common = {
-                    recipient: {
-                        id: message.chat.id,
-                    },
-                } as const;
-
                 let requestBody;
                 if (message.data.isReplyButtons) {
                     requestBody = {
@@ -218,9 +218,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
 
                 const subtitle = typeof message.data.subtitle === 'string' ? message.data.subtitle : undefined;
                 const requestBody = {
-                    recipient: {
-                        id: message.chat.id,
-                    },
+                    ...common,
                     message: {
                         attachment: formatGenericTemplate({
                             title: message.data.title,
@@ -239,9 +237,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                 }
 
                 const requestBody = {
-                    recipient: {
-                        id: message.chat.id,
-                    },
+                    ...common,
                     message: {
                         attachment: {
                             type: 'audio',
@@ -261,9 +257,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                 }
 
                 const requestBody = {
-                    recipient: {
-                        id: message.chat.id,
-                    },
+                    ...common,
                     message: {
                         attachment: {
                             type: 'video',
@@ -283,9 +277,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
                 }
 
                 const requestBody = {
-                    recipient: {
-                        id: message.chat.id,
-                    },
+                    ...common,
                     message: {
                         attachment: {
                             type: 'file',

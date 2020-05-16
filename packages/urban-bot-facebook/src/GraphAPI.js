@@ -16,7 +16,6 @@ import config from './config';
 
 export class GraphAPI {
     static callSendAPI(requestBody) {
-        // Send the HTTP request to the Messenger Platform
         return requestPromise({
             uri: `${config.mPlatfom}/me/messages`,
             qs: {
