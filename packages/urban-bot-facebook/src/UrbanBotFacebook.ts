@@ -204,12 +204,41 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
 
                 return GraphAPI.callSendAPI(requestBody);
             }
+            case 'urban-img': {
+                if (typeof message.data.file !== 'string') {
+                    throw new Error('@urban-bot/facebook support file only as string');
+                }
+
+                const requestBody = {
+                    recipient: {
+                        id: message.chat.id,
+                    },
+                    message: {
+                        attachment: {
+                            type: 'template',
+                            payload: {
+                                template_type: 'generic',
+                                elements: [
+                                    {
+                                        title: message.data.title,
+                                        subtitle: message.data.subtitle,
+                                        image_url: message.data.file,
+                                        buttons: message.data.buttons ? formatButtons(message.data.buttons) : undefined,
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                };
+
+                return GraphAPI.callSendAPI(requestBody);
+            }
             default: {
                 throw new Error(
                     `Tag '${
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         (message as any).nodeName
-                    }' is not supported. Please don't use it with slack bot or add this logic to @urban-bot/slack.`,
+                    }' is not supported. Please don't use it with facebook bot or add this logic to @urban-bot/facebook.`,
                 );
             }
         }

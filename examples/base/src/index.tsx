@@ -101,8 +101,7 @@ if (process.env.TELEGRAM_TOKEN_DEV) {
 // }
 
 render(
-    <Root bot={new UrbanBotFacebook()}>
+    <Root bot={new UrbanBotFacebook()} isNewMessageEveryRender>
         <App />
     </Root>,
 );
-
