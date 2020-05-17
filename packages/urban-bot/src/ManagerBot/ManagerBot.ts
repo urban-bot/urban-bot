@@ -116,10 +116,22 @@ export class ManagerBot<Bot extends UrbanBot = any> {
     }
 
     updateMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
+        if (this.bot.updateMessage === undefined) {
+            throw new Error(
+                `'${this.bot.type}' doesn't support updating message. Provide isNewMessageEveryRender prop to Root component`,
+            );
+        }
+
         return this.bot.updateMessage(message);
     }
 
     deleteMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
+        if (this.bot.deleteMessage === undefined) {
+            throw new Error(
+                `'${this.bot.type}' doesn't support deleting message. Provide isNewMessageEveryRender prop to Root component`,
+            );
+        }
+
         return this.bot.deleteMessage(message);
     }
 }

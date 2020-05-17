@@ -32,6 +32,11 @@ export function Hooks() {
         setAnswer("You've sent a command " + command);
     });
 
+    useImage(({ files }) => {
+        const name = files[0].name ?? '';
+        setAnswer("You've sent an image " + name);
+    });
+
     useVideo(({ files }) => {
         const name = files[0].name ?? '';
         setAnswer("You've sent a video " + name);
@@ -39,11 +44,6 @@ export function Hooks() {
 
     usePoll(({ question }) => {
         setAnswer("You've sent a poll " + question);
-    });
-
-    useImage(({ files }) => {
-        const name = files[0].name ?? '';
-        setAnswer("You've sent an image " + name);
     });
 
     useLocation(({ latitude, longitude }) => {

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React from 'react';
-import { ButtonGroup, Button } from '@urban-bot/core';
+import { ButtonGroup, Button, useText } from '@urban-bot/core';
 
 export function ButtonsExample() {
     return (
@@ -12,8 +12,14 @@ export function ButtonsExample() {
 }
 
 export function ReplyButtonsExample() {
+    const [text, setText] = React.useState('Reply Buttons');
+
+    useText(({ text }) => {
+        setText(text);
+    });
+
     return (
-        <ButtonGroup isNewMessageEveryRender title="Reply Buttons" isReplyButtons>
+        <ButtonGroup isNewMessageEveryRender title={text} isReplyButtons>
             <Button>Echo</Button>
             <Button>/text</Button>
         </ButtonGroup>

@@ -149,6 +149,7 @@ export interface UrbanSyntheticEventVoice<NativeEvent extends UrbanNativeEvent>
     type: 'voice';
     payload: {
         duration: number;
+        mimeType?: string;
     };
 }
 
