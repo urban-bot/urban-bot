@@ -3,11 +3,16 @@ import { UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './type
 import { ManagerBot } from './ManagerBot/ManagerBot';
 import { UrbanBot } from './types/UrbanBot';
 import { BotMetaByBot } from './hooks/hooks';
+import debouncePromise from 'debounce-promise';
 
 export type UrbanNode<Bot extends UrbanBot> = Omit<UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>, 'meta'> & {
     $$managerBot: ManagerBot<Bot>;
     isNewMessageEveryRender?: boolean;
+    debounceDelay?: number;
     meta?: Promise<BotMetaByBot<Bot>['MessageMeta']>;
+    sendMessage: ManagerBot<Bot>['sendMessage'];
+    updateMessage: ManagerBot<Bot>['updateMessage'];
+    deleteMessage: ManagerBot<Bot>['deleteMessage'];
 };
 
 export type UrbanNodeRoot = {
@@ -27,12 +32,15 @@ export function createNode<Bot extends UrbanBot>(
 
         return { nodeName };
     }
-    const { $$managerBot, chat, isNewMessageEveryRender, data } = props;
+    const { $$managerBot, chat, isNewMessageEveryRender, data, debounceDelay = 50 } = props;
     const node = {
         nodeName,
         $$managerBot,
         chat,
         isNewMessageEveryRender,
+        sendMessage: debouncePromise($$managerBot.sendMessage.bind($$managerBot), debounceDelay),
+        updateMessage: debouncePromise($$managerBot.updateMessage.bind($$managerBot), debounceDelay),
+        deleteMessage: $$managerBot.deleteMessage.bind($$managerBot),
     };
 
     return {
@@ -55,7 +63,7 @@ export function appendChildNode<Bot extends UrbanBot>(
         data: childNode.data,
     } as UrbanMessage;
 
-    childNode.meta = childNode.$$managerBot.sendMessage(message);
+    childNode.meta = childNode.sendMessage(message);
 }
 
 export function removeChildNode<Bot extends UrbanBot>(_node: UrbanNode<Bot>, removedNode: UrbanNode<Bot>) {
@@ -75,7 +83,7 @@ export function removeChildNode<Bot extends UrbanBot>(_node: UrbanNode<Bot>, rem
             meta,
         } as UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>;
 
-        removedNode.$$managerBot.deleteMessage(message);
+        removedNode.deleteMessage(message);
     });
 }
 
@@ -88,6 +96,7 @@ export function updateNode<Bot extends UrbanBot>(
 ) {
     const { data: oldPropsData, ...oldPropsWithoutData } = oldProps;
     const { data: newPropsData, ...newPropsWithoutData } = newProps;
+
     if (
         !node.isNewMessageEveryRender &&
         shallowEqual(oldPropsWithoutData, newPropsWithoutData) &&
@@ -96,11 +105,7 @@ export function updateNode<Bot extends UrbanBot>(
         return;
     }
 
-    const newNode = createNode(node.nodeName, newProps);
-
-    if (newNode.nodeName === 'root') {
-        throw new Error("root nodeName shouldn't update");
-    }
+    const newNode = { ...node, isNewMessageEveryRender: newProps.isNewMessageEveryRender, data: newProps.data };
 
     const message = {
         nodeName: newNode.nodeName,
@@ -109,7 +114,7 @@ export function updateNode<Bot extends UrbanBot>(
     } as UrbanMessage;
 
     if (node.isNewMessageEveryRender) {
-        node.meta = newNode.$$managerBot.sendMessage(message);
+        node.meta = newNode.sendMessage(message);
     } else {
         if (node.meta === undefined) {
             throw new Error('sendMessage should return Promise with message meta data to enable updating it.');
@@ -121,7 +126,7 @@ export function updateNode<Bot extends UrbanBot>(
                 meta,
             };
 
-            newNode.$$managerBot.updateMessage(existingMessage);
+            newNode.updateMessage(existingMessage);
         });
     }
 }

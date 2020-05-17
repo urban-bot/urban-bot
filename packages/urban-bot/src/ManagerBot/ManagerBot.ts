@@ -5,19 +5,17 @@ import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
 import { UrbanListener } from '../types';
 import { UrbanSyntheticEvent } from '../types/Events';
 import { BotMetaByBot } from '../hooks/hooks';
-import debounce from 'lodash.debounce';
 
 type Chat = {
     eventEmitter: EventEmitter;
     promiseQueue: PromiseQueue;
-    updateMessage: Function;
 };
 
 export class ManagerBot<Bot extends UrbanBot = any> {
     private chats = new Map<string, Chat>();
     private eventEmitter: EventEmitter;
 
-    constructor(private bot: Bot, private debounceDelay = 50) {
+    constructor(private bot: Bot) {
         this.eventEmitter = new EventEmitter();
 
         bot.processUpdate = this.processUpdate;
@@ -39,24 +37,9 @@ export class ManagerBot<Bot extends UrbanBot = any> {
     };
 
     addChat(id: string) {
-        let updateMessage;
-        if (this.bot.updateMessage !== undefined) {
-            updateMessage = debounce(
-                (message: UrbanExistingMessage) => this.bot.updateMessage?.(message),
-                this.debounceDelay,
-            );
-        } else {
-            updateMessage = () => {
-                throw new Error(
-                    `'${this.bot.type}' doesn't support updating message. Provide isNewMessageEveryRender prop to Root component`,
-                );
-            };
-        }
-
         this.chats.set(id, {
             promiseQueue: new PromiseQueue(),
             eventEmitter: new EventEmitter(),
-            updateMessage,
         });
     }
 
@@ -133,13 +116,13 @@ export class ManagerBot<Bot extends UrbanBot = any> {
     }
 
     updateMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
-        const chatById = this.chats.get(message.chat.id);
-
-        if (chatById === undefined) {
-            throw new Error('Specify chatId via managerBot.addChat(chatId) to updateMessage for specific chat');
+        if (this.bot.updateMessage === undefined) {
+            throw new Error(
+                `'${this.bot.type}' doesn't support updating message. Provide isNewMessageEveryRender prop to Root component`,
+            );
         }
 
-        chatById.updateMessage(message);
+        return this.bot.updateMessage(message);
     }
 
     deleteMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
