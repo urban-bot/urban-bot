@@ -33,7 +33,6 @@ export class GraphAPI {
     callMessengerProfileAPI(requestBody: any) {
         // Send the HTTP request to the Messenger Profile API
 
-        console.log(`Setting Messenger Profile for app ${this.options.appId}`);
         return requestPromise({
             uri: `${this.options.apiUrl}/me/messenger_profile`,
             qs: {
@@ -51,7 +50,6 @@ export class GraphAPI {
         // You can use the Graph API's /{app-id}/subscriptions edge to configure and
         // manage your app's Webhooks product
         // https://developers.facebook.com/docs/graph-api/webhooks/subscriptions-edge
-        console.log(`Setting app ${this.options.appId} callback url to ${this.options.webhookUrl}`);
 
         let fields = 'messages, messaging_postbacks, messaging_optins, \
       message_deliveries, messaging_referrals';
@@ -59,8 +57,6 @@ export class GraphAPI {
         if (customFields !== undefined) {
             fields = fields + ', ' + customFields;
         }
-
-        console.log(fields);
 
         return requestPromise({
             uri: `${this.options.apiUrl}/${this.options.appId}/subscriptions`,
@@ -83,7 +79,6 @@ export class GraphAPI {
         // You can use the Graph API's /{page-id}/subscribed_apps edge to configure
         // and manage your pages subscriptions
         // https://developers.facebook.com/docs/graph-api/reference/page/subscribed_apps
-        console.log(`Subscribing app ${this.options.appId} to page ${this.options.pageId}`);
 
         let fields = 'messages, messaging_postbacks, messaging_optins, \
       message_deliveries, messaging_referrals';
@@ -117,7 +112,7 @@ export class GraphAPI {
 
             return userProfile;
         } catch (err) {
-            console.log('Fetch failed:', err);
+            console.error('Fetch failed:', err);
         }
     }
 
@@ -168,7 +163,6 @@ export class GraphAPI {
         // Send the HTTP request to the Built-in NLP Configs API
         // https://developers.facebook.com/docs/graph-api/reference/page/nlp_configs/
 
-        console.log(`Enable Built-in NLP for Page ${this.options.pageId}`);
         return requestPromise({
             uri: `${this.options.apiUrl}/me/nlp_configs`,
             qs: {
