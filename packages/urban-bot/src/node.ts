@@ -5,7 +5,10 @@ import { UrbanBot } from './types/UrbanBot';
 import { BotMetaByBot } from './hooks/hooks';
 import debouncePromise from 'debounce-promise';
 
-export type UrbanNode<Bot extends UrbanBot> = Omit<UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>, 'meta'> & {
+export type UrbanNode<Bot extends UrbanBot = any> = Omit<
+    UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>,
+    'meta'
+> & {
     $$managerBot: ManagerBot<Bot>;
     isNewMessageEveryRender?: boolean;
     debounceDelay?: number;
@@ -13,10 +16,12 @@ export type UrbanNode<Bot extends UrbanBot> = Omit<UrbanExistingMessage<BotMetaB
     sendMessage: ManagerBot<Bot>['sendMessage'];
     updateMessage: ManagerBot<Bot>['updateMessage'];
     deleteMessage: ManagerBot<Bot>['deleteMessage'];
+    childNodes: Array<UrbanNode>;
 };
 
 export type UrbanNodeRoot = {
     nodeName: 'root';
+    childNodes: Array<UrbanNode>;
 };
 
 type Props<Bot extends UrbanBot> = Omit<UrbanNode<Bot>, 'nodeName'>;
@@ -30,7 +35,7 @@ export function createNode<Bot extends UrbanBot>(
             throw new Error('props are necessary for every node');
         }
 
-        return { nodeName };
+        return { nodeName, childNodes: [] };
     }
     const { $$managerBot, chat, isNewMessageEveryRender, data, debounceDelay = 50 } = props;
     const node = {
@@ -45,17 +50,16 @@ export function createNode<Bot extends UrbanBot>(
 
     return {
         ...node,
+        childNodes: [],
         data,
     } as UrbanNode<Bot>;
 }
 
 export function appendChildNode<Bot extends UrbanBot>(
-    _node: UrbanNode<Bot> | UrbanNodeRoot,
-    childNode: UrbanNode<Bot> | UrbanNodeRoot,
+    parentNode: UrbanNode<Bot> | UrbanNodeRoot,
+    childNode: UrbanNode<Bot>,
 ) {
-    if (childNode.nodeName === 'root') {
-        return;
-    }
+    parentNode.childNodes.push(childNode);
 
     const message = {
         nodeName: childNode.nodeName,
@@ -66,7 +70,9 @@ export function appendChildNode<Bot extends UrbanBot>(
     childNode.meta = childNode.sendMessage(message);
 }
 
-export function removeChildNode<Bot extends UrbanBot>(_node: UrbanNode<Bot>, removedNode: UrbanNode<Bot>) {
+export function removeChildNode<Bot extends UrbanBot>(parentNode: UrbanNode<Bot>, removedNode: UrbanNode<Bot>) {
+    parentNode.childNodes = parentNode.childNodes.filter((node) => node !== removedNode);
+
     if (removedNode.isNewMessageEveryRender) {
         return;
     }
@@ -86,6 +92,18 @@ export function removeChildNode<Bot extends UrbanBot>(_node: UrbanNode<Bot>, rem
         removedNode.deleteMessage(message);
     });
 }
+
+export const insertBeforeNode = (node: UrbanNode, newChildNode: UrbanNode, beforeChildNode: UrbanNode) => {
+    const beforeChildNodeIndex = node.childNodes.findIndex((childNode) => childNode === beforeChildNode);
+    const nodesAfterInserted = node.childNodes.filter((_childNode, index) => index >= beforeChildNodeIndex);
+    nodesAfterInserted.forEach((nodeAfterInserted) => {
+        removeChildNode(node, nodeAfterInserted);
+    });
+    appendChildNode(node, newChildNode);
+    nodesAfterInserted.forEach((nodeAfterInserted) => {
+        appendChildNode(node, nodeAfterInserted);
+    });
+};
 
 export function updateNode<Bot extends UrbanBot>(
     node: UrbanNode<Bot>,
