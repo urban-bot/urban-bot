@@ -93,7 +93,7 @@ export function removeChildNode<Bot extends UrbanBot>(parentNode: UrbanNode<Bot>
     });
 }
 
-export const insertBeforeNode = (node: UrbanNode, newChildNode: UrbanNode, beforeChildNode: UrbanNode) => {
+export function insertBeforeNode(node: UrbanNode, newChildNode: UrbanNode, beforeChildNode: UrbanNode) {
     const beforeChildNodeIndex = node.childNodes.findIndex((childNode) => childNode === beforeChildNode);
     const nodesAfterInserted = node.childNodes.filter((_childNode, index) => index >= beforeChildNodeIndex);
     nodesAfterInserted.forEach((nodeAfterInserted) => {
@@ -103,7 +103,7 @@ export const insertBeforeNode = (node: UrbanNode, newChildNode: UrbanNode, befor
     nodesAfterInserted.forEach((nodeAfterInserted) => {
         appendChildNode(node, nodeAfterInserted);
     });
-};
+}
 
 export function updateNode<Bot extends UrbanBot>(
     node: UrbanNode<Bot>,
