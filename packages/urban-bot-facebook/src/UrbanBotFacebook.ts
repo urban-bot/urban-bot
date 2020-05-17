@@ -79,9 +79,10 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
 
             if (mode && token) {
                 if (mode === 'subscribe' && token === this.options.verifyToken) {
-                    console.log('WEBHOOK_VERIFIED');
+                    console.log('webhook verified');
                     res.status(200).send(challenge);
                 } else {
+                    console.error('webhook not verified');
                     res.sendStatus(403);
                 }
             }
@@ -336,7 +337,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         const signature = req.headers['x-hub-signature'];
 
         if (!signature) {
-            console.log("Couldn't validate the signature.");
+            console.error("Couldn't validate the signature.");
         } else {
             const elements = signature.split('=');
             const signatureHash = elements[1];

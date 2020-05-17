@@ -6,12 +6,14 @@
  *
  * Messenger For Original Coast Clothing
  * https://developers.facebook.com/docs/messenger-platform/getting-started/sample-apps/original-coast-clothing
+ * Based on https://github.com/fbsamples/original-coast-clothing/blob/master/services/graph-api.js
  */
 
 import requestPromise from 'request-promise';
 import camelCase from 'camelcase';
 import { FacebookOptions } from './UrbanBotFacebook';
 
+// TODO specify GraphAPI types
 export class GraphAPI {
     constructor(public options: FacebookOptions) {}
 
@@ -44,7 +46,7 @@ export class GraphAPI {
         });
     }
 
-    callSubscriptionsAPI(customFields: any) {
+    callSubscriptionsAPI(customFields: string) {
         // Send the HTTP request to the Subscriptions Edge to configure your webhook
         // You can use the Graph API's /{app-id}/subscriptions edge to configure and
         // manage your app's Webhooks product
@@ -76,7 +78,7 @@ export class GraphAPI {
         });
     }
 
-    callSubscribedApps(customFields: any) {
+    callSubscribedApps(customFields: string) {
         // Send the HTTP request to subscribe an app for Webhooks for Pages
         // You can use the Graph API's /{page-id}/subscribed_apps edge to configure
         // and manage your pages subscriptions
@@ -102,7 +104,7 @@ export class GraphAPI {
         });
     }
 
-    async getUserProfile(senderPsid: any) {
+    async getUserProfile(senderPsid: string) {
         try {
             const userProfile = (await this.callUserProfileAPI(senderPsid)) as any;
 
@@ -119,7 +121,7 @@ export class GraphAPI {
         }
     }
 
-    callUserProfileAPI(senderPsid: any) {
+    callUserProfileAPI(senderPsid: string) {
         return requestPromise({
             uri: `${this.options.apiUrl}/${senderPsid}`,
             qs: {
@@ -179,7 +181,7 @@ export class GraphAPI {
         });
     }
 
-    callFBAEventsAPI(senderPsid: any, eventName: any) {
+    callFBAEventsAPI(senderPsid: string, eventName: string) {
         // Construct the message body
         const requestBody = {
             event: 'CUSTOM_APP_EVENTS',
