@@ -1,0 +1,65 @@
+{
+  "name": "dating-bot",
+  "version": "0.0.1",
+  "description": "Bot for dating",
+  "main": "dist/index.js",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "start": "npm run build && node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "dev": "rimraf dist && nodemon",
+    "test": "jest",
+    "lint": "eslint \"./src/**\"",
+    "lint:fix": "npm run lint -- --fix",
+    "precommit": "lint-staged"
+  },
+  "authors": [
+    "ledamint",
+    "oTkPoBeHuE"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/faker": "^4.1.11",
+    "@types/react": "^16.9.34",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "husky": "^4.2.5",
+    "jest": "^25.4.0",
+    "lint-staged": "^10.1.7",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+
+    "@urban-bot/core": "0.0.1",
+    "@urban-bot/slack": "0.0.1",
+    "@urban-bot/telegram": "0.0.1",
+
+    "faker": "^4.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/urban-bot/urban-bot.git",
+    "directory": "examples/dating-bot"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}
