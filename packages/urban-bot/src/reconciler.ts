@@ -1,5 +1,5 @@
 import ReactReconciler from 'react-reconciler';
-import { createNode, appendChildNode, removeChildNode, updateNode } from './node';
+import { createNode, appendChildNode, removeChildNode, updateNode, insertBeforeNode } from './node';
 
 const rootHostContext = {};
 const childHostContext = {};
@@ -30,7 +30,7 @@ const hostConfig = {
     finalizeInitialChildren: () => false,
     supportsMutation: true,
     appendChildToContainer: appendChildNode,
-    insertInContainerBefore: appendChildNode,
+    insertInContainerBefore: insertBeforeNode,
     removeChildFromContainer: removeChildNode,
     prepareUpdate: () => true,
     commitUpdate: updateNode,
