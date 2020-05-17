@@ -71,7 +71,9 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
         this.events.on('message', this.handleMessage);
         this.interactions.action(/.*/, this.handleAction);
 
-        app.listen(port);
+        app.listen(port, () => {
+            console.log('@urban-bot/slack has started');
+        });
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventSlack>) {
@@ -210,8 +212,8 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
                 payload: req.body,
             },
         };
-        res.send();
-        return this.processUpdate(ctx);
+        this.processUpdate(ctx);
+        res.sendStatus(200);
     };
 
     async sendMessage(message: UrbanMessage): Promise<SlackMessageMeta> {
@@ -284,7 +286,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             }
             case 'urban-file': {
                 if (typeof message.data.file === 'string') {
-                    throw new Error("@urban-bot/slack doesn't support video file as string");
+                    throw new Error("@urban-bot/slack doesn't support file as string");
                 }
 
                 return (this.client.files.upload({

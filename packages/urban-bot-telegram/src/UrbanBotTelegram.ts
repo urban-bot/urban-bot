@@ -85,6 +85,8 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
                 return;
             }
         });
+
+        console.log('@urban-bot/telegram has started');
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventTelegram>) {
@@ -381,6 +383,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
                     type: 'voice',
                     payload: {
                         duration: ctx.voice.duration,
+                        mimeType: ctx.voice.mime_type,
                     },
                 };
 

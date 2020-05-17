@@ -28,23 +28,16 @@ const existingMessage: UrbanExistingMessage<typeof meta> = {
     meta,
 } as const;
 
-// FIXME rewrite broken tests
 describe('ManagerBot', () => {
     it('method updateMessage', async () => {
-        const debounceDelay = 50;
-        const managerBot = new ManagerBot(testBot, debounceDelay);
-
-        managerBot.addChat(existingMessage.chat.id);
+        const managerBot = new ManagerBot(testBot);
 
         managerBot.updateMessage(existingMessage);
-
-        await new Promise((resolve) => setTimeout(resolve, debounceDelay));
 
         expect(testBot.updateMessage).toHaveBeenCalledTimes(1);
         expect(testBot.updateMessage).toHaveBeenLastCalledWith(existingMessage);
 
         managerBot.updateMessage(existingMessage);
-        await new Promise((resolve) => setTimeout(resolve, debounceDelay));
 
         expect(testBot.updateMessage).toHaveBeenCalledTimes(2);
     });

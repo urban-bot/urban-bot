@@ -16,7 +16,7 @@ export interface UrbanBot<Metadata extends UrbanBotMeta = UrbanBotMeta> {
     defaultParseMode?: UrbanParseMode;
     processUpdate: ProcessUpdate<Metadata['NativeEvent']>;
     sendMessage: (message: UrbanMessage) => Promise<Metadata['MessageMeta']>;
-    updateMessage: (message: UrbanExistingMessage<Metadata['MessageMeta']>) => void;
-    deleteMessage: (message: UrbanExistingMessage<Metadata['MessageMeta']>) => void;
+    updateMessage?: (message: UrbanExistingMessage<Metadata['MessageMeta']>) => void;
+    deleteMessage?: (message: UrbanExistingMessage<Metadata['MessageMeta']>) => void;
     initializeCommands?: (commands: UrbanCommand[]) => Promise<unknown>;
 }
