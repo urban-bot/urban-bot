@@ -15,7 +15,7 @@ const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN, {
 });
 
 render(
-    <Root bot={urbanBotTelegram} parseMode="HTML">
+    <Root bot={urbanBotTelegram} parseMode="HTML" isNewMessageEveryRender>
         <App />
     </Root>,
     () => console.log('telegram bot is started'),

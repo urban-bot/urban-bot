@@ -10,7 +10,7 @@ type Props = {
     isNewMessageEveryRender?: boolean;
 };
 
-export function UserProfile({ profile, buttons, isNewMessageEveryRender }: Props) {
+export function UserProfile({ profile, buttons }: Props) {
     return (
         <Image
             file={profile.avatar}
@@ -23,7 +23,6 @@ export function UserProfile({ profile, buttons, isNewMessageEveryRender }: Props
                 </>
             }
             buttons={buttons}
-            isNewMessageEveryRender={isNewMessageEveryRender}
         />
     );
 }

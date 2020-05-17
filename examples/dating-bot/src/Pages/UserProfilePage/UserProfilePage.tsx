@@ -63,7 +63,6 @@ export function UserProfilePage({ botContext, profile }: Props) {
                                 <Button onClick={() => console.log('Click first button')}>Сохранить</Button>
                             </ButtonGroup>
                         }
-                        isNewMessageEveryRender
                     />
                 </>
             )}

@@ -25,7 +25,6 @@ export function DatingPage() {
                     <Button onClick={handleClickNext}>{'>'}</Button>
                 </ButtonGroup>
             }
-            isNewMessageEveryRender
         />
     );
 }

@@ -12,7 +12,7 @@ type Props = {
 export function MainPage({ botContext, profile }: Props) {
     if (!profile) {
         return (
-            <Text isNewMessageEveryRender>
+            <Text>
                 {`${botContext.chat.firstName} ${botContext.chat.lastName}`}, добро пожаловать в <i>Tindergram</i>
                 Вы должно создать профиль <br />
                 <b>/profile</b> - Профиль <br />
@@ -21,7 +21,7 @@ export function MainPage({ botContext, profile }: Props) {
     }
 
     return (
-        <Text isNewMessageEveryRender>
+        <Text>
             {`${profile.name}`}, добро пожаловать в <i>Tindergram</i> <br />
             <b>/dating</b> - Поиск пары <br />
             <b>/profile</b> - Профиль <br />
