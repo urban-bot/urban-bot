@@ -5,6 +5,7 @@ export type UrbanButton = OtherProps & {
     text: string;
     id?: string;
     url?: string;
+    phoneNumber?: string | number;
 };
 
 export type UrbanOption = {
@@ -21,6 +22,7 @@ export type UrbanMessageCommonData = OtherProps & {
     disableNotification?: boolean;
     replyToMessageId?: string;
     forceReply?: boolean;
+    personaId?: number | string;
 };
 
 export type UrbanMessageTextData = UrbanMessageCommonData & {

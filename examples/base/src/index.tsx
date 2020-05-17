@@ -3,6 +3,7 @@ import React from 'react';
 import { render, Route, Router, Root, Notification, Text } from '@urban-bot/core';
 import { UrbanBotTelegram } from '@urban-bot/telegram';
 import { UrbanBotSlack } from '@urban-bot/slack';
+import { UrbanBotFacebook } from '@urban-bot/facebook';
 import { TextExample } from './Text';
 import { Hooks } from './Hooks';
 import { ImageExample } from './Image';
@@ -75,8 +76,9 @@ function App() {
         </Router>
     );
 }
-if (process.env.TELEGRAM_TOKEN_DEV) {
-    const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN_DEV as string, {
+
+if (process.env.TELEGRAM_TOKEN) {
+    const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN, {
         polling: true,
     });
     render(
@@ -87,12 +89,29 @@ if (process.env.TELEGRAM_TOKEN_DEV) {
 }
 if (process.env.SLACK_SIGNING_SECRET && process.env.SLACK_TOKEN) {
     const urbanBotSlack = new UrbanBotSlack({
-        signingSecret: process.env.SLACK_SIGNING_SECRET as string,
-        token: process.env.SLACK_TOKEN as string,
+        signingSecret: process.env.SLACK_SIGNING_SECRET,
+        token: process.env.SLACK_TOKEN,
     });
 
     render(
         <Root bot={urbanBotSlack}>
+            <App />
+        </Root>,
+    );
+}
+
+if (process.env.FACEBOOK_APP_SECRET && process.env.FACEBOOK_PAGE_ACCESS_TOKEN && process.env.FACEBOOK_VERIFY_TOKEN) {
+    render(
+        <Root
+            bot={
+                new UrbanBotFacebook({
+                    appSecret: process.env.FACEBOOK_APP_SECRET,
+                    pageAccessToken: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
+                    verifyToken: process.env.FACEBOOK_VERIFY_TOKEN,
+                })
+            }
+            isNewMessageEveryRender
+        >
             <App />
         </Root>,
     );
