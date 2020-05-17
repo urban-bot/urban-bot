@@ -7,26 +7,29 @@ import { UrbanCommand } from '../../types';
 
 let isCommandsInitialized = false;
 
+type RouterChild = React.ReactElement<RouteProps> | null | undefined;
 type RouterProps = {
-    children: React.ReactElement<RouteProps> | React.ReactElement<RouteProps>[];
+    children: RouterChild | RouterChild[];
     withInitializeCommands?: boolean;
 };
 
 export function Router({ children, withInitializeCommands = false }: RouterProps) {
     const { bot } = useBotContext();
     const [activePath, navigate] = React.useState('');
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<RouteProps>[];
+    const notNullableChildren = React.Children.toArray(children).filter(
+        (route): route is React.ReactElement<RouteProps> => route !== null,
+    );
 
     React.useEffect(() => {
         if (!withInitializeCommands || isCommandsInitialized) {
             return;
         }
 
-        const commands = childrenArray
-            .map((routes) => {
+        const commands = notNullableChildren
+            .map((route) => {
                 return {
-                    command: routes.props.path,
-                    description: routes.props.description,
+                    command: route.props.path,
+                    description: route.props.description,
                 };
             })
             .filter(({ command }) => typeof command === 'string' && command[0] === '/') as UrbanCommand[];
@@ -38,14 +41,14 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
     }, []);
 
     useCommand(({ command }) => {
-        if (childrenArray.some(matchChild(command))) {
+        if (notNullableChildren.some(matchChild(command))) {
             navigate(command);
         }
     });
 
     return (
         <RouterContext.Provider value={{ activePath, navigate }}>
-            {childrenArray.find(matchChild(activePath))}
+            {notNullableChildren.find(matchChild(activePath))}
         </RouterContext.Provider>
     );
 }
