@@ -12,6 +12,25 @@ Universal chatbot library based on [React](https://github.com/facebook/react).
 
 Currently, the library is under active development and has an alpha version status. But you can help us if you try to use it and understand conception. It is really easy if you have already known React. All available example [components](https://github.com/urban-bot/urban-bot/tree/master/examples/base/src) and [hooks](https://github.com/urban-bot/urban-bot/blob/master/examples/base/src/Hooks.tsx).
 
+## Hello, World!
+```javascript
+import React from 'react';
+import { render, Root, Text } from '@urban-bot/core';
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+
+render(
+    <Root
+        bot={
+            new UrbanBotTelegram(telegramToken, {
+                polling: true,
+            })
+        }
+    >
+        <Text>Hello, world!</Text>
+    </Root>
+);
+```
+
 **Platforms we are supporting**
 
 [![https://telegram.org/](files/telegram-logo.svg)](https://telegram.org/)
@@ -34,7 +53,7 @@ Or install manually:
 $ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
 
-## Example
+## Multiplatform Example
 ![](files/telegram-gif.gif)
 ![](files/slack-gif.gif)
 ```javascript
