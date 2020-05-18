@@ -1,6 +1,6 @@
 {
     "name": "@urban-bot/core",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Universal chatbot library based on React",
     "files": [
         "dist/**/*"
@@ -55,8 +55,8 @@
     },
     "dependencies": {
         "array-flatten": "3.0.0",
-        "react-reconciler": "0.25.1",
-        "debounce-promise": "3.1.2"
+        "debounce-promise": "3.1.2",
+        "react-reconciler": "0.25.1"
     },
     "peerDependencies": {
         "react": "^16.13.1"
