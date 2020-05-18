@@ -5,3 +5,4 @@ dist
 coverage
 tsconfig.tsbuildinfo
 yarn-error.log
+lerna-debug.log

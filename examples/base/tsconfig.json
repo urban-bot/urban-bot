@@ -5,5 +5,9 @@
         "outDir": "dist" /* Redirect output structure to the directory. */,
         "rootDir": "src" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*"],
+    "exclude": [
+        "node_modules",
+        "**/*.test.ts"
+    ]
 }
