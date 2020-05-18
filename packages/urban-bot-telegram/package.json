@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/telegram",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Create Telegram chatbot with urban-bot",
   "files": [
     "dist/**/*"
@@ -34,6 +34,7 @@
     "@types/jest": "25.2.1",
     "@typescript-eslint/eslint-plugin": "2.29.0",
     "@typescript-eslint/parser": "2.29.0",
+    "@urban-bot/core": "^0.0.2",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "2.20.2",
@@ -46,8 +47,7 @@
     "prettier": "2.0.5",
     "rimraf": "3.0.2",
     "ts-jest": "25.4.0",
-    "typescript": "3.8.3",
-    "@urban-bot/core": "0.0.1"
+    "typescript": "3.8.3"
   },
   "dependencies": {
     "@types/node-telegram-bot-api": "0.40.3",
