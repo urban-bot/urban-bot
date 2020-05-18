@@ -54,7 +54,7 @@
     "node-telegram-bot-api": "0.40.0"
   },
   "peerDependencies": {
-    "@urban-bot/core": "^0.0.2"
+    "@urban-bot/core": "^0.0.3"
   },
   "repository": {
     "type": "git",
