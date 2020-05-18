@@ -31,10 +31,10 @@ Please use our zero configuration [starter](https://github.com/urban-bot/urban-b
 
 Or install manually:
 ```
-$ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/slack
+$ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
 
-## Simple example
+## Example
 ![](files/telegram-gif.gif)
 ![](files/slack-gif.gif)
 ```javascript
