@@ -1,6 +1,6 @@
 {
     "name": "urban-bot-base-example",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "urban bot base example",
     "files": [
         "dist/**/*"
@@ -32,18 +32,18 @@
         "eslint-plugin-prettier": "3.1.3",
         "eslint-plugin-react": "7.19.0",
         "eslint-plugin-react-hooks": "3.0.0",
-        "nodemon": "2.0.3",
-        "rimraf": "3.0.2",
-        "typescript": "3.8.3",
         "lint-staged": "10.1.7",
-        "prettier": "2.0.5"
+        "nodemon": "2.0.3",
+        "prettier": "2.0.5",
+        "rimraf": "3.0.2",
+        "typescript": "3.8.3"
     },
     "dependencies": {
-        "react": "16.13.1",
-        "@urban-bot/core": "0.0.1",
-        "@urban-bot/slack": "0.0.1",
-        "@urban-bot/telegram": "0.0.1",
-        "@urban-bot/facebook": "0.0.1"
+        "@urban-bot/core": "^0.0.2",
+        "@urban-bot/facebook": "^0.0.2",
+        "@urban-bot/slack": "^0.0.2",
+        "@urban-bot/telegram": "^0.0.2",
+        "react": "16.13.1"
     },
     "engines": {
         "node": ">=10.0.0"
