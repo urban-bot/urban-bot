@@ -38,7 +38,6 @@
         "@types/react-reconciler": "0.18.0",
         "@typescript-eslint/eslint-plugin": "2.29.0",
         "@typescript-eslint/parser": "2.29.0",
-        "debounce-promise": "3.1.2",
         "eslint": "6.8.0",
         "eslint-config-prettier": "6.11.0",
         "eslint-plugin-import": "2.20.2",
@@ -56,7 +55,8 @@
     },
     "dependencies": {
         "array-flatten": "3.0.0",
-        "react-reconciler": "0.25.1"
+        "react-reconciler": "0.25.1",
+        "debounce-promise": "3.1.2"
     },
     "peerDependencies": {
         "react": "^16.13.1"
