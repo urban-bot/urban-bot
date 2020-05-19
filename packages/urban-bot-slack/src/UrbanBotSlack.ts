@@ -30,13 +30,13 @@ import { getTypeByMimeType } from './utils';
 
 const app = express();
 
-type UrbanBotSlackProps = {
+export type UrbanBotSlackProps = {
     signingSecret: string;
     token: string;
     port?: number;
 };
 
-type UrbanNativeEventSlack = {
+export type UrbanNativeEventSlack = {
     type: SLACK;
     payload?: SlackPayload;
 };
