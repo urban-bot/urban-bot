@@ -1,19 +1,18 @@
 import express from 'express';
 
-const expressAppMap = new Map<number, { app: express.Express; isStarted: boolean }>();
+export type ExpressAppType = {
+    app: express.Express;
+    isStarted: boolean;
+};
+
+const expressAppMap = new Map<number, ExpressAppType>();
 
 export function getExpressApp(port: number) {
-    const expressApp = expressAppMap.get(port);
-
-    if (expressApp !== undefined) {
-        return expressApp;
+    if (!expressAppMap.has(port)) {
+        expressAppMap.set(port, { app: express(), isStarted: false });
     }
 
-    const newExpressApp = { app: express(), isStarted: false };
-
-    expressAppMap.set(port, newExpressApp);
-
-    return newExpressApp;
+    return expressAppMap.get(port) as ExpressAppType;
 }
 
 export function listen(port: number) {
