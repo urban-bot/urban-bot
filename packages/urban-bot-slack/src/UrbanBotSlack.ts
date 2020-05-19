@@ -68,8 +68,6 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
         expressApp.use('/slack/events', this.events.expressMiddleware());
         expressApp.use('/slack/actions', this.interactions.expressMiddleware());
         expressApp.post('/slack/commands', bodyParser.urlencoded({ extended: false }), this.handleCommand);
-
-        console.log('@urban-bot/slack has started');
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventSlack>) {

@@ -60,15 +60,15 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         this.options = { ...defaultOptions, ...options };
         this.client = new GraphAPI(this.options);
     }
-
     initializeServer(expressApp: express.Express) {
         expressApp.use(
+            '/facebook/*',
             urlencoded({
                 extended: true,
             }),
         );
 
-        expressApp.use(json({ verify: this.verifyRequestSignature }));
+        expressApp.use('/facebook/*', json({ verify: this.verifyRequestSignature }));
 
         expressApp.get('/facebook/webhook', (req, res) => {
             const mode = req.query['hub.mode'];
@@ -92,8 +92,6 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             this.handleEvent(payload);
             res.sendStatus(200);
         });
-
-        console.log('@urban-bot/facebook has started');
 
         if (this.options.pageId !== undefined) {
             console.log('Test your app by messaging:');
