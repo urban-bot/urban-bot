@@ -28,12 +28,9 @@ import {
 import { formatButtons, formatTitle, withRightSpaceIfExist } from './format';
 import { getTypeByMimeType } from './utils';
 
-const app = express();
-
-export type UrbanBotSlackProps = {
+export type SlackOptions = {
     signingSecret: string;
     token: string;
-    port?: number;
 };
 
 export type UrbanNativeEventSlack = {
@@ -54,26 +51,25 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
     events: ReturnType<typeof createEventAdapter>;
     interactions: ReturnType<typeof createMessageAdapter>;
 
-    constructor({ signingSecret, port = 8080, token }: UrbanBotSlackProps) {
+    constructor({ signingSecret, token }: SlackOptions) {
         this.client = new WebClient(token);
-
         this.events = createEventAdapter(signingSecret);
         this.interactions = createMessageAdapter(signingSecret);
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore this.events extends EventEmitter
         this.events.on('error', console.error);
-        app.use('/slack/events', this.events.expressMiddleware());
-        app.use('/slack/actions', this.interactions.expressMiddleware());
-
-        app.post('/slack/commands', bodyParser.urlencoded({ extended: false }), this.handleCommand);
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore this.events extends EventEmitter
         this.events.on('message', this.handleMessage);
         this.interactions.action(/.*/, this.handleAction);
+    }
 
-        app.listen(port, () => {
-            console.log('@urban-bot/slack has started');
-        });
+    initializeServer(expressApp: express.Express) {
+        expressApp.use('/slack/events', this.events.expressMiddleware());
+        expressApp.use('/slack/actions', this.interactions.expressMiddleware());
+        expressApp.post('/slack/commands', bodyParser.urlencoded({ extended: false }), this.handleCommand);
+
+        console.log('@urban-bot/slack has started');
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventSlack>) {

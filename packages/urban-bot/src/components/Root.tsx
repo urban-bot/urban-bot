@@ -6,6 +6,7 @@ import { UrbanChat, UrbanParseMode } from '../types';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
 import { BotMetaByBot } from '../hooks/hooks';
+import { getExpressApp, listen } from '../expressApp';
 
 export type ChatProps<Bot extends UrbanBot> = {
     bot: Bot;
@@ -45,6 +46,7 @@ export type RootProps<Bot extends UrbanBot> = {
     sessionTimeSeconds?: number;
     isNewMessageEveryRender?: boolean;
     parseMode?: UrbanParseMode;
+    port?: number;
 };
 
 export function Root<Bot extends UrbanBot>({
@@ -53,6 +55,7 @@ export function Root<Bot extends UrbanBot>({
     sessionTimeSeconds = 60 * 60 * 24 * 7,
     isNewMessageEveryRender = false,
     parseMode,
+    port = 8080,
 }: RootProps<Bot>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map());
@@ -63,6 +66,13 @@ export function Root<Bot extends UrbanBot>({
 
     const [firstMessage, setFirstMessage] = React.useState<UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>>();
 
+    React.useEffect(() => {
+        if (bot.initializeServer !== undefined) {
+            const { app } = getExpressApp(port);
+            bot.initializeServer(app);
+            listen(port);
+        }
+    }, [port, bot]);
     const $$managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
     React.useEffect(() => {
