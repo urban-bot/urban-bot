@@ -47,12 +47,12 @@ export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
     payload?: Payload;
 };
-export type TelegramBotType = UrbanBotMeta & {
+export type TelegramBotMeta = UrbanBotMeta & {
     NativeEvent: UrbanNativeEventTelegram;
     MessageMeta: TelegramMessageMeta;
 };
 
-export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
+export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanBotTelegram.TYPE;
     defaultParseMode: UrbanParseMode = 'HTML';
