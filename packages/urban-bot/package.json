@@ -1,6 +1,6 @@
 {
     "name": "@urban-bot/core",
-    "version": "0.0.5",
+    "version": "0.0.4",
     "description": "Universal chatbot library based on React",
     "files": [
         "dist/**/*"
