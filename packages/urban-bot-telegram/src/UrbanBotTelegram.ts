@@ -103,14 +103,11 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
             return;
         }
 
-        expressApp.use(express.json());
-
-        expressApp.post(`/bot${this.options.token}`, (req, res) => {
+        expressApp.use('/telegram/*', express.json());
+        expressApp.post(`/telegram/bot${this.options.token}`, (req, res) => {
             this.bot.processUpdate(req.body);
             res.sendStatus(200);
         });
-
-        console.log('@urban-bot/telegram has started');
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventTelegram>) {
