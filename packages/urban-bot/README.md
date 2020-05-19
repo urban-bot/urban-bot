@@ -14,17 +14,17 @@ Currently, the library is under active development and has an alpha version stat
 
 **Platforms we are supporting**
 
-[![https://telegram.org/](../../files/telegram-logo.svg)](https://telegram.org/)
- [![https://telegram.org/](../../files/slack-logo.svg)](https://slack.com/)
- [![https://telegram.org/](../../files/facebook-logo.svg)](https://www.messenger.com/)
+[![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/telegram-logo.svg)](https://telegram.org/)
+ [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/slack-logo.svg)](https://slack.com/)
+ [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/facebook-logo.svg)](https://www.messenger.com/)
  
  
 **Soon**
 
-[![https://telegram.org/](../../files/discord-logo.svg)](https://www.discord.com/)
- [![https://telegram.org/](../../files/whatsapp-logo.svg)](https://www.whatsapp.com/)
- [![https://telegram.org/](../../files/vk-logo.svg)](https://www.vk.com/)
- [![https://telegram.org/](../../files/viber-logo.svg)](https://www.viber.com/)
+[![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/discord-logo.svg)](https://www.discord.com/)
+ [![](https://raw.githubusercontent.com/urban-bot/urban-bot/97a13c34a623ac076190eb39a2d55e033dc705d2/files/whatsapp-logo.svg)](https://www.whatsapp.com/)
+ [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/vk-logo.svg)](https://www.vk.com/)
+ [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/viber-logo.svg)](https://www.viber.com/)
 
 ## Installation
 Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter).
@@ -35,8 +35,8 @@ $ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
 
 ## Example
-![](../../files/telegram-gif.gif)
-![](../../files/slack-gif.gif)
+![](https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/telegram-gif.gif)
+![](https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/slack-gif.gif)
 ```javascript
 import React from 'react';
 import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from '@urban-bot/core';
