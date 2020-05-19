@@ -15,7 +15,8 @@
     "lint:fix": "npm run lint -- --fix",
     "my-publish": "npm run build && npm publish --access public",
     "typecheck": "tsc --noEmit",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepare": "npm run build"
   },
   "keywords": [
     "urban-bot",

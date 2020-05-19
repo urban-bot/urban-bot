@@ -12,7 +12,8 @@
         "typecheck": "tsc --noEmit",
         "lint": "eslint \"./src/**\"",
         "lint:fix": "npm run lint -- --fix",
-        "precommit": "lint-staged"
+        "precommit": "lint-staged",
+        "prepare": "npm run build"
     },
     "authors": [
         "ledamint",
