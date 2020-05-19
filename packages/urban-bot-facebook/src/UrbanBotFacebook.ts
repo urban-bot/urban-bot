@@ -34,13 +34,11 @@ export type FacebookOptions = {
     webhookUrl?: string;
     apiUrl?: string;
     apiUrlVersion?: string;
-    port?: number;
 };
 
 const defaultOptions: Partial<FacebookOptions> = {
     apiUrl: 'https://graph.facebook.com',
     apiUrlVersion: 'v3.2',
-    port: 8080,
 };
 
 export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
@@ -51,8 +49,6 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
     options: FacebookOptions;
 
     constructor(options: FacebookOptions) {
-        const app = express();
-
         if (!('pageAccessToken' in options)) {
             throw new Error(`Provide pageAccessToken to @urban-bot/facebook options`);
         }
@@ -63,16 +59,18 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
 
         this.options = { ...defaultOptions, ...options };
         this.client = new GraphAPI(this.options);
+    }
 
-        app.use(
+    initializeServer(expressApp: express.Express) {
+        expressApp.use(
             urlencoded({
                 extended: true,
             }),
         );
 
-        app.use(json({ verify: this.verifyRequestSignature }));
+        expressApp.use(json({ verify: this.verifyRequestSignature }));
 
-        app.get('/webhook', (req, res) => {
+        expressApp.get('/facebook/webhook', (req, res) => {
             const mode = req.query['hub.mode'];
             const token = req.query['hub.verify_token'];
             const challenge = req.query['hub.challenge'];
@@ -88,21 +86,19 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
             }
         });
 
-        app.post('/webhook', (req, res) => {
+        expressApp.post('/facebook/webhook', (req, res) => {
             const payload = req.body as FacebookPayload;
 
             this.handleEvent(payload);
             res.sendStatus(200);
         });
 
-        app.listen(this.options.port, () => {
-            console.log('@urban-bot/facebook has started');
+        console.log('@urban-bot/facebook has started');
 
-            if (this.options.pageId !== undefined) {
-                console.log('Test your app by messaging:');
-                console.log('https://m.me/' + this.options.pageId);
-            }
-        });
+        if (this.options.pageId !== undefined) {
+            console.log('Test your app by messaging:');
+            console.log('https://m.me/' + this.options.pageId);
+        }
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventFacebook>) {
