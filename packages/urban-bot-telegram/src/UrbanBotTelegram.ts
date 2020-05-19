@@ -42,25 +42,32 @@ import {
     InputMediaFile,
     InputMediaAnimation,
 } from './types';
+import express from 'express';
 
 export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
     payload?: Payload;
 };
-export type TelegramBotType = UrbanBotMeta & {
+export type TelegramBotMeta = UrbanBotMeta & {
     NativeEvent: UrbanNativeEventTelegram;
     MessageMeta: TelegramMessageMeta;
 };
 
-export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
+export type TelegramOptions = {
+    token: string;
+    isPolling?: boolean;
+};
+
+export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanBotTelegram.TYPE;
     defaultParseMode: UrbanParseMode = 'HTML';
 
     bot: TelegramBot;
 
-    constructor(token: string, options?: TelegramBot.ConstructorOptions) {
-        this.bot = new TelegramBot(token, options);
+    constructor(public options: TelegramOptions) {
+        const { isPolling, token } = options;
+        this.bot = new TelegramBot(token, isPolling ? { polling: true } : undefined);
 
         this.bot.on('text', (ctx) => this.handleMessage('text', ctx));
         this.bot.on('callback_query', this.handleCallbackQuery);
@@ -84,6 +91,23 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotType> {
 
                 return;
             }
+        });
+
+        if (isPolling) {
+            console.log('@urban-bot/telegram has started polling');
+        }
+    }
+
+    initializeServer(expressApp: express.Express) {
+        if (this.options.isPolling) {
+            return;
+        }
+
+        expressApp.use(express.json());
+
+        expressApp.post(`/bot${this.options.token}`, (req, res) => {
+            this.bot.processUpdate(req.body);
+            res.sendStatus(200);
         });
 
         console.log('@urban-bot/telegram has started');

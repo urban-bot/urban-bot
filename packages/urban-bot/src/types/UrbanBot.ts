@@ -1,6 +1,7 @@
 import { UrbanNativeEvent, UrbanSyntheticEvent } from './Events';
 import { UrbanMessage, UrbanExistingMessage } from './Messages';
 import { UrbanCommand, UrbanParseMode } from './index';
+import { Express } from 'express';
 
 export type ProcessUpdate<NativeEvent extends UrbanNativeEvent = UrbanNativeEvent> = (
     event: UrbanSyntheticEvent<NativeEvent>,
@@ -19,4 +20,5 @@ export interface UrbanBot<Metadata extends UrbanBotMeta = UrbanBotMeta> {
     updateMessage?: (message: UrbanExistingMessage<Metadata['MessageMeta']>) => void;
     deleteMessage?: (message: UrbanExistingMessage<Metadata['MessageMeta']>) => void;
     initializeCommands?: (commands: UrbanCommand[]) => Promise<unknown>;
+    initializeServer?: (expressApp: Express) => void;
 }

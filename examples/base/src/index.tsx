@@ -78,8 +78,9 @@ function App() {
 }
 
 if (process.env.TELEGRAM_TOKEN) {
-    const urbanBotTelegram = new UrbanBotTelegram(process.env.TELEGRAM_TOKEN, {
-        polling: true,
+    const urbanBotTelegram = new UrbanBotTelegram({
+        token: process.env.TELEGRAM_TOKEN,
+        isPolling: true,
     });
     render(
         <Root bot={urbanBotTelegram}>
