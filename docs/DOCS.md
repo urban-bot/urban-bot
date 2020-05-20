@@ -1,18 +1,18 @@
 
-# Components  
+# Urban Bot Components  
   
 ## Text
-Send text message to chat
+Send a text message to a chat.
 ```javascript  
 <Text>Some text<Text>  
 ```  
 ### Props  
 Common props and
-
-#### disableWebPagePreview
+#### Optional
+##### disableWebPagePreview
 Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
-##### type
-boolean
+###### type
+`boolean`
 ```javascript
 <Text disableWebPagePreview>
     <a href="https://github.com/urban-bot/urban-bot">link</a>
@@ -44,6 +44,24 @@ Could be `string`, `number` and supported tags:
     </b>
     ...
 </Text>  
+```
+## Image
+Send an image to a chat.
+```javascript
+<Image file="https://path-to-image.com" />
+```  
+### Props  
+Common props and
+#### Required
+##### file
+File id or URL or Stream or Buffer.
+###### type
+`string` | `Buffer` | `NodeJS.ReadableStream`
+```javascript
+<Image file="id123" />
+<Image file="https://path-to-image.com" />
+<Image file={fs.createReadStream('/files/image.jpeg')} />
+<Image file={fs.readFileSync('/files/image.jpeg')} />
 ```
 
 ### Common props  
