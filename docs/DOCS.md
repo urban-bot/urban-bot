@@ -16,7 +16,7 @@ const { render, Root, Text } = require('@urban-bot/core');
 ```  
     
 ## render  
-The main function that starts React. Works similar `ReactDOM.render` but for urban-bot.  
+The main function that starts React. Works similar `ReactDOM.render`.  
 ### Arguments  
 ####  1  
 > Instance of `Root` component.  
