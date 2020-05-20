@@ -11,7 +11,7 @@ Send a text message to a chat.
 ```javascript  
 <Text>Some text<Text>  
 ```  
-### Props  
+### Props
 #### [Common props](#common-props)
 ####  children
 > [html](#html)
@@ -41,7 +41,7 @@ Send a text message to a chat.
 ```
 ## ButtonGroup
 Required wrapper for buttons.
-```
+```javascript
 <ButtonGroup>
     <Button onClick={() => console.log('Click first')}>First</Button>
     <Button onClick={() => console.log('Click second')}>Second</Button>
@@ -49,11 +49,37 @@ Required wrapper for buttons.
 ```
 ### Props  
 #### [Common props](#common-props)
+#### children
+> [Button](#Button)
+###### required
+`Button` `Button[]` `Button[][]`
+```javascript
+<ButtonGroup title="Button">
+    <Button>First</Button>
+</ButtonGroup>
+```
+```javascript
+<ButtonGroup title="Buttons">
+    <Button>First</Button>
+    <Button>Second</Button>
+</ButtonGroup>
+```
+```javascript
+<ButtonGroup title="Matrix Buttons">
+    {[
+        [<Button>First button</Button>, <Button>Second button</Button>],
+        [<Button>Third button</Button>, <Button>Fourth button</Button>],
+    ]}
+</ButtonGroup>
+```
+
 #### title
 > [html](#html)
 ###### optional
 ```javascript
 <ButtonGroup title="text">...</ButtonGroup>
+```
+```javascript
 <ButtonGroup title={<b>text</b>}>...</ButtonGroup>
 ```
 #### isReplyButtons
@@ -115,15 +141,24 @@ Send an image to a chat.
 `string` | `Buffer` | `NodeJS.ReadableStream`
 ```javascript
 <Image file="id123" />
+```
+```javascript
 <Image file="https://path-to-image.com" />
+```
+```javascript
 <Image file={fs.createReadStream('/files/image.jpeg')} />
+```
+```javascript
 <Image file={fs.readFileSync('/files/image.jpeg')} />
 ```
+
 #### title
 > [html](#html)
 ###### optional
 ```javascript
 <Image title="text" />
+```
+```javascript
 <Image title={<b>text</b>} />
 ```
 #### alt
