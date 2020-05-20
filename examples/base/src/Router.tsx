@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, Text, useRouter, ButtonGroup, Button } from '@urban-bot/core';
 
-function Route1() {
+function Buttons() {
     const { navigate } = useRouter();
 
     return (
@@ -11,7 +11,7 @@ function Route1() {
     );
 }
 
-function Route2() {
+function ReplyButtons() {
     return (
         <ButtonGroup isReplyButtons title="Route 2">
             <Button>route_1</Button>
@@ -26,10 +26,10 @@ export function RouterExample() {
                 <Text>Welcome to Router! Write route_1 or /route_2</Text>
             </Route>
             <Route path="route_1" description="path by string">
-                <Route1 />
+                <Buttons />
             </Route>
             <Route path="/route_2" description="path by command">
-                <Route2 />
+                <ReplyButtons />
             </Route>
             <Route path={/.+/} description="path by regex">
                 <Text>Not found</Text>
