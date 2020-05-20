@@ -2,16 +2,24 @@
 # Components  
   
 ## Text
-Send  one message to chat
+Send text message to chat
 ```javascript  
 <Text>Some text<Text>  
 ```  
-#### Props  
-Common props and  
-`disableWebPagePreview?: boolean;`
+### Props  
+Common props and
 
-#### Children  
-Could be string, number and supported tags:  
+#### disableWebPagePreview
+Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
+##### type
+boolean
+```javascript
+<Text disableWebPagePreview>Some text<Text>
+```
+
+
+### Children  
+Could be `string`, `number` and supported tags:  
   
 * `<b>bold</b>` `<strong>bold</strong>`  **bold**
 * `<i>italic</i>` `<em>italic</em>`  *italic*  
@@ -21,10 +29,7 @@ Could be string, number and supported tags:
 * `<q>text</q>`  quote text
 * `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)  
 * `<br />`  Line break  
-  
 
-  
-**Example**  
 ```jvascript  
 <Text>    
     Usual text    
@@ -34,8 +39,9 @@ Could be string, number and supported tags:
     <i>Italic text</i>    
     <b>    
         Bold and <s>Strikethrough text</s>    
-    </b>    
-... </Text>  
+    </b>
+    ...
+</Text>  
 ```
 
 ### Common props  
