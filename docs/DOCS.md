@@ -62,6 +62,44 @@ Required wrapper for buttons.
 <ButtonGroup isReplyButtons>...</ButtonGroup>
 ```
 
+## Button
+Button, just button.
+```
+<Button>Text</Button>
+```
+### Props
+#### children
+> Button name.
+###### required
+`string`
+#### onClick
+> Callback will be called after click.
+###### optional
+`Function`
+```javascript
+<Button onClick={() => console.log('Click first')}>First</Button>
+```
+#### url
+> The web page will be open after click.
+###### optional
+`string`
+```javascript
+<Button url="http://some-url.com">Open a web page</Button>
+```
+#### phoneNumber
+> The phone number will be suggested to call after click.
+###### optional
+`string` `number`
+```javascript
+<Button phoneNumber="+71234567890">Call Saul Goodman</Button>
+```
+#### id
+> Unique id. If you don't specify it, it will be generated automatically.
+###### optional
+`string`
+```javascript
+<Button id="some-id">First</Button>
+```
 ## Image
 Send an image to a chat.
 ```javascript
@@ -108,5 +146,3 @@ Send an image to a chat.
 * `<q>text</q>`  quote text
 * `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)  
 * `<br />`  Line break  
-
-```
