@@ -7,7 +7,7 @@ Send a text message to a chat.
 <Text>Some text<Text>  
 ```  
 ### Props  
-Common props and
+* #### [Common props](#common-props)
 * #### disableWebPagePreview
 Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
 ##### type
@@ -53,7 +53,7 @@ Send an image to a chat.
 <Image file="https://path-to-image.com" />
 ```  
 ### Props  
-Common props and
+* #### [Common props](#common-props)
 * #### file
 File id or URL or Stream or Buffer.
 ##### type
@@ -66,7 +66,7 @@ File id or URL or Stream or Buffer.
 <Image file={fs.readFileSync('/files/image.jpeg')} />
 ```
 
-### Common props  
+### Common props
 ```
 const commonProps = {
   parseMode?: 'HTML' | 'markdown';
