@@ -14,7 +14,9 @@ Some messengers show web page preview if you attach a link in your text. Set to 
 ##### type
 boolean
 ```javascript
-<Text disableWebPagePreview>Some text<Text>
+<Text disableWebPagePreview>
+    <a href="https://github.com/urban-bot/urban-bot">link</a>
+<Text>
 ```
 
 
