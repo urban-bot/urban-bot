@@ -37,6 +37,31 @@ Send a text message to a chat.
     <a href="https://github.com/urban-bot/urban-bot">link</a>
 <Text>
 ```
+## ButtonGroup
+Required wrapper for buttons.
+```
+<ButtonGroup>
+    <Button onClick={() => console.log('Click first')}>First</Button>
+    <Button onClick={() => console.log('Click second')}>Second</Button>
+</ButtonGroup>
+```
+### Props  
+#### [Common props](#common-props)
+#### title
+> [html](#html)
+###### optional
+```javascript
+<ButtonGroup title="text">...</ButtonGroup>
+<ButtonGroup title={<b>text</b>}>...</ButtonGroup>
+```
+#### isReplyButtons
+> Buttons send text which is located in `<Button>` children.
+###### optional
+`boolean`
+```javascript
+<ButtonGroup isReplyButtons>...</ButtonGroup>
+```
+
 ## Image
 Send an image to a chat.
 ```javascript
@@ -83,3 +108,5 @@ Send an image to a chat.
 * `<q>text</q>`  quote text
 * `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)  
 * `<br />`  Line break  
+
+```
