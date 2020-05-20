@@ -21,7 +21,7 @@ The main function that starts React. Works similar `ReactDOM.render`.
 ####  1  
 > Instance of `Root` component.  
 ###### required  
-[`Root`](root)  
+[`Root`](#root)  
 ```javascript    
 render(  
     <Root bot={new UrbanBotTelegram(options)}>  
