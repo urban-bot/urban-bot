@@ -4,7 +4,7 @@
 * [render](#render)  
 * [Root](#root)  
 * [Text](#text)  
-* [ButtonGroup](#buttonGroup)  
+* [ButtonGroup](#buttongroup)  
 * [Button](#button)  
 * [Image](#image)  
   
