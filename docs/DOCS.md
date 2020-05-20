@@ -10,8 +10,8 @@ Send a text message to a chat.
 <Text>Some text<Text>  
 ```  
 ### Props  
-* #### [Common props](#common-props)
-* #### disableWebPagePreview
+#### __[Common props](#common-props)__
+#### __disableWebPagePreview__
 Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
 ##### type
 ###### optional
