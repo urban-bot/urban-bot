@@ -13,7 +13,6 @@ Send a text message to a chat.
 #### [Common props](#common-props)
 #### disableWebPagePreview
 > Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
-##### type
 ###### optional
 `boolean`
 ```javascript
@@ -23,7 +22,6 @@ Send a text message to a chat.
 ```
 ####  children
 > Text or html tags
-##### type
 ###### required
 
 * `string`  
@@ -59,7 +57,6 @@ Send an image to a chat.
 #### [Common props](#common-props)
 #### file
 > File id or URL or Stream or Buffer.
-##### type
 ###### required
 `string` | `Buffer` | `NodeJS.ReadableStream`
 ```javascript
