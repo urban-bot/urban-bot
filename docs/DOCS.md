@@ -2,6 +2,8 @@
 # Urban Bot Components  
 
 * [Text](#text)
+* [ButtonGroup](#buttonGroup)
+* [Button](#button)
 * [Image](#image)
   
 ## Text
@@ -64,7 +66,7 @@ Required wrapper for buttons.
 
 ## Button
 Button, just button.
-```
+```javascript
 <Button>Text</Button>
 ```
 ### Props
@@ -146,3 +148,4 @@ Send an image to a chat.
 * `<q>text</q>`  quote text
 * `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)  
 * `<br />`  Line break  
+
