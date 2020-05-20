@@ -10,9 +10,9 @@ Send a text message to a chat.
 <Text>Some text<Text>  
 ```  
 ### Props  
-#### __[Common props](#common-props)__
-#### __disableWebPagePreview__
-Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
+#### [Common props](#common-props)
+#### disableWebPagePreview
+> Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
 ##### type
 ###### optional
 `boolean`
@@ -21,8 +21,8 @@ Some messengers show web page preview if you attach a link in your text. Set to 
     <a href="https://github.com/urban-bot/urban-bot">link</a>
 <Text>
 ```
-* ####  children
-Text or html tags
+####  children
+> Text or html tags
 ##### type
 ###### required
 
@@ -56,9 +56,9 @@ Send an image to a chat.
 <Image file="https://path-to-image.com" />
 ```  
 ### Props  
-* #### [Common props](#common-props)
-* #### file
-File id or URL or Stream or Buffer.
+#### [Common props](#common-props)
+#### file
+> File id or URL or Stream or Buffer.
 ##### type
 ###### required
 `string` | `Buffer` | `NodeJS.ReadableStream`
