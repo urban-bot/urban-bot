@@ -1,3 +1,4 @@
+
 # Urban Bot Docs  
   
 * [render](#render)  
@@ -257,14 +258,45 @@ Send an image to a chat.
   
 #### HTML  
 > Plain text or HTML tags.  
-  
-* `string`    
-* `number`    
-* `<b>bold</b>` `<strong>bold</strong>`  **bold**  
-* `<i>italic</i>` `<em>italic</em>`  *italic*    
-* `<u>underline</u>` `<ins>underline</ins>`  underline  
-* `<s>strikethrough</s>` `<strike>strikethrough</strike>` `<del>strikethrough</del>`   ~~strikethrough~~    
-* `<code>code</code>` `<pre>code</pre>` `code`    
-* `<q>text</q>`  quote text  
-* `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)    
-* `<br />`  Line break
+
+##### Plain text
+`string`    
+`number` 
+##### Bold
+```javascript
+<b>bold</b>
+<strong>bold</strong>
+```
+##### Italic
+```javascript
+<i>italic</i>
+<em>italic</em>
+```
+##### Underline
+```javascript
+<u>underline</u>
+<ins>underline</ins>
+```
+##### Strikethrough
+```javascript
+<s>strikethrough</s>
+<strike>strikethrough</strike>
+<del>strikethrough</del>
+```
+##### Code
+```javascript
+<code>code</code>
+<pre>code</pre>
+```
+##### Quote text  
+```javascript
+<q>text</q>
+``` 
+##### Link
+ ```javascript
+ <a href="https://github.com/urban-bot/urban-bot">Link</a>
+ ```
+##### Line break
+ ```javascript
+ <br />
+ ```
