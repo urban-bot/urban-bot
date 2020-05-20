@@ -61,6 +61,13 @@ Send an image to a chat.
 <Image title="text" />
 <Image title={<b>text</b>} />
 ```
+#### alt
+> Text if image is not loaded.
+###### optional
+`string`
+```javascript
+<Image alt="This is cat" />
+```
 ## Common
 
 #### html
@@ -76,5 +83,3 @@ Send an image to a chat.
 * `<q>text</q>`  quote text
 * `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)  
 * `<br />`  Line break  
-
-```
