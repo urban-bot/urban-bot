@@ -1,5 +1,8 @@
 
 # Urban Bot Components  
+
+* [Text](#text)
+* [Image](#image)
   
 ## Text
 Send a text message to a chat.
