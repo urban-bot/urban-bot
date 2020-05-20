@@ -8,7 +8,7 @@ Send a text message to a chat.
 ```  
 ### Props  
 Common props and
-#### disableWebPagePreview
+* #### disableWebPagePreview
 Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
 ##### type
 ###### optional
@@ -18,11 +18,13 @@ Some messengers show web page preview if you attach a link in your text. Set to 
     <a href="https://github.com/urban-bot/urban-bot">link</a>
 <Text>
 ```
+* ####  children
+Text or html tags
+##### type
+###### required
 
-
-### Children  
-Could be `string`, `number` and supported tags:  
-  
+* `string`  
+* `number`  
 * `<b>bold</b>` `<strong>bold</strong>`  **bold**
 * `<i>italic</i>` `<em>italic</em>`  *italic*  
 * `<u>underline</u>` `<ins>underline</ins>`  underline
@@ -52,7 +54,7 @@ Send an image to a chat.
 ```  
 ### Props  
 Common props and
-#### file
+* #### file
 File id or URL or Stream or Buffer.
 ##### type
 ###### required
