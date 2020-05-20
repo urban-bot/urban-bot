@@ -1,4 +1,5 @@
 
+
 # Urban Bot Components  
 
 * [Text](#text)
@@ -151,7 +152,6 @@ Send an image to a chat.
 ```javascript
 <Image file={fs.readFileSync('/files/image.jpeg')} />
 ```
-
 #### title
 > [html](#html)
 ###### optional
@@ -160,6 +160,20 @@ Send an image to a chat.
 ```
 ```javascript
 <Image title={<b>text</b>} />
+```
+#### buttons
+> [Button](#Button)
+###### optional
+`Button` `Button[]` `Button[][]`
+```javascript
+<Image
+    buttons={
+        <ButtonGroup>
+            <Button>First</Button>
+            <Button>Second</Button>
+        </ButtonGroup>
+    }
+/>
 ```
 #### alt
 > Text if image is not loaded.
