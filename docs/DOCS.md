@@ -2,11 +2,58 @@
 
 # Urban Bot Components  
 
+* [Root](#root)
 * [Text](#text)
 * [ButtonGroup](#buttonGroup)
 * [Button](#button)
 * [Image](#image)
+
+All components you could import from `@urban-bot/core`.
+```javascript  
+import { render, Root, Text } from '@urban-bot/core';
+```
+```javascript
+const { render, Root, Text } = require('@urban-bot/core');
+```
   
+## Root
+A required component which you should wrap over your application. It connects specific messenger to the core, provides the main context, manages multiple chats, and start the server.
+```javascript  
+render(
+    <Root bot={new UrbanBotTelegram(options)}>
+        <YourApp />  
+    </Root>
+);
+```
+For multiple messengers, you should create several `Root`.
+```javascript
+render(
+    <Root bot={new UrbanBotTelegram(options)}>
+        <YourApp />  
+    </Root>
+);
+render(
+    <Root bot={new UrbanBotFacebook(options)}>
+        <YourApp />
+    </Root>
+);
+```
+### Props
+####  children
+> Entry point of your app.
+###### required
+`ReactNode`
+```javascript  
+function YourApp() {
+	return <Text>Hello World!</Text>;
+}
+
+render(
+    <Root bot={new UrbanBotTelegram(options)}>
+        <YourApp />  
+    </Root>
+);
+```
 ## Text
 Send a text message to a chat.
 ```javascript  
@@ -49,7 +96,7 @@ Required wrapper for buttons.
 </ButtonGroup>
 ```
 ### Props  
-#### [Common props](#common-props)
+#### [Common props](#common-props)#### [Common props](#common-props)
 #### children
 > [Button](#Button)
 ###### required
