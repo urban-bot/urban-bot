@@ -83,7 +83,7 @@ Required wrapper for buttons.
 <ButtonGroup title={<b>text</b>}>...</ButtonGroup>
 ```
 #### isReplyButtons
-> Buttons send text which is located in `<Button>` children.
+> Buttons send text from `<Button>` children.
 ###### optional
 `boolean`
 ```javascript
