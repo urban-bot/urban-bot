@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBotContext, useCommand } from '../../hooks/hooks';
+import { useBotContext, useCommand, useText } from '../../hooks/hooks';
 import { RouterContext } from '../../context';
 import { RouteProps } from './Route';
 import { matchChild } from './utils';
@@ -37,9 +37,21 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    React.useEffect(() => {
+        if (childrenArray.some(matchChild('/'))) {
+            navigate('/');
+        }
+    }, []);
+
     useCommand(({ command }) => {
         if (childrenArray.some(matchChild(command))) {
             navigate(command);
+        }
+    });
+
+    useText(({ text }) => {
+        if (childrenArray.some(matchChild(text))) {
+            navigate(text);
         }
     });
 
