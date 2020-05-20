@@ -11,29 +11,9 @@ Send a text message to a chat.
 ```  
 ### Props  
 #### [Common props](#common-props)
-#### disableWebPagePreview
-> Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
-###### optional
-`boolean`
-```javascript
-<Text disableWebPagePreview>
-    <a href="https://github.com/urban-bot/urban-bot">link</a>
-<Text>
-```
 ####  children
-> Text or html tags
+> [html](#html)
 ###### required
-
-* `string`  
-* `number`  
-* `<b>bold</b>` `<strong>bold</strong>`  **bold**
-* `<i>italic</i>` `<em>italic</em>`  *italic*  
-* `<u>underline</u>` `<ins>underline</ins>`  underline
-* `<s>strikethrough</s>` `<strike>strikethrough</strike>` `<del>strikethrough</del>`   ~~strikethrough~~  
-* `<code>code</code>` `<pre>code</pre>` `code`  
-* `<q>text</q>`  quote text
-* `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)  
-* `<br />`  Line break  
 
 ```javascript  
 <Text>    
@@ -47,6 +27,15 @@ Send a text message to a chat.
     </b>
     ...
 </Text>  
+```
+#### disableWebPagePreview
+> Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.
+###### optional
+`boolean`
+```javascript
+<Text disableWebPagePreview>
+    <a href="https://github.com/urban-bot/urban-bot">link</a>
+<Text>
 ```
 ## Image
 Send an image to a chat.
@@ -65,15 +54,27 @@ Send an image to a chat.
 <Image file={fs.createReadStream('/files/image.jpeg')} />
 <Image file={fs.readFileSync('/files/image.jpeg')} />
 ```
-
-### Common props
+#### title
+> [html](#html)
+###### optional
+```javascript
+<Image title="text" />
+<Image title={<b>text</b>} />
 ```
-const commonProps = {
-  parseMode?: 'HTML' | 'markdown';
-  disableNotification?: boolean;
-  replyToMessageId?: string;
-  forceReply?:boolean;
-  personaId?: number | string;
-  isNewMessageEveryRender?: boolean;
-}
+## Common
 
+#### html
+> Plain text or html tags.
+
+* `string`  
+* `number`  
+* `<b>bold</b>` `<strong>bold</strong>`  **bold**
+* `<i>italic</i>` `<em>italic</em>`  *italic*  
+* `<u>underline</u>` `<ins>underline</ins>`  underline
+* `<s>strikethrough</s>` `<strike>strikethrough</strike>` `<del>strikethrough</del>`   ~~strikethrough~~  
+* `<code>code</code>` `<pre>code</pre>` `code`  
+* `<q>text</q>`  quote text
+* `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)  
+* `<br />`  Line break  
+
+```
