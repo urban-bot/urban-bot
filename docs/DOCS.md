@@ -30,7 +30,7 @@ Could be `string`, `number` and supported tags:
 * `<a href="https://github.com/urban-bot/urban-bot">Link</a>`  [Link](https://github.com/urban-bot/urban-bot)  
 * `<br />`  Line break  
 
-```jvascript  
+```javascript  
 <Text>    
     Usual text    
     <br />    
