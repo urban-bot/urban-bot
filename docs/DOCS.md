@@ -1,25 +1,13 @@
 
-# Documentation  
+# Components  
   
-## Components  
-### Common props  
-  
-```  
-parseMode?: 'HTML' | 'markdown';  
-disableNotification?: boolean; 
-replyToMessageId?: string;
-forceReply?:boolean; personaId?: number | string;  
-isNewMessageEveryRender?: boolean;  
-```  
-  
-### Text  
-Send  text to chat  
+## Text
+Send  one message to chat
 ```javascript  
 <Text>Some text<Text>  
 ```  
 #### Props  
 Common props and  
-
 `disableWebPagePreview?: boolean;`
 
 #### Children  
@@ -49,3 +37,15 @@ Could be string, number and supported tags:
     </b>    
 ... </Text>  
 ```
+
+### Common props  
+```
+const commonProps = {
+  parseMode?: 'HTML' | 'markdown';
+  disableNotification?: boolean;
+  replyToMessageId?: string;
+  forceReply?:boolean;
+  personaId?: number | string;
+  isNewMessageEveryRender?: boolean;
+}
+
