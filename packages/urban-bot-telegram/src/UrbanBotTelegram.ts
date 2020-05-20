@@ -462,6 +462,10 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
             case 'urban-buttons': {
                 const params = formatParamsForNewMessage(message);
 
+                if (!message.data.title) {
+                    throw new Error('@urban-bot/telegram Specify title prop to ButtonGroup');
+                }
+
                 return this.bot.sendMessage(message.chat.id, message.data.title, params);
             }
             case 'urban-audio': {
