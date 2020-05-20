@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBotContext, useCommand } from '../../hooks/hooks';
+import { useBotContext, useCommand, useText } from '../../hooks/hooks';
 import { RouterContext } from '../../context';
 import { RouteProps } from './Route';
 import { matchChild } from './utils';
@@ -40,6 +40,12 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
     useCommand(({ command }) => {
         if (childrenArray.some(matchChild(command))) {
             navigate(command);
+        }
+    });
+
+    useText(({ text }) => {
+        if (childrenArray.some(matchChild(text))) {
+            navigate(text);
         }
     });
 

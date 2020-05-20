@@ -92,10 +92,6 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                 return;
             }
         });
-
-        if (isPolling) {
-            console.log('@urban-bot/telegram has started polling');
-        }
     }
 
     initializeServer(expressApp: express.Express) {
