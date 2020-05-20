@@ -37,6 +37,12 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    React.useEffect(() => {
+        if (childrenArray.some(matchChild('/'))) {
+            navigate('/');
+        }
+    }, []);
+
     useCommand(({ command }) => {
         if (childrenArray.some(matchChild(command))) {
             navigate(command);
