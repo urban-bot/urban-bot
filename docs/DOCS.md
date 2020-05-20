@@ -1,6 +1,3 @@
-
-  
-  
 # Urban Bot Docs  
   
 * [render](#render)  
@@ -237,9 +234,8 @@ Send an image to a chat.
 <Image title={<b>text</b>} />  
 ```  
 #### buttons  
-> [Button](#Button)  
 ###### optional  
-`Button` `Button[]` `Button[][]`  
+[`Button`](#Button) [`Button`](#Button)[]  [`Button`](#Button)[][]
 ```javascript  
 <Image  
     buttons={  
