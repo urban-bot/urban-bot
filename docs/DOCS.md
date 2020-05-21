@@ -1,4 +1,3 @@
-
 # Urban Bot Docs  
   
 * [render](#render)  
@@ -259,7 +258,29 @@ Send an image to a chat.
 ```javascript  
 <Image alt="This is cat" />  
 ```  
-## Common  
+## Common 
+
+### Props
+### parseMode
+>  The markup language which is used for parsing text. Calculated automatically for every messenger, but you can specify directly.
+###### optional  
+`'HTML'` | `'markdown'`
+```javascript  
+<Text parseMode"HTML"><b>text</b></Text> // '<b>bold</b>'
+```  
+```javascript  
+<Text parseMode"markdown"><b>text</b></Text> // '*bold*' 
+```
+```javascript  
+<Image parseMode"markdown" title={<b>text</b>} /> // '*bold*' 
+```
+You can provide usual text with ready formatting.
+```javascript  
+<Text parseMode"HTML">{'<b>text</b>'}</Text> // '<b>bold</b>'
+```  
+```javascript  
+<Text parseMode"markdown">*bold*</Text> // '*bold*' 
+```  
   
 #### HTML  
 > Plain text or HTML tags.  
