@@ -261,7 +261,7 @@ Send an image to a chat.
 ## Common 
 
 ### Props
-### parseMode
+#### parseMode
 >  The markup language which is used for parsing text. Calculated automatically for every messenger, but you can specify directly.
 ###### optional  
 `'HTML'` | `'markdown'`
@@ -294,6 +294,13 @@ You can provide usual text with ready formatting.
 `string`  | `number`  
 ```javascript  
 <Text replyToMessageId="some-id">Yes, I agree!</Text>
+``` 
+#### personaId 
+> Some messengers support sending messages from different persons inside one chat.
+###### optional  
+`string`  | `number`  
+```javascript
+<Text personaId="natalie-id">Hi, I am Natalie. How can I help you?</Text>
 ``` 
 ### Other
 #### HTML  
