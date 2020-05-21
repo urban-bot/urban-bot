@@ -276,12 +276,19 @@ Send an image to a chat.
 ```
 You can provide usual text with ready formatting.
 ```javascript  
-<Text parseMode"HTML">{'<b>text</b>'}</Text> // '<b>bold</b>'
+<Text parseMode"HTML">{'<b>text</b>'}</Text>
 ```  
 ```javascript  
-<Text parseMode"markdown">*bold*</Text> // '*bold*' 
+<Text parseMode"markdown">*bold*</Text>
 ```  
-  
+#### disableNotification  
+> Sending a message silently.
+###### optional  
+`boolean`  
+```javascript  
+<Text disableNotification>text</Text>
+``` 
+### Other
 #### HTML  
 > Plain text or HTML tags.  
 
