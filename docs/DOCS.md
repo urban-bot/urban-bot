@@ -6,9 +6,10 @@
 * [Text](#text)  
 * [ButtonGroup](#buttongroup)  
 * [Button](#button)  
-* [Image](#image)  
+* [Image](#image)
+* [Common](#common)
   
-All components you could import from `@urban-bot/core`.  
+All components you can import from `@urban-bot/core`.  
 ```javascript    
 import { render, Root, Text } from '@urban-bot/core';  
 ```  
@@ -63,6 +64,9 @@ render(
 );  
 ```  
 ### Props
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+###### optional
+###### default `false`
 ####  children  
 > Entry point of your app.  
 ###### required  
@@ -70,7 +74,7 @@ render(
 ```javascript    
 function YourApp() {  
    return <Text>Hello World!</Text>;  
-}  
+}
   
 render(  
     <Root bot={new UrbanBotTelegram(options)}>  
