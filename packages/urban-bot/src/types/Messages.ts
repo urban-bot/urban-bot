@@ -20,9 +20,9 @@ export type UrbanMessageCommon = {
 export type UrbanMessageCommonData = OtherProps & {
     parseMode?: UrbanParseMode;
     disableNotification?: boolean;
-    replyToMessageId?: string;
+    replyToMessageId?: string | number;
     forceReply?: boolean;
-    personaId?: number | string;
+    personaId?: string | number;
 };
 
 export type UrbanMessageTextData = UrbanMessageCommonData & {
