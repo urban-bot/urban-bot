@@ -65,7 +65,7 @@ render(
 );  
 ```  
 ### Props
-#### [isNewMessageEveryRender](#isnewmessageeveryrender )
+#### [isNewMessageEveryRender](#isnewmessageeveryrender🔗)
 ###### default `false`
 ####  children  
 > Entry point of your app.  
@@ -266,7 +266,7 @@ Send an image to a chat.
 ## Common 
 
 ### Props
-#### isNewMessageEveryRender 
+#### isNewMessageEveryRender🔗
 > If `true` urban-bot will send a new messsage after every state update. If `false` message will be sended one time and edited  every time.
 ###### optional  
 `boolean`  
