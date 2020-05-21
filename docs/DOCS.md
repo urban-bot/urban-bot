@@ -1,3 +1,4 @@
+
 # Urban Bot Docs  
   
  * [render](#render)  
@@ -113,6 +114,13 @@ You can provide usual text with ready formatting.
 ```javascript
 <Text personaId="natalie-id">Hi, I am Natalie. How can I help you?</Text>
 ``` 
+#### forceReply 
+> After sending a message next user message will automatically reply to the message.
+###### optional  
+`boolean`
+```javascript
+<Text forceReply>What's your name?</Text>
+``` 
 ## HTML  
 > Plain text or HTML tags.  
 
@@ -187,6 +195,7 @@ render(
 #### [parseMode](#parsemode)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
+#### [forceReply](#forcereply)
 ####  children  
 > Entry point of your app.  
 ###### required  
