@@ -1,14 +1,16 @@
 
 
+
 # Urban Bot Docs  
   
-* [render](#render)  
-* [Root](#root)  
-* [Text](#text)  
-* [ButtonGroup](#buttongroup)  
-* [Button](#button)  
-* [Image](#image)
-* [Common](#common)
+ * [render](#render)  
+ * [Props](#props)
+ * [Components](#components)
+	* [Root](#root)  
+	* [Text](#text)  
+	* [ButtonGroup](#buttongroup)  
+	* [Button](#button)  
+	* [Image](#image)
   
 All components you can import from `@urban-bot/core`.  
 ```javascript    
@@ -17,7 +19,6 @@ import { render, Root, Text } from '@urban-bot/core';
 ```javascript  
 const { render, Root, Text } = require('@urban-bot/core');  
 ```  
-    
 ## render  
 The main function that starts React. Works similar `ReactDOM.render`.  
 ### Arguments  
@@ -41,7 +42,126 @@ render(
     () => console.log('App has started'),  
 );  
 ```  
-  
+## Props
+#### isNewMessageEveryRender
+> If `true` urban-bot will send a new messsage after every state update. If `false` message will be sended one time and edited  every time.
+###### optional  
+`boolean`  
+```javascript
+function Example() {
+    const [text, setText] = React.useState('1');
+
+    return <Text isNewMessageEveryRender>{text}</Text>
+}
+
+// setText('2')
+// setText('3')
+
+// chat:
+// bot write: '1'
+// bot write: '2'
+// bot write: '3'
+``` 
+```javascript
+function Example() {
+    const [text, setText] = React.useState('1');
+
+    return <Text isNewMessageEveryRender={false}>{text}</Text>
+}
+
+// setText('2')
+// setText('3')
+
+// chat:
+// bot write: '3'
+``` 
+#### parseMode
+>  The markup language which is used for parsing text. Calculated automatically for every messenger, but you can specify directly.
+###### optional  
+`'HTML'` | `'markdown'`
+```javascript  
+<Text parseMode"HTML"><b>bold</b></Text> // '<b>bold</b>'
+```  
+```javascript  
+<Text parseMode"markdown"><b>bold</b></Text> // '*bold*' 
+```
+```javascript  
+<Image parseMode"markdown" title={<b>bold</b>} /> // '*bold*' 
+```
+You can provide usual text with ready formatting.
+```javascript  
+<Text parseMode"HTML">{'<b>bold</b>'}</Text>
+```  
+```javascript  
+<Text parseMode"markdown">*bold*</Text>
+```  
+#### disableNotification  
+> Sending a message silently.
+###### optional  
+`boolean`  
+```javascript  
+<Text disableNotification>Mam, I will be late today</Text>
+``` 
+#### replyToMessageId  
+> Specify if you want to send a message as a reply to another message.
+###### optional  
+`string`  | `number`  
+```javascript  
+<Text replyToMessageId="some-id">Yes, I agree!</Text>
+``` 
+#### personaId 
+> Some messengers support sending messages from different persons inside one chat.
+###### optional  
+`string`  | `number`  
+```javascript
+<Text personaId="natalie-id">Hi, I am Natalie. How can I help you?</Text>
+``` 
+## HTML  
+> Plain text or HTML tags.  
+
+##### Plain text
+`string`    
+`number` 
+##### Bold
+```javascript
+<b>bold</b>
+<strong>bold</strong>
+```
+##### Italic
+```javascript
+<i>italic</i>
+<em>italic</em>
+```
+##### Underline
+```javascript
+<u>underline</u>
+<ins>underline</ins>
+```
+##### Strikethrough
+```javascript
+<s>strikethrough</s>
+<strike>strikethrough</strike>
+<del>strikethrough</del>
+```
+##### Code
+```javascript
+<code>code</code>
+<pre>code</pre>
+```
+##### Quote text  
+```javascript
+<q>text</q>
+``` 
+##### Link
+ ```javascript
+ <a href="https://github.com/urban-bot/urban-bot">Link</a>
+ ```
+##### Line break
+ ```javascript
+ <br />
+ ```
+ 
+# Components
 ## Root  
 A required component which you should wrap over your application. It connects specific messenger to the core, provides the main context, manages multiple chats, and start the server.  
 ```javascript  
@@ -263,124 +383,3 @@ Send an image to a chat.
 ```javascript  
 <Image alt="This is cat" />  
 ```  
-## Common 
-
-### Props
-#### isNewMessageEveryRender🔗
-> If `true` urban-bot will send a new messsage after every state update. If `false` message will be sended one time and edited  every time.
-###### optional  
-`boolean`  
-```javascript
-function Example() {
-    const [text, setText] = React.useState('1');
-
-    return <Text isNewMessageEveryRender>{text}</Text>
-}
-
-// setText('2')
-// setText('3')
-
-// chat:
-// bot write: '1'
-// bot write: '2'
-// bot write: '3'
-``` 
-```javascript
-function Example() {
-    const [text, setText] = React.useState('1');
-
-    return <Text isNewMessageEveryRender={false}>{text}</Text>
-}
-
-// setText('2')
-// setText('3')
-
-// chat:
-// bot write: '3'
-``` 
-#### parseMode
->  The markup language which is used for parsing text. Calculated automatically for every messenger, but you can specify directly.
-###### optional  
-`'HTML'` | `'markdown'`
-```javascript  
-<Text parseMode"HTML"><b>bold</b></Text> // '<b>bold</b>'
-```  
-```javascript  
-<Text parseMode"markdown"><b>bold</b></Text> // '*bold*' 
-```
-```javascript  
-<Image parseMode"markdown" title={<b>bold</b>} /> // '*bold*' 
-```
-You can provide usual text with ready formatting.
-```javascript  
-<Text parseMode"HTML">{'<b>bold</b>'}</Text>
-```  
-```javascript  
-<Text parseMode"markdown">*bold*</Text>
-```  
-#### disableNotification  
-> Sending a message silently.
-###### optional  
-`boolean`  
-```javascript  
-<Text disableNotification>Mam, I will be late today</Text>
-``` 
-#### replyToMessageId  
-> Specify if you want to send a message as a reply to another message.
-###### optional  
-`string`  | `number`  
-```javascript  
-<Text replyToMessageId="some-id">Yes, I agree!</Text>
-``` 
-#### personaId 
-> Some messengers support sending messages from different persons inside one chat.
-###### optional  
-`string`  | `number`  
-```javascript
-<Text personaId="natalie-id">Hi, I am Natalie. How can I help you?</Text>
-``` 
-### Other
-#### HTML  
-> Plain text or HTML tags.  
-
-##### Plain text
-`string`    
-`number` 
-##### Bold
-```javascript
-<b>bold</b>
-<strong>bold</strong>
-```
-##### Italic
-```javascript
-<i>italic</i>
-<em>italic</em>
-```
-##### Underline
-```javascript
-<u>underline</u>
-<ins>underline</ins>
-```
-##### Strikethrough
-```javascript
-<s>strikethrough</s>
-<strike>strikethrough</strike>
-<del>strikethrough</del>
-```
-##### Code
-```javascript
-<code>code</code>
-<pre>code</pre>
-```
-##### Quote text  
-```javascript
-<q>text</q>
-``` 
-##### Link
- ```javascript
- <a href="https://github.com/urban-bot/urban-bot">Link</a>
- ```
-##### Line break
- ```javascript
- <br />
- ```
