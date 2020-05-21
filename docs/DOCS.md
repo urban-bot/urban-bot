@@ -156,11 +156,15 @@ Required wrapper for buttons.
 <ButtonGroup title={<b>text</b>}>...</ButtonGroup>  
 ```  
 #### isReplyButtons  
-> Buttons send text from `<Button>` children.  
-###### optional  
-`boolean`  
+> Send button name as text after every click.
+###### optional
+`boolean`
+
+After click will be the same as a user write 'Hello'.
 ```javascript  
-<ButtonGroup isReplyButtons>...</ButtonGroup>  
+<ButtonGroup isReplyButtons>
+    <Button>Hello</Button>
+</ButtonGroup>  
 ```  
   
 ## Button  
@@ -234,9 +238,10 @@ Send an image to a chat.
 ```javascript  
 <Image title={<b>text</b>} />  
 ```  
-#### buttons  
+#### buttons
+> Buttons will be attached with image.
 ###### optional  
-[`Button`](#Button) [`Button`](#Button)[]  [`Button`](#Button)[][]
+[`ButtonGroup`](#buttongroup)
 ```javascript  
 <Image  
     buttons={  
