@@ -266,27 +266,34 @@ Send an image to a chat.
 ###### optional  
 `'HTML'` | `'markdown'`
 ```javascript  
-<Text parseMode"HTML"><b>text</b></Text> // '<b>bold</b>'
+<Text parseMode"HTML"><b>BOLD</b></Text> // '<b>BOLD</b>'
 ```  
 ```javascript  
-<Text parseMode"markdown"><b>text</b></Text> // '*bold*' 
+<Text parseMode"markdown"><b>BOLD</b></Text> // '*BOLD*' 
 ```
 ```javascript  
-<Image parseMode"markdown" title={<b>text</b>} /> // '*bold*' 
+<Image parseMode"markdown" title={<b>BOLD</b>} /> // '*BOLD*' 
 ```
 You can provide usual text with ready formatting.
 ```javascript  
-<Text parseMode"HTML">{'<b>text</b>'}</Text>
+<Text parseMode"HTML">{'<b>BOLD</b>'}</Text>
 ```  
 ```javascript  
-<Text parseMode"markdown">*bold*</Text>
+<Text parseMode"markdown">*BOLD*</Text>
 ```  
 #### disableNotification  
 > Sending a message silently.
 ###### optional  
 `boolean`  
 ```javascript  
-<Text disableNotification>text</Text>
+<Text disableNotification>Mam, I will be late today</Text>
+``` 
+#### replyToMessageId  
+> Specify if you want to send a message as a reply to another message.
+###### optional  
+`string`  | `number`  
+```javascript  
+<Text replyToMessageId="some-id">Yes, I agree!</Text>
 ``` 
 ### Other
 #### HTML  
