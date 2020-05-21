@@ -266,20 +266,20 @@ Send an image to a chat.
 ###### optional  
 `'HTML'` | `'markdown'`
 ```javascript  
-<Text parseMode"HTML"><b>BOLD</b></Text> // '<b>BOLD</b>'
+<Text parseMode"HTML"><b>bold</b></Text> // '<b>bold</b>'
 ```  
 ```javascript  
-<Text parseMode"markdown"><b>BOLD</b></Text> // '*BOLD*' 
+<Text parseMode"markdown"><b>bold</b></Text> // '*bold*' 
 ```
 ```javascript  
-<Image parseMode"markdown" title={<b>BOLD</b>} /> // '*BOLD*' 
+<Image parseMode"markdown" title={<b>bold</b>} /> // '*bold*' 
 ```
 You can provide usual text with ready formatting.
 ```javascript  
-<Text parseMode"HTML">{'<b>BOLD</b>'}</Text>
+<Text parseMode"HTML">{'<b>bold</b>'}</Text>
 ```  
 ```javascript  
-<Text parseMode"markdown">*BOLD*</Text>
+<Text parseMode"markdown">*bold*</Text>
 ```  
 #### disableNotification  
 > Sending a message silently.
