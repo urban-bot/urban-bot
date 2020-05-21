@@ -83,7 +83,7 @@ if (process.env.TELEGRAM_TOKEN) {
         isPolling: true,
     });
     render(
-        <Root bot={urbanBotTelegram}>
+        <Root bot={urbanBotTelegram} isNewMessageEveryRender={false}>
             <App />
         </Root>,
     );
@@ -95,7 +95,7 @@ if (process.env.SLACK_SIGNING_SECRET && process.env.SLACK_TOKEN) {
     });
 
     render(
-        <Root bot={urbanBotSlack}>
+        <Root bot={urbanBotSlack} isNewMessageEveryRender={false}>
             <App />
         </Root>,
     );
@@ -111,7 +111,6 @@ if (process.env.FACEBOOK_APP_SECRET && process.env.FACEBOOK_PAGE_ACCESS_TOKEN &&
                     verifyToken: process.env.FACEBOOK_VERIFY_TOKEN,
                 })
             }
-            isNewMessageEveryRender
         >
             <App />
         </Root>,
