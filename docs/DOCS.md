@@ -1,6 +1,3 @@
-
-
-
 # Urban Bot Docs  
   
  * [render](#render)  
@@ -12,7 +9,7 @@
 	* [Button](#button)  
 	* [Image](#image)
   
-All components you can import from `@urban-bot/core`.  
+All variables you can import from `@urban-bot/core`.  
 ```javascript    
 import { render, Root, Text } from '@urban-bot/core';  
 ```  
@@ -185,8 +182,11 @@ render(
 );  
 ```  
 ### Props
-#### [isNewMessageEveryRender](#isnewmessageeveryrender🔗)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
 ###### default `false`
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
 ####  children  
 > Entry point of your app.  
 ###### required  
