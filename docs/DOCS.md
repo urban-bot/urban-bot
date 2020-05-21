@@ -1,3 +1,4 @@
+
 # Urban Bot Docs  
   
 * [render](#render)  
@@ -61,7 +62,7 @@ render(
     </Root>  
 );  
 ```  
-### Props  
+### Props
 ####  children  
 > Entry point of your app.  
 ###### required  
@@ -261,6 +262,38 @@ Send an image to a chat.
 ## Common 
 
 ### Props
+#### isNewMessageEveryRender  
+> If `true` urban-bot will send a new messsage after every state update. If `false` message will be sended one time and edited  every time.
+###### optional  
+`boolean`  
+```javascript
+function Example() {
+    const [text, setText] = React.useState('1');
+
+    return <Text isNewMessageEveryRender>{text}</Text>
+}
+
+// setText('2')
+// setText('3')
+
+// chat:
+// bot write: '1'
+// bot write: '2'
+// bot write: '3'
+``` 
+```javascript
+function Example() {
+    const [text, setText] = React.useState('1');
+
+    return <Text isNewMessageEveryRender={false}>{text}</Text>
+}
+
+// setText('2')
+// setText('3')
+
+// chat:
+// bot write: '3'
+``` 
 #### parseMode
 >  The markup language which is used for parsing text. Calculated automatically for every messenger, but you can specify directly.
 ###### optional  
