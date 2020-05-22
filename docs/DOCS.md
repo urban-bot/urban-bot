@@ -1,5 +1,3 @@
-
-
 # Urban Bot Docs  
   
  * [render](#render)
@@ -90,7 +88,7 @@ function Example() {
 ```javascript  
 <Image parseMode"markdown" title={<b>bold</b>} /> // '*bold*' 
 ```
-You can provide usual text with ready formatting.
+You can pass usual text with ready formatting.
 ```javascript  
 <Text parseMode"HTML">{'<b>bold</b>'}</Text>
 ```  
@@ -326,7 +324,20 @@ function ProfileButtons() {
     );
 }
 ```
-
+### Props
+####  children  
+> One or many Route components.
+###### required  
+[`Route`](#route)  
+#### withInitializeCommands
+> If you pass commands to path prop every specific bot could initialize them. For example auto-suggesting command if a user starts to type it.
+###### optional  
+###### default `false`  
+```javascript
+<Router withInitializeCommands>
+    ...
+</Router>
+```
 ## Text  
 Send a text message to a chat.  
 ```javascript    
