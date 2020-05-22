@@ -1,4 +1,5 @@
 
+
 # Urban Bot Docs  
   
  * [render](#render)  
@@ -191,11 +192,24 @@ render(
 ```  
 ### Props
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+> Specify default value for all urban-bot components under Root.
+```javascript
+function MyAudio() {
+	return <Audio file="/some-audio.mp3" />
+}
+render(  
+    <Root bot={...} isNewMessageEveryRender={false}>  
+        <>
+            <Text>some text</Text>
+            <Image file="https://path-to-image.com" />
+            <MyAudio />
+        </>
+    </Root>  
+); 
+
+// Text, Image, Audio will be with isNewMessageEveryRender={false}
+```
 ###### default `false`
-#### [parseMode](#parsemode)
-#### [replyToMessageId](#replytomessageid)
-#### [personaId](#personaid)
-#### [forceReply](#forcereply)
 ####  children  
 > Entry point of your app.  
 ###### required  
@@ -217,7 +231,6 @@ Send a text message to a chat.
 <Text>Some text<Text>    
 ```    
 ### Props  
-#### [Common props](#common-props)  
 ####  children  
 > Plain text or supported HTML tags.  
 ###### required  
@@ -244,6 +257,11 @@ Send a text message to a chat.
     <a href="https://github.com/urban-bot/urban-bot">link</a>  
 <Text>  
 ```  
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
 ## ButtonGroup  
 Required wrapper for buttons.  
 ```javascript  
