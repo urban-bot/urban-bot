@@ -2,9 +2,9 @@
 
 # Urban Bot Docs  
   
- * [render](#render)  
- * [Props](#props)
+ * [render](#render)
  * [Components](#components)
+    * [Common props](#common-props)
 	* [Root](#root)  
 	* [Text](#text)  
 	* [ButtonGroup](#buttongroup)  
@@ -41,7 +41,9 @@ render(
     () => console.log('App has started'),  
 );  
 ```  
-## Props
+ 
+# Components
+### Common props
 #### isNewMessageEveryRender
 > If `true` urban-bot will send a new messsage after every state update. If `false` message will be sended one time and edited  every time.
 ###### optional  
@@ -122,7 +124,7 @@ You can provide usual text with ready formatting.
 ```javascript
 <Text forceReply>What's your name?</Text>
 ``` 
-## HTML  
+### HTML  
 > Plain text or HTML tags.  
 
 ##### Plain text
@@ -166,9 +168,7 @@ You can provide usual text with ready formatting.
  ```javascript
  <br />
  ```
- 
-# Components
-## Root  
+## Root
 A required component which you should wrap over your application. It connects specific messenger to the core, provides the main context, manages multiple chats, and start the server.  
 ```javascript  
 render(  
