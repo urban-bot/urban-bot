@@ -1,6 +1,3 @@
-
-
-
 # Urban Bot Docs  
   
  * [render](#render)
@@ -233,6 +230,36 @@ render(
     </Root>  
 );  
 ```  
+####  port  
+>  Port to start server.
+###### optional  
+###### default `8080`
+`number`
+```javascript    
+render(  
+    <Root port={3000}>  
+        <YourApp />    
+    </Root>  
+);
+```  
+If you use several messengers you could use the same or use a unique port for each.
+```javascript    
+render(  
+    <Root bot={new UrbanTelegramBot(options)} port={3000}>  
+        <YourApp />    
+    </Root>  
+);  
+render(  
+    <Root bot={new UrbanSlackBot(options)} port={3000}>
+        <YourApp /> 
+    </Root>  
+);  
+render(  
+    <Root bot={new UrbanFacebookBot(options)} port={4000}>
+        <YourApp />    
+    </Root>  
+);  
+``` 
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 > Specify default value for all urban-bot components under Root.
 ###### default `false`
