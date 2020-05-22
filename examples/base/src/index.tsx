@@ -17,6 +17,7 @@ import { ContactExample } from './Contact';
 import { MediaExample } from './Media';
 import { LocationExample } from './Location';
 import { ButtonsExample, ReplyButtonsExample, MatrixButtonsExample } from './ButtonGroup';
+import { RouterExample } from './Router';
 
 dotenv.config();
 
@@ -67,6 +68,9 @@ function App() {
             </Route>
             <Route path="/location" description="location">
                 <LocationExample />
+            </Route>
+            <Route path="/router" description="router">
+                <RouterExample />
             </Route>
             <Route path="/notification" description="notification">
                 <Notification intervalSeconds={2}>

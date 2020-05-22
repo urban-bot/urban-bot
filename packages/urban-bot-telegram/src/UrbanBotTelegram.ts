@@ -92,10 +92,6 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                 return;
             }
         });
-
-        if (isPolling) {
-            console.log('@urban-bot/telegram has started polling');
-        }
     }
 
     initializeServer(expressApp: express.Express) {
@@ -465,6 +461,10 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
             }
             case 'urban-buttons': {
                 const params = formatParamsForNewMessage(message);
+
+                if (!message.data.title) {
+                    throw new Error('@urban-bot/telegram Specify title prop to ButtonGroup');
+                }
 
                 return this.bot.sendMessage(message.chat.id, message.data.title, params);
             }
