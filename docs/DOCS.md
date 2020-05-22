@@ -225,7 +225,8 @@ render(
 
 // Text, Image, Audio will be with isNewMessageEveryRender={false}
 ```
-###### default `false`
+#### [parseMode](#parsemode)
+> Specify default value for all urban-bot components under Root.
 ## Text  
 Send a text message to a chat.  
 ```javascript    
