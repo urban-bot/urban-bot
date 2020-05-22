@@ -221,8 +221,21 @@ render(
     </Root>  
 );  
 ```  
+####  sessionTimeSeconds  
+>  Urban Bot will be clear session data for a user after this time.
+###### optional  
+###### default `60 * 60 * 24 * 7`
+`number`
+```javascript    
+render(  
+    <Root sessionTimeSeconds={Infinity}>  
+        <YourApp />    
+    </Root>  
+);  
+```  
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 > Specify default value for all urban-bot components under Root.
+###### default `false`
 ```javascript
 function MyAudio() {
     return <Audio file="/some-audio.mp3" />
