@@ -1,3 +1,4 @@
+
 # Urban Bot Docs  
   
  * [render](#render)
@@ -373,7 +374,11 @@ After click will be the same as a user write 'Hello'.
     <Button>Hello</Button>
 </ButtonGroup>  
 ```  
-  
+  #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
 ## Button  
 Button, just button.  
 ```javascript  
@@ -418,7 +423,6 @@ Send an image to a chat.
 <Image file="https://path-to-image.com" />  
 ```    
 ### Props    
-#### [Common props](#common-props)  
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
@@ -466,3 +470,8 @@ Send an image to a chat.
 ```javascript  
 <Image alt="This is cat" />  
 ```  
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
