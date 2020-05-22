@@ -424,7 +424,7 @@ Required wrapper for buttons.
 ###### optional
 `boolean`
 
-After click will be the same as a user write 'Hello'.
+After a click, there will be the same as a user write 'Hello'.
 ```javascript  
 <ButtonGroup isReplyButtons>
     <Button>Hello</Button>
