@@ -1,5 +1,6 @@
 
 
+
 # Urban Bot Docs  
   
  * [render](#render)
@@ -200,6 +201,19 @@ render(
 function YourApp() {  
    return <Text>Hello World!</Text>;  
 }
+  
+render(  
+    <Root bot={new UrbanBotTelegram(options)}>  
+        <YourApp />    
+    </Root>  
+);  
+```  
+####  bot  
+>  An instance of specific UrbanBot*. 
+###### required  
+`UrbanBot` 
+```javascript    
+import { UrbanBotTelegram } from '@urban-bot/telegram';
   
 render(  
     <Root bot={new UrbanBotTelegram(options)}>  
