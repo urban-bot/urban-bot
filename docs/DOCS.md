@@ -1,10 +1,12 @@
 
+
 # Urban Bot Docs  
   
  * [render](#render)
  * [Components](#components)
     * [Common props](#common-props)
 	* [Root](#root)  
+	* [Router](#router)  
 	* [Text](#text)  
 	* [ButtonGroup](#buttongroup)  
 	* [Button](#button)  
@@ -249,12 +251,14 @@ render(
     <Root bot={new UrbanTelegramBot(options)} port={3000}>  
         <YourApp />    
     </Root>  
-);  
+);
+
 render(  
     <Root bot={new UrbanSlackBot(options)} port={3000}>
         <YourApp /> 
     </Root>  
-);  
+);
+
 render(  
     <Root bot={new UrbanFacebookBot(options)} port={4000}>
         <YourApp />    
@@ -268,6 +272,7 @@ render(
 function MyAudio() {
     return <Audio file="/some-audio.mp3" />
 }
+
 render(
     <Root isNewMessageEveryRender={false}>  
         <>
@@ -282,6 +287,46 @@ render(
 ```
 #### [parseMode](#parsemode)
 > Specify default value for all urban-bot components under Root.
+
+## Router
+You could separate different parts of your application by Router. 
+```javascript
+function Profile() {
+    return ...
+}
+
+function Catalog() {
+    return ...
+}
+
+function App() {
+    return (
+        <Router>
+            <Route path="profile">  
+                <Profile />  
+            </Route>
+            <Route path="catalog">  
+                <Catalog />  
+            </Route>
+        </Router>
+    );
+}
+```  
+Now if a user type 'profile' or 'catalog' urban-bot will render a corresponding component.
+
+Also you can navigate inside your app without messaging by using a router context.
+```javascript
+function ProfileButtons() {
+    const { navigate } = useRouter();
+
+    return (
+        <ButtonGroup>
+            <Button onClick={() => navigate('catalog')}>Go to Catalog</Button>
+        </ButtonGroup>
+    );
+}
+```
+
 ## Text  
 Send a text message to a chat.  
 ```javascript    
