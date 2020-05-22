@@ -191,25 +191,7 @@ render(
 );  
 ```  
 ### Props
-#### [isNewMessageEveryRender](#isnewmessageeveryrender)
-> Specify default value for all urban-bot components under Root.
-```javascript
-function MyAudio() {
-	return <Audio file="/some-audio.mp3" />
-}
-render(  
-    <Root bot={...} isNewMessageEveryRender={false}>  
-        <>
-            <Text>some text</Text>
-            <Image file="https://path-to-image.com" />
-            <MyAudio />
-        </>
-    </Root>  
-); 
 
-// Text, Image, Audio will be with isNewMessageEveryRender={false}
-```
-###### default `false`
 ####  children  
 > Entry point of your app.  
 ###### required  
@@ -225,6 +207,25 @@ render(
     </Root>  
 );  
 ```  
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+> Specify default value for all urban-bot components under Root.
+```javascript
+function MyAudio() {
+    return <Audio file="/some-audio.mp3" />
+}
+render(
+    <Root isNewMessageEveryRender={false}>  
+        <>
+            <Text>some text</Text>
+            <Image file="https://path-to-image.com" />
+            <MyAudio />
+        </>
+    </Root>  
+); 
+
+// Text, Image, Audio will be with isNewMessageEveryRender={false}
+```
+###### default `false`
 ## Text  
 Send a text message to a chat.  
 ```javascript    
