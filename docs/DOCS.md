@@ -5,6 +5,7 @@
     * [Common props](#common-props)
 	* [Root](#root)  
 	* [Router](#router)  
+	* [Route](#route)  
 	* [Text](#text)  
 	* [ButtonGroup](#buttongroup)  
 	* [Button](#button)  
@@ -338,6 +339,36 @@ function ProfileButtons() {
     ...
 </Router>
 ```
+## Route
+[Router](#router) children.
+```javascript
+<Route path="profile">  
+    <Profile />  
+</Route>
+```
+####  children  
+> Part of your application.  
+###### required  
+`ReactNode` 
+####  path  
+> String or regexp which will be connected with Route children.
+###### required  
+`string` `RexExp` 
+```javascript
+<Route path="profile">
+    <Text>You are in your profile</Text>
+</Route>
+```
+```javascript
+<Route path="/profile">
+    <Text>You are in your profile</Text>
+</Route>
+```
+```javascript
+<Route path={/.+/}>
+    <Text>Not found</Text>
+</Route>
+```
 ## Text  
 Send a text message to a chat.  
 ```javascript    
@@ -384,6 +415,7 @@ Required wrapper for buttons.
 </ButtonGroup>  
 ```  
 ### Props    
+#### [Common props](#common-props)
 #### children  
 >  An instance or instances of `Button`.
 ###### required  
@@ -423,7 +455,7 @@ Required wrapper for buttons.
 ###### optional
 `boolean`
 
-After a click, there will be the same as a user write 'Hello'.
+After click will be the same as a user write 'Hello'.
 ```javascript  
 <ButtonGroup isReplyButtons>
     <Button>Hello</Button>
