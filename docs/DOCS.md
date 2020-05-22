@@ -1,3 +1,4 @@
+
 # Urban Bot Docs  
   
  * [render](#render)
@@ -356,17 +357,26 @@ function ProfileButtons() {
 `string` `RexExp` 
 ```javascript
 <Route path="profile">
-    <Text>You are in your profile</Text>
+    ...
 </Route>
 ```
 ```javascript
 <Route path="/profile">
-    <Text>You are in your profile</Text>
+    ...
 </Route>
 ```
 ```javascript
 <Route path={/.+/}>
     <Text>Not found</Text>
+</Route>
+```
+####  description  
+> Describe your Route. Usually is needed for [withInitializeCommands](#withinitializecommands).
+###### optional  
+`string`
+```javascript
+<Route path="profile" description="Some information about you">
+    ...
 </Route>
 ```
 ## Text  
