@@ -454,6 +454,7 @@ Send a text message to a chat.
 ```  
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
@@ -490,16 +491,6 @@ Required wrapper for buttons.
 </ButtonGroup>  
 ```  
   
-#### title  
->  Plain text or supported HTML tags.  
-###### optional  
-[`HTML`](#HTML)  
-```javascript
-<ButtonGroup title="text">...</ButtonGroup>  
-```  
-```javascript
-<ButtonGroup title={<b>text</b>}>...</ButtonGroup>  
-```  
 #### isReplyButtons  
 > Send button name as text after every click.
 ###### optional
@@ -511,8 +502,10 @@ If a user clicks on the button, he automatically sends 'Hello' message.
     <Button>Hello</Button>
 </ButtonGroup>  
 ```  
+#### [title](#title)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
@@ -593,6 +586,7 @@ Send an image to a chat.
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
@@ -653,6 +647,7 @@ Send a video to a chat.
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
@@ -702,6 +697,7 @@ Send an audio to a chat.
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
@@ -756,6 +752,7 @@ Send an animation to a chat.
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
@@ -792,6 +789,7 @@ Send a file to a chat.
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
@@ -821,6 +819,7 @@ Send a group of media files.
 [`Media File`](#media-file)[]
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
@@ -885,6 +884,7 @@ Send a location.
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
