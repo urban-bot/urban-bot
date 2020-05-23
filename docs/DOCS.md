@@ -26,6 +26,7 @@
 	* [File](#file-4)
 	* [Media](#media)
 	* [Location](#location)
+	* [Poll](#poll)
   
 All variables you can import from `@urban-bot/core`.  
 ```javascript
