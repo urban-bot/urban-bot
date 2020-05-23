@@ -46,7 +46,7 @@ render(
 # Components
 ### Common props
 #### isNewMessageEveryRender
-> If `true` urban-bot will send a new messsage after every state update. If `false` message will be sended one time and edited  every time.
+> If `true` there will be a new message after every state update. If `false` message will be sent one time and edited  every time.
 ###### optional  
 `boolean`  
 ```javascript
@@ -222,7 +222,7 @@ render(
 );  
 ```  
 ####  sessionTimeSeconds  
->  Urban Bot will be clear session data for a user after this time.
+>  Time after which the user session is clear
 ###### optional  
 ###### default `60 * 60 * 24 * 7`
 `number`
