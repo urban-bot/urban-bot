@@ -10,8 +10,6 @@ Universal chatbot library based on [React](https://github.com/facebook/react).
 * **Session.** App renders unique for every chat, so just write your app as if it is client-side rendering.
 * **Types.** Full typescript support.
 
-### [Documentation](https://github.com/urban-bot/urban-bot/blob/master/docs/DOCS.md)
-
 **Platforms we are supporting**
 
 [![](files/telegram-logo.svg)](https://telegram.org/)
@@ -26,6 +24,7 @@ Universal chatbot library based on [React](https://github.com/facebook/react).
  [![](files/vk-logo.svg)](https://www.vk.com/)
  [![](files/viber-logo.svg)](https://www.viber.com/)
 
+### [Documentation](https://github.com/urban-bot/urban-bot/blob/master/docs/DOCS.md)
 
 ## Installation
 Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter).
