@@ -13,6 +13,7 @@
 	* [Image](#image)
 	* [Video](#video)
 	* [Audio](#audio)
+	* [Animation](#animation)
 	* [Media](#media)
 	* [Location](#location)
   
