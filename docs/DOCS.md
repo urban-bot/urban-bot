@@ -310,7 +310,7 @@ render(
 ``` 
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 > Default value for all urban-bot components under Root.
-###### default `false`
+###### default `true`
 ```javascript
 function MyAudio() {
     return <Audio file="/some-audio.mp3" />
