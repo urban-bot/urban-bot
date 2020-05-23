@@ -124,17 +124,20 @@ function Example() {
 ###### optional  
 `'HTML'` | `'markdown'`
 ```javascript
+// '<b>bold</b>'
 <Text parseMode="HTML">
-    <b>bold</b> // '<b>bold</b>'
-</Text> 
-```  
-```javascript
-<Text parseMode="markdown">
-    <b>bold</b> // '*bold*' 
+    <b>bold</b>
 </Text> 
 ```
 ```javascript
-<Image parseMode="markdown" title={<b>bold</b>} /> // '*bold*' 
+// '*bold*'
+<Text parseMode="markdown">
+    <b>bold</b> 
+</Text> 
+```
+```javascript
+// '*bold*'
+<Image parseMode="markdown" title={<b>bold</b>} /> 
 ```
 You can pass usual text with ready formatting.
 ```javascript
