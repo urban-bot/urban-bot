@@ -27,6 +27,7 @@
 	* [Media](#media)
 	* [Location](#location)
 	* [Poll](#poll)
+	* [Option](#option)
 	* [Contact](#contact)
   
 All variables you can import from `@urban-bot/core`.  
@@ -384,7 +385,7 @@ function ProfileButtons() {
 </Router>
 ```
 ## Route
-[Router](#router) children.
+Piece of [Router](#router).
 ```javascript
 <Route path="profile">  
     <Profile />  
@@ -904,9 +905,6 @@ Send a poll.
 #### children
 ###### required
 [`Option`](#option) | [`Option`](#option)[]
-```javascript
-<Option>Yes</Option>
-```
 #### question
 ###### required
 `string`
@@ -961,6 +959,22 @@ Send a poll.
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
 
+## Option
+> Piece of [Poll](#poll).
+```javascript
+<Option>Yes</Option>
+```
+### Props
+#### children
+###### required
+`string`
+#### id  
+> The unique id. If you don't specify it, it is generated automatically.  
+###### optional  
+`string`  
+```javascript
+<Option id="some-id">Yes</Option>  
+```  
 ## Contact
 Send a contact.
 ```javascript
