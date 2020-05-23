@@ -467,13 +467,13 @@ Required wrapper for buttons.
 ###### optional
 `boolean`
 
-After click will be the same as a user write 'Hello'.
+If the user clicks on the button, he will send 'Hello' message.
 ```javascript  
 <ButtonGroup isReplyButtons>
     <Button>Hello</Button>
 </ButtonGroup>  
 ```  
-  #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
