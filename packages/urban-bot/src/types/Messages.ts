@@ -130,7 +130,7 @@ export type UrbanMessagePollData = UrbanMessageCommonData & {
     rightOption?: string | number;
     explanation?: string;
     parseMode?: UrbanParseMode;
-    livePeriod?: number;
+    livePeriodSeconds?: number;
     closeTime?: number;
     buttons?: UrbanButton[] | UrbanButton[][];
     isReplyButtons?: boolean;
@@ -168,7 +168,7 @@ export type UrbanMessageMedia = UrbanMessageCommon & {
 export type UrbanMessageLocationData = UrbanMessageCommonData & {
     latitude: number;
     longitude: number;
-    livePeriod?: number;
+    livePeriodSeconds?: number;
     buttons?: UrbanButton[] | UrbanButton[][];
     isReplyButtons?: boolean;
     title?: string;
