@@ -677,7 +677,7 @@ Send an audio to a chat.
 ###### optional
 `number`
 ```javascript
-<Video duration={10} />
+<Audio duration={10} />
 ``` 
 #### [title](#title)
 #### [buttons](#buttons)
