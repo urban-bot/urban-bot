@@ -27,6 +27,7 @@
 	* [Media](#media)
 	* [Location](#location)
 	* [Poll](#poll)
+	* [Contact](#contact)
   
 All variables you can import from `@urban-bot/core`.  
 ```javascript
@@ -951,6 +952,48 @@ Send a poll.
 ```javascript
 <Poll type="quiz">...</Poll>
 ```
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
+
+## Contact
+Send a contact.
+```javascript
+<Contact firstName="Kamola" phoneNumber="+71234567890" />;
+```
+### Props
+#### phoneNumber  
+###### optional  
+`string` | `number`  
+```javascript
+<Contact phoneNumber="+71234567890" />
+```
+#### username  
+###### optional  
+`string`
+```javascript
+<Contact username="ledamint" />
+```
+#### firstName  
+###### optional  
+`string`
+```javascript
+<Contact firstName="Vanya" />
+```
+#### lastName  
+###### optional  
+`string`
+```javascript
+<Contact lastName="Che Guevara" />
+```  
+#### vCard  
+###### optional  
+`string`
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
