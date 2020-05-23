@@ -3,7 +3,7 @@
   
  * [render](#render)
  * [Components](#components)
-    * [Common props](#common-props)
+    * [Common](#common)
       * [isNewMessageEveryRender](#isnewmessageeveryrender)
       * [title](#title)
       * [buttons](#buttons)
@@ -12,6 +12,7 @@
       * [replyToMessageId](#replytomessageid)
       * [personaId](#personaid)
       * [forceReply](#forcereply)
+      * [HTML](#HTML)
 	* [Root](#root)  
 	* [Router](#router)  
 	* [Route](#route)  
