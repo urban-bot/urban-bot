@@ -82,20 +82,20 @@ function Example() {
 ###### optional  
 `'HTML'` | `'markdown'`
 ```javascript  
-<Text parseMode"HTML"><b>bold</b></Text> // '<b>bold</b>'
+<Text parseMode="HTML"><b>bold</b></Text> // '<b>bold</b>'
 ```  
 ```javascript  
-<Text parseMode"markdown"><b>bold</b></Text> // '*bold*' 
+<Text parseMode="markdown"><b>bold</b></Text> // '*bold*' 
 ```
 ```javascript  
-<Image parseMode"markdown" title={<b>bold</b>} /> // '*bold*' 
+<Image parseMode="markdown" title={<b>bold</b>} /> // '*bold*' 
 ```
 You can pass usual text with ready formatting.
 ```javascript  
-<Text parseMode"HTML">{'<b>bold</b>'}</Text>
+<Text parseMode="HTML">{'<b>bold</b>'}</Text>
 ```  
 ```javascript  
-<Text parseMode"markdown">*bold*</Text>
+<Text parseMode="markdown">*bold*</Text>
 ```  
 #### disableNotification  
 > Sending a message silently.
