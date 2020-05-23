@@ -565,7 +565,13 @@ Send an image to a chat.
 ```  
 ```javascript
 <Image file={fs.readFileSync('/files/image.jpg')} />  
-```  
+```
+#### name
+###### optional
+`string`
+```javascript
+<Image name="a big cat" />
+``` 
 #### alt  
 > Text if an image will be not displayed.  
 ###### optional  
@@ -774,5 +780,35 @@ Send a group of media files.
 #### type
 ###### required
 `'image'` | `'video'`
+```javascript
+<Media
+    files={[
+        {
+            type: 'image',
+            // ...
+        },
+        {
+            type: 'video',
+            // ...
+        }
+    ]}
+/>
+```
 #### [Image props](#props-5)
 #### [Video props](#props-6)
+```javascript
+<Media
+    files={[
+        {
+            type: 'image',
+            file: 'https://path-to-image.png',
+            title: 'a big cat'
+        },
+        {
+            type: 'video',
+            file: 'https://path-to-video.mp4',
+            duration: 10
+        }
+    ]}
+/>
+```
