@@ -3,7 +3,7 @@
   
  * [render](#render)
  * [Components](#components)
-    * [Common](#common)
+    * [Common props](#common-props)
       * [isNewMessageEveryRender](#isnewmessageeveryrender)
       * [title](#title)
       * [buttons](#buttons)
@@ -61,7 +61,7 @@ render(
 ```  
  
 # Components
-### Common
+### Common props
 #### isNewMessageEveryRender
 > If `true`, a new message is sent after every state update. If `false`, a message is sent one time and edited next state updates.
 ###### optional  
