@@ -79,14 +79,14 @@ function Example() {
 // bot write: '3'
 ``` 
 #### title
->  Plain text or supported HTML tags.  
+>  A text will be sent with the main message.
 ###### optional  
 [`HTML`](#HTML)
 ```javascript  
-<Image title="text" />  
-```  
+<Image title="some text" />  
+``` 
 ```javascript  
-<Image title={<b>text</b>} />  
+<Image title={<b>some text</b>} />  
 ```  
 #### buttons
 > Buttons will be attached with a message.
@@ -586,6 +586,22 @@ Send a video to a chat.
 ```    
 #### file  
 > File id or URL or Stream or Buffer.  
+###### required  
+`string` | `Buffer` | `NodeJS.ReadableStream`  
+```javascript  
+<Video file="id123" />
+```  
+```javascript  
+<Video file="https://path-to-video.com" />
+```  
+```javascript  
+<Video file={fs.createReadStream('/files/video.mp4')} />
+```  
+```javascript  
+<Video file={fs.readFileSync('/files/video.mp4')} />  
+```  
+#### name  
+> A video name.
 ###### required  
 `string` | `Buffer` | `NodeJS.ReadableStream`  
 ```javascript  
