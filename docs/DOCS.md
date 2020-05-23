@@ -48,7 +48,7 @@ render(
 );  
 ```  
 ####  2  
-> A callback will be called when your app is initialized.  
+> A callback is called when your app is initialized.  
 ###### optional  
 ```javascript
 render(  
@@ -60,7 +60,7 @@ render(
 # Components
 ### Common props
 #### isNewMessageEveryRender
-> If `true` there will be a new message after every state update. If `false` message will be sent one time and edited  every time.
+> If `true` there is a new message after every state update. If `false` a message is sent one time and edited every time.
 ###### optional  
 `boolean`  
 ```javascript
@@ -92,7 +92,7 @@ function Example() {
 // bot write: '3'
 ``` 
 #### title
->  A text will be sent with the main message.
+>  A text is sent with the main message.
 ###### optional  
 [`HTML`](#HTML)
 ```javascript
@@ -102,7 +102,7 @@ function Example() {
 <Image title={<b>some text</b>} />  
 ```  
 #### buttons
-> Buttons will be attached with a message.
+> Buttons are attached to a message.
 ###### optional  
 [`ButtonGroup`](#buttongroup)
 ```javascript
@@ -162,7 +162,7 @@ You can pass usual text with ready formatting.
 <Text personaId="natalie-id">Hi, I am Natalie. How can I help you?</Text>
 ``` 
 #### forceReply 
-> After sending a message next user message will automatically reply to the message.
+> After sending a message next user message automatically replies to the sent message.
 ###### optional  
 `boolean`
 ```javascript
@@ -325,7 +325,7 @@ render(
     </Root>  
 ); 
 
-// Text, Image, Audio will be with isNewMessageEveryRender={true}
+// Text, Image, Audio are with isNewMessageEveryRender={true}
 ```
 #### [parseMode](#parsemode)
 > Default value for all urban-bot components under Root.
@@ -354,7 +354,7 @@ function App() {
     );
 }
 ```  
-Now if a user type 'profile' or 'catalog' urban-bot will render a corresponding component.
+Now if a user type 'profile' or 'catalog' urban-bot renders a corresponding component.
 
 Also, you can navigate inside your app without messaging by using a router context.
 ```javascript
@@ -394,7 +394,7 @@ function ProfileButtons() {
 ###### required  
 `ReactNode` 
 ####  path  
-> String or regexp which will be connected with Route children.
+> String or regexp which is connected with Route children.
 ###### required  
 `string` | `RexExp` 
 ```javascript
@@ -506,7 +506,7 @@ Required wrapper for buttons.
 ###### optional
 `boolean`
 
-If the user clicks on the button, he will send 'Hello' message.
+If a user clicks on the button, he automatically sends 'Hello' message.
 ```javascript
 <ButtonGroup isReplyButtons>
     <Button>Hello</Button>
@@ -528,28 +528,28 @@ Button, just button.
 ###### required  
 `string`  
 #### onClick  
-> Callback will be called after click.  
+> Callback is called after click.  
 ###### optional  
 `Function`  
 ```javascript
 <Button onClick={() => console.log('Click first')}>First</Button>  
 ```  
 #### url  
-> The web page will be open after a click.  
+> The web page is opened after a click.  
 ###### optional  
 `string`  
 ```javascript
 <Button url="http://some-url.com">Open a web page</Button>  
 ```  
 #### phoneNumber  
-> The phone number will be suggested to call after a click.  
+> The phone number is suggested to call after a click.
 ###### optional  
 `string` | `number`  
 ```javascript
 <Button phoneNumber="+71234567890">Call Saul Goodman</Button>  
 ```  
 #### id  
-> The unique id. If you don't specify it, it will be generated automatically.  
+> The unique id. If you don't specify it, it is generated automatically.  
 ###### optional  
 `string`  
 ```javascript
@@ -584,7 +584,7 @@ Send an image to a chat.
 <Image name="a big cat" />
 ``` 
 #### alt  
-> Text if an image will be not displayed.  
+> Text if an image is not displayed.  
 ###### optional  
 `string`  
 ```javascript
