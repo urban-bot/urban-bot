@@ -133,8 +133,7 @@ You can pass usual text with ready formatting.
 > Plain text or HTML tags.  
 
 ##### Plain text
-`string`    
-`number` 
+`string` | `number` 
 ##### Bold
 ```javascript
 <b>bold</b>
@@ -358,7 +357,7 @@ function ProfileButtons() {
 ####  path  
 > String or regexp which will be connected with Route children.
 ###### required  
-`string` `RexExp` 
+`string` | `RexExp` 
 ```javascript
 <Route path="profile">
     ...
@@ -433,7 +432,7 @@ Required wrapper for buttons.
 #### children  
 >  An instance or instances of `Button`.
 ###### required  
-[`Button`](#Button) [`Button`](#Button)[] [`Button`](#Button)[][]
+[`Button`](#Button) | [`Button`](#Button)[] | [`Button`](#Button)[][]
 ```javascript  
 <ButtonGroup title="Button">  
     <Button>First</Button>  
@@ -507,7 +506,7 @@ Button, just button.
 #### phoneNumber  
 > The phone number will be suggested to call after a click.  
 ###### optional  
-`string` `number`  
+`string` | `number`  
 ```javascript  
 <Button phoneNumber="+71234567890">Call Saul Goodman</Button>  
 ```  
