@@ -428,7 +428,6 @@ Required wrapper for buttons.
 </ButtonGroup>  
 ```  
 ### Props    
-#### [Common props](#common-props)
 #### children  
 >  An instance or instances of `Button`.
 ###### required  
