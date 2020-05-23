@@ -64,7 +64,7 @@ render(
 # Components
 ### Common
 #### isNewMessageEveryRender
-> If `true` there is a new message after every state update. If `false` a message is sent one time and edited every time.
+> If `true`, a new message is sent after every state update. If `false`, a message is sent one time and edited next state updates.
 ###### optional  
 `boolean`  
 ```javascript
