@@ -318,11 +318,9 @@ function MyAudio() {
 
 render(
     <Root isNewMessageEveryRender>  
-        <>
-            <Text>some text</Text>
-            <Image file="https://path-to-image.jpg" />
-            <MyAudio />
-        </>
+        <Text>some text</Text>
+        <Image file="https://path-to-image.jpg" />
+        <MyAudio />
     </Root>  
 ); 
 
