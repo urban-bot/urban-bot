@@ -23,6 +23,7 @@
 	* [Video](#video)
 	* [Audio](#audio)
 	* [Animation](#animation)
+	* [File](#file)
 	* [Media](#media)
 	* [Location](#location)
   
@@ -760,6 +761,44 @@ Send an animation to a chat.
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
+
+## File
+Send a file to a chat.
+```javascript
+<File file="https://path-to-file.pdf" />
+```
+### Props
+#### file  
+> File id or URL or Stream or Buffer.  
+###### required  
+`string` | `Buffer` | `NodeJS.ReadableStream`  
+```javascript
+<File file="id123" />
+```  
+```javascript
+<File file="https://path-to-file.pdf" />
+```  
+```javascript
+<File file={fs.createReadStream('/files/file.pdf')} />
+```  
+```javascript
+<File file={fs.readFileSync('/files/file.pdf')} />  
+```  
+#### name
+###### optional
+`string`
+```javascript
+<File name="report_21.03.15" />
+``` 
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
+
+
 ## Media
 Send a group of media files.
 ```javascript
