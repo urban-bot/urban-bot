@@ -20,9 +20,9 @@ export type UrbanMessageCommon = {
 export type UrbanMessageCommonData = OtherProps & {
     parseMode?: UrbanParseMode;
     disableNotification?: boolean;
-    replyToMessageId?: string;
+    replyToMessageId?: string | number;
     forceReply?: boolean;
-    personaId?: number | string;
+    personaId?: string | number;
 };
 
 export type UrbanMessageTextData = UrbanMessageCommonData & {
@@ -130,8 +130,7 @@ export type UrbanMessagePollData = UrbanMessageCommonData & {
     rightOption?: string | number;
     explanation?: string;
     parseMode?: UrbanParseMode;
-    livePeriod?: number;
-    closeTime?: number;
+    livePeriodSeconds?: number;
     buttons?: UrbanButton[] | UrbanButton[][];
     isReplyButtons?: boolean;
 };
@@ -168,7 +167,7 @@ export type UrbanMessageMedia = UrbanMessageCommon & {
 export type UrbanMessageLocationData = UrbanMessageCommonData & {
     latitude: number;
     longitude: number;
-    livePeriod?: number;
+    livePeriodSeconds?: number;
     buttons?: UrbanButton[] | UrbanButton[][];
     isReplyButtons?: boolean;
     title?: string;

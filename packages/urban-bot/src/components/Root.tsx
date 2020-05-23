@@ -53,7 +53,7 @@ export function Root<Bot extends UrbanBot>({
     children,
     bot,
     sessionTimeSeconds = 60 * 60 * 24 * 7,
-    isNewMessageEveryRender = false,
+    isNewMessageEveryRender = true,
     parseMode,
     port = 8080,
 }: RootProps<Bot>) {
