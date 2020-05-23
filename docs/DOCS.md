@@ -874,11 +874,81 @@ Send a location.
 ###### required
 `number`
 #### livePeriodSeconds
-> A period when a location can update online.
+> A period when a location can be updated online.
 ###### required
 `number`
 ```javascript
 <Location livePeriodSeconds={60 * 30} />
+```
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
+
+## Poll
+Send a poll.
+```javascript
+<Poll question="Do you like Urban Bot?">
+    <Option>Yes</Option>
+    <Option>Of course</Option>
+    <Option>Сertainly</Option>
+</Poll>
+```
+### Props
+#### children
+###### required
+[`Option`](#option) | [`Option`](#option)[]
+```javascript
+<Option>Yes</Option>
+```
+#### question
+###### required
+`string`
+```javascript
+<Poll question="Do you like Urban Bot?">...</Poll>
+```
+#### withMultipleAnswers
+###### optional
+`boolean`
+```javascript
+<Poll withMultipleAnswers>...</Poll>
+```
+#### isAnonymous
+###### optional
+`boolean`
+```javascript
+<Poll isAnonymous>...</Poll>
+```
+#### rightOption
+> If it is a quiz you can set a right answer.
+###### optional
+`string` | `number`
+```javascript
+<Poll rightOption={1}>...</Poll>
+```
+#### explanation
+> If it is a quiz you can set an explanation of right answer.
+###### optional
+`string`
+```javascript
+<Poll explanation="2 + 2 = 4">...</Poll>
+```
+#### livePeriodSeconds
+> A period when a poll can be active.
+###### optional
+`number`
+```javascript
+<Poll livePeriodSeconds={60 * 30}>...</Poll>
+```
+#### type
+###### optional
+`string`
+```javascript
+<Poll type="quiz">...</Poll>
 ```
 #### [title](#title)
 #### [buttons](#buttons)

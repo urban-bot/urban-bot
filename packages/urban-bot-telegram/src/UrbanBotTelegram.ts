@@ -593,7 +593,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                             explanation: message.data.explanation,
                             explanation_parse_mode: params.parse_mode,
                             open_period: message.data.livePeriodSeconds,
-                            close_date: message.data.closeTime,
+                            close_date: message.data.close_time,
                         })
                 );
             }
