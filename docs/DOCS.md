@@ -307,7 +307,7 @@ render(
     <Root isNewMessageEveryRender>  
         <>
             <Text>some text</Text>
-            <Image file="https://path-to-image.com" />
+            <Image file="https://path-to-image.jpg" />
             <MyAudio />
         </>
     </Root>  
@@ -546,7 +546,7 @@ Button, just button.
 ## Image  
 Send an image to a chat.  
 ```javascript
-<Image file="https://path-to-image.com" />  
+<Image file="https://path-to-image.png" />  
 ```    
 ### Props    
 #### file  
@@ -557,13 +557,13 @@ Send an image to a chat.
 <Image file="id123" />  
 ```  
 ```javascript
-<Image file="https://path-to-image.com" />  
+<Image file="https://path-to-image.png" />  
 ```  
 ```javascript
-<Image file={fs.createReadStream('/files/image.jpeg')} />  
+<Image file={fs.createReadStream('/files/image.jpg')} />  
 ```  
 ```javascript
-<Image file={fs.readFileSync('/files/image.jpeg')} />  
+<Image file={fs.readFileSync('/files/image.jpg')} />  
 ```  
 #### alt  
 > Text if an image will be not displayed.  
@@ -583,7 +583,7 @@ Send an image to a chat.
 ## Video  
 Send a video to a chat.
 ```javascript
-<Video file="https://path-to-video.com" />
+<Video file="https://path-to-video.mp4" />
 ```    
 #### file  
 > File id or URL or Stream or Buffer.  
@@ -593,7 +593,7 @@ Send a video to a chat.
 <Video file="id123" />
 ```  
 ```javascript
-<Video file="https://path-to-video.com" />
+<Video file="https://path-to-video.mp4" />
 ```  
 ```javascript
 <Video file={fs.createReadStream('/files/video.mp4')} />
@@ -643,7 +643,7 @@ Send a video to a chat.
 ## Audio
 Send an audio to a chat.
 ```javascript
-<Audio file="https://path-to-audio.com" />
+<Audio file="https://path-to-audio.mp3" />
 ```    
 #### file  
 > File id or URL or Stream or Buffer.  
@@ -653,7 +653,7 @@ Send an audio to a chat.
 <Audio file="id123" />
 ```  
 ```javascript
-<Audio file="https://path-to-audio.com" />
+<Audio file="https://path-to-audio.mp3" />
 ```  
 ```javascript
 <Audio file={fs.createReadStream('/files/audio.mp3')} />
@@ -687,3 +687,55 @@ Send an audio to a chat.
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
 
+## Animation
+Send an animation to a chat.
+```javascript
+<Animation file="https://path-to-animation.gif" />
+```    
+#### file
+> File id or URL or Stream or Buffer.  
+###### required
+`string` | `Buffer` | `NodeJS.ReadableStream`  
+```javascript
+<Animation file="id123" />
+```  
+```javascript
+<Animation file="https://path-to-audio.gif" />
+```  
+```javascript
+<Animation file={fs.createReadStream('/files/animation.gif')} />
+```  
+```javascript
+<Animation file={fs.readFileSync('/files/animation.gif')} />  
+```  
+#### name
+###### optional
+`string`
+```javascript
+<Animation name="Say my name" />
+```
+#### duration
+###### optional
+`number`
+```javascript
+<Animation duration={10} />
+```
+#### width
+###### optional
+`number`
+```javascript
+<Animation width={200} />
+```
+#### height  
+###### optional
+`number`
+```javascript
+<Animation height={200} />
+``` 
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
