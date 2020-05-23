@@ -94,10 +94,11 @@ function Example() {
 [`ButtonGroup`](#buttongroup)
 ```javascript  
 <Image
+    file={image}
     buttons={  
         <ButtonGroup>  
-            <Button>First</Button>  
-            <Button>Second</Button>  
+            <Button onClick={() => setUrl(nextImage)}>Next</Button>  
+            <Button onClick={() => setUrl(prevImage)}>Previous</Button>  
         </ButtonGroup>  
     }  
 />  
