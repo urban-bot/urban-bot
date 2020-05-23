@@ -245,7 +245,7 @@ render(
     </Root>  
 );
 ```  
-If you use several messengers you could use the same or use a unique port for each.
+If you use several messengers you can use the same or use a unique port for each.
 ```javascript    
 render(  
     <Root bot={new UrbanTelegramBot(options)} port={3000}>  
@@ -266,7 +266,7 @@ render(
 );  
 ``` 
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-> Specify default value for all urban-bot components under Root.
+> Default value for all urban-bot components under Root.
 ###### default `false`
 ```javascript
 function MyAudio() {
@@ -274,7 +274,7 @@ function MyAudio() {
 }
 
 render(
-    <Root isNewMessageEveryRender={false}>  
+    <Root isNewMessageEveryRender>  
         <>
             <Text>some text</Text>
             <Image file="https://path-to-image.com" />
@@ -283,13 +283,13 @@ render(
     </Root>  
 ); 
 
-// Text, Image, Audio will be with isNewMessageEveryRender={false}
+// Text, Image, Audio will be with isNewMessageEveryRender={true}
 ```
 #### [parseMode](#parsemode)
-> Specify default value for all urban-bot components under Root.
+> Default value for all urban-bot components under Root.
 
 ## Router
-You could separate different parts of your application by Router. 
+Separate different parts of your application by Router. 
 ```javascript
 function Profile() {
     return ...
@@ -314,7 +314,7 @@ function App() {
 ```  
 Now if a user type 'profile' or 'catalog' urban-bot will render a corresponding component.
 
-Also you can navigate inside your app without messaging by using a router context.
+Also, you can navigate inside your app without messaging by using a router context.
 ```javascript
 function ProfileButtons() {
     const { navigate } = useRouter();
@@ -332,7 +332,7 @@ function ProfileButtons() {
 ###### required  
 [`Route`](#route)  
 #### withInitializeCommands
-> If you pass commands to path prop every specific bot could initialize them. For example auto-suggesting command if a user starts to type it.
+> If you pass commands to path prop every specific bot can initialize them. For example auto-suggesting command if a user starts to type it.
 ###### optional  
 ###### default `false`  
 ```javascript
@@ -494,21 +494,21 @@ Button, just button.
 <Button onClick={() => console.log('Click first')}>First</Button>  
 ```  
 #### url  
-> The web page will be open after click.  
+> The web page will be open after a click.  
 ###### optional  
 `string`  
 ```javascript  
 <Button url="http://some-url.com">Open a web page</Button>  
 ```  
 #### phoneNumber  
-> The phone number will be suggested to call after click.  
+> The phone number will be suggested to call after a click.  
 ###### optional  
 `string` `number`  
 ```javascript  
 <Button phoneNumber="+71234567890">Call Saul Goodman</Button>  
 ```  
 #### id  
-> Unique id. If you don't specify it, it will be generated automatically.  
+> The unique id. If you don't specify it, it will be generated automatically.  
 ###### optional  
 `string`  
 ```javascript  
@@ -561,7 +561,7 @@ Send an image to a chat.
 />  
 ```  
 #### alt  
-> Text if image is not loaded.  
+> Text if an image will be not displayed.  
 ###### optional  
 `string`  
 ```javascript  
