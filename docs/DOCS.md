@@ -602,20 +602,11 @@ Send a video to a chat.
 ```  
 #### name  
 > A video name.
-###### required  
-`string` | `Buffer` | `NodeJS.ReadableStream`  
+###### optional
+`string`
 ```javascript  
-<Video file="id123" />
-```  
-```javascript  
-<Video file="https://path-to-video.com" />
-```  
-```javascript  
-<Video file={fs.createReadStream('/files/video.mp4')} />
-```  
-```javascript  
-<Video file={fs.readFileSync('/files/video.mp4')} />  
-```  
+<Video name="I'm a cook" />
+``` 
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
