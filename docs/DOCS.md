@@ -548,7 +548,7 @@ Send an image to a chat.
 ```javascript
 <Image file="https://path-to-image.png" />  
 ```    
-### Props    
+### Props
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
@@ -584,7 +584,8 @@ Send an image to a chat.
 Send a video to a chat.
 ```javascript
 <Video file="https://path-to-video.mp4" />
-```    
+```
+### Props
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
@@ -644,7 +645,8 @@ Send a video to a chat.
 Send an audio to a chat.
 ```javascript
 <Audio file="https://path-to-audio.mp3" />
-```    
+```
+### Props
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
@@ -691,7 +693,8 @@ Send an audio to a chat.
 Send an animation to a chat.
 ```javascript
 <Animation file="https://path-to-animation.gif" />
-```    
+```
+### Props
 #### file
 > File id or URL or Stream or Buffer.  
 ###### required
@@ -739,3 +742,34 @@ Send an animation to a chat.
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
+## Media
+Send a group of media files.
+```javascript
+<Media
+    files={[
+        {
+            type: 'image',
+            file: 'https://path-to-image1.jpg',
+            title: 'image1'
+        },
+        {
+            type: 'image',
+            file: 'https://path-to-image2.jpg',
+            title: 'image2'
+        }
+    ]}
+/>
+```
+### Props
+#### files
+###### required
+[`File`](#file)[]
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
+### File
+#### type
+###### required
+`'image'` | `'video'`
