@@ -62,7 +62,7 @@ render(
 ```  
  
 # Components
-### Common props
+### Common
 #### isNewMessageEveryRender
 > If `true` there is a new message after every state update. If `false` a message is sent one time and edited every time.
 ###### optional  
