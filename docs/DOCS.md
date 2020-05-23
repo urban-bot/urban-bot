@@ -12,6 +12,7 @@
 	* [Button](#button)  
 	* [Image](#image)
 	* [Video](#video)
+	* [Audio](#audio)
   
 All variables you can import from `@urban-bot/core`.  
 ```javascript
@@ -610,7 +611,7 @@ Send a video to a chat.
 ###### optional
 `string`
 ```javascript
-<Video author="" />
+<Video author="Leeroy Jenkins" />
 ``` 
 #### width  
 ###### optional
@@ -623,6 +624,54 @@ Send a video to a chat.
 `number`
 ```javascript
 <Video height={200} />
+``` 
+#### duration
+###### optional
+`number`
+```javascript
+<Video duration={10} />
+``` 
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
+
+
+## Audio
+Send an audio to a chat.
+```javascript
+<Audio file="https://path-to-audio.com" />
+```    
+#### file  
+> File id or URL or Stream or Buffer.  
+###### required  
+`string` | `Buffer` | `NodeJS.ReadableStream`  
+```javascript
+<Audio file="id123" />
+```  
+```javascript
+<Audio file="https://path-to-audio.com" />
+```  
+```javascript
+<Audio file={fs.createReadStream('/files/audio.mp3')} />
+```  
+```javascript
+<Audio file={fs.readFileSync('/files/audio.mp3')} />  
+```  
+#### name
+###### optional
+`string`
+```javascript
+<Audio name="Morning Mood" />
+``` 
+#### author  
+###### optional
+`string`
+```javascript
+<Audio author="Edvard Grieg" />
 ``` 
 #### duration
 ###### optional
