@@ -23,7 +23,7 @@
 	* [Video](#video)
 	* [Audio](#audio)
 	* [Animation](#animation)
-	* [File](#file)
+	* [File](#file-4)
 	* [Media](#media)
 	* [Location](#location)
   
