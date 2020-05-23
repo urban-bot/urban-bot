@@ -82,10 +82,14 @@ function Example() {
 ###### optional  
 `'HTML'` | `'markdown'`
 ```javascript  
-<Text parseMode="HTML"><b>bold</b></Text> // '<b>bold</b>'
+<Text parseMode="HTML">
+    <b>bold</b> // '<b>bold</b>'
+</Text> 
 ```  
 ```javascript  
-<Text parseMode="markdown"><b>bold</b></Text> // '*bold*' 
+<Text parseMode="markdown">
+    <b>bold</b> // '*bold*' 
+</Text> 
 ```
 ```javascript  
 <Image parseMode="markdown" title={<b>bold</b>} /> // '*bold*' 
