@@ -764,13 +764,15 @@ Send a group of media files.
 ### Props
 #### files
 ###### required
-[`File`](#file)[]
+[`Media File`](#media-file)[]
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
-### File
+### Media File
 #### type
 ###### required
 `'image'` | `'video'`
+#### [Image props](#props-5)
+#### [Video props](#props-6)
