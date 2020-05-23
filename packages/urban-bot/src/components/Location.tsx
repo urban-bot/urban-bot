@@ -9,7 +9,7 @@ import { getParseMode } from '../utils/getParseMode';
 export type LocationProps = UrbanMessageCommonData & {
     latitude: number;
     longitude: number;
-    livePeriod?: number;
+    livePeriodSeconds?: number;
     title?: React.ReactNode;
     buttons?: React.FunctionComponentElement<ButtonGroupProps>;
     isNewMessageEveryRender?: boolean;
@@ -18,7 +18,7 @@ export type LocationProps = UrbanMessageCommonData & {
 export function Location({
     latitude,
     longitude,
-    livePeriod,
+    livePeriodSeconds,
     title,
     buttons: buttonGroupElement,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
@@ -49,7 +49,7 @@ export function Location({
             data={{
                 latitude,
                 longitude,
-                livePeriod,
+                livePeriodSeconds,
                 title: formattedTitle,
                 buttons: formattedButtons,
                 isReplyButtons: buttonGroupElement?.props.isReplyButtons,
