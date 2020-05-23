@@ -56,7 +56,7 @@ Callback is called when your app is initialized.
 ```javascript
 render(  
     ...,  
-    () => console.log('App has started'),  
+    () => console.log('App has started')
 );
 ```  
  
