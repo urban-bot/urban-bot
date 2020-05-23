@@ -13,7 +13,8 @@ export function MainPage({ botContext, profile }: Props) {
     if (!profile) {
         return (
             <Text>
-                {`${botContext.chat.firstName} ${botContext.chat.lastName}`}, добро пожаловать в <i>Tindergram</i>
+                {`${botContext.chat.firstName} ${botContext.chat.lastName}`}, добро пожаловать в <i>Tindergram</i>{' '}
+                <br />
                 Вы должно создать профиль <br />
                 <b>/profile</b> - Профиль <br />
             </Text>

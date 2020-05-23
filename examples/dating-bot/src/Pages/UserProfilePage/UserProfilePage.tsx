@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { UserProfile } from '../../Components/UserProfile/UserProfile';
 import { UrbanBotTelegram } from '@urban-bot/telegram';
 import { BotContextType } from '@urban-bot/core/dist/context';
@@ -20,10 +20,12 @@ export function UserProfilePage({ botContext, profile }: Props) {
     const photo = useGetUserProfilePhoto(botContext.bot, botContext.chat);
 
     useEffect(() => {
-        if (!avatar && !photo.loading && !photo.error && photo.data) {
-            setAvatar(photo.data.file_id);
-        }
-    }, [photo.data, avatar]);
+        setTimeout(() => {
+            if (!avatar && !photo.loading && !photo.error && photo.data) {
+                setAvatar(photo.data.file_id);
+            }
+        }, 2000);
+    }, [photo, avatar]);
 
     useCommandWithParameters('/setDescription', (...newDescription: string[]) => {
         if (newDescription) {
@@ -46,26 +48,28 @@ export function UserProfilePage({ botContext, profile }: Props) {
         }
     });
 
+    const handleAddProfile = useCallback(() => {}, []);
+
+    if (!avatar) {
+        return null;
+    }
+
     return (
         <>
-            {avatar && (
-                <>
-                    <UserProfile
-                        profile={{
-                            id: botContext.chat.id,
-                            name: name,
-                            avatar: avatar,
-                            description: description,
-                            birthday: birthday,
-                        }}
-                        buttons={
-                            <ButtonGroup title="Buttons">
-                                <Button onClick={() => console.log('Click first button')}>Сохранить</Button>
-                            </ButtonGroup>
-                        }
-                    />
-                </>
-            )}
+            <UserProfile
+                profile={{
+                    id: botContext.chat.id,
+                    name: name,
+                    avatar: avatar,
+                    description: description,
+                    birthday: birthday,
+                }}
+                buttons={
+                    <ButtonGroup title="Buttons">
+                        <Button onClick={handleAddProfile}>Создать пользователя</Button>
+                    </ButtonGroup>
+                }
+            />
             <Text>
                 <b>/setDescription</b> <i>текст</i> - Установить графу {"'О себе'"}
                 <br />

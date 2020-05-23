@@ -55,6 +55,7 @@ export function getApiHooksCreator<ARG_TYPE extends unknown[], RESPONSE_TYPE>(
             apiFunction(...params)
                 .then(setData)
                 .catch(setError);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [setData, setError, ...params]);
 
         return {
