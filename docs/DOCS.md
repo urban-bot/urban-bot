@@ -40,8 +40,7 @@ const { render, Root, Text } = require('@urban-bot/core');
 ## render  
 The main function that starts React. Works similar `ReactDOM.render`.  
 ### Arguments  
-####  1  
-> Instance of `Root` component.  
+Instance of `Root` component.  
 ###### required  
 [`Root`](#root)  
 ```javascript
@@ -49,16 +48,16 @@ render(
     <Root bot={new UrbanBotTelegram(options)}>  
         <YourApp />    
     </Root>  
-);  
+);
 ```  
-####  2  
-> A callback is called when your app is initialized.  
+Callback
+> A callback is called when your app is initialized.
 ###### optional  
 ```javascript
 render(  
     ...,  
     () => console.log('App has started'),  
-);  
+);
 ```  
  
 # Components
