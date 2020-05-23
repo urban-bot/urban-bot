@@ -11,6 +11,7 @@
 	* [ButtonGroup](#buttongroup)  
 	* [Button](#button)  
 	* [Image](#image)
+	* [Video](#video)
   
 All variables you can import from `@urban-bot/core`.  
 ```javascript    
@@ -77,6 +78,30 @@ function Example() {
 // chat:
 // bot write: '3'
 ``` 
+#### title
+>  Plain text or supported HTML tags.  
+###### optional  
+[`HTML`](#HTML)
+```javascript  
+<Image title="text" />  
+```  
+```javascript  
+<Image title={<b>text</b>} />  
+```  
+#### buttons
+> Buttons will be attached with a message.
+###### optional  
+[`ButtonGroup`](#buttongroup)
+```javascript  
+<Image
+    buttons={  
+        <ButtonGroup>  
+            <Button>First</Button>  
+            <Button>Second</Button>  
+        </ButtonGroup>  
+    }  
+/>  
+```  
 #### parseMode
 >  The markup language which is used for parsing text. Calculated automatically for every messenger, but you can specify directly.
 ###### optional  
@@ -538,30 +563,6 @@ Send an image to a chat.
 ```javascript  
 <Image file={fs.readFileSync('/files/image.jpeg')} />  
 ```  
-#### title  
->  Plain text or supported HTML tags.  
-###### optional  
-[`HTML`](#HTML)
-```javascript  
-<Image title="text" />  
-```  
-```javascript  
-<Image title={<b>text</b>} />  
-```  
-#### buttons
-> Buttons will be attached with image.
-###### optional  
-[`ButtonGroup`](#buttongroup)
-```javascript  
-<Image  
-    buttons={  
-        <ButtonGroup>  
-            <Button>First</Button>  
-            <Button>Second</Button>  
-        </ButtonGroup>  
-    }  
-/>  
-```  
 #### alt  
 > Text if an image will be not displayed.  
 ###### optional  
@@ -569,6 +570,37 @@ Send an image to a chat.
 ```javascript  
 <Image alt="This is cat" />  
 ```  
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
+
+## Video  
+Send a video to a chat.
+```javascript  
+<Video file="https://path-to-video.com" />
+```    
+#### file  
+> File id or URL or Stream or Buffer.  
+###### required  
+`string` | `Buffer` | `NodeJS.ReadableStream`  
+```javascript  
+<Video file="id123" />
+```  
+```javascript  
+<Video file="https://path-to-video.com" />
+```  
+```javascript  
+<Video file={fs.createReadStream('/files/video.mp4')} />
+```  
+```javascript  
+<Video file={fs.readFileSync('/files/video.mp4')} />  
+```  
+#### [title](#title)
+#### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
 #### [parseMode](#parsemode)
 #### [replyToMessageId](#replytomessageid)
