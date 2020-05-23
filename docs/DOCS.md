@@ -14,10 +14,10 @@
 	* [Video](#video)
   
 All variables you can import from `@urban-bot/core`.  
-```javascript    
+```javascript
 import { render, Root, Text } from '@urban-bot/core';  
-```  
-```javascript  
+```
+```javascript
 const { render, Root, Text } = require('@urban-bot/core');  
 ```  
 ## render  
@@ -27,7 +27,7 @@ The main function that starts React. Works similar `ReactDOM.render`.
 > Instance of `Root` component.  
 ###### required  
 [`Root`](#root)  
-```javascript    
+```javascript
 render(  
     <Root bot={new UrbanBotTelegram(options)}>  
         <YourApp />    
@@ -37,7 +37,7 @@ render(
 ####  2  
 > A callback will be called when your app is initialized.  
 ###### optional  
-```javascript    
+```javascript
 render(  
     ...,  
     () => console.log('App has started'),  
@@ -82,17 +82,17 @@ function Example() {
 >  A text will be sent with the main message.
 ###### optional  
 [`HTML`](#HTML)
-```javascript  
+```javascript
 <Image title="some text" />  
 ``` 
-```javascript  
+```javascript
 <Image title={<b>some text</b>} />  
 ```  
 #### buttons
 > Buttons will be attached with a message.
 ###### optional  
 [`ButtonGroup`](#buttongroup)
-```javascript  
+```javascript
 <Image
     file={image}
     buttons={  
@@ -107,38 +107,38 @@ function Example() {
 >  The markup language which is used for parsing text. Calculated automatically for every messenger, but you can specify directly.
 ###### optional  
 `'HTML'` | `'markdown'`
-```javascript  
+```javascript
 <Text parseMode="HTML">
     <b>bold</b> // '<b>bold</b>'
 </Text> 
 ```  
-```javascript  
+```javascript
 <Text parseMode="markdown">
     <b>bold</b> // '*bold*' 
 </Text> 
 ```
-```javascript  
+```javascript
 <Image parseMode="markdown" title={<b>bold</b>} /> // '*bold*' 
 ```
 You can pass usual text with ready formatting.
-```javascript  
+```javascript
 <Text parseMode="HTML">{'<b>bold</b>'}</Text>
 ```  
-```javascript  
+```javascript
 <Text parseMode="markdown">*bold*</Text>
 ```  
 #### disableNotification  
 > Sending a message silently.
 ###### optional  
 `boolean`  
-```javascript  
+```javascript
 <Text disableNotification>Mam, I will be late today</Text>
 ``` 
 #### replyToMessageId  
 > Specify if you want to send a message as a reply to another message.
 ###### optional  
 `string`  | `number`  
-```javascript  
+```javascript
 <Text replyToMessageId="some-id">Yes, I agree!</Text>
 ``` 
 #### personaId 
@@ -200,7 +200,7 @@ You can pass usual text with ready formatting.
  ```
 ## Root
 A required component which you should wrap over your application. It connects specific messenger to the core, provides the main context, manages multiple chats, and start the server.  
-```javascript  
+```javascript
 render(  
     <Root bot={new UrbanBotTelegram(options)}>  
         <YourApp />    
@@ -208,7 +208,7 @@ render(
 );  
 ```  
 For multiple messengers, you should create several `Root`.  
-```javascript  
+```javascript
 render(  
     <Root bot={new UrbanBotTelegram(options)}>  
         <YourApp />    
@@ -226,7 +226,7 @@ render(
 > Entry point of your app.  
 ###### required  
 `ReactNode`  
-```javascript    
+```javascript
 function YourApp() {  
    return <Text>Hello World!</Text>;  
 }
@@ -241,7 +241,7 @@ render(
 >  An instance of specific UrbanBot*. 
 ###### required  
 `UrbanBot` 
-```javascript    
+```javascript
 import { UrbanBotTelegram } from '@urban-bot/telegram';
   
 render(  
@@ -255,7 +255,7 @@ render(
 ###### optional  
 ###### default `60 * 60 * 24 * 7`
 `number`
-```javascript    
+```javascript
 render(  
     <Root sessionTimeSeconds={Infinity}>  
         <YourApp />    
@@ -267,7 +267,7 @@ render(
 ###### optional  
 ###### default `8080`
 `number`
-```javascript    
+```javascript
 render(  
     <Root port={3000}>  
         <YourApp />    
@@ -275,7 +275,7 @@ render(
 );
 ```  
 If you use several messengers you can use the same or use a unique port for each.
-```javascript    
+```javascript
 render(  
     <Root bot={new UrbanTelegramBot(options)} port={3000}>  
         <YourApp />    
@@ -410,7 +410,7 @@ function ProfileButtons() {
 ```
 ## Text  
 Send a text message to a chat.  
-```javascript    
+```javascript
 <Text>Some text<Text>    
 ```    
 ### Props  
@@ -418,7 +418,7 @@ Send a text message to a chat.
 > Plain text or supported HTML tags.  
 ###### required  
 [`HTML`](#HTML)  
-```javascript    
+```javascript
 <Text>      
     Usual text      
     <br />      
@@ -435,7 +435,7 @@ Send a text message to a chat.
 > Some messengers show web page preview if you attach a link in your text. Set to `true` if you want to block this behavior.  
 ###### optional  
 `boolean`  
-```javascript  
+```javascript
 <Text disableWebPagePreview>  
     <a href="https://github.com/urban-bot/urban-bot">link</a>  
 <Text>  
@@ -447,7 +447,7 @@ Send a text message to a chat.
 #### [forceReply](#forcereply)
 ## ButtonGroup  
 Required wrapper for buttons.  
-```javascript  
+```javascript
 <ButtonGroup>  
     <Button onClick={() => console.log('Click first')}>First</Button>  
     <Button onClick={() => console.log('Click second')}>Second</Button>  
@@ -458,18 +458,18 @@ Required wrapper for buttons.
 >  An instance or instances of `Button`.
 ###### required  
 [`Button`](#Button) | [`Button`](#Button)[] | [`Button`](#Button)[][]
-```javascript  
+```javascript
 <ButtonGroup title="Button">  
     <Button>First</Button>  
 </ButtonGroup>  
 ```  
-```javascript  
+```javascript
 <ButtonGroup title="Buttons">  
     <Button>First</Button>  
     <Button>Second</Button>  
 </ButtonGroup>  
 ```  
-```javascript  
+```javascript
 <ButtonGroup title="Matrix Buttons">  
     {[  
         [<Button>First button</Button>, <Button>Second button</Button>],  
@@ -482,10 +482,10 @@ Required wrapper for buttons.
 >  Plain text or supported HTML tags.  
 ###### optional  
 [`HTML`](#HTML)  
-```javascript  
+```javascript
 <ButtonGroup title="text">...</ButtonGroup>  
 ```  
-```javascript  
+```javascript
 <ButtonGroup title={<b>text</b>}>...</ButtonGroup>  
 ```  
 #### isReplyButtons  
@@ -494,7 +494,7 @@ Required wrapper for buttons.
 `boolean`
 
 If the user clicks on the button, he will send 'Hello' message.
-```javascript  
+```javascript
 <ButtonGroup isReplyButtons>
     <Button>Hello</Button>
 </ButtonGroup>  
@@ -506,7 +506,7 @@ If the user clicks on the button, he will send 'Hello' message.
 #### [forceReply](#forcereply)
 ## Button  
 Button, just button.  
-```javascript  
+```javascript
 <Button>Text</Button>  
 ```  
 ### Props  
@@ -518,33 +518,33 @@ Button, just button.
 > Callback will be called after click.  
 ###### optional  
 `Function`  
-```javascript  
+```javascript
 <Button onClick={() => console.log('Click first')}>First</Button>  
 ```  
 #### url  
 > The web page will be open after a click.  
 ###### optional  
 `string`  
-```javascript  
+```javascript
 <Button url="http://some-url.com">Open a web page</Button>  
 ```  
 #### phoneNumber  
 > The phone number will be suggested to call after a click.  
 ###### optional  
 `string` | `number`  
-```javascript  
+```javascript
 <Button phoneNumber="+71234567890">Call Saul Goodman</Button>  
 ```  
 #### id  
 > The unique id. If you don't specify it, it will be generated automatically.  
 ###### optional  
 `string`  
-```javascript  
+```javascript
 <Button id="some-id">First</Button>  
 ```  
 ## Image  
 Send an image to a chat.  
-```javascript  
+```javascript
 <Image file="https://path-to-image.com" />  
 ```    
 ### Props    
@@ -552,23 +552,23 @@ Send an image to a chat.
 > File id or URL or Stream or Buffer.  
 ###### required  
 `string` | `Buffer` | `NodeJS.ReadableStream`  
-```javascript  
+```javascript
 <Image file="id123" />  
 ```  
-```javascript  
+```javascript
 <Image file="https://path-to-image.com" />  
 ```  
-```javascript  
+```javascript
 <Image file={fs.createReadStream('/files/image.jpeg')} />  
 ```  
-```javascript  
+```javascript
 <Image file={fs.readFileSync('/files/image.jpeg')} />  
 ```  
 #### alt  
 > Text if an image will be not displayed.  
 ###### optional  
 `string`  
-```javascript  
+```javascript
 <Image alt="This is cat" />  
 ```  
 #### [title](#title)
@@ -581,31 +581,54 @@ Send an image to a chat.
 
 ## Video  
 Send a video to a chat.
-```javascript  
+```javascript
 <Video file="https://path-to-video.com" />
 ```    
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
 `string` | `Buffer` | `NodeJS.ReadableStream`  
-```javascript  
+```javascript
 <Video file="id123" />
 ```  
-```javascript  
+```javascript
 <Video file="https://path-to-video.com" />
 ```  
-```javascript  
+```javascript
 <Video file={fs.createReadStream('/files/video.mp4')} />
 ```  
-```javascript  
+```javascript
 <Video file={fs.readFileSync('/files/video.mp4')} />  
 ```  
-#### name  
-> A video name.
+#### name
 ###### optional
 `string`
-```javascript  
+```javascript
 <Video name="I'm a cook" />
+``` 
+#### author  
+###### optional
+`string`
+```javascript
+<Video author="" />
+``` 
+#### width  
+###### optional
+`number`
+```javascript
+<Video width={200} />
+``` 
+#### height  
+###### optional
+`number`
+```javascript
+<Video height={200} />
+``` 
+#### duration
+###### optional
+`number`
+```javascript
+<Video duration={10} />
 ``` 
 #### [title](#title)
 #### [buttons](#buttons)
@@ -614,3 +637,4 @@ Send a video to a chat.
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
+
