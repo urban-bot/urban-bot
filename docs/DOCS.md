@@ -14,6 +14,7 @@
 	* [Video](#video)
 	* [Audio](#audio)
 	* [Media](#media)
+	* [Location](#location)
   
 All variables you can import from `@urban-bot/core`.  
 ```javascript
@@ -812,3 +813,31 @@ Send a group of media files.
     ]}
 />
 ```
+## Location
+Send a location.
+```javascript
+<Location latitude={60.734539} longitude={77.608548}  />
+```
+### Props
+#### latitude
+> Latitude coordinate.
+###### required
+`number`
+#### longitude
+> Longitude coordinate.
+###### required
+`number`
+#### livePeriodSeconds
+> A period when a location can update online.
+###### required
+`number`
+```javascript
+<Location livePeriodSeconds={60 * 30} />
+```
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [parseMode](#parsemode)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
