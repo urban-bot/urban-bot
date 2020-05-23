@@ -13,6 +13,7 @@
 	* [Image](#image)
 	* [Video](#video)
 	* [Audio](#audio)
+	* [Media](#media)
   
 All variables you can import from `@urban-bot/core`.  
 ```javascript
