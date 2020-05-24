@@ -47,9 +47,7 @@ const bot = new UrbanBotTelegram({
 });
 
 render(
-    <Root
-        bot={bot}
-    >
+    <Root bot={bot}>
         <Text>Hello, world!</Text>
     </Root>
 );
