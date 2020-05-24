@@ -41,14 +41,14 @@ import React from 'react';
 import { render, Root, Text } from '@urban-bot/core';
 import { UrbanBotTelegram } from '@urban-bot/telegram';
 
+const bot = new UrbanBotTelegram({
+    token: 'telegramToken',
+    polling: true,
+});
+
 render(
     <Root
-        bot={
-            new UrbanBotTelegram({
-                token: 'telegramToken',
-                polling: true,
-            })
-        }
+        bot={bot}
     >
         <Text>Hello, world!</Text>
     </Root>
