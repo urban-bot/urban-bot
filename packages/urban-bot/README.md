@@ -10,15 +10,13 @@ Universal chatbot library based on [React](https://github.com/facebook/react).
 * **Session.** App renders unique for every chat, so just write your app as if it is client-side rendering.
 * **Types.** Full typescript support.
 
-Currently, the library is under active development and has an alpha version status. But you can help us if you try to use it and understand conception. It is really easy if you have already known React. All available example [components](https://github.com/urban-bot/urban-bot/tree/master/examples/base/src) and [hooks](https://github.com/urban-bot/urban-bot/blob/master/examples/base/src/Hooks.tsx).
-
 **Platforms we are supporting**
 
 [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/telegram-logo.svg)](https://telegram.org/)
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/slack-logo.svg)](https://slack.com/)
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/facebook-logo.svg)](https://www.messenger.com/)
- 
- 
+
+
 **Soon**
 
 [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/discord-logo.svg)](https://www.discord.com/)
@@ -26,15 +24,35 @@ Currently, the library is under active development and has an alpha version stat
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/vk-logo.svg)](https://www.vk.com/)
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/viber-logo.svg)](https://www.viber.com/)
 
+## [Documentation](https://github.com/urban-bot/urban-bot/blob/master/docs/DOCS.md)
+
 ## Installation
 Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter).
 
 Or install manually:
+```shell
+npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
-$ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
+## Example
+### Hello, World!
+```javascript
+import React from 'react';
+import { render, Root, Text } from '@urban-bot/core';
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+
+const bot = new UrbanBotTelegram({
+    token: 'telegramToken',
+    polling: true,
+});
+
+render(
+    <Root bot={bot}>
+        <Text>Hello, world!</Text>
+    </Root>
+);
 ```
 
-## Example
+### With Router
 ![](https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/telegram-gif.gif)
 ![](https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/slack-gif.gif)
 ```javascript
@@ -87,7 +105,8 @@ function App() {
 render(
     <Root
         bot={
-            new UrbanBotTelegram(telegramToken, {
+            new UrbanBotTelegram({
+                token: telegramToken,
                 polling: true,
             })
         }
