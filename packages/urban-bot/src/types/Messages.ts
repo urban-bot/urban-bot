@@ -1,5 +1,6 @@
-import { UrbanChat, UrbanFileFormat, UrbanParseMode } from './index';
+import { UrbanBot, UrbanChat, UrbanFileFormat, UrbanParseMode } from './index';
 import { OtherProps } from './common';
+import { BotMetaByBot } from '../hooks/hooks';
 
 export type UrbanButton = OtherProps & {
     text: string;
@@ -203,34 +204,34 @@ export type UrbanMessageData =
     | UrbanMessageLocationData
     | UrbanMessageMediaData;
 
-type Meta<MessageMeta = any> = {
-    meta: MessageMeta;
+type Meta<Bot extends UrbanBot> = {
+    meta: BotMetaByBot<Bot>['MessageMeta'];
 };
 
-export type UrbanExistingMessage<MessageMeta = any> = UrbanMessage & Meta<MessageMeta>;
+export type UrbanExistingMessage<Bot extends UrbanBot> = UrbanMessage & Meta<Bot>;
 
-export type UrbanExistingMessageByType<T extends UrbanMessageNodeName, MessageMeta = any> = T extends 'urban-text'
-    ? UrbanMessageText & Meta<MessageMeta>
+export type UrbanExistingMessageByType<Bot extends UrbanBot, T extends UrbanMessageNodeName> = T extends 'urban-text'
+    ? UrbanMessageText & Meta<Bot>
     : T extends 'urban-buttons'
-    ? UrbanMessageButtons & Meta<MessageMeta>
+    ? UrbanMessageButtons & Meta<Bot>
     : T extends 'urban-img'
-    ? UrbanMessageImage & Meta<MessageMeta>
+    ? UrbanMessageImage & Meta<Bot>
     : T extends 'urban-audio'
-    ? UrbanMessageAudio & Meta<MessageMeta>
+    ? UrbanMessageAudio & Meta<Bot>
     : T extends 'urban-video'
-    ? UrbanMessageVideo & Meta<MessageMeta>
+    ? UrbanMessageVideo & Meta<Bot>
     : T extends 'urban-animation'
-    ? UrbanMessageAnimation & Meta<MessageMeta>
+    ? UrbanMessageAnimation & Meta<Bot>
     : T extends 'urban-file'
-    ? UrbanMessageFile & Meta<MessageMeta>
+    ? UrbanMessageFile & Meta<Bot>
     : T extends 'urban-poll'
-    ? UrbanMessagePoll & Meta<MessageMeta>
+    ? UrbanMessagePoll & Meta<Bot>
     : T extends 'urban-contact'
-    ? UrbanMessageContact & Meta<MessageMeta>
+    ? UrbanMessageContact & Meta<Bot>
     : T extends 'urban-media'
-    ? UrbanMessageMedia & Meta<MessageMeta>
+    ? UrbanMessageMedia & Meta<Bot>
     : T extends 'urban-location'
-    ? UrbanMessageLocation & Meta<MessageMeta>
-    : UrbanExistingMessage<MessageMeta>;
+    ? UrbanMessageLocation & Meta<Bot>
+    : UrbanExistingMessage<Bot>;
 
 export type UrbanMessageNodeName = UrbanMessage['nodeName'];

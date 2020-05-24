@@ -6,22 +6,20 @@ export interface UrbanNativeEvent<Type = any, Payload = any> {
     payload?: Payload;
 }
 
-export interface UrbanSyntheticEventCommon<NativeEvent extends UrbanNativeEvent> {
+export interface UrbanSyntheticEventCommon<Bot extends UrbanBot> {
     chat: UrbanChat;
-    nativeEvent?: NativeEvent;
+    nativeEvent?: BotMetaByBot<Bot>['NativeEvent'];
     from: UrbanFrom;
 }
 
-export interface UrbanSyntheticEventAction<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventAction<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'action';
     payload: {
         actionId: string;
     };
 }
 
-export interface UrbanSyntheticEventCommand<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventCommand<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'command';
     payload: {
         command: string;
@@ -29,8 +27,7 @@ export interface UrbanSyntheticEventCommand<NativeEvent extends UrbanNativeEvent
     };
 }
 
-export interface UrbanSyntheticEventSticker<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventSticker<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'sticker';
     payload: {
         emoji?: string;
@@ -42,24 +39,21 @@ export interface UrbanSyntheticEventSticker<NativeEvent extends UrbanNativeEvent
     };
 }
 
-export interface UrbanSyntheticEventDice<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventDice<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'dice';
     payload: {
         value: number;
     };
 }
 
-export interface UrbanSyntheticEventText<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventText<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'text';
     payload: {
         text: string;
     };
 }
 
-export interface UrbanSyntheticEventAnimation<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventAnimation<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'animation';
     payload: {
         duration: number;
@@ -68,16 +62,14 @@ export interface UrbanSyntheticEventAnimation<NativeEvent extends UrbanNativeEve
     };
 }
 
-export interface UrbanSyntheticEventAudio<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventAudio<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'audio';
     payload: {
         files: UrbanFile[];
     };
 }
 
-export interface UrbanSyntheticEventContact<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventContact<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'contact';
     payload: {
         phoneNumber: string;
@@ -87,8 +79,7 @@ export interface UrbanSyntheticEventContact<NativeEvent extends UrbanNativeEvent
     };
 }
 
-export interface UrbanSyntheticEventFile<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventFile<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'file';
     payload: {
         text?: string;
@@ -96,8 +87,7 @@ export interface UrbanSyntheticEventFile<NativeEvent extends UrbanNativeEvent>
     };
 }
 
-export interface UrbanSyntheticEventInvoice<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventInvoice<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'invoice';
     payload: {
         title: string;
@@ -108,8 +98,7 @@ export interface UrbanSyntheticEventInvoice<NativeEvent extends UrbanNativeEvent
     };
 }
 
-export interface UrbanSyntheticEventLocation<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventLocation<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'location';
     payload: {
         latitude: number;
@@ -117,8 +106,7 @@ export interface UrbanSyntheticEventLocation<NativeEvent extends UrbanNativeEven
     };
 }
 
-export interface UrbanSyntheticEventImage<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventImage<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'image';
     payload: {
         text?: string;
@@ -126,8 +114,7 @@ export interface UrbanSyntheticEventImage<NativeEvent extends UrbanNativeEvent>
     };
 }
 
-export interface UrbanSyntheticEventPoll<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventPoll<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'poll';
     payload: {
         id: string;
@@ -136,8 +123,7 @@ export interface UrbanSyntheticEventPoll<NativeEvent extends UrbanNativeEvent>
     };
 }
 
-export interface UrbanSyntheticEventVideo<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventVideo<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'video';
     payload: {
         text?: string;
@@ -145,8 +131,7 @@ export interface UrbanSyntheticEventVideo<NativeEvent extends UrbanNativeEvent>
     };
 }
 
-export interface UrbanSyntheticEventVoice<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventVoice<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'voice';
     payload: {
         duration: number;
@@ -154,94 +139,83 @@ export interface UrbanSyntheticEventVoice<NativeEvent extends UrbanNativeEvent>
     };
 }
 
-export interface UrbanSyntheticEventAny<NativeEvent extends UrbanNativeEvent>
-    extends UrbanSyntheticEventCommon<NativeEvent> {
+export interface UrbanSyntheticEventAny<Bot extends UrbanBot> extends UrbanSyntheticEventCommon<Bot> {
     type: 'any';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     payload: any;
 }
 
-export type UrbanSyntheticEvent<NativeEvent extends UrbanNativeEvent> =
-    | UrbanSyntheticEventAction<NativeEvent>
-    | UrbanSyntheticEventVoice<NativeEvent>
-    | UrbanSyntheticEventCommand<NativeEvent>
-    | UrbanSyntheticEventInvoice<NativeEvent>
-    | UrbanSyntheticEventAnimation<NativeEvent>
-    | UrbanSyntheticEventAudio<NativeEvent>
-    | UrbanSyntheticEventVideo<NativeEvent>
-    | UrbanSyntheticEventText<NativeEvent>
-    | UrbanSyntheticEventPoll<NativeEvent>
-    | UrbanSyntheticEventImage<NativeEvent>
-    | UrbanSyntheticEventFile<NativeEvent>
-    | UrbanSyntheticEventContact<NativeEvent>
-    | UrbanSyntheticEventSticker<NativeEvent>
-    | UrbanSyntheticEventLocation<NativeEvent>
-    | UrbanSyntheticEventDice<NativeEvent>
-    | UrbanSyntheticEventAny<NativeEvent>;
+export type UrbanSyntheticEvent<Bot extends UrbanBot> =
+    | UrbanSyntheticEventAction<Bot>
+    | UrbanSyntheticEventVoice<Bot>
+    | UrbanSyntheticEventCommand<Bot>
+    | UrbanSyntheticEventInvoice<Bot>
+    | UrbanSyntheticEventAnimation<Bot>
+    | UrbanSyntheticEventAudio<Bot>
+    | UrbanSyntheticEventVideo<Bot>
+    | UrbanSyntheticEventText<Bot>
+    | UrbanSyntheticEventPoll<Bot>
+    | UrbanSyntheticEventImage<Bot>
+    | UrbanSyntheticEventFile<Bot>
+    | UrbanSyntheticEventContact<Bot>
+    | UrbanSyntheticEventSticker<Bot>
+    | UrbanSyntheticEventLocation<Bot>
+    | UrbanSyntheticEventDice<Bot>
+    | UrbanSyntheticEventAny<Bot>;
 
 export type UrbanSyntheticEventByType<
-    NativeEvent extends UrbanNativeEvent,
-    T extends UrbanSyntheticEvent<NativeEvent>['type']
+    Bot extends UrbanBot,
+    T extends UrbanSyntheticEvent<Bot>['type']
 > = T extends 'text'
-    ? UrbanSyntheticEventText<NativeEvent>
+    ? UrbanSyntheticEventText<Bot>
     : T extends 'command'
-    ? UrbanSyntheticEventCommand<NativeEvent>
+    ? UrbanSyntheticEventCommand<Bot>
     : T extends 'pool'
-    ? UrbanSyntheticEventPoll<NativeEvent>
+    ? UrbanSyntheticEventPoll<Bot>
     : T extends 'sticker'
-    ? UrbanSyntheticEventSticker<NativeEvent>
+    ? UrbanSyntheticEventSticker<Bot>
     : T extends 'animation'
-    ? UrbanSyntheticEventAnimation<NativeEvent>
+    ? UrbanSyntheticEventAnimation<Bot>
     : T extends 'audio'
-    ? UrbanSyntheticEventAudio<NativeEvent>
+    ? UrbanSyntheticEventAudio<Bot>
     : T extends 'contact'
-    ? UrbanSyntheticEventContact<NativeEvent>
+    ? UrbanSyntheticEventContact<Bot>
     : T extends 'file'
-    ? UrbanSyntheticEventFile<NativeEvent>
+    ? UrbanSyntheticEventFile<Bot>
     : T extends 'invoice'
-    ? UrbanSyntheticEventInvoice<NativeEvent>
+    ? UrbanSyntheticEventInvoice<Bot>
     : T extends 'location'
-    ? UrbanSyntheticEventLocation<NativeEvent>
+    ? UrbanSyntheticEventLocation<Bot>
     : T extends 'image'
-    ? UrbanSyntheticEventImage<NativeEvent>
+    ? UrbanSyntheticEventImage<Bot>
     : T extends 'poll'
-    ? UrbanSyntheticEventPoll<NativeEvent>
+    ? UrbanSyntheticEventPoll<Bot>
     : T extends 'dice'
-    ? UrbanSyntheticEventDice<NativeEvent>
+    ? UrbanSyntheticEventDice<Bot>
     : T extends 'voice'
-    ? UrbanSyntheticEventVoice<NativeEvent>
+    ? UrbanSyntheticEventVoice<Bot>
     : T extends 'action'
-    ? UrbanSyntheticEventAction<NativeEvent>
+    ? UrbanSyntheticEventAction<Bot>
     : T extends 'video'
-    ? UrbanSyntheticEventVideo<NativeEvent>
+    ? UrbanSyntheticEventVideo<Bot>
     : T extends 'any'
-    ? UrbanSyntheticEventAny<NativeEvent>
-    : UrbanSyntheticEvent<NativeEvent>;
+    ? UrbanSyntheticEventAny<Bot>
+    : UrbanSyntheticEvent<Bot>;
 
-export type UrbanListenerByType<
-    NativeEvent extends UrbanNativeEvent,
-    T extends UrbanSyntheticEvent<NativeEvent>['type']
-> = UrbanListener<UrbanSyntheticEventByType<NativeEvent, T>>;
-
-export type UrbanSyntheticEventType<NativeEvent extends UrbanNativeEvent> = UrbanSyntheticEvent<NativeEvent>['type'];
-export type UrbanListenerByNativeEvent<NativeEvent extends UrbanNativeEvent> = UrbanListenerByType<
-    NativeEvent,
-    UrbanSyntheticEventType<NativeEvent>
+export type UrbanListenerByType<Bot extends UrbanBot, T extends UrbanSyntheticEvent<Bot>['type']> = UrbanListener<
+    UrbanSyntheticEventByType<Bot, T>
 >;
+
+export type UrbanSyntheticEventType<Bot extends UrbanBot> = UrbanSyntheticEvent<Bot>['type'];
+export type UrbanListenerByNativeEvent<Bot extends UrbanBot> = UrbanListenerByType<Bot, UrbanSyntheticEventType<Bot>>;
 
 export type SpreadField<T, K extends keyof T> = Omit<T, K> & T[K];
 
 export type UrbanListenerByNativeEventWithSpreadPayload<
-    NativeEvent extends UrbanNativeEvent,
-    Event extends Parameters<UrbanListenerByNativeEvent<NativeEvent>>[0]
+    Bot extends UrbanBot,
+    Event extends Parameters<UrbanListenerByNativeEvent<Bot>>[0]
 > = (event: SpreadField<Event, 'payload'>) => unknown;
 
-export type UrbanListenerByTypeWithSpreadPayload<
-    NativeEvent extends UrbanNativeEvent,
-    EventType extends UrbanSyntheticEvent<NativeEvent>['type']
-> = UrbanListenerByNativeEventWithSpreadPayload<NativeEvent, UrbanSyntheticEventByType<NativeEvent, EventType>>;
-
-export type UrbanEventListener<
-    Bot extends UrbanBot,
-    Command extends UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>['type']
-> = UrbanListenerByTypeWithSpreadPayload<BotMetaByBot<Bot>['NativeEvent'], Command>;
+export type UrbanEventListener<Bot extends UrbanBot, Command extends UrbanSyntheticEvent<Bot>['type']> = (
+    event: SpreadField<UrbanSyntheticEventByType<Bot, Command>, 'payload'>,
+) => unknown;

@@ -21,7 +21,7 @@ export class ManagerBot<Bot extends UrbanBot = any> {
         bot.processUpdate = this.processUpdate;
     }
 
-    processUpdate: ProcessUpdate<BotMetaByBot<Bot>['NativeEvent']> = (event) => {
+    processUpdate: ProcessUpdate<Bot> = (event) => {
         this.eventEmitter.emit('any', event);
         this.eventEmitter.emit(event.type, event);
 
@@ -47,11 +47,11 @@ export class ManagerBot<Bot extends UrbanBot = any> {
         this.chats.delete(id);
     }
 
-    on<
-        Event extends UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']> = UrbanSyntheticEvent<
-            BotMetaByBot<Bot>['NativeEvent']
-        >
-    >(eventName: Event['type'] | 'any', listener: UrbanListener<Event>, chatId?: string) {
+    on<Event extends UrbanSyntheticEvent<Bot> = UrbanSyntheticEvent<Bot>>(
+        eventName: Event['type'] | 'any',
+        listener: UrbanListener<Event>,
+        chatId?: string,
+    ) {
         if (chatId === undefined) {
             return this.eventEmitter.on(eventName, listener);
         } else {
@@ -66,11 +66,11 @@ export class ManagerBot<Bot extends UrbanBot = any> {
         }
     }
 
-    emit<
-        Event extends UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']> = UrbanSyntheticEvent<
-            BotMetaByBot<Bot>['NativeEvent']
-        >
-    >(eventName: Event['type'] | 'any', event: Event, chatId?: string) {
+    emit<Event extends UrbanSyntheticEvent<Bot> = UrbanSyntheticEvent<Bot>>(
+        eventName: Event['type'] | 'any',
+        event: Event,
+        chatId?: string,
+    ) {
         this.eventEmitter.emit('any', event);
         this.eventEmitter.emit(eventName, event);
 
@@ -86,11 +86,11 @@ export class ManagerBot<Bot extends UrbanBot = any> {
         }
     }
 
-    removeListener<
-        Event extends UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']> = UrbanSyntheticEvent<
-            BotMetaByBot<Bot>['NativeEvent']
-        >
-    >(eventName: Event['type'] | 'any', listener: UrbanListener<Event>, chatId?: string) {
+    removeListener<Event extends UrbanSyntheticEvent<Bot> = UrbanSyntheticEvent<Bot>>(
+        eventName: Event['type'] | 'any',
+        listener: UrbanListener<Event>,
+        chatId?: string,
+    ) {
         if (chatId === undefined) {
             return this.eventEmitter.removeListener(eventName, listener);
         } else {
@@ -115,7 +115,7 @@ export class ManagerBot<Bot extends UrbanBot = any> {
         });
     }
 
-    updateMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
+    updateMessage(message: UrbanExistingMessage<Bot>) {
         if (this.bot.updateMessage === undefined) {
             throw new Error(
                 `'${this.bot.type}' doesn't support updating message. Provide isNewMessageEveryRender prop to Root component`,
@@ -125,7 +125,7 @@ export class ManagerBot<Bot extends UrbanBot = any> {
         return this.bot.updateMessage(message);
     }
 
-    deleteMessage(message: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>) {
+    deleteMessage(message: UrbanExistingMessage<Bot>) {
         if (this.bot.deleteMessage === undefined) {
             throw new Error(
                 `'${this.bot.type}' doesn't support deleting message. Provide isNewMessageEveryRender prop to Root component`,

@@ -23,7 +23,7 @@ const newMessage2: UrbanMessage = {
     data: { file: 'http://...' },
 };
 
-const existingMessage: UrbanExistingMessage<typeof meta> = {
+const existingMessage: UrbanExistingMessage<typeof testBot> = {
     ...newMessage,
     meta,
 } as const;

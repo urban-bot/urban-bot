@@ -5,7 +5,6 @@ import {
     UrbanListener,
     UrbanSyntheticEvent,
     UrbanListenerByType,
-    UrbanNativeEvent,
     UrbanSyntheticEventType,
     UrbanListenerByNativeEventWithSpreadPayload,
     UrbanEventListener,
@@ -34,12 +33,10 @@ export function useRouter() {
     return routerContext;
 }
 
-function useSubscribe<
-    Bot extends UrbanBot,
-    Event extends UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']> = UrbanSyntheticEvent<
-        BotMetaByBot<Bot>['NativeEvent']
-    >
->(listener: UrbanListener<Event>, event: Event['type']) {
+function useSubscribe<Bot extends UrbanBot, Event extends UrbanSyntheticEvent<Bot> = UrbanSyntheticEvent<Bot>>(
+    listener: UrbanListener<Event>,
+    event: Event['type'],
+) {
     const { chat, $$managerBot } = useBotContext<Bot>();
 
     React.useEffect(() => {
@@ -52,10 +49,10 @@ function useSubscribe<
 }
 
 export function useSubscribeWithSpreadPayload<
-    NativeEvent extends UrbanNativeEvent,
-    EventType extends UrbanSyntheticEventType<NativeEvent>,
-    Event extends Parameters<UrbanListenerByType<NativeEvent, EventType>>[0]
->(listener: UrbanListenerByNativeEventWithSpreadPayload<NativeEvent, Event>, eventType: EventType) {
+    Bot extends UrbanBot,
+    EventType extends UrbanSyntheticEventType<Bot>,
+    Event extends Parameters<UrbanListenerByType<Bot, EventType>>[0]
+>(listener: UrbanListenerByNativeEventWithSpreadPayload<Bot, Event>, eventType: EventType) {
     useSubscribe<UrbanBot, Event>((event) => {
         const { payload, ...other } = event;
         listener({
@@ -66,7 +63,7 @@ export function useSubscribeWithSpreadPayload<
 }
 
 export function useAny<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'any'>) {
-    useSubscribe(listener, 'any');
+    useSubscribeWithSpreadPayload(listener, 'any');
 }
 
 export function useText<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'text'>) {

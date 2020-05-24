@@ -70,7 +70,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
         expressApp.post('/slack/commands', bodyParser.urlencoded({ extended: false }), this.handleCommand);
     }
 
-    processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventSlack>) {
+    processUpdate(_event: UrbanSyntheticEvent<UrbanBot<SlackBotMeta>>) {
         throw new Error('this method must be overridden');
     }
 
@@ -80,7 +80,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
                 return;
             }
 
-            const adaptedCtx: UrbanSyntheticEventAction<UrbanNativeEventSlack> = {
+            const adaptedCtx: UrbanSyntheticEventAction<UrbanBot<SlackBotMeta>> = {
                 type: 'action',
                 chat: {
                     id: ctx.channel.id,
@@ -107,7 +107,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             return;
         }
 
-        const common: UrbanSyntheticEventCommon<UrbanNativeEventSlack> = {
+        const common: UrbanSyntheticEventCommon<UrbanBot<SlackBotMeta>> = {
             chat: {
                 id: ctx.channel,
                 type: ctx.channel_type,
@@ -173,7 +173,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             return;
         }
 
-        const textEvent: UrbanSyntheticEventText<UrbanNativeEventSlack> = {
+        const textEvent: UrbanSyntheticEventText<UrbanBot<SlackBotMeta>> = {
             ...common,
             type: 'text',
             payload: {
@@ -186,7 +186,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
 
     handleCommand = (req: express.Request, res: express.Response) => {
         const { channel_id, command, text, user_id, user_name, channel_name } = req.body as SlackCommandContext;
-        const ctx: UrbanSyntheticEventCommand<UrbanNativeEventSlack> = {
+        const ctx: UrbanSyntheticEventCommand<UrbanBot<SlackBotMeta>> = {
             type: 'command',
             chat: {
                 id: channel_id,
@@ -347,7 +347,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
         }
     }
 
-    async updateMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
+    async updateMessage(message: UrbanExistingMessage<UrbanBot<SlackBotMeta>>) {
         switch (message.nodeName) {
             case 'urban-text': {
                 this.client.chat.update({
@@ -428,7 +428,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
         }
     }
 
-    deleteMessage(message: UrbanExistingMessage<SlackMessageMeta>) {
+    deleteMessage(message: UrbanExistingMessage<UrbanBot<SlackBotMeta>>) {
         this.client.chat.delete({ channel: message.meta.channel, ts: message.meta.ts });
     }
 }

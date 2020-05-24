@@ -5,10 +5,7 @@ import { UrbanBot } from './types/UrbanBot';
 import { BotMetaByBot } from './hooks/hooks';
 import debouncePromise from 'debounce-promise';
 
-export type UrbanNode<Bot extends UrbanBot = any> = Omit<
-    UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>,
-    'meta'
-> & {
+export type UrbanNode<Bot extends UrbanBot = UrbanBot> = Omit<UrbanExistingMessage<Bot>, 'meta'> & {
     $$managerBot: ManagerBot<Bot>;
     isNewMessageEveryRender?: boolean;
     debounceDelay?: number;
@@ -87,7 +84,7 @@ export function removeChildNode<Bot extends UrbanBot>(parentNode: UrbanNode<Bot>
             chat: removedNode.chat,
             data: removedNode.data,
             meta,
-        } as UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>;
+        } as UrbanExistingMessage<Bot>;
 
         removedNode.deleteMessage(message);
     });
@@ -139,7 +136,7 @@ export function updateNode<Bot extends UrbanBot>(
         }
 
         node.meta.then((meta) => {
-            const existingMessage: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']> = {
+            const existingMessage: UrbanExistingMessage<Bot> = {
                 ...message,
                 meta,
             };

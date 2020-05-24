@@ -99,7 +99,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         }
     }
 
-    processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventFacebook>) {
+    processUpdate(_event: UrbanSyntheticEvent<UrbanBot<FacebookBotMeta>>) {
         throw new Error('this method must be overridden');
     }
 

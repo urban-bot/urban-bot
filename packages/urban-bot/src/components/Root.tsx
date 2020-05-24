@@ -5,7 +5,6 @@ import { ManagerBot } from '../ManagerBot/ManagerBot';
 import { UrbanChat, UrbanParseMode } from '../types';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
-import { BotMetaByBot } from '../hooks/hooks';
 import { getExpressApp, listen } from '../expressApp';
 
 export type ChatProps<Bot extends UrbanBot> = {
@@ -64,7 +63,7 @@ export function Root<Bot extends UrbanBot>({
 
     const timeoutIdsRef = React.useRef<{ [key: string]: NodeJS.Timer }>({});
 
-    const [firstMessage, setFirstMessage] = React.useState<UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>>();
+    const [firstMessage, setFirstMessage] = React.useState<UrbanSyntheticEvent<Bot>>();
 
     React.useEffect(() => {
         if (bot.initializeServer !== undefined) {
@@ -76,7 +75,7 @@ export function Root<Bot extends UrbanBot>({
     const $$managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
     React.useEffect(() => {
-        function handler(message: UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>) {
+        function handler(message: UrbanSyntheticEvent<Bot>) {
             const { chat } = message;
             const { id: chatId } = chat;
 
