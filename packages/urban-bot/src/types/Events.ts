@@ -1,4 +1,5 @@
-import { UrbanChat, UrbanFile, UrbanFrom, UrbanListener } from './index';
+import { UrbanBot, UrbanChat, UrbanFile, UrbanFrom, UrbanListener } from './index';
+import { BotMetaByBot } from '../hooks/hooks';
 
 export interface UrbanNativeEvent<Type = any, Payload = any> {
     type: Type;
@@ -153,6 +154,13 @@ export interface UrbanSyntheticEventVoice<NativeEvent extends UrbanNativeEvent>
     };
 }
 
+export interface UrbanSyntheticEventAny<NativeEvent extends UrbanNativeEvent>
+    extends UrbanSyntheticEventCommon<NativeEvent> {
+    type: 'any';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload: any;
+}
+
 export type UrbanSyntheticEvent<NativeEvent extends UrbanNativeEvent> =
     | UrbanSyntheticEventAction<NativeEvent>
     | UrbanSyntheticEventVoice<NativeEvent>
@@ -168,7 +176,8 @@ export type UrbanSyntheticEvent<NativeEvent extends UrbanNativeEvent> =
     | UrbanSyntheticEventContact<NativeEvent>
     | UrbanSyntheticEventSticker<NativeEvent>
     | UrbanSyntheticEventLocation<NativeEvent>
-    | UrbanSyntheticEventDice<NativeEvent>;
+    | UrbanSyntheticEventDice<NativeEvent>
+    | UrbanSyntheticEventAny<NativeEvent>;
 
 export type UrbanSyntheticEventByType<
     NativeEvent extends UrbanNativeEvent,
@@ -205,6 +214,8 @@ export type UrbanSyntheticEventByType<
     ? UrbanSyntheticEventAction<NativeEvent>
     : T extends 'video'
     ? UrbanSyntheticEventVideo<NativeEvent>
+    : T extends 'any'
+    ? UrbanSyntheticEventAny<NativeEvent>
     : UrbanSyntheticEvent<NativeEvent>;
 
 export type UrbanListenerByType<
@@ -229,3 +240,8 @@ export type UrbanListenerByTypeWithSpreadPayload<
     NativeEvent extends UrbanNativeEvent,
     EventType extends UrbanSyntheticEvent<NativeEvent>['type']
 > = UrbanListenerByNativeEventWithSpreadPayload<NativeEvent, UrbanSyntheticEventByType<NativeEvent, EventType>>;
+
+export type UrbanEventListener<
+    Bot extends UrbanBot,
+    Command extends UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>['type']
+> = UrbanListenerByTypeWithSpreadPayload<BotMetaByBot<Bot>['NativeEvent'], Command>;
