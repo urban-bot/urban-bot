@@ -52,6 +52,7 @@ render(
 ```  
  
 # Components
+Components are used to send messages.
 ### Common props
 #### isNewMessageEveryRender
 > If `true`, a new message is sent after every state update. If `false`, a message is sent one time and edited next state updates.
