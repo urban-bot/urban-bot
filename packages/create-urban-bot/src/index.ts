@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { execSync } from 'child_process';
 import path from 'path';
+import fs from 'fs';
 
 const outDir = process.argv[2] || 'urban-bot-app';
 
@@ -15,3 +16,10 @@ commands.forEach((command, i) => {
         cwd, // path to where you want to save the file
     });
 });
+
+renameEnvFile();
+
+function renameEnvFile() {
+    const cwd = path.resolve(process.cwd(), outDir);
+    fs.renameSync(cwd + '/.env.example', cwd + '/.env');
+}
