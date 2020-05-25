@@ -4,7 +4,7 @@ import path from 'path';
 
 const outDir = process.argv[2] || 'urban-bot-app';
 
-const commands = ['git clone https://github.com/urban-bot/urban-bot-starter.git ' + outDir, 'rimraf .git', 'npm i'];
+const commands = ['git clone https://github.com/urban-bot/urban-bot-starter.git ' + outDir, 'npx rimraf .git', 'npm i'];
 
 commands.forEach((command, i) => {
     const dir = i > 0 ? outDir : '';
