@@ -20,8 +20,12 @@
     margin-bottom: 20px;
 }
 
-.title {
+.platforms .title {
     margin: 0 0 20px;
+}
+
+.platforms .title:last-of-type {
+    margin: 20px 0 20px;
 }
 
 .platforms .logos .logo {

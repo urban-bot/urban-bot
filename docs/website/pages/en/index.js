@@ -188,6 +188,21 @@ class Index extends React.Component {
                             <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/facebook-logo.svg" alt="facebook" />
                         </a>
                     </div>
+                    <h3 className="title">Soon</h3>
+                    <div className="logos">
+                        <a href="https://www.discord.com/" className="logo" target="_blank">
+                            <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/discord-logo.svg" alt="discord" />
+                        </a>
+                        <a href="https://www.whatsapp.com/" className="logo" target="_blank">
+                            <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/whatsapp-logo.svg" alt="whatsapp" />
+                        </a>
+                        <a href="https://www.vk.com/" className="logo" target="_blank">
+                            <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/vk-logo.svg" alt="vk" />
+                        </a>
+                        <a href="https://www.viber.com/" className="logo" target="_blank">
+                            <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/viber-logo.svg" alt="viber" />
+                        </a>
+                    </div>
                 </div>
                 <h3 className="example-title">Example</h3>
                 <div className="example">
