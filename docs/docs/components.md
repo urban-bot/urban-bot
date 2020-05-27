@@ -6,6 +6,7 @@ sidebar_label: Components
   
  * [render](#render)
  * [Common props](#common-props)
+ * [HTML](#html)
  * [Root](#root)  
  * [Router](#router)  
  * [Route](#route)  
@@ -33,7 +34,6 @@ const { render, Root, Text } = require('@urban-bot/core');
 ```  
 ## render  
 The main function that starts React. Works similar `ReactDOM.render`.  
-### Arguments  
 #### Instance of `Root` component.
 ###### required  
 [`Root`](#root)  
@@ -162,14 +162,14 @@ You can pass usual text with ready formatting.
 <Text personaId="natalie-id">Hi, I am Natalie. How can I help you?</Text>
 ``` 
 #### forceReply 
-> After sending a message next user message automatically replies to the sent message.
+> After sending a message, next user message automatically will be reply to the sent message.
 ###### optional  
 `boolean`
 ```jsx
 <Text forceReply>What's your name?</Text>
 ``` 
-### HTML  
-> Plain text or HTML tags.  
+## HTML  
+> You can format text with this tags.
 
 ##### Plain text
 `string` | `number` 
@@ -233,7 +233,7 @@ render(
     </Root>  
 );  
 ```  
-### Props
+
 
 ####  children  
 > Entry point of your app.  
@@ -366,7 +366,7 @@ function ProfileButtons() {
     );
 }
 ```
-### Props
+
 ####  children  
 > One or many Route components.
 ###### required  
@@ -387,7 +387,7 @@ Piece of [Router](#router).
     <Profile />  
 </Route>
 ```
-### Props
+
 ####  children  
 > Part of your application.  
 ###### required  
@@ -425,7 +425,7 @@ Send a text message to a chat.
 ```jsx
 <Text>Some text<Text>    
 ```    
-### Props  
+  
 ####  children  
 > Plain text or supported HTML tags.  
 ###### required  
@@ -466,7 +466,7 @@ Required wrapper for buttons.
     <Button onClick={() => console.log('Click second')}>Second</Button>  
 </ButtonGroup>  
 ```  
-### Props    
+    
 #### children  
 >  An instance or instances of `Button`.
 ###### required  
@@ -514,7 +514,7 @@ Button, just button.
 ```jsx
 <Button>Text</Button>  
 ```  
-### Props  
+  
 #### children  
 > Button name.  
 ###### required  
@@ -552,7 +552,7 @@ Send an image to a chat.
 ```jsx
 <Image file="https://path-to-image.png" />  
 ```    
-### Props
+
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
@@ -596,7 +596,7 @@ Send a video to a chat.
 ```jsx
 <Video file="https://path-to-video.mp4" />
 ```
-### Props
+
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
@@ -658,7 +658,7 @@ Send an audio to a chat.
 ```jsx
 <Audio file="https://path-to-audio.mp3" />
 ```
-### Props
+
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
@@ -707,7 +707,7 @@ Send an animation to a chat.
 ```jsx
 <Animation file="https://path-to-animation.gif" />
 ```
-### Props
+
 #### file
 > File id or URL or Stream or Buffer.  
 ###### required
@@ -762,7 +762,7 @@ Send a file to a chat.
 ```jsx
 <File file="https://path-to-file.pdf" />
 ```
-### Props
+
 #### file  
 > File id or URL or Stream or Buffer.  
 ###### required  
@@ -813,7 +813,7 @@ Send a group of media files.
     ]}
 />
 ```
-### Props
+
 #### files
 ###### required
 [`Media File`](#media-file)[]
@@ -864,7 +864,7 @@ Send a location.
 ```jsx
 <Location latitude={60.734539} longitude={77.608548}  />
 ```
-### Props
+
 #### latitude
 > Latitude coordinate.
 ###### required
@@ -898,7 +898,7 @@ Send a poll.
     <Option>Сertainly</Option>
 </Poll>
 ```
-### Props
+
 #### children
 ###### required
 [`Option`](#option) | [`Option`](#option)[]
@@ -961,7 +961,7 @@ Send a poll.
 ```jsx
 <Option>Yes</Option>
 ```
-### Props
+
 #### children
 ###### required
 `string`
@@ -977,7 +977,7 @@ Send a contact.
 ```jsx
 <Contact firstName="Kamola" phoneNumber="+71234567890" />;
 ```
-### Props
+
 #### phoneNumber  
 ###### optional  
 `string` | `number`  
