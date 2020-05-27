@@ -75,7 +75,7 @@ const siteConfig = {
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
-    theme: 'default',
+    theme: 'arta',
   },
   usePrism: ['jsx'],
 
@@ -104,6 +104,8 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   //   repoUrl: 'https://github.com/facebook/test-site',
+
+  scrollToTop: true,
 };
 
 module.exports = siteConfig;
