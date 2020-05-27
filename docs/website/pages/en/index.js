@@ -123,7 +123,7 @@ class HomeSplash extends React.Component {
                     <ProjectTitle tagline={siteConfig.tagline} title={siteConfig.title} />
                     <PromoSection>
                         <Button href={docUrl('components.html')}>Documentation</Button>
-                        <Button href="https://github.com/urban-bot/urban-bot/tree/master/examples">Examples</Button>
+                        <Button target="_blank" href="https://github.com/urban-bot/urban-bot/tree/master/examples">Examples</Button>
                     </PromoSection>
                 </div>
             </SplashContainer>
