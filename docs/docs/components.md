@@ -169,7 +169,7 @@ You can pass usual text with ready formatting.
 <Text forceReply>What's your name?</Text>
 ``` 
 ## HTML  
-> You can format text with this tags.
+> You can format text with these tags.
 
 ##### Plain text
 `string` | `number` 
@@ -660,7 +660,7 @@ Send an audio to a chat.
 ```
 
 #### file  
-> File id or URL or Stream or Buffer.  
+> File id or URL or Stream or Buffsder.  
 ###### required  
 `string` | `Buffer` | `ReadableStream`  
 ```jsx
