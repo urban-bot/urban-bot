@@ -40,6 +40,10 @@ class Footer extends React.Component {
                         <a href={this.docUrl('components.html', this.props.language)}>Components</a>
                     </div>
                     <div>
+                        <h5>Community</h5>
+                        <a href="https://t.me/urbanbotjs" target="_blank">Telegram</a>
+                    </div>
+                    <div>
                         <h5>Links</h5>
                         <a
                             className="github-button"
@@ -49,12 +53,14 @@ class Footer extends React.Component {
                             data-show-count="true"
                             data-count-aria-label="# stargazers on GitHub"
                             aria-label="Star this project on GitHub"
+                            target="_blank"
                         >
                             Urban Bot
                         </a>
                         {this.props.config.twitterUsername && (
                             <div className="social">
                                 <a
+                                    target="_blank"
                                     href={`https://twitter.com/${this.props.config.twitterUsername}`}
                                     className="twitter-follow-button"
                                 >
