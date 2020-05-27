@@ -39,7 +39,10 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'components', label: 'Docs'},
-    {blog: true, label: 'Blog'},
+    {
+      href: 'https://github.com/urban-bot/urban-bot',
+      label: 'GitHub',
+    },
   ],
 
   // If you have users set above, you add it here:
