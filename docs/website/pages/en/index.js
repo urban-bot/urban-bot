@@ -62,6 +62,7 @@ function App() {
 
 const bot = new UrbanBotTelegram({
     token: 'telegramToken',
+    isPolling: true,
 });
 
 render(
