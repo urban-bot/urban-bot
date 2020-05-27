@@ -174,11 +174,11 @@ class Index extends React.Component {
         return (
             <div>
                 <HomeSplash siteConfig={siteConfig} language={language} />
-                <div style={{ display: 'flex' }}>
-                    <div style={{ display: 'inline-block', width: '60%' }}>
+                <div className="example">
+                    <div>
                         <MarkdownBlock>{example}</MarkdownBlock>
                     </div>
-                    <div style={{ display: 'inline-block', width: '40%' }}>
+                    <div>
                         <img
                             src="https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/telegram-gif.gif"
                             alt="telegram"

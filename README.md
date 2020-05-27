@@ -2,7 +2,7 @@
 ![Build](https://github.com/urban-bot/urban-bot/workflows/Node.js%20CI/badge.svg)
 # Urban Bot
 
-Universal chatbot library based on [React](https://github.com/facebook/react).
+The universal chatbot library based on [React](https://github.com/facebook/react).
 
 * **Declarative.** You don't need to know any messenger API, just write simple react components.
 * **Multiplatform.** Write once, launch any messenger.
