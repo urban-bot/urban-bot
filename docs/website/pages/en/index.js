@@ -13,6 +13,65 @@ const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
 const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
 
+const example =
+`
+\`\`\`jsx
+import React from 'react';
+import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from '@urban-bot/core';
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+
+function Echo() {
+    const [text, setText] = React.useState('Say something');
+
+    useText(({ text }) => {
+        setText(text);
+    });
+
+    return (
+        <Text>
+            <i>{text}</i>
+        </Text>
+    );
+}
+
+function Counter() {
+    const [count, setCount] = React.useState(0);
+
+    const increment = () => setCount(count + 1);
+    const decrement = () => setCount(count - 1);
+
+    return (
+        <ButtonGroup title={count} isNewMessageEveryRender={false}>
+            <Button onClick={increment}>+1</Button>
+            <Button onClick={decrement}>-1</Button>
+        </ButtonGroup>
+    );
+}
+
+function App() {
+    return (
+        <Router>
+            <Route path="/echo">
+                <Echo />
+            </Route>
+            <Route path="/counter">
+                <Counter />
+            </Route>
+        </Router>
+    );
+}
+
+const bot = new UrbanBotTelegram({
+    token: 'telegramToken',
+});
+
+render(
+    <Root bot={bot}>
+        <App />
+    </Root>
+);
+`
+
 class HomeSplash extends React.Component {
   render() {
     const {siteConfig, language = ''} = this.props;
@@ -60,12 +119,12 @@ class HomeSplash extends React.Component {
 
     return (
       <SplashContainer>
-        <Logo img_src={`${baseUrl}img/undraw_monitor.svg`} />
+        {/*<Logo img_src={`${baseUrl}img/undraw_monitor.svg`} />*/}
         <div className="inner">
           <ProjectTitle tagline={siteConfig.tagline} title={siteConfig.title} />
           <PromoSection>
-            <Button href="#try">Try It Out</Button>
-            <Button href={docUrl('components.html')}>Example Link</Button>
+            <Button href={docUrl('components.html')}>Try It Out</Button>
+            <Button href="https://github.com/urban-bot/urban-bot/tree/master/examples">Examples</Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -91,77 +150,6 @@ class Index extends React.Component {
       </Container>
     );
 
-    const FeatureCallout = () => (
-      <div
-        className="productShowcaseSection paddingBottom"
-        style={{textAlign: 'center'}}>
-        <h2>Feature Callout</h2>
-        <MarkdownBlock>These are features of this project</MarkdownBlock>
-      </div>
-    );
-
-    const TryOut = () => (
-      <Block id="try">
-        {[
-          {
-            content:
-              'To make your landing page more attractive, use illustrations! Check out ' +
-              '[**unDraw**](https://undraw.co/) which provides you with customizable illustrations which are free to use. ' +
-              'The illustrations you see on this page are from unDraw.',
-            image: `${baseUrl}img/undraw_code_review.svg`,
-            imageAlign: 'left',
-            title: 'Wonderful SVG Illustrations',
-          },
-        ]}
-      </Block>
-    );
-
-    const Description = () => (
-      <Block background="dark">
-        {[
-          {
-            content:
-              'This is another description of how this project is useful',
-            image: `${baseUrl}img/undraw_note_list.svg`,
-            imageAlign: 'right',
-            title: 'Description',
-          },
-        ]}
-      </Block>
-    );
-
-    const LearnHow = () => (
-      <Block background="light">
-        {[
-          {
-            content:
-              'Each new Docusaurus project has **randomly-generated** theme colors.',
-            image: `${baseUrl}img/undraw_youtube_tutorial.svg`,
-            imageAlign: 'right',
-            title: 'Randomly Generated Theme Colors',
-          },
-        ]}
-      </Block>
-    );
-
-    const Features = () => (
-      <Block layout="fourColumn">
-        {[
-          {
-            content: 'This is the content of my feature',
-            image: `${baseUrl}img/undraw_react.svg`,
-            imageAlign: 'top',
-            title: 'Feature One',
-          },
-          {
-            content: 'The content of my second feature',
-            image: `${baseUrl}img/undraw_operating_system.svg`,
-            imageAlign: 'top',
-            title: 'Feature Two',
-          },
-        ]}
-      </Block>
-    );
 
     const Showcase = () => {
       if ((siteConfig.users || []).length === 0) {
@@ -196,13 +184,20 @@ class Index extends React.Component {
       <div>
         <HomeSplash siteConfig={siteConfig} language={language} />
         <div className="mainContainer">
-          <Features />
-          <FeatureCallout />
-          <LearnHow />
-          <TryOut />
-          <Description />
           <Showcase />
+            <div style={{display: 'flex'}}>
+                <div style={{display: 'inline-block', width: '60%'}}>
+                    <MarkdownBlock>
+                        {example}
+                    </MarkdownBlock>
+                </div>
+                <div style={{display: 'inline-block', width: '40%'}}>
+                    <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/telegram-gif.gif" alt="telegram"/>
+                </div>
+
+            </div>
         </div>
+
       </div>
     );
   }

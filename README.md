@@ -70,7 +70,7 @@ function Echo() {
     });
 
     return (
-        <Text isNewMessageEveryRender>
+        <Text>
             <i>{text}</i>
         </Text>
     );
@@ -83,7 +83,7 @@ function Counter() {
     const decrement = () => setCount(count - 1);
 
     return (
-        <ButtonGroup title={count}>
+        <ButtonGroup title={count} isNewMessageEveryRender={false}>
             <Button onClick={increment}>+1</Button>
             <Button onClick={decrement}>-1</Button>
         </ButtonGroup>
@@ -107,8 +107,8 @@ render(
     <Root
         bot={
             new UrbanBotTelegram({
-                token: telegramToken,
-                polling: true,
+                token: 'telegramToken',
+                isPolling: true,
             })
         }
     >
@@ -120,8 +120,8 @@ render(
     <Root
         bot={
             new UrbanBotSlack({
-                signingSecret: slackSigningSecret,
-                token: slackToken,
+                signingSecret: 'slackSigningSecret',
+                token: 'slackToken',
             })
         }
     >
