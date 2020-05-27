@@ -13,8 +13,7 @@ const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
 const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
 
-const example =
-`
+const example = `
 \`\`\`jsx
 import React from 'react';
 import { render, Route, Router, Root, Text, ButtonGroup, Button, useText } from '@urban-bot/core';
@@ -70,137 +69,125 @@ render(
         <App />
     </Root>
 );
-`
+`;
 
 class HomeSplash extends React.Component {
-  render() {
-    const {siteConfig, language = ''} = this.props;
-    const {baseUrl, docsUrl} = siteConfig;
-    const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
-    const langPart = `${language ? `${language}/` : ''}`;
-    const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`;
+    render() {
+        const { siteConfig, language = '' } = this.props;
+        const { baseUrl, docsUrl } = siteConfig;
+        const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
+        const langPart = `${language ? `${language}/` : ''}`;
+        const docUrl = (doc) => `${baseUrl}${docsPart}${langPart}${doc}`;
 
-    const SplashContainer = props => (
-      <div className="homeContainer">
-        <div className="homeSplashFade">
-          <div className="wrapper homeWrapper">{props.children}</div>
-        </div>
-      </div>
-    );
+        const SplashContainer = (props) => (
+            <div className="homeContainer">
+                <div className="homeSplashFade">
+                    <div className="wrapper homeWrapper">{props.children}</div>
+                </div>
+            </div>
+        );
 
-    const Logo = props => (
-      <div className="projectLogo">
-        <img src={props.img_src} alt="Project Logo" />
-      </div>
-    );
+        const Logo = (props) => (
+            <div className="projectLogo">
+                <img src={props.img_src} alt="Project Logo" />
+            </div>
+        );
 
-    const ProjectTitle = props => (
-      <h2 className="projectTitle">
-        {props.title}
-        <small>{props.tagline}</small>
-      </h2>
-    );
+        const ProjectTitle = (props) => (
+            <h2 className="projectTitle">
+                {props.title}
+                <small>{props.tagline}</small>
+            </h2>
+        );
 
-    const PromoSection = props => (
-      <div className="section promoSection">
-        <div className="promoRow">
-          <div className="pluginRowBlock">{props.children}</div>
-        </div>
-      </div>
-    );
+        const PromoSection = (props) => (
+            <div className="section promoSection">
+                <div className="promoRow">
+                    <div className="pluginRowBlock">{props.children}</div>
+                </div>
+            </div>
+        );
 
-    const Button = props => (
-      <div className="pluginWrapper buttonWrapper">
-        <a className="button" href={props.href} target={props.target}>
-          {props.children}
-        </a>
-      </div>
-    );
+        const Button = (props) => (
+            <div className="pluginWrapper buttonWrapper">
+                <a className="button" href={props.href} target={props.target}>
+                    {props.children}
+                </a>
+            </div>
+        );
 
-    return (
-      <SplashContainer>
-        {/*<Logo img_src={`${baseUrl}img/undraw_monitor.svg`} />*/}
-        <div className="inner">
-          <ProjectTitle tagline={siteConfig.tagline} title={siteConfig.title} />
-          <PromoSection>
-            <Button href={docUrl('components.html')}>Documentation</Button>
-            <Button href="https://github.com/urban-bot/urban-bot/tree/master/examples">Examples</Button>
-          </PromoSection>
-        </div>
-      </SplashContainer>
-    );
-  }
+        return (
+            <SplashContainer>
+                {/*<Logo img_src={`${baseUrl}img/undraw_monitor.svg`} />*/}
+                <div className="inner">
+                    <ProjectTitle tagline={siteConfig.tagline} title={siteConfig.title} />
+                    <PromoSection>
+                        <Button href={docUrl('components.html')}>Documentation</Button>
+                        <Button href="https://github.com/urban-bot/urban-bot/tree/master/examples">Examples</Button>
+                    </PromoSection>
+                </div>
+            </SplashContainer>
+        );
+    }
 }
 
 class Index extends React.Component {
-  render() {
-    const {config: siteConfig, language = ''} = this.props;
-    const {baseUrl} = siteConfig;
+    render() {
+        const { config: siteConfig, language = '' } = this.props;
+        const { baseUrl } = siteConfig;
 
-    const Block = props => (
-      <Container
-        padding={['bottom', 'top']}
-        id={props.id}
-        background={props.background}>
-        <GridBlock
-          align="center"
-          contents={props.children}
-          layout={props.layout}
-        />
-      </Container>
-    );
+        const Block = (props) => (
+            <Container padding={['bottom', 'top']} id={props.id} background={props.background}>
+                <GridBlock align="center" contents={props.children} layout={props.layout} />
+            </Container>
+        );
 
+        const Showcase = () => {
+            if ((siteConfig.users || []).length === 0) {
+                return null;
+            }
 
-    const Showcase = () => {
-      if ((siteConfig.users || []).length === 0) {
-        return null;
-      }
+            const showcase = siteConfig.users
+                .filter((user) => user.pinned)
+                .map((user) => (
+                    <a href={user.infoLink} key={user.infoLink}>
+                        <img src={user.image} alt={user.caption} title={user.caption} />
+                    </a>
+                ));
 
-      const showcase = siteConfig.users
-        .filter(user => user.pinned)
-        .map(user => (
-          <a href={user.infoLink} key={user.infoLink}>
-            <img src={user.image} alt={user.caption} title={user.caption} />
-          </a>
-        ));
+            const pageUrl = (page) => baseUrl + (language ? `${language}/` : '') + page;
 
-      const pageUrl = page => baseUrl + (language ? `${language}/` : '') + page;
-
-      return (
-        <div className="productShowcaseSection paddingBottom">
-          <h2>Who is Using This?</h2>
-          <p>This project is used by all these people</p>
-          <div className="logos">{showcase}</div>
-          <div className="more-users">
-            <a className="button" href={pageUrl('users.html')}>
-              More {siteConfig.title} Users
-            </a>
-          </div>
-        </div>
-      );
-    };
-
-    return (
-      <div>
-        <HomeSplash siteConfig={siteConfig} language={language} />
-        <div className="mainContainer">
-          <Showcase />
-            <div style={{display: 'flex'}}>
-                <div style={{display: 'inline-block', width: '60%'}}>
-                    <MarkdownBlock>
-                        {example}
-                    </MarkdownBlock>
+            return (
+                <div className="productShowcaseSection paddingBottom">
+                    <h2>Who is Using This?</h2>
+                    <p>This project is used by all these people</p>
+                    <div className="logos">{showcase}</div>
+                    <div className="more-users">
+                        <a className="button" href={pageUrl('users.html')}>
+                            More {siteConfig.title} Users
+                        </a>
+                    </div>
                 </div>
-                <div style={{display: 'inline-block', width: '40%'}}>
-                    <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/telegram-gif.gif" alt="telegram"/>
-                </div>
+            );
+        };
 
+        return (
+            <div>
+                <HomeSplash siteConfig={siteConfig} language={language} />
+                <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'inline-block', width: '60%' }}>
+                        <MarkdownBlock>{example}</MarkdownBlock>
+                    </div>
+                    <div style={{ display: 'inline-block', width: '40%' }}>
+                        <img
+                            src="https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/telegram-gif.gif"
+                            alt="telegram"
+                        />
+                    </div>
+                </div>
             </div>
-        </div>
-
-      </div>
-    );
-  }
+        );
+    }
 }
 
 module.exports = Index;
