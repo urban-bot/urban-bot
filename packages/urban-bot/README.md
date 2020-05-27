@@ -42,7 +42,7 @@ import { UrbanBotTelegram } from '@urban-bot/telegram';
 
 const bot = new UrbanBotTelegram({
     token: 'telegramToken',
-    polling: true,
+    isPolling: true,
 });
 
 render(
