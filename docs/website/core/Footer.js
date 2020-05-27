@@ -51,7 +51,7 @@ class Footer extends React.Component {
               data-show-count="true"
               data-count-aria-label="# stargazers on GitHub"
               aria-label="Star this project on GitHub">
-              Star
+              Urban Bot
             </a>
             {this.props.config.twitterUsername && (
               <div className="social">
