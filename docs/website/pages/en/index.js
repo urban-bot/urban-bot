@@ -206,7 +206,7 @@ class Index extends React.Component {
                 </div>
                 <h3 className="example-title">Example</h3>
                 <div className="example">
-                    <div>
+                    <div className="code">
                         <MarkdownBlock>{example}</MarkdownBlock>
                     </div>
                     <div>

@@ -10,6 +10,12 @@
 .example {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    overflow-x: scroll;
+}
+
+.example .code {
+    max-width: 100%;
 }
 
 .platforms {
