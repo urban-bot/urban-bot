@@ -10,7 +10,31 @@
 .example {
     display: flex;
     justify-content: center;
-    align-content: center;
+}
+
+.platforms {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.title {
+    margin: 0 0 20px;
+}
+
+.platforms .logos .logo {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.platforms .logos .logo:last-of-type {
+    margin-right: 0;
+}
+
+.example-title {
+    text-align: center;
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {

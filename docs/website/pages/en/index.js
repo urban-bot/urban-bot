@@ -174,6 +174,21 @@ class Index extends React.Component {
         return (
             <div>
                 <HomeSplash siteConfig={siteConfig} language={language} />
+                <div className="platforms">
+                    <h3 className="title">Platforms we are supporting</h3>
+                    <div className="logos">
+                        <a href="https://telegram.org/" className="logo" target="_blank">
+                            <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/telegram-logo.svg" alt="telegram" />
+                        </a>
+                        <a href="https://slack.com/" className="logo" target="_blank">
+                            <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/slack-logo.svg" alt="slack" />
+                        </a>
+                        <a href="https://www.messenger.com/" className="logo" target="_blank">
+                            <img src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/facebook-logo.svg" alt="facebook" />
+                        </a>
+                    </div>
+                </div>
+                <h3 className="example-title">Example</h3>
                 <div className="example">
                     <div>
                         <MarkdownBlock>{example}</MarkdownBlock>
