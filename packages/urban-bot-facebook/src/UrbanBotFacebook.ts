@@ -71,9 +71,9 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         expressApp.use('/facebook/*', json({ verify: this.verifyRequestSignature }));
 
         expressApp.get('/facebook/webhook', (req, res) => {
-            const mode = req.query['hub.mode'];
-            const token = req.query['hub.verify_token'];
-            const challenge = req.query['hub.challenge'];
+            const mode = req.query?.['hub.mode'];
+            const token = req.query?.['hub.verify_token'];
+            const challenge = req.query?.['hub.challenge'];
 
             if (mode && token) {
                 if (mode === 'subscribe' && token === this.options.verifyToken) {
@@ -99,7 +99,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         }
     }
 
-    processUpdate(_event: UrbanSyntheticEvent<UrbanBot<FacebookBotMeta>>) {
+    processUpdate(_event: UrbanSyntheticEvent<FacebookBotMeta>) {
         throw new Error('this method must be overridden');
     }
 
@@ -328,7 +328,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
     }
 
     verifyRequestSignature = (req: any, _res: any, buf: any) => {
-        const signature = req.headers['x-hub-signature'];
+        const signature = req?.headers['x-hub-signature'];
 
         if (!signature) {
             console.error("Couldn't validate the signature.");
