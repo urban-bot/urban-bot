@@ -36,9 +36,7 @@ inviteLink?: string;
 The main urban bot context. It works under [`Root`](components.md#root).
 ```jsx
 function SomeComponent() {
-    useBotContext((context) => {
-        // do stuff with context
-    });
+    const context = useBotContext();
 
     // ...
 }
@@ -47,22 +45,26 @@ function SomeComponent() {
 #### [chat](#chat)
 ```jsx
 function DisplayChatId() {
-    const [chatId, setChatId] = React.useState();
+    const { chat } = useBotContext();
 
-    useBotContext(({ chat }) => {
-        setChatId(chat.id);
-    });
+    return <Text>{chat.id}</Text>;
+}
+```
+#### [bot](components.md#bot)
+> An instance of specific UrbanBot*.
+```jsx
+function SomeComponent() {
+    const { bot: telegramBot } = useBotContext();
 
-    return <Text>{chatId}</Text>;
+    telegramBot.bot.kickChatMember(/* ... */);
+    // ...
 }
 ```
 #### [isNewMessageEveryRender](components.md#isnewmessageeveryrender)
 > The value that is passed to the [`Root`](components.md#root).
 ```jsx
 function SomeComponent() {
-    useBotContext(({ isNewMessageEveryRender }) => {
-        // do stuff with isNewMessageEveryRender
-    });
+    const { isNewMessageEveryRender } = useBotContext();
 
     // ...
 }
@@ -71,10 +73,8 @@ function SomeComponent() {
 > The value that is passed to the [`Root`](components.md#root).
 ```jsx
 function SomeComponent() {
-    useBotContext(({ parseMode }) => {
-        // do stuff with parseMode
-    });
-
+    const { parseMode } = useBotContext();
+    
     // ...
 }
 ```
