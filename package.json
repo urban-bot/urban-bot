@@ -1,7 +1,7 @@
 {
   "name": "urban-bot",
   "version": "0.0.0",
-  "description": "Universal chatbot library based on React. Write once, launch Telegram, Slack, ... every messenger with chatbots",
+  "description": "The universal chatbot library based on React. Write once, launch Telegram, Slack, ... every messenger with chatbots",
   "scripts": {
     "start": "lerna run start --stream --parallel",
     "lint": "lerna run lint  --stream --parallel",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:urban-bot/urban-bot.git"
+    "url": "https://github.com/urban-bot/urban-bot.git"
   },
   "private": true,
   "workspaces": [

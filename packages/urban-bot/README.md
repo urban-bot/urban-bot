@@ -2,7 +2,7 @@
 ![Build](https://github.com/urban-bot/urban-bot/workflows/Node.js%20CI/badge.svg)
 # Urban Bot
 
-Universal chatbot library based on [React](https://github.com/facebook/react).
+The universal chatbot library based on [React](https://github.com/facebook/react).
 
 * **Declarative.** You don't need to know any messenger API, just write simple react components.
 * **Multiplatform.** Write once, launch any messenger.
@@ -42,7 +42,7 @@ import { UrbanBotTelegram } from '@urban-bot/telegram';
 
 const bot = new UrbanBotTelegram({
     token: 'telegramToken',
-    polling: true,
+    isPolling: true,
 });
 
 render(
@@ -69,7 +69,7 @@ function Echo() {
     });
 
     return (
-        <Text isNewMessageEveryRender>
+        <Text>
             <i>{text}</i>
         </Text>
     );
@@ -82,7 +82,7 @@ function Counter() {
     const decrement = () => setCount(count - 1);
 
     return (
-        <ButtonGroup title={count}>
+        <ButtonGroup title={count} isNewMessageEveryRender={false}>
             <Button onClick={increment}>+1</Button>
             <Button onClick={decrement}>-1</Button>
         </ButtonGroup>
@@ -106,8 +106,8 @@ render(
     <Root
         bot={
             new UrbanBotTelegram({
-                token: telegramToken,
-                polling: true,
+                token: 'telegramToken',
+                isPolling: true,
             })
         }
     >
@@ -119,8 +119,8 @@ render(
     <Root
         bot={
             new UrbanBotSlack({
-                signingSecret: slackSigningSecret,
-                token: slackToken,
+                signingSecret: 'slackSigningSecret',
+                token: 'slackToken',
             })
         }
     >

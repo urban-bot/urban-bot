@@ -1,7 +1,7 @@
 {
     "name": "@urban-bot/core",
     "version": "0.0.6",
-    "description": "Universal chatbot library based on React",
+    "description": "The universal chatbot library based on React",
     "files": [
         "dist/**/*"
     ],
@@ -66,7 +66,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git@github.com:urban-bot/urban-bot.git",
+        "url": "https://github.com/urban-bot/urban-bot.git",
         "directory": "packages/urban-bot"
     },
     "engines": {
