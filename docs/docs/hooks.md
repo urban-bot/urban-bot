@@ -16,6 +16,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
 ## Navigation
  * [Common](#common)
  * [useBotContext](#usebotcontext)
+ * [useRouter](#userouter)
  
 ## Common
 #### chat
@@ -41,7 +42,6 @@ function SomeComponent() {
     // ...
 }
 ```
-### Context
 #### [chat](#chat)
 ```jsx
 function DisplayChatId() {
@@ -78,3 +78,34 @@ function SomeComponent() {
     // ...
 }
 ```
+## useRouter
+The router context. It works under [`Router`](components.md#router).
+```jsx
+function SomeComponent() {
+    const routerContext = useRouter();
+
+    // ...
+}
+```
+#### navigate
+> Go to some route.
+```jsx
+function ProfileButtons() {
+    const { navigate } = useRouter();
+
+    return (
+        <ButtonGroup>
+            <Button onClick={() => navigate('catalog')}>Go to Catalog</Button>
+        </ButtonGroup>
+    );
+}
+```
+#### activePath
+> Current route path.
+```jsx
+ function WhereAmI() {
+     const { activePath } = useRouter();
+ 
+     return <Text>You are here {activePath}</Text>;
+ }
+ ```
