@@ -105,6 +105,26 @@ function SomeComponent() {
     // ...
 }
 ```
+If you develop some messengers you can divide behavior by comparing type.
+```jsx
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+import { UrbanBotSlack } from '@urban-bot/slack';
+
+function SomeComponent() {
+    const { bot } = useBotContext();
+     
+    if (bot.type === UrbanBotTelegram.type) {
+        bot.bot.kickChatMember(/* ... */);
+    }
+    
+    if (bot.type === UrbanBotSlack.type) {
+        bot.client.conversations.kick(/* ... */);
+    }
+
+
+    // ...
+}
+```
 #### [isNewMessageEveryRender](components.md#isnewmessageeveryrender)
 > The value that is passed to the [`Root`](components.md#root).
 ```jsx
