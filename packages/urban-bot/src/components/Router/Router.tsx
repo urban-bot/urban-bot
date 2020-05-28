@@ -41,7 +41,7 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
         if (childrenArray.some(matchChild('/'))) {
             navigate('/');
         }
-    }, []);
+    }, []); // TODO: childrenArray ?
 
     useCommand(({ command }) => {
         if (childrenArray.some(matchChild(command))) {

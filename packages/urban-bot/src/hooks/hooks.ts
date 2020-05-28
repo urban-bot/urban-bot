@@ -1,19 +1,17 @@
 import React from 'react';
 import { BotContextType, getBotContext, RouterContext } from '../context';
 import {
-    UrbanBot,
     UrbanListener,
     UrbanSyntheticEvent,
     UrbanListenerByType,
     UrbanSyntheticEventType,
     UrbanListenerByNativeEventWithSpreadPayload,
     UrbanEventListener,
+    UrbanBotMeta,
 } from '../types';
 
-export type BotMetaByBot<Bot extends UrbanBot> = Bot extends UrbanBot<infer BotMeta> ? BotMeta : never;
-
-export function useBotContext<Bot extends UrbanBot>(): BotContextType<Bot> {
-    const BotContext = getBotContext<Bot>();
+export function useBotContext<Metadata extends UrbanBotMeta>(): BotContextType<Metadata> {
+    const BotContext = getBotContext<Metadata>();
     const botContext = React.useContext(BotContext);
 
     if (botContext === undefined) {
@@ -33,11 +31,11 @@ export function useRouter() {
     return routerContext;
 }
 
-function useSubscribe<Bot extends UrbanBot, Event extends UrbanSyntheticEvent<Bot> = UrbanSyntheticEvent<Bot>>(
-    listener: UrbanListener<Event>,
-    event: Event['type'],
-) {
-    const { chat, $$managerBot } = useBotContext<Bot>();
+function useSubscribe<
+    Metadata extends UrbanBotMeta,
+    Event extends UrbanSyntheticEvent<Metadata> = UrbanSyntheticEvent<Metadata>
+>(listener: UrbanListener<Event>, event: Event['type']) {
+    const { chat, $$managerBot } = useBotContext<Metadata>();
 
     React.useEffect(() => {
         $$managerBot.on(event, listener, chat.id);
@@ -49,11 +47,11 @@ function useSubscribe<Bot extends UrbanBot, Event extends UrbanSyntheticEvent<Bo
 }
 
 export function useSubscribeWithSpreadPayload<
-    Bot extends UrbanBot,
-    EventType extends UrbanSyntheticEventType<Bot>,
-    Event extends Parameters<UrbanListenerByType<Bot, EventType>>[0]
->(listener: UrbanListenerByNativeEventWithSpreadPayload<Bot, Event>, eventType: EventType) {
-    useSubscribe<UrbanBot, Event>((event) => {
+    Metadata extends UrbanBotMeta,
+    EventType extends UrbanSyntheticEventType<Metadata>,
+    Event extends Parameters<UrbanListenerByType<Metadata, EventType>>[0]
+>(listener: UrbanListenerByNativeEventWithSpreadPayload<Metadata, Event>, eventType: EventType) {
+    useSubscribe<Metadata, Event>((event) => {
         const { payload, ...other } = event;
         listener({
             ...other,
@@ -62,66 +60,66 @@ export function useSubscribeWithSpreadPayload<
     }, eventType);
 }
 
-export function useAny<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'any'>) {
+export function useAny<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'any'>) {
     useSubscribeWithSpreadPayload(listener, 'any');
 }
 
-export function useText<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'text'>) {
+export function useText<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'text'>) {
     useSubscribeWithSpreadPayload(listener, 'text');
 }
 
-export function useCommand<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'command'>) {
+export function useCommand<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'command'>) {
     useSubscribeWithSpreadPayload(listener, 'command');
 }
 
-export function useSticker<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'sticker'>) {
+export function useSticker<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'sticker'>) {
     useSubscribeWithSpreadPayload(listener, 'sticker');
 }
 
-export function useAnimation<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'animation'>) {
+export function useAnimation<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'animation'>) {
     useSubscribeWithSpreadPayload(listener, 'animation');
 }
 
-export function useAudio<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'audio'>) {
+export function useAudio<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'audio'>) {
     useSubscribeWithSpreadPayload(listener, 'audio');
 }
 
-export function useContact<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'contact'>) {
+export function useContact<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'contact'>) {
     useSubscribeWithSpreadPayload(listener, 'contact');
 }
 
-export function useFile<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'file'>) {
+export function useFile<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'file'>) {
     useSubscribeWithSpreadPayload(listener, 'file');
 }
 
-export function useInvoice<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'invoice'>) {
+export function useInvoice<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'invoice'>) {
     useSubscribeWithSpreadPayload(listener, 'invoice');
 }
 
-export function useLocation<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'location'>) {
+export function useLocation<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'location'>) {
     useSubscribeWithSpreadPayload(listener, 'location');
 }
 
-export function useImage<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'image'>) {
+export function useImage<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'image'>) {
     useSubscribeWithSpreadPayload(listener, 'image');
 }
 
-export function usePoll<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'poll'>) {
+export function usePoll<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'poll'>) {
     useSubscribeWithSpreadPayload(listener, 'poll');
 }
 
-export function useVideo<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'video'>) {
+export function useVideo<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'video'>) {
     useSubscribeWithSpreadPayload(listener, 'video');
 }
 
-export function useVoice<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'voice'>) {
+export function useVoice<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'voice'>) {
     useSubscribeWithSpreadPayload(listener, 'voice');
 }
 
-export function useDice<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'dice'>) {
+export function useDice<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'dice'>) {
     useSubscribeWithSpreadPayload(listener, 'dice');
 }
 
-export function useAction<Bot extends UrbanBot>(listener: UrbanEventListener<Bot, 'action'>) {
+export function useAction<Metadata extends UrbanBotMeta>(listener: UrbanEventListener<Metadata, 'action'>) {
     useSubscribeWithSpreadPayload(listener, 'action');
 }
