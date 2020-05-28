@@ -3,7 +3,7 @@ id: hooks
 title: Hooks 
 sidebar_label: Hooks
 ---
-**React hooks from the Urban Bot. Use it to subscrube to user actions or get an application data.**
+**Available react hooks. Use it to subscrube to user actions or get an application data.**
 
 All variables you can import from `@urban-bot/core`.  
 ```javascript
@@ -17,11 +17,12 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [Common](#common)
  * [useBotContext](#usebotcontext)
  * [useRouter](#userouter)
+ * [useAnyEvent](#useanyevent)
  
 ## Common
 #### chat
 > Information about the chat.
-```
+```typescript
 id: string;
 type?: string;
 title?: string;
@@ -31,8 +32,51 @@ lastName?: string;
 description?: string;
 inviteLink?: string;
 ```
+#### from
+> Information about who send message.
+```typescript
+id?: string;
+isBot?: boolean;
+username?: string;
+firstName?: string;
+lastName?: string;
+```
 
- 
+#### nativeEvent
+> Native event data from the specific messenger.
+```jsx
+function SomeComponent() {
+    useText(({ nativeEvent }) => {
+        console.log('this message from messenger', nativeEvent.type);
+        // do stuff with nativeEvent.payload
+    });
+
+    // ...
+}
+```
+```typescript
+type: string; // 'TELEGRAM' || 'FACEBOOK' || ...
+payload?: any;
+```
+If you develop some messengers you can divide behavior by comparing type.
+```jsx
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+import { UrbanBotFacebook } from '@urban-bot/facebook';
+
+function SomeComponent() {
+    useText(({ nativeEvent }) => {
+        if (nativeEvent.type === UrbanBotTelegram.type) {
+            console.log('this message from telegram');
+        }
+        
+        if (nativeEvent.type === UrbanBotFacebook.type) {
+            console.log('this message from facebook');
+        }
+    });
+
+    // ...
+}
+```
 ## useBotContext
 The main urban bot context. It works under [`Root`](components.md#root).
 ```jsx
@@ -57,6 +101,7 @@ function SomeComponent() {
     const { bot: telegramBot } = useBotContext();
 
     telegramBot.bot.kickChatMember(/* ... */);
+
     // ...
 }
 ```
@@ -88,7 +133,7 @@ function SomeComponent() {
 }
 ```
 #### navigate
-> Go to some route.
+> Go to the particular route.
 ```jsx
 function ProfileButtons() {
     const { navigate } = useRouter();
@@ -171,3 +216,5 @@ function SomeComponent() {
     // ...
 }
 ```
+#### [nativeEvent](#nativeevent)
+
