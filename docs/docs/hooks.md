@@ -44,7 +44,19 @@ function SomeComponent() {
 }
 ```
 ### Context
-#### [`isNewMessageEveryRender`](components.md#isnewmessageeveryrender)
+#### [chat](#chat)
+```jsx
+function DisplayChatId() {
+    const [chatId, setChatId] = React.useState();
+
+    useBotContext(({ chat }) => {
+        setChatId(chat.id);
+    });
+
+    return <Text>{chatId}</Text>;
+}
+```
+#### [isNewMessageEveryRender](components.md#isnewmessageeveryrender)
 > The value that is passed to the [`Root`](components.md#root).
 ```jsx
 function SomeComponent() {
@@ -55,11 +67,12 @@ function SomeComponent() {
     // ...
 }
 ```
-#### [chat](#chat)
+#### [parseMode](components.md#parsemode)
+> The value that is passed to the [`Root`](components.md#root).
 ```jsx
 function SomeComponent() {
-    useBotContext(({ chat }) => {
-        // do stuff with chat
+    useBotContext(({ parseMode }) => {
+        // do stuff with parseMode
     });
 
     // ...
