@@ -65,7 +65,7 @@ export function useSubscribeWithSpreadPayload<
     }, eventType);
 }
 
-export function useAny<NativeEvent extends UrbanNativeEvent>(
+export function useAnyEvent<NativeEvent extends UrbanNativeEvent>(
     listener: UrbanListener<UrbanSyntheticEvent<NativeEvent>>,
 ) {
     useSubscribe(listener, 'any');

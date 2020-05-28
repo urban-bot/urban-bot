@@ -9,7 +9,7 @@ import {
     useFile,
     useContact,
     useAudio,
-    useAny,
+    useAnyEvent,
     useSticker,
     useVoice,
     useAnimation,
@@ -20,7 +20,7 @@ import {
 export function Hooks() {
     const [answer, setAnswer] = React.useState('Please send anything');
 
-    useAny(() => {
+    useAnyEvent(() => {
         console.log('calling after any type sending');
     });
 

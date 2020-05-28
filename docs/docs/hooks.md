@@ -109,3 +109,65 @@ function ProfileButtons() {
      return <Text>You are here {activePath}</Text>;
  }
  ```
+## useAnyEvent
+Call after any user action.
+```jsx
+function SomeComponent() {
+    useAnyEvent((event) => {
+        console.log('user made something');
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+```jsx
+function SomeComponent() {
+    useAnyEvent(({ chat }) => {
+        console.log('message from chat id', chat.id);
+    });
+
+    // ...
+}
+```
+#### type
+> Event type.
+```jsx
+function SomeComponent() {
+    useAnyEvent(({ type }) => {
+        console.log('event type', type);
+    });
+
+    // ...
+}
+```
+
+`'command'` | `'pool'` | `'sticker'` | `'animation'` | `'audio'` | `'contact'` | `'file'` | `'invoice'` | `'location'` | `'image'` | `'poll'` | `'dice'` | `'voice'` | `'action'` | `'video'`
+
+#### payload
+> Payload depending on the event type.
+```jsx
+function SomeComponent() {
+    useAnyEvent(({ type, payload }) => {
+        if (type === 'text') {
+            console.log(payload.text);
+        }
+
+        if (type === 'location') {
+            console.log(payload.latitude);
+        }
+    });
+
+    // ...
+}
+```
+#### [from](#from)
+```jsx
+function SomeComponent() {
+    useAnyEvent(({ from }) => {
+        console.log('message from user id', from.id);
+    });
+
+    // ...
+}
+```
