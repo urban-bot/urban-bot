@@ -10,7 +10,7 @@ const repoUrl = 'https://github.com/urban-bot/urban-bot';
 const siteConfig = {
     title: 'Urban Bot', // Title for your website.
     tagline: 'The universal chatbot library based on React.',
-    url: 'https://urban-bot.now.sh/', // Your website URL
+    url: 'https://urban-bot.now.sh', // Your website URL
     baseUrl: '/', // Base URL for your project */
     // For github.io type URLs, you would set the url and baseUrl like:
     //   url: 'https://facebook.github.io',
