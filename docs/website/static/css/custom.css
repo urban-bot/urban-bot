@@ -1,0 +1,63 @@
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* your custom css */
+
+.example {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-x: scroll;
+}
+
+.example .code {
+    max-width: 100%;
+}
+
+.platforms {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.platforms .title {
+    margin: 0 0 20px;
+}
+
+.platforms .title:last-of-type {
+    margin: 20px 0 20px;
+}
+
+.platforms .logos .logo {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.platforms .logos .logo:last-of-type {
+    margin-right: 0;
+}
+
+.example-title {
+    text-align: center;
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+}
+
+@media only screen and (min-width: 1024px) {
+}
+
+@media only screen and (max-width: 1023px) {
+}
+
+@media only screen and (min-width: 1400px) {
+}
+
+@media only screen and (min-width: 1500px) {
+}

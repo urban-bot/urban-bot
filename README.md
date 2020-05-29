@@ -2,7 +2,7 @@
 ![Build](https://github.com/urban-bot/urban-bot/workflows/Node.js%20CI/badge.svg)
 # Urban Bot
 
-Universal chatbot library based on [React](https://github.com/facebook/react).
+The universal chatbot library based on [React](https://github.com/facebook/react).
 
 * **Declarative.** You don't need to know any messenger API, just write simple react components.
 * **Multiplatform.** Write once, launch any messenger.
@@ -24,7 +24,7 @@ Universal chatbot library based on [React](https://github.com/facebook/react).
  [![](files/vk-logo.svg)](https://www.vk.com/)
  [![](files/viber-logo.svg)](https://www.viber.com/)
 
-## [Documentation](https://github.com/urban-bot/urban-bot/blob/master/docs/DOCS.md)
+## [Documentation](https://urban-bot.now.sh/docs/components.html)
 
 ## Installation
 Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter).
@@ -35,6 +35,25 @@ $ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
 
 ## Example
+### Hello, World!
+```javascript
+import React from 'react';
+import { render, Root, Text } from '@urban-bot/core';
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+
+const bot = new UrbanBotTelegram({
+    token: 'telegramToken',
+    isPolling: true,
+});
+
+render(
+    <Root bot={bot}>
+        <Text>Hello, world!</Text>
+    </Root>
+);
+```
+
+### With Router
 ![](files/telegram-gif.gif)
 ![](files/slack-gif.gif)
 ```javascript
@@ -51,7 +70,7 @@ function Echo() {
     });
 
     return (
-        <Text isNewMessageEveryRender>
+        <Text>
             <i>{text}</i>
         </Text>
     );
@@ -64,7 +83,7 @@ function Counter() {
     const decrement = () => setCount(count - 1);
 
     return (
-        <ButtonGroup title={count}>
+        <ButtonGroup title={count} isNewMessageEveryRender={false}>
             <Button onClick={increment}>+1</Button>
             <Button onClick={decrement}>-1</Button>
         </ButtonGroup>
@@ -87,8 +106,9 @@ function App() {
 render(
     <Root
         bot={
-            new UrbanBotTelegram(telegramToken, {
-                polling: true,
+            new UrbanBotTelegram({
+                token: 'telegramToken',
+                isPolling: true,
             })
         }
     >
@@ -100,8 +120,8 @@ render(
     <Root
         bot={
             new UrbanBotSlack({
-                signingSecret: slackSigningSecret,
-                token: slackToken,
+                signingSecret: 'slackSigningSecret',
+                token: 'slackToken',
             })
         }
     >
