@@ -18,6 +18,9 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useBotContext](#usebotcontext)
  * [useRouter](#userouter)
  * [useAnyEvent](#useanyevent)
+ * [useText](#usetext)
+ * [useCommand](#usecommand)
+ * [useImage](#useimage)
  
 ## Common
 #### chat
@@ -100,6 +103,19 @@ function SomeComponent() {
 
     // ...
 }
+```
+#### file
+> The file type of media content which is a user can send. Used with useImage, useVideo,... hooks.
+```typescript
+id?: string;
+url?: string;
+name?: string;
+size?: number;
+width?: number;
+height?: number;
+mimeType?: string;
+type?: string;
+duration?: number;
 ```
 ## useBotContext
 The main urban bot context. It works under [`Root`](components.md#root).
@@ -327,6 +343,36 @@ function SomeComponent() {
         if (command === '/sayMyName') {
             console.log(argument);
         }
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useImage
+Call after a user sends an image or images.
+```jsx
+function SomeComponent() {
+    useImage((event) => {
+        console.log('user sent an image');
+    });
+
+    // ...
+}
+```
+#### files
+> Images which a user sent.
+###### required
+[`file`](#file)[]
+```jsx
+function SomeComponent() {
+    useImage(({ files }) => {
+        const id = files[0].id
+    
+        console.log('user sent a image with id', id);
     });
 
     // ...
