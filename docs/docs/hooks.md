@@ -31,6 +31,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useContact](#usecontact)
  * [usePoll](#usepoll)
  * [useInvoice](#useinvoice)
+ * [useDice](#usedice)
  
 ## Common
 #### chat
@@ -782,6 +783,33 @@ function Billing() {
 ###### optional
 `string`
 
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useDice
+Call after a user sends a random value.
+```jsx
+function SomeComponent() {
+    useDice((event) => {
+        // do stuff with random value
+    });
+
+    // ...
+}
+```
+#### value
+###### required
+`number`
+```jsx
+function SomeComponent() {
+    useDice(({ value }) => {
+        console.log(`user sent a random value ${value}`);
+    });
+
+    // ...
+}
+```
 #### [chat](#chat)
 #### [from](#from)
 #### [nativeEvent](#nativeevent)
