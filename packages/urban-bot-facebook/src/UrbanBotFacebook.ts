@@ -17,7 +17,7 @@ export type UrbanNativeEventFacebook = {
     payload?: FacebookPayload;
 };
 
-export type FacebookBotMeta = {
+export type FacebookBotType = {
     NativeEvent: UrbanNativeEventFacebook;
     MessageMeta: FacebookMessageMeta;
 };
@@ -41,7 +41,7 @@ const defaultOptions: Partial<FacebookOptions> = {
     apiUrlVersion: 'v3.2',
 };
 
-export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
+export class UrbanBotFacebook implements UrbanBot<FacebookBotType> {
     static TYPE: FACEBOOK = 'FACEBOOK';
     type: FACEBOOK = UrbanBotFacebook.TYPE;
     defaultParseMode: UrbanParseMode = 'markdown';
@@ -99,7 +99,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         }
     }
 
-    processUpdate(_event: UrbanSyntheticEvent<FacebookBotMeta>) {
+    processUpdate(_event: UrbanSyntheticEvent<FacebookBotType>) {
         throw new Error('this method must be overridden');
     }
 

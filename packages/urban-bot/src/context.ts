@@ -1,20 +1,20 @@
 import React from 'react';
 import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanBotMeta, UrbanChat, UrbanParseMode } from './types';
+import { UrbanBotType, UrbanChat, UrbanParseMode } from './types';
 import { UrbanBot } from './types/UrbanBot';
 
-export type BotContextType<Metadata extends UrbanBotMeta> = {
-    $$managerBot: ManagerBot<Metadata>;
+export type BotContextType<BotType extends UrbanBotType> = {
+    $$managerBot: ManagerBot<BotType>;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
     parseMode?: UrbanParseMode;
-    bot: UrbanBot<Metadata>;
+    bot: UrbanBot<BotType>;
 };
 
 export const BotContext = React.createContext(undefined);
 
-export function getBotContext<Metadata extends UrbanBotMeta>() {
-    return (BotContext as unknown) as React.Context<BotContextType<Metadata>>;
+export function getBotContext<BotType extends UrbanBotType>() {
+    return (BotContext as unknown) as React.Context<BotContextType<BotType>>;
 }
 
 export type RouterContext = {
