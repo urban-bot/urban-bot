@@ -22,7 +22,7 @@ export interface UrbanSyntheticEventCommand<BotType extends UrbanBotType> extend
     type: 'command';
     payload: {
         command: string;
-        text?: string;
+        argument?: string;
     };
 }
 
@@ -34,7 +34,6 @@ export interface UrbanSyntheticEventSticker<BotType extends UrbanBotType> extend
         width?: number;
         height?: number;
         name?: string;
-        size?: number;
     };
 }
 
@@ -55,8 +54,9 @@ export interface UrbanSyntheticEventText<BotType extends UrbanBotType> extends U
 export interface UrbanSyntheticEventAnimation<BotType extends UrbanBotType> extends UrbanSyntheticEventCommon<BotType> {
     type: 'animation';
     payload: {
+        id?: string;
         duration: number;
-        fileName?: string;
+        name?: string;
         mimeType?: string;
     };
 }
@@ -71,10 +71,10 @@ export interface UrbanSyntheticEventAudio<BotType extends UrbanBotType> extends 
 export interface UrbanSyntheticEventContact<BotType extends UrbanBotType> extends UrbanSyntheticEventCommon<BotType> {
     type: 'contact';
     payload: {
-        phoneNumber: string;
-        firstName: string;
+        phoneNumber?: string;
+        firstName?: string;
         lastName?: string;
-        userId?: number;
+        userId?: string | number;
     };
 }
 
@@ -89,11 +89,11 @@ export interface UrbanSyntheticEventFile<BotType extends UrbanBotType> extends U
 export interface UrbanSyntheticEventInvoice<BotType extends UrbanBotType> extends UrbanSyntheticEventCommon<BotType> {
     type: 'invoice';
     payload: {
-        title: string;
-        description: string;
-        startParameter: string;
-        currency: string;
         totalAmount: number;
+        title?: string;
+        description?: string;
+        startParameter?: string;
+        currency?: string;
     };
 }
 
@@ -116,9 +116,9 @@ export interface UrbanSyntheticEventImage<BotType extends UrbanBotType> extends 
 export interface UrbanSyntheticEventPoll<BotType extends UrbanBotType> extends UrbanSyntheticEventCommon<BotType> {
     type: 'poll';
     payload: {
-        id: string;
+        id?: string | number;
         question: string;
-        options: Array<{ id?: string; text: string; count?: number }>;
+        options: Array<{ id?: string | number; text: string; count?: number }>;
     };
 }
 
@@ -133,7 +133,8 @@ export interface UrbanSyntheticEventVideo<BotType extends UrbanBotType> extends 
 export interface UrbanSyntheticEventVoice<BotType extends UrbanBotType> extends UrbanSyntheticEventCommon<BotType> {
     type: 'voice';
     payload: {
-        duration: number;
+        id?: string;
+        duration?: number;
         mimeType?: string;
     };
 }
@@ -169,8 +170,6 @@ export type UrbanSyntheticEventByType<
     ? UrbanSyntheticEventText<BotType>
     : T extends 'command'
     ? UrbanSyntheticEventCommand<BotType>
-    : T extends 'pool'
-    ? UrbanSyntheticEventPoll<BotType>
     : T extends 'sticker'
     ? UrbanSyntheticEventSticker<BotType>
     : T extends 'animation'

@@ -9,7 +9,7 @@ import {
     useFile,
     useContact,
     useAudio,
-    useAny,
+    useAnyEvent,
     useSticker,
     useVoice,
     useAnimation,
@@ -20,7 +20,7 @@ import {
 export function Hooks() {
     const [answer, setAnswer] = React.useState('Please send anything');
 
-    useAny(() => {
+    useAnyEvent(() => {
         console.log('calling after any type sending');
     });
 
@@ -28,8 +28,10 @@ export function Hooks() {
         setAnswer("You've sent a text " + text);
     });
 
-    useCommand(({ command }) => {
-        setAnswer("You've sent a command " + command);
+    useCommand(({ command, argument }) => {
+        const argumentText = argument ? '. Argument is ' + argument : '';
+
+        setAnswer("You've sent a command " + command + argumentText);
     });
 
     useImage(({ files }) => {
