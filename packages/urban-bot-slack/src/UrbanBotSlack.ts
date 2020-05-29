@@ -195,7 +195,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotMeta> {
             },
             payload: {
                 command,
-                text,
+                argument: text,
             },
             from: {
                 id: user_id,

@@ -24,7 +24,7 @@ export interface UrbanSyntheticEventCommand<NativeEvent extends UrbanNativeEvent
     type: 'command';
     payload: {
         command: string;
-        text?: string;
+        argument?: string;
     };
 }
 

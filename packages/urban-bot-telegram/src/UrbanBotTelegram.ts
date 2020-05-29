@@ -142,11 +142,13 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                 }
 
                 if (ctx.text[0] === '/') {
+                    const [command, ...args] = ctx.text.split(' ');
                     const adaptedContext: UrbanSyntheticEventCommand<UrbanNativeEventTelegram<TelegramBot.Message>> = {
                         ...common,
                         type: 'command',
                         payload: {
-                            command: ctx.text,
+                            command,
+                            argument: args.join(' '),
                         },
                     };
 

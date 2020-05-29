@@ -28,8 +28,10 @@ export function Hooks() {
         setAnswer("You've sent a text " + text);
     });
 
-    useCommand(({ command }) => {
-        setAnswer("You've sent a command " + command);
+    useCommand(({ command, argument }) => {
+        const argumentText = argument ? '. Argument is ' + argument : '';
+
+        setAnswer("You've sent a command " + command + argumentText);
     });
 
     useImage(({ files }) => {
