@@ -799,6 +799,7 @@ function SomeComponent() {
 }
 ```
 #### value
+> A random value.
 ###### required
 `number`
 ```jsx
