@@ -12,13 +12,13 @@ const { urlencoded, json } = bodyParser;
 
 export type FACEBOOK = 'FACEBOOK';
 
-export type UrbanNativeEventFacebook = {
+export type UrbanNativeEventFacebook<Payload = FacebookPayload> = {
     type: FACEBOOK;
-    payload?: FacebookPayload;
+    payload?: Payload;
 };
 
-export type FacebookBotMeta = {
-    NativeEvent: UrbanNativeEventFacebook;
+export type UrbanBotFacebookType<Payload = FacebookPayload> = {
+    NativeEvent: UrbanNativeEventFacebook<Payload>;
     MessageMeta: FacebookMessageMeta;
 };
 
@@ -41,7 +41,7 @@ const defaultOptions: Partial<FacebookOptions> = {
     apiUrlVersion: 'v3.2',
 };
 
-export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
+export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
     static TYPE: FACEBOOK = 'FACEBOOK';
     type: FACEBOOK = UrbanBotFacebook.TYPE;
     defaultParseMode: UrbanParseMode = 'markdown';
@@ -71,9 +71,9 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         expressApp.use('/facebook/*', json({ verify: this.verifyRequestSignature }));
 
         expressApp.get('/facebook/webhook', (req, res) => {
-            const mode = req.query['hub.mode'];
-            const token = req.query['hub.verify_token'];
-            const challenge = req.query['hub.challenge'];
+            const mode = req.query?.['hub.mode'];
+            const token = req.query?.['hub.verify_token'];
+            const challenge = req.query?.['hub.challenge'];
 
             if (mode && token) {
                 if (mode === 'subscribe' && token === this.options.verifyToken) {
@@ -99,7 +99,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
         }
     }
 
-    processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventFacebook>) {
+    processUpdate(_event: UrbanSyntheticEvent<UrbanBotFacebookType>) {
         throw new Error('this method must be overridden');
     }
 
@@ -329,7 +329,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotMeta> {
     }
 
     verifyRequestSignature = (req: any, _res: any, buf: any) => {
-        const signature = req.headers['x-hub-signature'];
+        const signature = req?.headers['x-hub-signature'];
 
         if (!signature) {
             console.error("Couldn't validate the signature.");

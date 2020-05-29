@@ -1,20 +1,17 @@
 import React from 'react';
 import { BotContextType, getBotContext, RouterContext } from '../context';
 import {
-    UrbanBot,
     UrbanListener,
     UrbanSyntheticEvent,
     UrbanListenerByType,
-    UrbanNativeEvent,
     UrbanSyntheticEventType,
     UrbanListenerByNativeEventWithSpreadPayload,
-    UrbanListenerByTypeWithSpreadPayload,
+    UrbanEventListener,
+    UrbanBotType,
 } from '../types';
 
-export type BotMetaByBot<Bot extends UrbanBot> = Bot extends UrbanBot<infer BotMeta> ? BotMeta : never;
-
-export function useBotContext<Bot extends UrbanBot>(): BotContextType<Bot> {
-    const BotContext = getBotContext<Bot>();
+export function useBotContext<BotType extends UrbanBotType>(): BotContextType<BotType> {
+    const BotContext = getBotContext<BotType>();
     const botContext = React.useContext(BotContext);
 
     if (botContext === undefined) {
@@ -35,12 +32,10 @@ export function useRouter() {
 }
 
 function useSubscribe<
-    Bot extends UrbanBot,
-    Event extends UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']> = UrbanSyntheticEvent<
-        BotMetaByBot<Bot>['NativeEvent']
-    >
->(listener: UrbanListener<Event>, event: Event['type'] | 'any') {
-    const { chat, $$managerBot } = useBotContext<Bot>();
+    BotType extends UrbanBotType,
+    Event extends UrbanSyntheticEvent<BotType> = UrbanSyntheticEvent<BotType>
+>(listener: UrbanListener<Event>, event: Event['type']) {
+    const { chat, $$managerBot } = useBotContext<BotType>();
 
     React.useEffect(() => {
         $$managerBot.on(event, listener, chat.id);
@@ -52,11 +47,11 @@ function useSubscribe<
 }
 
 export function useSubscribeWithSpreadPayload<
-    NativeEvent extends UrbanNativeEvent,
-    EventType extends UrbanSyntheticEventType<NativeEvent>,
-    Event extends Parameters<UrbanListenerByType<NativeEvent, EventType>>[0]
->(listener: UrbanListenerByNativeEventWithSpreadPayload<NativeEvent, Event>, eventType: EventType) {
-    useSubscribe<UrbanBot, Event>((event) => {
+    BotType extends UrbanBotType,
+    EventType extends UrbanSyntheticEventType<BotType>,
+    Event extends Parameters<UrbanListenerByType<BotType, EventType>>[0]
+>(listener: UrbanListenerByNativeEventWithSpreadPayload<BotType, Event>, eventType: EventType) {
+    useSubscribe<BotType, Event>((event) => {
         const { payload, ...other } = event;
         listener({
             ...other,
@@ -65,98 +60,66 @@ export function useSubscribeWithSpreadPayload<
     }, eventType);
 }
 
-export function useAnyEvent<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListener<UrbanSyntheticEvent<NativeEvent>>,
-) {
-    useSubscribe(listener, 'any');
+export function useAnyEvent<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'any'>) {
+    useSubscribeWithSpreadPayload(listener, 'any');
 }
 
-export function useText<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'text'>,
-) {
+export function useText<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'text'>) {
     useSubscribeWithSpreadPayload(listener, 'text');
 }
 
-export function useCommand<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'command'>,
-) {
+export function useCommand<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'command'>) {
     useSubscribeWithSpreadPayload(listener, 'command');
 }
 
-export function useSticker<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'sticker'>,
-) {
+export function useSticker<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'sticker'>) {
     useSubscribeWithSpreadPayload(listener, 'sticker');
 }
 
-export function useAnimation<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'animation'>,
-) {
+export function useAnimation<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'animation'>) {
     useSubscribeWithSpreadPayload(listener, 'animation');
 }
 
-export function useAudio<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'audio'>,
-) {
+export function useAudio<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'audio'>) {
     useSubscribeWithSpreadPayload(listener, 'audio');
 }
 
-export function useContact<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'contact'>,
-) {
+export function useContact<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'contact'>) {
     useSubscribeWithSpreadPayload(listener, 'contact');
 }
 
-export function useFile<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'file'>,
-) {
+export function useFile<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'file'>) {
     useSubscribeWithSpreadPayload(listener, 'file');
 }
 
-export function useInvoice<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'invoice'>,
-) {
+export function useInvoice<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'invoice'>) {
     useSubscribeWithSpreadPayload(listener, 'invoice');
 }
 
-export function useLocation<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'location'>,
-) {
+export function useLocation<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'location'>) {
     useSubscribeWithSpreadPayload(listener, 'location');
 }
 
-export function useImage<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'image'>,
-) {
+export function useImage<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'image'>) {
     useSubscribeWithSpreadPayload(listener, 'image');
 }
 
-export function usePoll<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'poll'>,
-) {
+export function usePoll<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'poll'>) {
     useSubscribeWithSpreadPayload(listener, 'poll');
 }
 
-export function useVideo<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'video'>,
-) {
+export function useVideo<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'video'>) {
     useSubscribeWithSpreadPayload(listener, 'video');
 }
 
-export function useVoice<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'voice'>,
-) {
+export function useVoice<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'voice'>) {
     useSubscribeWithSpreadPayload(listener, 'voice');
 }
 
-export function useDice<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'dice'>,
-) {
+export function useDice<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'dice'>) {
     useSubscribeWithSpreadPayload(listener, 'dice');
 }
 
-export function useAction<NativeEvent extends UrbanNativeEvent>(
-    listener: UrbanListenerByTypeWithSpreadPayload<NativeEvent, 'action'>,
-) {
+export function useAction<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'action'>) {
     useSubscribeWithSpreadPayload(listener, 'action');
 }

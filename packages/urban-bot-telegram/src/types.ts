@@ -1,9 +1,6 @@
-import { UrbanNativeEvent, UrbanSyntheticEvent } from '@urban-bot/core';
 import TelegramBot from 'node-telegram-bot-api';
 
 export type TELEGRAM = 'TELEGRAM';
-
-export type ProcessUpdate<NativeEvent extends UrbanNativeEvent> = (event: UrbanSyntheticEvent<NativeEvent>) => void;
 
 export type TelegramBotLostMessage = {
     dice?: {

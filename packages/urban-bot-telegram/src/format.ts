@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { UrbanButton, UrbanExistingMessageByType, UrbanMessage, UrbanParseMode } from '@urban-bot/core';
+import { UrbanBotType, UrbanButton, UrbanExistingMessageByType, UrbanMessage, UrbanParseMode } from '@urban-bot/core';
 import TelegramBot, { InlineKeyboardButton } from 'node-telegram-bot-api';
 
 export type EditMessageOptions =
@@ -107,7 +107,10 @@ export function formatParamsForExistingMessage(message: UrbanMessage): EditMessa
 }
 
 export function getTelegramMedia(
-    message: UrbanExistingMessageByType<'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file' | 'urban-animation'>,
+    message: UrbanExistingMessageByType<
+        UrbanBotType,
+        'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file' | 'urban-animation'
+    >,
     parseMode: TelegramBot.ParseMode | undefined,
 ) {
     const common = {

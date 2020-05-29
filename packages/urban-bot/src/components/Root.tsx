@@ -2,31 +2,30 @@ import React from 'react';
 import { getBotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
-import { UrbanChat, UrbanParseMode } from '../types';
+import { UrbanBotType, UrbanChat, UrbanParseMode } from '../types';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
-import { BotMetaByBot } from '../hooks/hooks';
 import { getExpressApp, listen } from '../expressApp';
 
-export type ChatProps<Bot extends UrbanBot> = {
-    bot: Bot;
+export type ChatProps<BotType extends UrbanBotType> = {
+    bot: UrbanBot<BotType>;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
     parseMode?: UrbanParseMode;
-    $$managerBot: ManagerBot<Bot>;
+    $$managerBot: ManagerBot<BotType>;
     children: React.ReactNode;
     key: string;
 };
 
-function Chat<Bot extends UrbanBot>({
+function Chat<BotType extends UrbanBotType>({
     bot,
     children,
     isNewMessageEveryRender,
     chat,
     parseMode,
     $$managerBot,
-}: ChatProps<Bot>) {
-    const BotContext = getBotContext<Bot>();
+}: ChatProps<BotType>) {
+    const BotContext = getBotContext<BotType>();
 
     return (
         <BotContext.Provider
@@ -40,8 +39,8 @@ function Chat<Bot extends UrbanBot>({
     );
 }
 
-export type RootProps<Bot extends UrbanBot> = {
-    bot: Bot;
+export type RootProps<BotType extends UrbanBotType> = {
+    bot: UrbanBot<BotType>;
     children: React.ReactNode;
     sessionTimeSeconds?: number;
     isNewMessageEveryRender?: boolean;
@@ -49,14 +48,14 @@ export type RootProps<Bot extends UrbanBot> = {
     port?: number;
 };
 
-export function Root<Bot extends UrbanBot>({
+export function Root<BotType extends UrbanBotType>({
     children,
     bot,
     sessionTimeSeconds = 60 * 60 * 24 * 7,
     isNewMessageEveryRender = true,
     parseMode,
     port = 8080,
-}: RootProps<Bot>) {
+}: RootProps<BotType>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map());
     const chatsRef = React.useRef(chats);
@@ -64,7 +63,7 @@ export function Root<Bot extends UrbanBot>({
 
     const timeoutIdsRef = React.useRef<{ [key: string]: NodeJS.Timer }>({});
 
-    const [firstMessage, setFirstMessage] = React.useState<UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>>();
+    const [firstMessage, setFirstMessage] = React.useState<UrbanSyntheticEvent<BotType>>();
 
     React.useEffect(() => {
         if (bot.initializeServer !== undefined) {
@@ -76,14 +75,14 @@ export function Root<Bot extends UrbanBot>({
     const $$managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
     React.useEffect(() => {
-        function handler(message: UrbanSyntheticEvent<BotMetaByBot<Bot>['NativeEvent']>) {
+        function handler(message: UrbanSyntheticEvent<BotType>) {
             const { chat } = message;
             const { id: chatId } = chat;
 
             if (!chatsRef.current.has(chatId)) {
                 chatsRef.current.set(
                     chat.id,
-                    <Chat<Bot>
+                    <Chat
                         bot={bot}
                         $$managerBot={$$managerBot}
                         key={chatId}
