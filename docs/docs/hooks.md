@@ -24,6 +24,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useVideo](#usevideo)
  * [useAudio](#useaudio)
  * [useFile](#usefile)
+ * [useAnimation](#useanimation)
  * [useVoice](#usevoice)
  * [useSticker](#usesticker)
  
@@ -477,6 +478,49 @@ function SomeComponent() {
 #### [from](#from)
 #### [nativeEvent](#nativeevent)
 
+## useAnimation
+Call after a user sends an animation.
+```jsx
+function SomeComponent() {
+    useAnimation((event) => {
+        console.log('user sent an animation');
+    });
+
+    // ...
+}
+```
+#### name
+> An animation name.
+###### optional
+`string`
+```jsx
+function SomeComponent() {
+    useAnimation(({ name }) => {
+        console.log(`user sent an animation with name ${name}`);
+    });
+
+    // ...
+}
+```
+#### duration
+> An animation duration.
+###### optional
+`number`
+#### id
+> An animation id.
+###### optional
+`string`
+#### mimeType
+> An animation mimeType.
+###### optional
+`string`
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+
+
 ## useVoice
 Call after a user sends a voice.
 ```jsx
@@ -495,7 +539,7 @@ function SomeComponent() {
 ```jsx
 function SomeComponent() {
     useVoice(({ id }) => {
-        console.log(`You have voice with id ${id}`);
+        console.log(`user sent voice with id ${id}`);
     });
 
     // ...
@@ -533,7 +577,7 @@ function SomeComponent() {
 ```jsx
 function SomeComponent() {
     useSticker(({ emoji }) => {
-        console.log(`You have sent ${emoji}`);
+        console.log(`user sent a sticker ${emoji}`);
     });
 
     // ...

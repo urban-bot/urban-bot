@@ -215,7 +215,6 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     payload: {
                         emoji: ctx.sticker.emoji,
                         id: ctx.sticker.file_id,
-                        size: ctx.sticker.file_size,
                         width: ctx.sticker.width,
                         height: ctx.sticker.height,
                         name: ctx.sticker.set_name,
@@ -236,7 +235,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     type: 'animation',
                     payload: {
                         duration: ctx.animation.duration,
-                        fileName: ctx.animation.file_name,
+                        name: ctx.animation.file_name,
                         mimeType: ctx.animation.mime_type,
                     },
                 };

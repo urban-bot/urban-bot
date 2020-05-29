@@ -60,8 +60,9 @@ export interface UrbanSyntheticEventAnimation<NativeEvent extends UrbanNativeEve
     extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'animation';
     payload: {
+        id?: string;
         duration: number;
-        fileName?: string;
+        name?: string;
         mimeType?: string;
     };
 }
