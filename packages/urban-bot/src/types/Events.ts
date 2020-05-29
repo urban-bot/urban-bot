@@ -99,11 +99,11 @@ export interface UrbanSyntheticEventInvoice<NativeEvent extends UrbanNativeEvent
     extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'invoice';
     payload: {
-        title: string;
-        description: string;
-        startParameter: string;
-        currency: string;
         totalAmount: number;
+        title?: string;
+        description?: string;
+        startParameter?: string;
+        currency?: string;
     };
 }
 
