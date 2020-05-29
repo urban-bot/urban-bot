@@ -30,11 +30,8 @@ The universal chatbot library based on [React](https://github.com/facebook/react
 Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter).
 
 Or install manually:
-```
+```bash
 npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
-```
-```
-yarn add react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
 
 ## Example
