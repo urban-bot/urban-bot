@@ -27,6 +27,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useAnimation](#useanimation)
  * [useVoice](#usevoice)
  * [useSticker](#usesticker)
+ * [useLocation](#uselocation)
  
 ## Common
 #### chat
@@ -558,7 +559,6 @@ function SomeComponent() {
 #### [from](#from)
 #### [nativeEvent](#nativeevent)
 
-
 ## useSticker
 Call after a user sends a sticker.
 ```jsx
@@ -586,7 +586,7 @@ function SomeComponent() {
 #### name
 > A sticker name.
 ###### optional
-`number`
+`string`
 #### id
 > A sticker id.
 ###### optional
@@ -594,12 +594,43 @@ function SomeComponent() {
 #### width
 > A sticker width.
 ###### optional
-`string`
+`number`
 #### height
 > A sticker height.
 ###### optional
 `number`
 
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+
+## useLocation
+Call after a user sends a location.
+```jsx
+function SomeComponent() {
+    useLocation((event) => {
+        console.log('user sent a location');
+    });
+
+    // ...
+}
+```
+#### latitude
+###### required
+`number`
+#### longitude
+###### required
+`number`
+```jsx
+function SomeComponent() {
+    useLocation(({ latitude, longitude }) => {
+        console.log(`user sent a coordinate ${latitude} ${longitude}`);
+    });
+
+    // ...
+}
+```
 #### [chat](#chat)
 #### [from](#from)
 #### [nativeEvent](#nativeevent)
