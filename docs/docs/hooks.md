@@ -119,7 +119,7 @@ function SomeComponent() {
 }
 ```
 #### file
-> The file type of media content from user messages. Used with useImage, useVideo, etc.
+> The file type of media content from user messages. It is used with useImage, useVideo, etc.
 ```typescript
 id?: string;
 url?: string;
@@ -132,7 +132,7 @@ type?: string;
 duration?: number;
 ```
 ## useBotContext
-The main urban bot context. It works under [`Root`](components.md#root).
+The main urban bot context. Your component has to be under [`Root`](components.md#root).
 ```jsx
 function SomeComponent() {
     const context = useBotContext();
@@ -255,7 +255,7 @@ function SomeComponent() {
 > Event type.
 
 ###### required  
-`'command'` | `'pool'` | `'sticker'` | `'animation'` | `'audio'` | `'contact'` | `'file'` | `'invoice'` | `'location'` | `'image'` | `'poll'` | `'dice'` | `'voice'` | `'action'` | `'video'`
+`'text'` | `'command'` | `'sticker'` | `'animation'` | `'audio'` | `'contact'` | `'file'` | `'invoice'` | `'location'` | `'image'` | `'poll'` | `'dice'` | `'voice'` | `'action'` | `'video'`
 ```jsx
 function SomeComponent() {
     useAnyEvent(({ type }) => {
@@ -270,7 +270,6 @@ function SomeComponent() {
 > Payload depending on the event type.
 
 ###### optional  
-`any`
 ```jsx
 function SomeComponent() {
     useAnyEvent(({ type, payload }) => {
@@ -330,7 +329,7 @@ function SomeComponent() {
 ## useCommand
 `/command`
 
-Call after a user sends a command. Command usually is a text with prefix slash.
+Call after a user sends a command. A command usually is a text with a prefix slash.
 ```jsx
 function SomeComponent() {
     useCommand((event) => {
@@ -391,7 +390,7 @@ function SomeComponent() {
 ```jsx
 function SomeComponent() {
     useImage(({ files }) => {
-        const id = files[0].id;
+        const { id } = files[0];
     
         console.log('user sent a image with id', id);
     });
@@ -421,7 +420,7 @@ function SomeComponent() {
 ```jsx
 function SomeComponent() {
     useVideo(({ files }) => {
-        const id = files[0].id;
+        const { id } = files[0];
     
         console.log('user sent a video with id', id);
     });
@@ -451,7 +450,7 @@ function SomeComponent() {
 ```jsx
 function SomeComponent() {
     useAudio(({ files }) => {
-        const id = files[0].id;
+        const { id } = files[0];
     
         console.log('user sent an audio with id', id);
     });
@@ -481,7 +480,7 @@ function SomeComponent() {
 ```jsx
 function SomeComponent() {
     useFile(({ files }) => {
-        const id = files[0].id;
+        const { id } = files[0];
     
         console.log('user sent a file with id', id);
     });
@@ -561,11 +560,11 @@ function SomeComponent() {
 }
 ```
 #### duration
-> A sticker duration.
+> A voice duration.
 ###### optional
 `number`
 #### mimeType
-> A sticker mimeType.
+> A voice mimeType.
 ###### optional
 `string`
 
