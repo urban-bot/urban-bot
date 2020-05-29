@@ -129,9 +129,9 @@ export interface UrbanSyntheticEventPoll<NativeEvent extends UrbanNativeEvent>
     extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'poll';
     payload: {
-        id: string;
+        id?: string | number;
         question: string;
-        options: Array<{ id?: string; text: string; count?: number }>;
+        options: Array<{ id?: string | number; text: string; count?: number }>;
     };
 }
 
@@ -178,8 +178,6 @@ export type UrbanSyntheticEventByType<
     ? UrbanSyntheticEventText<NativeEvent>
     : T extends 'command'
     ? UrbanSyntheticEventCommand<NativeEvent>
-    : T extends 'pool'
-    ? UrbanSyntheticEventPoll<NativeEvent>
     : T extends 'sticker'
     ? UrbanSyntheticEventSticker<NativeEvent>
     : T extends 'animation'

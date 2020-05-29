@@ -29,6 +29,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useSticker](#usesticker)
  * [useLocation](#uselocation)
  * [useContact](#usecontact)
+ * [usePoll](#usepoll)
  
 ## Common
 #### chat
@@ -675,3 +676,57 @@ function SomeComponent() {
 #### [chat](#chat)
 #### [from](#from)
 #### [nativeEvent](#nativeevent)
+
+## usePoll
+Call after a user sends a poll.
+```jsx
+function SomeComponent() {
+    usePoll((event) => {
+        console.log('user sent a poll');
+    });
+
+    // ...
+}
+```
+#### question
+> A poll question.
+###### required
+`string`
+```jsx
+function SomeComponent() {
+    usePoll(({ question }) => {
+        console.log(`user ask a question ${question}`);
+    });
+
+    // ...
+}
+```
+#### options
+> A poll options.
+###### required
+[`option`](#option)[]
+```jsx
+function SomeComponent() {
+    usePoll(({ options }) => {
+        options.forEach((option) => {
+            console.log(`you can choose ${option.text}`);
+        });
+    });
+
+    // ...
+}
+```
+#### id
+> A poll id.
+###### optional
+`string` | `number`
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+### Option
+```typescript
+text: string;
+id?: string | number; 
+count?: number;
+```
