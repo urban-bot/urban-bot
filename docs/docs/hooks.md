@@ -30,6 +30,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useLocation](#uselocation)
  * [useContact](#usecontact)
  * [usePoll](#usepoll)
+ * [useInvoice](#useinvoice)
  
 ## Common
 #### chat
@@ -738,3 +739,49 @@ text: string;
 id?: string | number; 
 count?: number;
 ```
+
+## useInvoice
+Call after a user sends an invoice.
+```jsx
+function SomeComponent() {
+    useInvoice((event) => {
+        console.log('user sent an invoice');
+    });
+
+    // ...
+}
+```
+
+#### totalAmount
+> An invoice totalAmount.
+###### required
+`number`
+```jsx
+function Billing() {
+    useInvoice(({ totalAmount }) => {
+        console.log(`user sent an invoice with ${totalAmount}`);
+    });
+
+    // ...
+}
+```
+#### title
+> An invoice title.
+###### optional
+`string`
+#### description
+> An invoice description.
+###### optional
+`string`
+#### startParameter
+> An invoice startParameter.
+###### optional
+`string`
+#### currency
+> An invoice currency.
+###### optional
+`string`
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
