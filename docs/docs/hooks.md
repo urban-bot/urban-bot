@@ -39,15 +39,6 @@ const { useBotContext, useText } = require('@urban-bot/core');
 > Information about the chat.
 
 ###### required
-```jsx
-function SomeComponent() {
-    useText(({ chat }) => {
-        console.log('message from chat id', chat.id);
-    });
-
-    // ...
-}
-```
 ```typescript
 id: string;
 type?: string;
@@ -58,10 +49,26 @@ lastName?: string;
 description?: string;
 inviteLink?: string;
 ```
+```jsx
+function SomeComponent() {
+    useText(({ chat }) => {
+        console.log('message from chat id', chat.id);
+    });
+
+    // ...
+}
+```
 #### from
 > Information about who send the message.
 
 ###### required
+```typescript
+id?: string;
+isBot?: boolean;
+username?: string;
+firstName?: string;
+lastName?: string;
+```
 ```jsx
 function SomeComponent() {
     useAnyEvent(({ from }) => {
@@ -71,18 +78,15 @@ function SomeComponent() {
     // ...
 }
 ```
-```typescript
-id?: string;
-isBot?: boolean;
-username?: string;
-firstName?: string;
-lastName?: string;
-```
 
 #### nativeEvent
 > Native event data from the specific messenger.
 
 ###### required
+```typescript
+type: string; // 'TELEGRAM' || 'FACEBOOK' || ...
+payload?: any;
+```
 ```jsx
 function SomeComponent() {
     useImage(({ nativeEvent }) => {
@@ -91,10 +95,6 @@ function SomeComponent() {
 
     // ...
 }
-```
-```typescript
-type: string; // 'TELEGRAM' || 'FACEBOOK' || ...
-payload?: any;
 ```
 If you develop some messengers you can divide behavior by comparing type.
 ```jsx
@@ -116,7 +116,7 @@ function SomeComponent() {
 }
 ```
 #### file
-> The file type of media content which is a user can send. Used with useImage, useVideo,... hooks.
+> The file type of media content from user messages. Used with useImage, useVideo, etc.
 ```typescript
 id?: string;
 url?: string;
@@ -138,7 +138,6 @@ function SomeComponent() {
 }
 ```
 #### [chat](#chat)
-###### required
 ```jsx
 function DisplayChatId() {
     const { chat } = useBotContext();
