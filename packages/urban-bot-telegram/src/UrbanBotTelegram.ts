@@ -19,13 +19,12 @@ import {
     UrbanSyntheticEventAction,
     UrbanSyntheticEventType,
     UrbanSyntheticEventCommon,
-    UrbanBotMeta,
     UrbanBot,
     UrbanExistingMessage,
-    UrbanExistingMessageByType,
     UrbanMessage,
     UrbanCommand,
     UrbanParseMode,
+    UrbanExistingMessageByType,
 } from '@urban-bot/core';
 import {
     EditMessageOptions,
@@ -48,8 +47,8 @@ export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
     payload?: Payload;
 };
-export type TelegramBotMeta = UrbanBotMeta & {
-    NativeEvent: UrbanNativeEventTelegram;
+export type UrbanBotTelegramType<Payload = TelegramPayload> = {
+    NativeEvent: UrbanNativeEventTelegram<Payload>;
     MessageMeta: TelegramMessageMeta;
 };
 
@@ -58,7 +57,7 @@ export type TelegramOptions = {
     isPolling?: boolean;
 };
 
-export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
+export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanBotTelegram.TYPE;
     defaultParseMode: UrbanParseMode = 'HTML';
@@ -106,12 +105,12 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
         });
     }
 
-    processUpdate(_event: UrbanSyntheticEvent<UrbanNativeEventTelegram>) {
+    processUpdate(_event: UrbanSyntheticEvent<UrbanBotTelegramType>) {
         throw new Error('this method must be overridden');
     }
 
-    handleMessage = (type: UrbanSyntheticEventType<UrbanNativeEventTelegram>, ctx: TelegramBotMessage) => {
-        const common: UrbanSyntheticEventCommon<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+    handleMessage = (type: UrbanSyntheticEventType<UrbanBotTelegramType>, ctx: TelegramBotMessage) => {
+        const common: UrbanSyntheticEventCommon<UrbanBotTelegramType> = {
             chat: {
                 id: String(ctx.chat.id),
                 type: ctx.chat.type,
@@ -142,7 +141,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                 }
 
                 if (ctx.text[0] === '/') {
-                    const adaptedContext: UrbanSyntheticEventCommand<UrbanNativeEventTelegram<TelegramBot.Message>> = {
+                    const adaptedContext: UrbanSyntheticEventCommand<UrbanBotTelegramType> = {
                         ...common,
                         type: 'command',
                         payload: {
@@ -152,7 +151,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
 
                     this.processUpdate(adaptedContext);
                 } else {
-                    const adaptedContext: UrbanSyntheticEventText<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                    const adaptedContext: UrbanSyntheticEventText<UrbanBotTelegramType> = {
                         ...common,
                         type: 'text',
                         payload: {
@@ -169,7 +168,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                 if (ctx.dice === undefined) {
                     break;
                 }
-                const adaptedContext: UrbanSyntheticEventDice<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventDice<UrbanBotTelegramType> = {
                     ...common,
                     type: 'dice',
                     payload: {
@@ -186,7 +185,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventPoll<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventPoll<UrbanBotTelegramType> = {
                     ...common,
                     type: 'poll',
                     payload: {
@@ -207,7 +206,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventSticker<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventSticker<UrbanBotTelegramType> = {
                     ...common,
                     type: 'sticker',
                     payload: {
@@ -229,7 +228,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventAnimation<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventAnimation<UrbanBotTelegramType> = {
                     ...common,
                     type: 'animation',
                     payload: {
@@ -248,7 +247,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                 }
 
                 const name = `${ctx.audio.performer ?? ''} ${ctx.audio.title ?? ''}`.trim();
-                const adaptedContext: UrbanSyntheticEventAudio<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventAudio<UrbanBotTelegramType> = {
                     ...common,
                     type: 'audio',
                     payload: {
@@ -272,7 +271,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventContact<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventContact<UrbanBotTelegramType> = {
                     ...common,
                     type: 'contact',
                     payload: {
@@ -291,7 +290,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventFile<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventFile<UrbanBotTelegramType> = {
                     ...common,
                     type: 'file',
                     payload: {
@@ -314,7 +313,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventInvoice<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventInvoice<UrbanBotTelegramType> = {
                     ...common,
                     type: 'invoice',
                     payload: {
@@ -334,7 +333,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventLocation<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventLocation<UrbanBotTelegramType> = {
                     ...common,
                     type: 'location',
                     payload: {
@@ -351,7 +350,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventImage<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventImage<UrbanBotTelegramType> = {
                     ...common,
                     type: 'image',
                     payload: {
@@ -372,7 +371,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventVideo<UrbanNativeEventTelegram<TelegramBot.Message>> = {
+                const adaptedContext: UrbanSyntheticEventVideo<UrbanBotTelegramType> = {
                     ...common,
                     type: 'video',
                     payload: {
@@ -395,7 +394,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
                     break;
                 }
 
-                const adaptedContext: UrbanSyntheticEventVoice<UrbanNativeEventTelegram<TelegramBotMessage>> = {
+                const adaptedContext: UrbanSyntheticEventVoice<UrbanBotTelegramType> = {
                     ...common,
                     type: 'voice',
                     payload: {
@@ -413,7 +412,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
 
     handleCallbackQuery = (ctx: TelegramBot.CallbackQuery) => {
         if (ctx.message?.chat !== undefined && ctx.data !== undefined) {
-            const adaptedContext: UrbanSyntheticEventAction<UrbanNativeEventTelegram<TelegramBot.CallbackQuery>> = {
+            const adaptedContext: UrbanSyntheticEventAction<UrbanBotTelegramType> = {
                 type: 'action',
                 chat: {
                     id: String(ctx.message.chat.id),
@@ -608,7 +607,7 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
         }
     }
 
-    updateMessage(message: UrbanExistingMessage<TelegramMessageMeta>) {
+    updateMessage(message: UrbanExistingMessage<UrbanBotTelegramType>) {
         if (message.data.isReplyButtons === true) {
             throw new Error('Reply buttons can not edited. You could send a new message every time for this message.');
         }
@@ -689,14 +688,14 @@ export class UrbanBotTelegram implements UrbanBot<TelegramBotMeta> {
         }
     }
 
-    deleteMessage(message: UrbanExistingMessage<TelegramMessageMeta>) {
+    deleteMessage(message: UrbanExistingMessage<UrbanBotTelegramType>) {
         this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 
     editMedia(
         message: UrbanExistingMessageByType<
-            'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file' | 'urban-animation',
-            TelegramMessageMeta
+            UrbanBotTelegramType,
+            'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file' | 'urban-animation'
         >,
     ) {
         const metaToEdit = {

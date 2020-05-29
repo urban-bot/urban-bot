@@ -1,22 +1,18 @@
 import { shallowEqual } from './utils/shallowEqual';
 import { UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types/Messages';
 import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanBot } from './types/UrbanBot';
-import { BotMetaByBot } from './hooks/hooks';
+import { UrbanBotType } from './types/UrbanBot';
 import debouncePromise from 'debounce-promise';
 
-export type UrbanNode<Bot extends UrbanBot = any> = Omit<
-    UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>,
-    'meta'
-> & {
-    $$managerBot: ManagerBot<Bot>;
+export type UrbanNode<BotType extends UrbanBotType = UrbanBotType> = Omit<UrbanExistingMessage<BotType>, 'meta'> & {
+    $$managerBot: ManagerBot<BotType>;
     isNewMessageEveryRender?: boolean;
     debounceDelay?: number;
-    meta?: Promise<BotMetaByBot<Bot>['MessageMeta']>;
-    sendMessage: ManagerBot<Bot>['sendMessage'];
-    updateMessage: ManagerBot<Bot>['updateMessage'];
-    deleteMessage: ManagerBot<Bot>['deleteMessage'];
-    childNodes: Array<UrbanNode>;
+    meta?: Promise<BotType['MessageMeta']>;
+    sendMessage: ManagerBot<BotType>['sendMessage'];
+    updateMessage: ManagerBot<BotType>['updateMessage'];
+    deleteMessage: ManagerBot<BotType>['deleteMessage'];
+    childNodes: Array<UrbanNode<BotType>>;
 };
 
 export type UrbanNodeRoot = {
@@ -24,12 +20,12 @@ export type UrbanNodeRoot = {
     childNodes: Array<UrbanNode>;
 };
 
-type Props<Bot extends UrbanBot> = Omit<UrbanNode<Bot>, 'nodeName'>;
+type Props<BotType extends UrbanBotType> = Omit<UrbanNode<BotType>, 'nodeName'>;
 
-export function createNode<Bot extends UrbanBot>(
+export function createNode<BotType extends UrbanBotType>(
     nodeName: UrbanMessageNodeName | 'root',
-    props?: Props<Bot>,
-): UrbanNode<Bot> | UrbanNodeRoot {
+    props?: Props<BotType>,
+): UrbanNode<BotType> | UrbanNodeRoot {
     if (props === undefined) {
         if (nodeName !== 'root') {
             throw new Error('props are necessary for every node');
@@ -52,13 +48,16 @@ export function createNode<Bot extends UrbanBot>(
         ...node,
         childNodes: [],
         data,
-    } as UrbanNode<Bot>;
+    } as UrbanNode<BotType>;
 }
 
-export function appendChildNode<Bot extends UrbanBot>(
-    parentNode: UrbanNode<Bot> | UrbanNodeRoot,
-    childNode: UrbanNode<Bot>,
+export function appendChildNode<BotType extends UrbanBotType>(
+    parentNode: UrbanNode<BotType> | UrbanNodeRoot,
+    childNode: UrbanNode<BotType>,
 ) {
+    // FIXME: fix types.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     parentNode.childNodes.push(childNode);
 
     const message = {
@@ -70,7 +69,10 @@ export function appendChildNode<Bot extends UrbanBot>(
     childNode.meta = childNode.sendMessage(message);
 }
 
-export function removeChildNode<Bot extends UrbanBot>(parentNode: UrbanNode<Bot>, removedNode: UrbanNode<Bot>) {
+export function removeChildNode<BotType extends UrbanBotType>(
+    parentNode: UrbanNode<BotType>,
+    removedNode: UrbanNode<BotType>,
+) {
     parentNode.childNodes = parentNode.childNodes.filter((node) => node !== removedNode);
 
     if (removedNode.isNewMessageEveryRender) {
@@ -87,7 +89,7 @@ export function removeChildNode<Bot extends UrbanBot>(parentNode: UrbanNode<Bot>
             chat: removedNode.chat,
             data: removedNode.data,
             meta,
-        } as UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']>;
+        } as UrbanExistingMessage<BotType>;
 
         removedNode.deleteMessage(message);
     });
@@ -105,12 +107,12 @@ export function insertBeforeNode(node: UrbanNode, newChildNode: UrbanNode, befor
     });
 }
 
-export function updateNode<Bot extends UrbanBot>(
-    node: UrbanNode<Bot>,
+export function updateNode<BotType extends UrbanBotType>(
+    node: UrbanNode<BotType>,
     _updatePayload: unknown,
     _type: unknown,
-    oldProps: Props<Bot>,
-    newProps: Props<Bot>,
+    oldProps: Props<BotType>,
+    newProps: Props<BotType>,
 ) {
     const { data: oldPropsData, ...oldPropsWithoutData } = oldProps;
     const { data: newPropsData, ...newPropsWithoutData } = newProps;
@@ -139,7 +141,7 @@ export function updateNode<Bot extends UrbanBot>(
         }
 
         node.meta.then((meta) => {
-            const existingMessage: UrbanExistingMessage<BotMetaByBot<Bot>['MessageMeta']> = {
+            const existingMessage: UrbanExistingMessage<BotType> = {
                 ...message,
                 meta,
             };
