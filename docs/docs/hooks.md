@@ -22,6 +22,15 @@ const { useBotContext, useText } = require('@urban-bot/core');
 ## Common
 #### chat
 > Information about the chat.
+```jsx
+function SomeComponent() {
+    useText(({ chat }) => {
+        console.log('message from chat id', chat.id);
+    });
+
+    // ...
+}
+```
 ```typescript
 id: string;
 type?: string;
@@ -33,7 +42,16 @@ description?: string;
 inviteLink?: string;
 ```
 #### from
-> Information about who send message.
+> Information about who send the message.
+```jsx
+function SomeComponent() {
+    useAnyEvent(({ from }) => {
+        console.log('message from user id', from.id);
+    });
+
+    // ...
+}
+```
 ```typescript
 id?: string;
 isBot?: boolean;
@@ -46,7 +64,7 @@ lastName?: string;
 > Native event data from the specific messenger.
 ```jsx
 function SomeComponent() {
-    useText(({ nativeEvent }) => {
+    useImage(({ nativeEvent }) => {
         console.log('this message from messenger', nativeEvent.type);
         // do stuff with nativeEvent.payload
     });
@@ -165,6 +183,7 @@ function ProfileButtons() {
     );
 }
 ```
+`Function`
 #### activePath
 > Current route path.
 ```jsx
@@ -174,22 +193,13 @@ function ProfileButtons() {
      return <Text>You are here {activePath}</Text>;
  }
  ```
+`string` | `RexExp` 
 ## useAnyEvent
 Call after any user action.
 ```jsx
 function SomeComponent() {
     useAnyEvent((event) => {
         console.log('user made something');
-    });
-
-    // ...
-}
-```
-#### [chat](#chat)
-```jsx
-function SomeComponent() {
-    useAnyEvent(({ chat }) => {
-        console.log('message from chat id', chat.id);
     });
 
     // ...
@@ -226,15 +236,32 @@ function SomeComponent() {
     // ...
 }
 ```
+#### [chat](#chat)
 #### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useText
+Call after user send a text.
 ```jsx
 function SomeComponent() {
-    useAnyEvent(({ from }) => {
-        console.log('message from user id', from.id);
+    useText((event) => {
+        console.log('user sent a text');
     });
 
     // ...
 }
 ```
-#### [nativeEvent](#nativeevent)
+#### text
+```jsx
+function SomeComponent() {
+    useText(({ text }) => {
+        console.log('user sent a text', text);
+    });
 
+    // ...
+}
+```
+`string`
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
