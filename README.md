@@ -31,7 +31,10 @@ Please use our zero configuration [starter](https://github.com/urban-bot/urban-b
 
 Or install manually:
 ```
-$ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
+npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
+```
+```
+yarn add react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
 
 ## Example
