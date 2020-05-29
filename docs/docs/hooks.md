@@ -22,6 +22,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useCommand](#usecommand)
  * [useImage](#useimage)
  * [useVideo](#usevideo)
+ * [useAudio](#useaudio)
  
 ## Common
 #### chat
@@ -404,6 +405,36 @@ function SomeComponent() {
         const id = files[0].id;
     
         console.log('user sent a video with id', id);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useAudio
+Call after a user sends an audio or audios.
+```jsx
+function SomeComponent() {
+    useAudio((event) => {
+        console.log('user sent an audio');
+    });
+
+    // ...
+}
+```
+#### files
+> Audios which a user sent.
+###### required
+[`file`](#file)[]
+```jsx
+function SomeComponent() {
+    useAudio(({ files }) => {
+        const id = files[0].id;
+    
+        console.log('user sent an audio with id', id);
     });
 
     // ...
