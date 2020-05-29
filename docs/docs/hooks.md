@@ -3,7 +3,7 @@ id: hooks
 title: Hooks 
 sidebar_label: Hooks
 ---
-**Available [react hooks](https://reactjs.org/docs/hooks-intro.html). Use it to subscrube to user actions or get an application data.**
+**Available [react hooks](https://reactjs.org/docs/hooks-intro.html). Use it to subscribe to user actions or get application data.**
 
 All variables you can import from `@urban-bot/core`.  
 ```javascript
