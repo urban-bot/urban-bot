@@ -79,10 +79,10 @@ export interface UrbanSyntheticEventContact<NativeEvent extends UrbanNativeEvent
     extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'contact';
     payload: {
-        phoneNumber: string;
-        firstName: string;
+        phoneNumber?: string;
+        firstName?: string;
         lastName?: string;
-        userId?: number;
+        userId?: string | number;
     };
 }
 

@@ -28,6 +28,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useVoice](#usevoice)
  * [useSticker](#usesticker)
  * [useLocation](#uselocation)
+ * [useContact](#usecontact)
  
 ## Common
 #### chat
@@ -631,6 +632,46 @@ function SomeComponent() {
     // ...
 }
 ```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useContact
+Call after a user sends a contact.
+```jsx
+function SomeComponent() {
+    useContact((event) => {
+        console.log('user sent a contact');
+    });
+
+    // ...
+}
+```
+#### phoneNumber
+> A contact phoneNumber.
+###### optional
+`string`
+```jsx
+function SomeComponent() {
+    useContact(({ phoneNumber }) => {
+        console.log(`user sent a phone number ${phoneNumber}`);
+    });
+
+    // ...
+}
+```
+#### firstName
+> A contact firstName.
+###### optional
+`string`
+#### lastName
+> A contact lastName.
+###### optional
+`string`
+#### userId
+> A contact id.
+###### optional
+`string` | `number`
 #### [chat](#chat)
 #### [from](#from)
 #### [nativeEvent](#nativeevent)
