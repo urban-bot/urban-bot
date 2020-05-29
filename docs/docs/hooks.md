@@ -88,9 +88,12 @@ type: string; // 'TELEGRAM' || 'FACEBOOK' || ...
 payload?: any;
 ```
 ```jsx
+// facebook bot
 function SomeComponent() {
     useImage(({ nativeEvent }) => {
-        console.log('this message from messenger', nativeEvent.type);
+        const senderId = nativeEvent.payload.entry[0].messaging[0].sender.id;
+       
+        console.log(`Some data from native facebook event ${senderId}`);
     });
 
     // ...
