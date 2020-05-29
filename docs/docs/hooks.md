@@ -87,7 +87,6 @@ lastName?: string;
 function SomeComponent() {
     useImage(({ nativeEvent }) => {
         console.log('this message from messenger', nativeEvent.type);
-        // do stuff with nativeEvent.payload
     });
 
     // ...
@@ -346,7 +345,7 @@ function SomeComponent() {
 ```jsx
 function SomeComponent() {
     useCommand(({ command }) => {
-        // do stuff with a command
+        console.log(`user sent a command ${command}`);
     });
 
     // ...
