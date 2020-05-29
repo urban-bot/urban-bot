@@ -41,7 +41,8 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
         if (childrenArray.some(matchChild('/'))) {
             navigate('/');
         }
-    }, []); // TODO: childrenArray ?
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // TODO check router children rerendering
 
     useCommand(({ command }) => {
         if (childrenArray.some(matchChild(command))) {

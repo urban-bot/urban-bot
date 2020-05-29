@@ -83,7 +83,7 @@ export function Root<Metadata extends UrbanBotMeta>({
             if (!chatsRef.current.has(chatId)) {
                 chatsRef.current.set(
                     chat.id,
-                    <Chat<Metadata>
+                    <Chat
                         bot={bot}
                         $$managerBot={$$managerBot}
                         key={chatId}

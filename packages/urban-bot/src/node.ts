@@ -55,7 +55,7 @@ export function appendChildNode<Metadata extends UrbanBotMeta>(
     parentNode: UrbanNode<Metadata> | UrbanNodeRoot,
     childNode: UrbanNode<Metadata>,
 ) {
-    // TODO: Fix me UrbanNodeRoot.
+    // FIXME: fix types.
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     parentNode.childNodes.push(childNode);
