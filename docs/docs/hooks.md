@@ -32,6 +32,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [usePoll](#usepoll)
  * [useInvoice](#useinvoice)
  * [useDice](#usedice)
+ * [useAction](#useaction)
  
 ## Common
 #### chat
@@ -792,7 +793,7 @@ Call after a user sends a random value.
 ```jsx
 function SomeComponent() {
     useDice((event) => {
-        // do stuff with random value
+        console.log('user sent an random value');
     });
 
     // ...
@@ -806,6 +807,34 @@ function SomeComponent() {
 function SomeComponent() {
     useDice(({ value }) => {
         console.log(`user sent a random value ${value}`);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useAction
+Call after a user makes some action, for example, click a button.
+```jsx
+function SomeComponent() {
+    useAction((event) => {
+        console.log('user made some action');
+    });
+
+    // ...
+}
+```
+#### actionId
+> An action id.
+###### required
+`string`
+```jsx
+function SomeComponent() {
+    useAction(({ actionId }) => {
+        console.log(`user made action ${actionId}`);
     });
 
     // ...
