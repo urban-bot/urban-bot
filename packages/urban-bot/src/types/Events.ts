@@ -147,7 +147,8 @@ export interface UrbanSyntheticEventVoice<NativeEvent extends UrbanNativeEvent>
     extends UrbanSyntheticEventCommon<NativeEvent> {
     type: 'voice';
     payload: {
-        duration: number;
+        id?: string;
+        duration?: number;
         mimeType?: string;
     };
 }

@@ -24,6 +24,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useVideo](#usevideo)
  * [useAudio](#useaudio)
  * [useFile](#usefile)
+ * [useVoice](#usevoice)
  * [useSticker](#usesticker)
  
 ## Common
@@ -475,6 +476,44 @@ function SomeComponent() {
 #### [chat](#chat)
 #### [from](#from)
 #### [nativeEvent](#nativeevent)
+
+## useVoice
+Call after a user sends a voice.
+```jsx
+function SomeComponent() {
+    useVoice((event) => {
+        console.log('user sent a voice');
+    });
+
+    // ...
+}
+```
+#### id
+> A voice id.
+###### optional
+`string`
+```jsx
+function SomeComponent() {
+    useVoice(({ id }) => {
+        console.log(`You have voice with id ${id}`);
+    });
+
+    // ...
+}
+```
+#### duration
+> A sticker duration.
+###### optional
+`number`
+#### mimeType
+> A sticker mimeType.
+###### optional
+`string`
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
 
 ## useSticker
 Call after a user sends a sticker.
