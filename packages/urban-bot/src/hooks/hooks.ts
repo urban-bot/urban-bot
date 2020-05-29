@@ -60,7 +60,7 @@ export function useSubscribeWithSpreadPayload<
     }, eventType);
 }
 
-export function useAny<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'any'>) {
+export function useAnyEvent<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'any'>) {
     useSubscribeWithSpreadPayload(listener, 'any');
 }
 

@@ -3,7 +3,18 @@ id: components
 title: Components 
 sidebar_label: Components
 ---
-  
+**Components are used to send messages to users.**
+
+All variables you can import from `@urban-bot/core`.  
+```javascript
+import { render, Root, Text } from '@urban-bot/core';  
+```
+```javascript
+const { render, Root, Text } = require('@urban-bot/core');  
+```  
+
+## Navigation
+
  * [render](#render)
  * [Common props](#common-props)
  * [HTML](#html)
@@ -24,14 +35,6 @@ sidebar_label: Components
  * [Option](#option)
  * [Contact](#contact)
     
-  
-All variables you can import from `@urban-bot/core`.  
-```jsx
-import { render, Root, Text } from '@urban-bot/core';  
-```
-```jsx
-const { render, Root, Text } = require('@urban-bot/core');  
-```  
 ## render  
 The main function that starts React. Works similar `ReactDOM.render`.  
 #### Instance of `Root` component.

@@ -1,0 +1,845 @@
+---
+id: hooks
+title: Hooks 
+sidebar_label: Hooks
+---
+**Available [react hooks](https://reactjs.org/docs/hooks-intro.html). Use it to subscribe to user actions or get application data.**
+
+All variables you can import from `@urban-bot/core`.  
+```javascript
+import { useBotContext, useText } from '@urban-bot/core';  
+```
+```javascript
+const { useBotContext, useText } = require('@urban-bot/core');  
+```  
+
+## Navigation
+ * [Common](#common)
+ * [useBotContext](#usebotcontext)
+ * [useRouter](#userouter)
+ * [useAnyEvent](#useanyevent)
+ * [useText](#usetext)
+ * [useCommand](#usecommand)
+ * [useImage](#useimage)
+ * [useVideo](#usevideo)
+ * [useAudio](#useaudio)
+ * [useFile](#usefile)
+ * [useAnimation](#useanimation)
+ * [useVoice](#usevoice)
+ * [useSticker](#usesticker)
+ * [useLocation](#uselocation)
+ * [useContact](#usecontact)
+ * [usePoll](#usepoll)
+ * [useInvoice](#useinvoice)
+ * [useDice](#usedice)
+ * [useAction](#useaction)
+ 
+## Common
+#### chat
+> Information about the chat.
+
+###### required
+```typescript
+id: string;
+type?: string;
+title?: string;
+username?: string;
+firstName?: string;
+lastName?: string;
+description?: string;
+inviteLink?: string;
+```
+```jsx
+function SomeComponent() {
+    useText(({ chat }) => {
+        console.log('message from chat id', chat.id);
+    });
+
+    // ...
+}
+```
+#### from
+> Information about who send the message.
+
+###### required
+```typescript
+id?: string;
+isBot?: boolean;
+username?: string;
+firstName?: string;
+lastName?: string;
+```
+```jsx
+function SomeComponent() {
+    useAnyEvent(({ from }) => {
+        console.log('message from user id', from.id);
+    });
+
+    // ...
+}
+```
+
+#### nativeEvent
+> Native event data from the specific messenger.
+
+###### required
+```typescript
+type: string; // 'TELEGRAM' || 'FACEBOOK' || ...
+payload?: any;
+```
+```jsx
+// facebook bot
+function SomeComponent() {
+    useImage(({ nativeEvent }) => {
+        const senderId = nativeEvent.payload.entry[0].messaging[0].sender.id;
+       
+        console.log(`Some data from native facebook event ${senderId}`);
+    });
+
+    // ...
+}
+```
+If you develop some messengers you can divide behavior by comparing type.
+```jsx
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+import { UrbanBotFacebook } from '@urban-bot/facebook';
+
+function SomeComponent() {
+    useText(({ nativeEvent }) => {
+        if (nativeEvent.type === UrbanBotTelegram.type) {
+            console.log('this message from telegram');
+        }
+        
+        if (nativeEvent.type === UrbanBotFacebook.type) {
+            console.log('this message from facebook');
+        }
+    });
+
+    // ...
+}
+```
+#### file
+> The file type of media content from user messages. It is used with useImage, useVideo, etc.
+```typescript
+id?: string;
+url?: string;
+name?: string;
+size?: number;
+width?: number;
+height?: number;
+mimeType?: string;
+type?: string;
+duration?: number;
+```
+## useBotContext
+The main urban bot context. Your component has to be under [`Root`](components.md#root).
+```jsx
+function SomeComponent() {
+    const context = useBotContext();
+
+    // ...
+}
+```
+#### [chat](#chat)
+```jsx
+function DisplayChatId() {
+    const { chat } = useBotContext();
+
+    return <Text>{chat.id}</Text>;
+}
+```
+#### [bot](components.md#bot)
+> An instance of specific UrbanBot*.
+
+###### required
+```jsx
+function SomeComponent() {
+    const { bot: telegramBot } = useBotContext();
+
+    telegramBot.bot.kickChatMember(/* ... */);
+
+    // ...
+}
+```
+If you develop some messengers you can divide behavior by comparing type.
+```jsx
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+import { UrbanBotSlack } from '@urban-bot/slack';
+
+function SomeComponent() {
+    const { bot } = useBotContext();
+     
+    if (bot.type === UrbanBotTelegram.type) {
+        bot.bot.kickChatMember(/* ... */);
+    }
+    
+    if (bot.type === UrbanBotSlack.type) {
+        bot.client.conversations.kick(/* ... */);
+    }
+
+
+    // ...
+}
+```
+#### [isNewMessageEveryRender](components.md#isnewmessageeveryrender)
+> The value that is passed to the [`Root`](components.md#root).
+
+###### optional
+```jsx
+function SomeComponent() {
+    const { isNewMessageEveryRender } = useBotContext();
+
+    // ...
+}
+```
+#### [parseMode](components.md#parsemode)
+> The value that is passed to the [`Root`](components.md#root).
+
+###### optional
+```jsx
+function SomeComponent() {
+    const { parseMode } = useBotContext();
+    
+    // ...
+}
+```
+## useRouter
+The router context. It works under [`Router`](components.md#router).
+```jsx
+function SomeComponent() {
+    const routerContext = useRouter();
+
+    // ...
+}
+```
+#### navigate
+> Go to the particular route.
+
+###### required
+`Function`
+```jsx
+function ProfileButtons() {
+    const { navigate } = useRouter();
+
+    return (
+        <ButtonGroup>
+            <Button onClick={() => navigate('catalog')}>Go to Catalog</Button>
+        </ButtonGroup>
+    );
+}
+```
+#### activePath
+> Current route path.
+
+###### required  
+`string` | `RexExp` 
+```jsx
+ function WhereAmI() {
+     const { activePath } = useRouter();
+ 
+     return <Text>You are here {activePath}</Text>;
+ }
+ ```
+## useAnyEvent
+Call after any user action.
+```jsx
+function SomeComponent() {
+    useAnyEvent((event) => {
+        console.log('user made something');
+    });
+
+    // ...
+}
+```
+#### type
+> Event type.
+
+###### required  
+`'text'` | `'command'` | `'sticker'` | `'animation'` | `'audio'` | `'contact'` | `'file'` | `'invoice'` | `'location'` | `'image'` | `'poll'` | `'dice'` | `'voice'` | `'action'` | `'video'`
+```jsx
+function SomeComponent() {
+    useAnyEvent(({ type }) => {
+        console.log('event type', type);
+    });
+
+    // ...
+}
+```
+
+#### payload
+> Payload depending on the event type.
+
+###### optional  
+```jsx
+function SomeComponent() {
+    useAnyEvent(({ type, payload }) => {
+        if (type === 'text') {
+            console.log(payload.text);
+        }
+
+        if (type === 'location') {
+            console.log(payload.latitude);
+        }
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useText
+Call after a user sends a text.
+```jsx
+function SomeComponent() {
+    useText((event) => {
+        console.log('user sent a text');
+    });
+
+    // ...
+}
+```
+#### text
+> A text which a user sent.
+###### required  
+`string`
+```jsx
+function SomeComponent() {
+    const [answer, setAnswer] = React.useState('Welcome to Urban Bot!');
+
+    useText(({ text }) => {
+        if (text === 'hello') {
+            setAnswer('How can I help you?');
+        }
+
+        if (text === 'good buy') {
+            setAnswer('See you soon');
+        }
+    });
+
+    return <Text>{answer}</Text>;
+}
+```
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useCommand
+`/command`
+
+Call after a user sends a command. A command usually is a text with a prefix slash.
+```jsx
+function SomeComponent() {
+    useCommand((event) => {
+        console.log('user sent a command');
+    });
+
+    // ...
+}
+```
+#### command
+> A command which a user sent.
+###### required  
+`string`
+```jsx
+function SomeComponent() {
+    useCommand(({ command }) => {
+        console.log(`user sent a command ${command}`);
+    });
+
+    // ...
+}
+```
+#### argument
+> An additional text after a command. If a user writes `/sayMyName Heisenberg`, command is `/sayMyName`, argument is `Heisenberg`.
+
+###### optional  
+ `string`
+```jsx
+function SomeComponent() {
+    useCommand(({ command, argument }) => {
+        if (command === '/sayMyName') {
+            console.log(argument);
+        }
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useImage
+Call after a user sends an image or images.
+```jsx
+function SomeComponent() {
+    useImage((event) => {
+        console.log('user sent an image');
+    });
+
+    // ...
+}
+```
+#### files
+> Images which a user sent.
+###### required
+[`file`](#file)[]
+```jsx
+function SomeComponent() {
+    useImage(({ files }) => {
+        const { id } = files[0];
+    
+        console.log('user sent a image with id', id);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useVideo
+Call after a user sends a video or videos.
+```jsx
+function SomeComponent() {
+    useVideo((event) => {
+        console.log('user sent a video');
+    });
+
+    // ...
+}
+```
+#### files
+> Videos which a user sent.
+###### required
+[`file`](#file)[]
+```jsx
+function SomeComponent() {
+    useVideo(({ files }) => {
+        const { id } = files[0];
+    
+        console.log('user sent a video with id', id);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useAudio
+Call after a user sends an audio or audios.
+```jsx
+function SomeComponent() {
+    useAudio((event) => {
+        console.log('user sent an audio');
+    });
+
+    // ...
+}
+```
+#### files
+> Audios which a user sent.
+###### required
+[`file`](#file)[]
+```jsx
+function SomeComponent() {
+    useAudio(({ files }) => {
+        const { id } = files[0];
+    
+        console.log('user sent an audio with id', id);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useFile
+Call after a user sends a file or files.
+```jsx
+function SomeComponent() {
+    useFile((event) => {
+        console.log('user sent a file');
+    });
+
+    // ...
+}
+```
+#### files
+> Files which a user sent.
+###### required
+[`file`](#file)[]
+```jsx
+function SomeComponent() {
+    useFile(({ files }) => {
+        const { id } = files[0];
+    
+        console.log('user sent a file with id', id);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useAnimation
+Call after a user sends an animation.
+```jsx
+function SomeComponent() {
+    useAnimation((event) => {
+        console.log('user sent an animation');
+    });
+
+    // ...
+}
+```
+#### name
+> An animation name.
+###### optional
+`string`
+```jsx
+function SomeComponent() {
+    useAnimation(({ name }) => {
+        console.log(`user sent an animation with name ${name}`);
+    });
+
+    // ...
+}
+```
+#### duration
+> An animation duration.
+###### optional
+`number`
+#### id
+> An animation id.
+###### optional
+`string`
+#### mimeType
+> An animation mimeType.
+###### optional
+`string`
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+
+
+## useVoice
+Call after a user sends a voice.
+```jsx
+function SomeComponent() {
+    useVoice((event) => {
+        console.log('user sent a voice');
+    });
+
+    // ...
+}
+```
+#### id
+> A voice id.
+###### optional
+`string`
+```jsx
+function SomeComponent() {
+    useVoice(({ id }) => {
+        console.log(`user sent voice with id ${id}`);
+    });
+
+    // ...
+}
+```
+#### duration
+> A voice duration.
+###### optional
+`number`
+#### mimeType
+> A voice mimeType.
+###### optional
+`string`
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useSticker
+Call after a user sends a sticker.
+```jsx
+function SomeComponent() {
+    useSticker((event) => {
+        console.log('user sent a sticker');
+    });
+
+    // ...
+}
+```
+#### emoji
+>  An emoji which is connected with a sticker.
+###### optional
+`string`
+```jsx
+function SomeComponent() {
+    useSticker(({ emoji }) => {
+        console.log(`user sent a sticker ${emoji}`);
+    });
+
+    // ...
+}
+```
+#### name
+> A sticker name.
+###### optional
+`string`
+#### id
+> A sticker id.
+###### optional
+`string`
+#### width
+> A sticker width.
+###### optional
+`number`
+#### height
+> A sticker height.
+###### optional
+`number`
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+
+## useLocation
+Call after a user sends a location.
+```jsx
+function SomeComponent() {
+    useLocation((event) => {
+        console.log('user sent a location');
+    });
+
+    // ...
+}
+```
+#### latitude
+###### required
+`number`
+#### longitude
+###### required
+`number`
+```jsx
+function SomeComponent() {
+    useLocation(({ latitude, longitude }) => {
+        console.log(`user sent a coordinate ${latitude} ${longitude}`);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useContact
+Call after a user sends a contact.
+```jsx
+function SomeComponent() {
+    useContact((event) => {
+        console.log('user sent a contact');
+    });
+
+    // ...
+}
+```
+#### phoneNumber
+> A contact phoneNumber.
+###### optional
+`string`
+```jsx
+function SomeComponent() {
+    useContact(({ phoneNumber }) => {
+        console.log(`user sent a phone number ${phoneNumber}`);
+    });
+
+    // ...
+}
+```
+#### firstName
+> A contact firstName.
+###### optional
+`string`
+#### lastName
+> A contact lastName.
+###### optional
+`string`
+#### userId
+> A contact id.
+###### optional
+`string` | `number`
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## usePoll
+Call after a user sends a poll.
+```jsx
+function SomeComponent() {
+    usePoll((event) => {
+        console.log('user sent a poll');
+    });
+
+    // ...
+}
+```
+#### question
+> A poll question.
+###### required
+`string`
+```jsx
+function SomeComponent() {
+    usePoll(({ question }) => {
+        console.log(`user ask a question ${question}`);
+    });
+
+    // ...
+}
+```
+#### options
+> A poll options.
+###### required
+[`option`](#option)[]
+```jsx
+function SomeComponent() {
+    usePoll(({ options }) => {
+        options.forEach((option) => {
+            console.log(`you can choose ${option.text}`);
+        });
+    });
+
+    // ...
+}
+```
+#### id
+> A poll id.
+###### optional
+`string` | `number`
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+### Option
+```typescript
+text: string;
+id?: string | number; 
+count?: number;
+```
+
+## useInvoice
+Call after a user sends an invoice.
+```jsx
+function SomeComponent() {
+    useInvoice((event) => {
+        console.log('user sent an invoice');
+    });
+
+    // ...
+}
+```
+
+#### totalAmount
+> An invoice totalAmount.
+###### required
+`number`
+```jsx
+function Billing() {
+    useInvoice(({ totalAmount }) => {
+        console.log(`user sent an invoice with ${totalAmount}`);
+    });
+
+    // ...
+}
+```
+#### title
+> An invoice title.
+###### optional
+`string`
+#### description
+> An invoice description.
+###### optional
+`string`
+#### startParameter
+> An invoice startParameter.
+###### optional
+`string`
+#### currency
+> An invoice currency.
+###### optional
+`string`
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useDice
+Call after a user sends a random value.
+```jsx
+function SomeComponent() {
+    useDice((event) => {
+        console.log('user sent an random value');
+    });
+
+    // ...
+}
+```
+#### value
+> A random value.
+###### required
+`number`
+```jsx
+function SomeComponent() {
+    useDice(({ value }) => {
+        console.log(`user sent a random value ${value}`);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useAction
+Call after a user makes some action, for example, click a button.
+```jsx
+function SomeComponent() {
+    useAction((event) => {
+        console.log('user made some action');
+    });
+
+    // ...
+}
+```
+#### actionId
+> An action id.
+###### required
+`string`
+```jsx
+function SomeComponent() {
+    useAction(({ actionId }) => {
+        console.log(`user made action ${actionId}`);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)

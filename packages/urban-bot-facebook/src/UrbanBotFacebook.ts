@@ -170,10 +170,11 @@ export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
             } else {
                 if (text !== undefined) {
                     if (text[0] === '/') {
+                        const [command, ...args] = text.split(' ');
                         this.processUpdate({
                             ...common,
                             type: 'command',
-                            payload: { command: text },
+                            payload: { command, argument: args.join(' ') },
                         });
                     } else {
                         this.processUpdate({
