@@ -22,6 +22,8 @@ const { useBotContext, useText } = require('@urban-bot/core');
 ## Common
 #### chat
 > Information about the chat.
+
+###### required
 ```jsx
 function SomeComponent() {
     useText(({ chat }) => {
@@ -43,6 +45,8 @@ inviteLink?: string;
 ```
 #### from
 > Information about who send the message.
+
+###### required
 ```jsx
 function SomeComponent() {
     useAnyEvent(({ from }) => {
@@ -62,6 +66,8 @@ lastName?: string;
 
 #### nativeEvent
 > Native event data from the specific messenger.
+
+###### required
 ```jsx
 function SomeComponent() {
     useImage(({ nativeEvent }) => {
@@ -105,6 +111,7 @@ function SomeComponent() {
 }
 ```
 #### [chat](#chat)
+###### required
 ```jsx
 function DisplayChatId() {
     const { chat } = useBotContext();
@@ -114,6 +121,8 @@ function DisplayChatId() {
 ```
 #### [bot](components.md#bot)
 > An instance of specific UrbanBot*.
+
+###### required
 ```jsx
 function SomeComponent() {
     const { bot: telegramBot } = useBotContext();
@@ -145,6 +154,8 @@ function SomeComponent() {
 ```
 #### [isNewMessageEveryRender](components.md#isnewmessageeveryrender)
 > The value that is passed to the [`Root`](components.md#root).
+
+###### optional
 ```jsx
 function SomeComponent() {
     const { isNewMessageEveryRender } = useBotContext();
@@ -154,6 +165,8 @@ function SomeComponent() {
 ```
 #### [parseMode](components.md#parsemode)
 > The value that is passed to the [`Root`](components.md#root).
+
+###### optional
 ```jsx
 function SomeComponent() {
     const { parseMode } = useBotContext();
@@ -172,6 +185,9 @@ function SomeComponent() {
 ```
 #### navigate
 > Go to the particular route.
+
+###### required
+`Function`
 ```jsx
 function ProfileButtons() {
     const { navigate } = useRouter();
@@ -183,9 +199,11 @@ function ProfileButtons() {
     );
 }
 ```
-`Function`
 #### activePath
 > Current route path.
+
+###### required  
+`string` | `RexExp` 
 ```jsx
  function WhereAmI() {
      const { activePath } = useRouter();
@@ -193,7 +211,6 @@ function ProfileButtons() {
      return <Text>You are here {activePath}</Text>;
  }
  ```
-`string` | `RexExp` 
 ## useAnyEvent
 Call after any user action.
 ```jsx
@@ -207,6 +224,9 @@ function SomeComponent() {
 ```
 #### type
 > Event type.
+
+###### required  
+`'command'` | `'pool'` | `'sticker'` | `'animation'` | `'audio'` | `'contact'` | `'file'` | `'invoice'` | `'location'` | `'image'` | `'poll'` | `'dice'` | `'voice'` | `'action'` | `'video'`
 ```jsx
 function SomeComponent() {
     useAnyEvent(({ type }) => {
@@ -217,10 +237,11 @@ function SomeComponent() {
 }
 ```
 
-`'command'` | `'pool'` | `'sticker'` | `'animation'` | `'audio'` | `'contact'` | `'file'` | `'invoice'` | `'location'` | `'image'` | `'poll'` | `'dice'` | `'voice'` | `'action'` | `'video'`
-
 #### payload
 > Payload depending on the event type.
+
+###### optional  
+`any`
 ```jsx
 function SomeComponent() {
     useAnyEvent(({ type, payload }) => {
@@ -241,7 +262,7 @@ function SomeComponent() {
 #### [nativeEvent](#nativeevent)
 
 ## useText
-Call after user send a text.
+Call after a user sends a text.
 ```jsx
 function SomeComponent() {
     useText((event) => {
@@ -252,16 +273,65 @@ function SomeComponent() {
 }
 ```
 #### text
+> A text which a user sent.
+###### required  
+`string`
 ```jsx
 function SomeComponent() {
     useText(({ text }) => {
-        console.log('user sent a text', text);
+        // do stuff with a text
     });
 
     // ...
 }
 ```
+
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useCommand
+`/command`
+
+Call after a user sends a command. Command usually is a text with prefix slash.
+```jsx
+function SomeComponent() {
+    useCommand((event) => {
+        console.log('user sent a command');
+    });
+
+    // ...
+}
+```
+#### command
+> A command which a user sent.
+###### required  
 `string`
+```jsx
+function SomeComponent() {
+    useCommand(({ command }) => {
+        // do stuff with a command
+    });
+
+    // ...
+}
+```
+#### argument
+> An additional text after a command. If a user writes `/sayMyName Heisenberg`, command is `/sayMyName`, argument is `Heisenberg`.
+
+###### optional  
+ `string`
+```jsx
+function SomeComponent() {
+    useCommand(({ command, argument }) => {
+        if (command === '/sayMyName') {
+            console.log(argument);
+        }
+    });
+
+    // ...
+}
+```
 #### [chat](#chat)
 #### [from](#from)
 #### [nativeEvent](#nativeevent)
