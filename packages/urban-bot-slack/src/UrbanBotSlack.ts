@@ -33,17 +33,17 @@ export type SlackOptions = {
     token: string;
 };
 
-export type UrbanNativeEventSlack = {
+export type UrbanNativeEventSlack<Payload extends SlackPayload = SlackPayload> = {
     type: SLACK;
-    payload?: SlackPayload;
+    payload?: Payload;
 };
 
-export type SlackBotType = {
+export type UrbanBotSlackType = {
     NativeEvent: UrbanNativeEventSlack;
     MessageMeta: SlackMessageMeta;
 };
 
-export class UrbanBotSlack implements UrbanBot<SlackBotType> {
+export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
     static TYPE = 'SLACK' as const;
     type = UrbanBotSlack.TYPE;
     defaultParseMode: UrbanParseMode = 'markdown';
@@ -70,7 +70,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotType> {
         expressApp.post('/slack/commands', bodyParser.urlencoded({ extended: false }), this.handleCommand);
     }
 
-    processUpdate(_event: UrbanSyntheticEvent<SlackBotType>) {
+    processUpdate(_event: UrbanSyntheticEvent<UrbanBotSlackType>) {
         throw new Error('this method must be overridden');
     }
 
@@ -80,7 +80,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotType> {
                 return;
             }
 
-            const adaptedCtx: UrbanSyntheticEventAction<SlackBotType> = {
+            const adaptedCtx: UrbanSyntheticEventAction<UrbanBotSlackType> = {
                 type: 'action',
                 chat: {
                     id: ctx.channel.id,
@@ -107,7 +107,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotType> {
             return;
         }
 
-        const common: UrbanSyntheticEventCommon<SlackBotType> = {
+        const common: UrbanSyntheticEventCommon<UrbanBotSlackType> = {
             chat: {
                 id: ctx.channel,
                 type: ctx.channel_type,
@@ -173,7 +173,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotType> {
             return;
         }
 
-        const textEvent: UrbanSyntheticEventText<SlackBotType> = {
+        const textEvent: UrbanSyntheticEventText<UrbanBotSlackType> = {
             ...common,
             type: 'text',
             payload: {
@@ -186,7 +186,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotType> {
 
     handleCommand = (req: express.Request, res: express.Response) => {
         const { channel_id, command, text, user_id, user_name, channel_name } = req.body as SlackCommandContext;
-        const ctx: UrbanSyntheticEventCommand<SlackBotType> = {
+        const ctx: UrbanSyntheticEventCommand<UrbanBotSlackType> = {
             type: 'command',
             chat: {
                 id: channel_id,
@@ -347,7 +347,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotType> {
         }
     }
 
-    async updateMessage(message: UrbanExistingMessage<SlackBotType>) {
+    async updateMessage(message: UrbanExistingMessage<UrbanBotSlackType>) {
         switch (message.nodeName) {
             case 'urban-text': {
                 this.client.chat.update({
@@ -428,7 +428,7 @@ export class UrbanBotSlack implements UrbanBot<SlackBotType> {
         }
     }
 
-    deleteMessage(message: UrbanExistingMessage<SlackBotType>) {
+    deleteMessage(message: UrbanExistingMessage<UrbanBotSlackType>) {
         this.client.chat.delete({ channel: message.meta.channel, ts: message.meta.ts });
     }
 }

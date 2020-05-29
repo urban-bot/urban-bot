@@ -12,13 +12,13 @@ const { urlencoded, json } = bodyParser;
 
 export type FACEBOOK = 'FACEBOOK';
 
-export type UrbanNativeEventFacebook = {
+export type UrbanNativeEventFacebook<Payload = FacebookPayload> = {
     type: FACEBOOK;
-    payload?: FacebookPayload;
+    payload?: Payload;
 };
 
-export type FacebookBotType = {
-    NativeEvent: UrbanNativeEventFacebook;
+export type UrbanBotFacebookType<Payload = FacebookPayload> = {
+    NativeEvent: UrbanNativeEventFacebook<Payload>;
     MessageMeta: FacebookMessageMeta;
 };
 
@@ -41,7 +41,7 @@ const defaultOptions: Partial<FacebookOptions> = {
     apiUrlVersion: 'v3.2',
 };
 
-export class UrbanBotFacebook implements UrbanBot<FacebookBotType> {
+export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
     static TYPE: FACEBOOK = 'FACEBOOK';
     type: FACEBOOK = UrbanBotFacebook.TYPE;
     defaultParseMode: UrbanParseMode = 'markdown';
@@ -99,7 +99,7 @@ export class UrbanBotFacebook implements UrbanBot<FacebookBotType> {
         }
     }
 
-    processUpdate(_event: UrbanSyntheticEvent<FacebookBotType>) {
+    processUpdate(_event: UrbanSyntheticEvent<UrbanBotFacebookType>) {
         throw new Error('this method must be overridden');
     }
 
