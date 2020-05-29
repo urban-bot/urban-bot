@@ -3,7 +3,7 @@ id: hooks
 title: Hooks 
 sidebar_label: Hooks
 ---
-**Available react hooks. Use it to subscrube to user actions or get an application data.**
+**Available [react hooks](https://reactjs.org/docs/hooks-intro.html). Use it to subscrube to user actions or get an application data.**
 
 All variables you can import from `@urban-bot/core`.  
 ```javascript
@@ -303,11 +303,19 @@ function SomeComponent() {
 `string`
 ```jsx
 function SomeComponent() {
+    const [answer, setAnswer] = React.useState('Welcome to Urban Bot!');
+
     useText(({ text }) => {
-        // do stuff with a text
+        if (text === 'hello') {
+            setAnswer('How can I help you?');
+        }
+
+        if (text === 'good buy') {
+            setAnswer('See you soon');
+        }
     });
 
-    // ...
+    return <Text>{answer}</Text>;
 }
 ```
 
