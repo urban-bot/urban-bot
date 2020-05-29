@@ -21,6 +21,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useText](#usetext)
  * [useCommand](#usecommand)
  * [useImage](#useimage)
+ * [useVideo](#usevideo)
  
 ## Common
 #### chat
@@ -370,9 +371,39 @@ function SomeComponent() {
 ```jsx
 function SomeComponent() {
     useImage(({ files }) => {
-        const id = files[0].id
+        const id = files[0].id;
     
         console.log('user sent a image with id', id);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useVideo
+Call after a user sends a video or videos.
+```jsx
+function SomeComponent() {
+    useVideo((event) => {
+        console.log('user sent a video');
+    });
+
+    // ...
+}
+```
+#### files
+> Videos which a user sent.
+###### required
+[`file`](#file)[]
+```jsx
+function SomeComponent() {
+    useVideo(({ files }) => {
+        const id = files[0].id;
+    
+        console.log('user sent a video with id', id);
     });
 
     // ...
