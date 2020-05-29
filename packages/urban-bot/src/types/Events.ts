@@ -37,7 +37,6 @@ export interface UrbanSyntheticEventSticker<NativeEvent extends UrbanNativeEvent
         width?: number;
         height?: number;
         name?: string;
-        size?: number;
     };
 }
 
