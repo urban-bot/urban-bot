@@ -29,7 +29,7 @@ export function Hooks() {
     });
 
     useText(() => {
-        setAnswer("You've sent a 😉");
+        setAnswer("You've sent an emoji 😉");
     }, '😉');
 
     useText(() => {
@@ -41,6 +41,10 @@ export function Hooks() {
 
         setAnswer("You've sent a command " + command + argumentText);
     });
+
+    useCommand(() => {
+        setAnswer("You've sent a specific command /setName");
+    }, '/setName');
 
     useImage(({ files }) => {
         const name = files[0].name ?? '';

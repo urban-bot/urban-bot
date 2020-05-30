@@ -16,7 +16,6 @@ import { Root } from './components/Root';
 import { getBotContext, RouterContext } from './context';
 import {
     useBotContext,
-    useCommand,
     useRouter,
     useSticker,
     useAnimation,
@@ -35,6 +34,7 @@ import {
 } from './hooks/hooks';
 
 import { useText } from './hooks/useText';
+import { useCommand } from './hooks/useCommand';
 
 export {
     render,
