@@ -300,6 +300,30 @@ function SomeComponent() {
     // ...
 }
 ```
+You can subscribe to a specific text.
+
+`string` | `RexExp` 
+```jsx
+function SomeComponent() {
+    useText((event) => {
+        console.log('user sent "hello"');
+    }, 'hello');
+
+    // ...
+}
+```
+Or subscribe to several values.
+
+(`string` | `RexExp`)[]
+```jsx
+function SomeComponent() {
+    useText((event) => {
+        console.log('user greeted');
+    }, ['hi', /hello/]);
+
+    // ...
+}
+```
 #### text
 > A text which a user sent.
 ###### required  
@@ -335,6 +359,32 @@ function SomeComponent() {
     useCommand((event) => {
         console.log('user sent a command');
     });
+
+    // ...
+}
+```
+You can subscribe to a specific command.
+
+`string` | `RexExp` 
+```jsx
+function SomeComponent() {
+    const [name, setName] = React.useState();
+
+    useCommand((event) => {
+        setName(event.argument)
+    }, '/setName');
+
+    // ...
+}
+```
+Or subscribe to several values.
+
+(`string` | `RexExp`)[]
+```jsx
+function SomeComponent() {
+    useCommand((event) => {
+        console.log('user wants to set name');
+    }, ['/setFirstName', '/setLastName']);
 
     // ...
 }
