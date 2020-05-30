@@ -34,6 +34,7 @@ const { render, Root, Text } = require('@urban-bot/core');
  * [Poll](#poll)
  * [Option](#option)
  * [Contact](#contact)
+ * [Notification](#notification)
     
 ## render  
 The main function that starts React. Works similar `ReactDOM.render`.  
@@ -1016,3 +1017,20 @@ Send a contact.
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
+
+
+## Notification
+It is used for sending a message every n time.
+```jsx
+<Notification intervalSeconds={2}>
+    <Text>Ping every two second</Text>
+</Notification>
+```
+#### children
+> Any component(s) from urban-bot.
+###### required
+`ReactNode`  | `ReactNode`[]
+#### intervalSeconds
+> Message sends one time in `intervalSeconds`. First time is after `intervalSeconds`.
+###### required
+`number`
