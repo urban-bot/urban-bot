@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const path = require('path');
 const repoUrl = 'https://github.com/urban-bot/urban-bot';
 
 const siteConfig = {
@@ -96,6 +97,7 @@ const siteConfig = {
     repoUrl,
 
     scrollToTop: true,
+    customDocsPath: path.basename(__dirname) + '/docs'
 };
 
 module.exports = siteConfig;
