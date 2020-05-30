@@ -64,10 +64,6 @@ export function useAnyEvent<BotType extends UrbanBotType>(listener: UrbanEventLi
     useSubscribeWithSpreadPayload(listener, 'any');
 }
 
-export function useText<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'text'>) {
-    useSubscribeWithSpreadPayload(listener, 'text');
-}
-
 export function useCommand<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'command'>) {
     useSubscribeWithSpreadPayload(listener, 'command');
 }

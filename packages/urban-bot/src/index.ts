@@ -16,7 +16,6 @@ import { Root } from './components/Root';
 import { getBotContext, RouterContext } from './context';
 import {
     useBotContext,
-    useText,
     useCommand,
     useRouter,
     useSticker,
@@ -34,6 +33,8 @@ import {
     useDice,
     useAction,
 } from './hooks/hooks';
+
+import { useText } from './hooks/useText';
 
 export {
     render,

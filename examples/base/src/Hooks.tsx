@@ -28,6 +28,14 @@ export function Hooks() {
         setAnswer("You've sent a text " + text);
     });
 
+    useText(() => {
+        setAnswer("You've sent a 😉");
+    }, '😉');
+
+    useText(() => {
+        setAnswer("You've greeted");
+    }, ['hi', /hello/]);
+
     useCommand(({ command, argument }) => {
         const argumentText = argument ? '. Argument is ' + argument : '';
 

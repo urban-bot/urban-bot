@@ -1,5 +1,6 @@
 import React from 'react';
-import { useBotContext, useCommand, useText } from '../../hooks/hooks';
+import { useBotContext, useCommand } from '../../hooks/hooks';
+import { useText } from '../../hooks/useText';
 import { RouterContext } from '../../context';
 import { RouteProps } from './Route';
 import { matchChild } from './utils';
