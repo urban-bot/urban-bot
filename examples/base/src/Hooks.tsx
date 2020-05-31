@@ -28,11 +28,23 @@ export function Hooks() {
         setAnswer("You've sent a text " + text);
     });
 
+    useText(() => {
+        setAnswer("You've sent an emoji 😉");
+    }, '😉');
+
+    useText(() => {
+        setAnswer("You've greeted");
+    }, ['hi', /hello/]);
+
     useCommand(({ command, argument }) => {
         const argumentText = argument ? '. Argument is ' + argument : '';
 
         setAnswer("You've sent a command " + command + argumentText);
     });
+
+    useCommand(() => {
+        setAnswer("You've sent a specific command /setName");
+    }, '/setName');
 
     useImage(({ files }) => {
         const name = files[0].name ?? '';
