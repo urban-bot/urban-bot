@@ -3,7 +3,9 @@ id: components
 title: Components 
 sidebar_label: Components
 ---
-**Components are used to send messages to users.**
+**Components are used to send messages to users.**  
+
+<a class="button" href="https://github.com/urban-bot/urban-bot/tree/master/examples/base/src" target="_blank">Examples</a>
 
 All variables you can import from `@urban-bot/core`.  
 ```javascript
@@ -34,6 +36,7 @@ const { render, Root, Text } = require('@urban-bot/core');
  * [Poll](#poll)
  * [Option](#option)
  * [Contact](#contact)
+ * [Notification](#notification)
     
 ## render  
 The main function that starts React. Works similar `ReactDOM.render`.  
@@ -254,9 +257,9 @@ render(
 );  
 ```  
 ####  bot  
->  An instance of specific UrbanBot*. 
+>  An instance of specific UrbanBot. 
 ###### required  
-`UrbanBot` 
+[`UrbanBotTelegram`](telegram.md) | [`UrbanBotFacebook`](facebook.md) | [`UrbanBotSlack`](slack.md)
 ```jsx
 import { UrbanBotTelegram } from '@urban-bot/telegram';
   
@@ -267,7 +270,7 @@ render(
 );  
 ```  
 ####  sessionTimeSeconds  
->  Time after which the user session is clear
+>  After this time a user session is clear.
 ###### optional  
 ###### default `60 * 60 * 24 * 7`
 `number`
@@ -1016,3 +1019,20 @@ Send a contact.
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
+
+
+## Notification
+Use it for sending a message every n time.
+```jsx
+<Notification intervalSeconds={2}>
+    <Text>Ping every two second</Text>
+</Notification>
+```
+#### children
+> Any component(s) from urban-bot.
+###### required
+`ReactNode`  | `ReactNode`[]
+#### intervalSeconds
+> Message sends one time in `intervalSeconds`. First time is after `intervalSeconds`.
+###### required
+`number`

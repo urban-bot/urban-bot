@@ -1,5 +1,13 @@
 {
     "docs": {
-        "Documentation": ["components", "hooks"]
+        "API": [
+            "components",
+            "hooks",
+            {
+                "type": "subcategory",
+                "label": "Bots",
+                "ids": ["telegram", "facebook", "slack"]
+            }
+        ]
     }
 }

@@ -103,28 +103,24 @@ function App() {
     );
 }
 
+const urbanBotTelegram = new UrbanBotTelegram({
+    token: 'telegramToken',
+    isPolling: true,
+});
+
+const urbanBotSlack = new UrbanBotSlack({
+    signingSecret: 'slackSigningSecret',
+    token: 'slackToken',
+});
+
 render(
-    <Root
-        bot={
-            new UrbanBotTelegram({
-                token: 'telegramToken',
-                isPolling: true,
-            })
-        }
-    >
+    <Root bot={urbanBotTelegram}>
         <App />
     </Root>
 );
 
 render(
-    <Root
-        bot={
-            new UrbanBotSlack({
-                signingSecret: 'slackSigningSecret',
-                token: 'slackToken',
-            })
-        }
-    >
+    <Root bot={urbanBotSlack}>
         <App />
     </Root>
 );
