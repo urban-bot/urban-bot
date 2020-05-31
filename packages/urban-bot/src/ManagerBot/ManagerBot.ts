@@ -110,27 +110,43 @@ export class ManagerBot<BotType extends UrbanBotType = UrbanBotType> {
         }
 
         return chatById.promiseQueue.next<BotType['MessageMeta']>(() => {
-            return this.bot.sendMessage(message);
+            try {
+                return this.bot.sendMessage(message);
+            } catch (e) {
+                console.error(e);
+            }
         });
     }
 
     updateMessage(message: UrbanExistingMessage<BotType>) {
         if (this.bot.updateMessage === undefined) {
-            throw new Error(
+            console.error(
                 `'${this.bot.type}' doesn't support updating message. Provide isNewMessageEveryRender prop to Root component`,
             );
+
+            return;
         }
 
-        return this.bot.updateMessage(message);
+        try {
+            return this.bot.updateMessage(message);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     deleteMessage(message: UrbanExistingMessage<BotType>) {
         if (this.bot.deleteMessage === undefined) {
-            throw new Error(
+            console.error(
                 `'${this.bot.type}' doesn't support deleting message. Provide isNewMessageEveryRender prop to Root component`,
             );
+
+            return;
         }
 
-        return this.bot.deleteMessage(message);
+        try {
+            return this.bot.deleteMessage(message);
+        } catch (e) {
+            console.error(e);
+        }
     }
 }
