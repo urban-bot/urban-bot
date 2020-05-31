@@ -7,6 +7,12 @@
 
 /* your custom css */
 
+.main-title {
+    font-family: Londrina Shadow, Segoe UI, Helvetica, Arial;
+    font-weight: 400;
+    font-size: 80px;
+}
+
 .example {
     display: flex;
     justify-content: center;
@@ -47,7 +53,16 @@
     text-align: center;
 }
 
+@media only screen and (max-device-width: 360px) {
+    .main-title {
+        font-size: 50px;
+    }
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+    .main-title {
+        font-size: 60px;
+    }
 }
 
 @media only screen and (min-width: 1024px) {
