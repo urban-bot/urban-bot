@@ -36,9 +36,12 @@ class Footer extends React.Component {
                         )}
                     </a>
                     <div>
-                        <h5>Docs</h5>
+                        <h5>API</h5>
                         <a href={this.docUrl('components.html')}>Components</a>
                         <a href={this.docUrl('hooks.html')}>Hooks</a>
+                        <a href={this.docUrl('telegram.html')}>Telegram</a>
+                        <a href={this.docUrl('hooks.html')}>Facebook</a>
+                        <a href={this.docUrl('slack.html')}>Slack</a>
                     </div>
                     <div>
                         <h5>Community</h5>

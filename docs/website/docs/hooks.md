@@ -3,7 +3,9 @@ id: hooks
 title: Hooks 
 sidebar_label: Hooks
 ---
-**Available [react hooks](https://reactjs.org/docs/hooks-intro.html). Use it to subscribe to user actions or get application data.**
+**Available <a href="https://reactjs.org/docs/hooks-intro.html" target="_blank">react hooks</a>. Use it to subscribe to user actions or get application data.**
+
+<a class="button" href="https://github.com/urban-bot/urban-bot/tree/master/examples/base/src/Hooks.tsx" target="_blank">Examples</a>
 
 All variables you can import from `@urban-bot/core`.  
 ```javascript
@@ -149,7 +151,9 @@ function DisplayChatId() {
 }
 ```
 #### [bot](components.md#bot)
-> An instance of specific UrbanBot*.
+> An instance of specific UrbanBot.
+
+[`UrbanBotTelegram`](telegram.md) | [`UrbanBotFacebook`](facebook.md) | [`UrbanBotSlack`](slack.md)
 
 ###### required
 ```jsx
