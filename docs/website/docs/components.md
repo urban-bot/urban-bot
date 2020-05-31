@@ -7,11 +7,13 @@ sidebar_label: Components
 
 <a class="button" href="https://github.com/urban-bot/urban-bot/tree/master/examples/base/src" target="_blank">Examples</a>
 
-All variables you can import from `@urban-bot/core`.  
+All variables you can import from `@urban-bot/core`. Don't forget to import `React` everywhere you use `JSX` syntax.
 ```javascript
+import React from 'react'; 
 import { render, Root, Text } from '@urban-bot/core';  
 ```
 ```javascript
+const React = require('react');
 const { render, Root, Text } = require('@urban-bot/core');  
 ```  
 
