@@ -62,27 +62,27 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     type = UrbanBotTelegram.TYPE;
     defaultParseMode: UrbanParseMode = 'HTML';
 
-    bot: TelegramBot;
+    client: TelegramBot;
 
     constructor(public options: TelegramOptions) {
         const { isPolling, token } = options;
-        this.bot = new TelegramBot(token, isPolling ? { polling: true } : undefined);
+        this.client = new TelegramBot(token, isPolling ? { polling: true } : undefined);
 
-        this.bot.on('text', (ctx) => this.handleMessage('text', ctx));
-        this.bot.on('callback_query', this.handleCallbackQuery);
-        this.bot.on('sticker', (ctx) => this.handleMessage('sticker', ctx));
-        this.bot.on('animation', (ctx) => this.handleMessage('animation', ctx));
-        this.bot.on('audio', (ctx) => this.handleMessage('audio', ctx));
-        this.bot.on('contact', (ctx) => this.handleMessage('contact', ctx));
-        this.bot.on('document', (ctx) => this.handleMessage('file', ctx));
-        this.bot.on('invoice', (ctx) => this.handleMessage('invoice', ctx));
-        this.bot.on('location', (ctx) => this.handleMessage('location', ctx));
-        this.bot.on('photo', (ctx) => this.handleMessage('image', ctx));
+        this.client.on('text', (ctx) => this.handleMessage('text', ctx));
+        this.client.on('callback_query', this.handleCallbackQuery);
+        this.client.on('sticker', (ctx) => this.handleMessage('sticker', ctx));
+        this.client.on('animation', (ctx) => this.handleMessage('animation', ctx));
+        this.client.on('audio', (ctx) => this.handleMessage('audio', ctx));
+        this.client.on('contact', (ctx) => this.handleMessage('contact', ctx));
+        this.client.on('document', (ctx) => this.handleMessage('file', ctx));
+        this.client.on('invoice', (ctx) => this.handleMessage('invoice', ctx));
+        this.client.on('location', (ctx) => this.handleMessage('location', ctx));
+        this.client.on('photo', (ctx) => this.handleMessage('image', ctx));
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.bot.on('poll' as any, (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBotMessage));
-        this.bot.on('video', (ctx) => this.handleMessage('video', ctx));
-        this.bot.on('voice', (ctx) => this.handleMessage('voice', ctx));
-        this.bot.on('message', (ctx) => {
+        this.client.on('poll' as any, (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBotMessage));
+        this.client.on('video', (ctx) => this.handleMessage('video', ctx));
+        this.client.on('voice', (ctx) => this.handleMessage('voice', ctx));
+        this.client.on('message', (ctx) => {
             const ctxWithDice: TelegramBotMessage = ctx;
 
             if (ctxWithDice.dice !== undefined) {
@@ -100,7 +100,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
         expressApp.use('/telegram/*', express.json());
         expressApp.post(`/telegram/bot${this.options.token}`, (req, res) => {
-            this.bot.processUpdate(req.body);
+            this.client.processUpdate(req.body);
             res.sendStatus(200);
         });
     }
@@ -449,12 +449,12 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-text': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendMessage(message.chat.id, message.data.text, params);
+                return this.client.sendMessage(message.chat.id, message.data.text, params);
             }
             case 'urban-img': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendPhoto(message.chat.id, message.data.file, {
+                return this.client.sendPhoto(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                 });
@@ -466,12 +466,12 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     throw new Error('@urban-bot/telegram Specify title prop to ButtonGroup');
                 }
 
-                return this.bot.sendMessage(message.chat.id, message.data.title, params);
+                return this.client.sendMessage(message.chat.id, message.data.title, params);
             }
             case 'urban-audio': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendAudio(message.chat.id, message.data.file, {
+                return this.client.sendAudio(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                     duration: message.data.duration,
@@ -482,7 +482,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-video': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendVideo(message.chat.id, message.data.file, {
+                return this.client.sendVideo(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                     duration: message.data.duration,
@@ -494,7 +494,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 const params = formatParamsForNewMessage(message);
 
                 return (
-                    this.bot
+                    this.client
                         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                         // @ts-ignore @types/node-telegram-bot-api doesn't have sendAnimation type
                         .sendAnimation(message.chat.id, message.data.file, {
@@ -510,7 +510,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-file': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendDocument(message.chat.id, message.data.file, {
+                return this.client.sendDocument(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                 });
@@ -518,7 +518,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-location': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendLocation(message.chat.id, message.data.latitude, message.data.longitude, {
+                return this.client.sendLocation(message.chat.id, message.data.latitude, message.data.longitude, {
                     ...params,
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore @types/node-telegram-bot-api bug. live_period is existed
@@ -558,12 +558,12 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore @types/node-telegram-bot-api bug. file could be not only string
-                return this.bot.sendMediaGroup(message.chat.id, media, params);
+                return this.client.sendMediaGroup(message.chat.id, media, params);
             }
             case 'urban-contact': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.bot.sendContact(
+                return this.client.sendContact(
                     message.chat.id,
                     String(message.data.phoneNumber),
                     message.data.firstName ?? '',
@@ -581,7 +581,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 const options = message.data.options.map(({ text }) => text);
 
                 return (
-                    this.bot
+                    this.client
                         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                         // @ts-ignore @types/node-telegram-bot-api doesn't have sendPoll type
                         .sendPoll(message.chat.id, message.data.question, options, {
@@ -622,7 +622,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
                 const params = formatParamsForExistingMessage(message);
 
-                this.bot.editMessageText(message.data.text, { ...params, ...metaToEdit });
+                this.client.editMessageText(message.data.text, { ...params, ...metaToEdit });
 
                 break;
             }
@@ -659,7 +659,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
                 const params = formatParamsForExistingMessage(message);
 
-                this.bot.editMessageText(message.data.title, { ...params, ...metaToEdit });
+                this.client.editMessageText(message.data.title, { ...params, ...metaToEdit });
 
                 break;
             }
@@ -671,7 +671,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
                 const params = formatParamsForExistingMessage(message);
 
-                this.bot.editMessageLiveLocation(message.data.latitude, message.data.longitude, {
+                this.client.editMessageLiveLocation(message.data.latitude, message.data.longitude, {
                     ...params,
                     ...metaToEdit,
                 });
@@ -690,7 +690,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     }
 
     deleteMessage(message: UrbanExistingMessage<UrbanBotTelegramType>) {
-        this.bot.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
+        this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 
     editMedia(
@@ -710,7 +710,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             try {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
-                const fileData = this.bot._formatSendData('file', message.data.file);
+                const fileData = this.client._formatSendData('file', message.data.file);
                 const { file } = fileData[0];
 
                 this.editMessageMedia({ ...media, media: `attach://file` }, { ...params, ...metaToEdit }, { file });
@@ -729,7 +729,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         // FIXME this methods should be fixed in node-telegram-bot-api
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        return this.bot._request('setMyCommands', {
+        return this.client._request('setMyCommands', {
             form: {
                 commands: JSON.stringify(commands),
             },
@@ -745,6 +745,6 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         const qs = { ...options, media: JSON.stringify(media) };
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        return this.bot._request('editMessageMedia', { qs, formData });
+        return this.client._request('editMessageMedia', { qs, formData });
     }
 }
