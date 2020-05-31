@@ -1022,7 +1022,7 @@ Send a contact.
 
 
 ## Notification
-It is used for sending a message every n time.
+Use it for sending a message every n time.
 ```jsx
 <Notification intervalSeconds={2}>
     <Text>Ping every two second</Text>
