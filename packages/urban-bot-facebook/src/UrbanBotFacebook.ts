@@ -24,10 +24,10 @@ export type UrbanBotFacebookType<Payload = FacebookPayload> = {
 
 export type FacebookOptions = {
     pageAccessToken: string;
-    // Your App secret can be found in App Dashboard -> Seetings -> Basic
+    // Your App secret can be found in App Dashboard -> Settings -> Basic
     appSecret: string;
     // A random string that is used for the webhook verification request
-    verifyToken?: string;
+    verifyToken: string;
     pageId?: string;
     appId?: string;
     // URL where you host this code

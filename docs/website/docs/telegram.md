@@ -3,7 +3,7 @@ id: telegram
 title: UrbanBotTelegram
 sidebar_label: Telegram
 ---
-**Urban bot part which is responsible to launch telegram bot.**
+**Urban bot part which is responsible to launch <a href="https://telegram.org/" target="_blank">telegram</a> bot.**
 #### Install
 ```shell
 npm i @urban-bot/telegram --save
