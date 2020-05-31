@@ -257,9 +257,9 @@ render(
 );  
 ```  
 ####  bot  
->  An instance of specific UrbanBot*. 
+>  An instance of specific UrbanBot. 
 ###### required  
-`UrbanBot` 
+[`UrbanBotTelegram`](telegram.md) | [`UrbanBotFacebook`](facebook.md) | [`UrbanBotSlack`](slack.md)
 ```jsx
 import { UrbanBotTelegram } from '@urban-bot/telegram';
   
@@ -270,7 +270,7 @@ render(
 );  
 ```  
 ####  sessionTimeSeconds  
->  Time after which the user session is clear
+>  After this time a user session is clear.
 ###### optional  
 ###### default `60 * 60 * 24 * 7`
 `number`
