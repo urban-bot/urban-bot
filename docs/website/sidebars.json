@@ -6,7 +6,7 @@
             {
                 "type": "subcategory",
                 "label": "Bots",
-                "ids": ["telegram", "facebook"]
+                "ids": ["telegram", "facebook", "slack"]
             }
         ]
     }
