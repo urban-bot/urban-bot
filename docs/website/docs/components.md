@@ -324,14 +324,14 @@ function MyAudio() {
 }
 
 render(
-    <Root isNewMessageEveryRender>  
+    <Root isNewMessageEveryRender={false}>  
         <Text>some text</Text>
         <Image file="https://path-to-image.jpg" />
         <MyAudio />
     </Root>  
 ); 
 
-// Text, Image, Audio are with isNewMessageEveryRender={true}
+// Text, Image, Audio are with isNewMessageEveryRender={false}
 ```
 #### [parseMode](#parsemode)
 > Default value for all urban-bot components under Root.
@@ -668,7 +668,7 @@ Send an audio to a chat.
 ```
 
 #### file  
-> File id or URL or Stream or Buffsder.  
+> File id or URL or Stream or Buffer.  
 ###### required  
 `string` | `Buffer` | `ReadableStream`  
 ```jsx
