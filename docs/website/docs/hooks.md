@@ -5,6 +5,8 @@ sidebar_label: Hooks
 ---
 **Available [react hooks](https://reactjs.org/docs/hooks-intro.html). Use it to subscribe to user actions or get application data.**
 
+<a class="button" href="https://github.com/urban-bot/urban-bot/tree/master/examples/base/src/Hooks.tsx" target="_blank">Examples</a>
+
 All variables you can import from `@urban-bot/core`.  
 ```javascript
 import { useBotContext, useText } from '@urban-bot/core';  
