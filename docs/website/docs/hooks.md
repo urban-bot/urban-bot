@@ -174,10 +174,12 @@ function SomeComponent() {
     const { bot } = useBotContext();
      
     if (bot.type === UrbanBotTelegram.type) {
-        bot.bot.kickChatMember(/* ... */);
+        // telegram api
+        bot.client.kickChatMember(/* ... */);
     }
     
     if (bot.type === UrbanBotSlack.type) {
+        // slack api
         bot.client.conversations.kick(/* ... */);
     }
 
