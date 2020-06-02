@@ -496,7 +496,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 return (
                     this.client
                         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore @types/node-telegram-bot-api doesn't have sendAnimation type
+                        // @ts-ignore @types/node-telegram-bot-api bug. Doesn't have sendAnimation type
                         .sendAnimation(message.chat.id, message.data.file, {
                             ...params,
                             file_name: message.data.name,
@@ -557,7 +557,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 });
 
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore @types/node-telegram-bot-api bug. file could be not only string
+                // @ts-ignore @types/node-telegram-bot-api bug. File could be not only string
                 return this.client.sendMediaGroup(message.chat.id, media, params);
             }
             case 'urban-contact': {
@@ -571,7 +571,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                         ...params,
                         last_name: message.data.lastName,
                         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore @types/node-telegram-bot-api doesn't have vcard type
+                        // @ts-ignore @types/node-telegram-bot-api bug. Doesn't have vcard type
                         vcard: message.data.vCard,
                     },
                 );
@@ -583,7 +583,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 return (
                     this.client
                         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore @types/node-telegram-bot-api doesn't have sendPoll type
+                        // @ts-ignore @types/node-telegram-bot-api bug. Doesn't have sendPoll type
                         .sendPoll(message.chat.id, message.data.question, options, {
                             ...params,
                             is_anonymous: message.data.isAnonymous,
