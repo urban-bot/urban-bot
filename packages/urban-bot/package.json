@@ -69,6 +69,7 @@
         "url": "https://github.com/urban-bot/urban-bot.git",
         "directory": "packages/urban-bot"
     },
+    "homepage": "https://urban-bot.now.sh",
     "engines": {
         "node": ">=10.0.0"
     }

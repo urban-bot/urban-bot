@@ -24,6 +24,7 @@
     "type": "git",
     "url": "https://github.com/urban-bot/urban-bot.git"
   },
+  "homepage": "https://urban-bot.now.sh",
   "private": true,
   "workspaces": [
     "packages/*",
