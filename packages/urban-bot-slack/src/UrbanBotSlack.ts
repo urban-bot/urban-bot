@@ -220,6 +220,12 @@ export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
             }
             case 'urban-img': {
                 if (typeof message.data.file !== 'string') {
+                    if (message.data.buttons !== undefined) {
+                        console.error(
+                            "@urban-bot/slack doesn't support buttons prop with file from file system. Change file to url or send buttons separately.",
+                        );
+                    }
+
                     return (this.client.files.upload({
                         file: message.data.file,
                         channels: message.chat.id,
