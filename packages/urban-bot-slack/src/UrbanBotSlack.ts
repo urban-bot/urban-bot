@@ -237,7 +237,7 @@ export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
                             emoji: true,
                         },
                         image_url: message.data.file,
-                        alt_text: message.data.alt ?? '',
+                        alt_text: message.data.alt ?? 'image',
                     },
                 ];
 
