@@ -27,7 +27,11 @@ The universal chatbot library based on [React](https://github.com/facebook/react
 ## [Documentation](https://github.com/urban-bot/urban-bot/blob/master/docs/DOCS.md)
 
 ## Installation
-Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter).
+Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter-typescript).
+#### typescript
+`npx create-urban-bot my-app`
+#### javascript
+`npx create-urban-bot my-app --template js`
 
 Or install manually:
 ```shell
