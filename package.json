@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "The universal chatbot library based on React. Write once, launch Telegram, Slack, ... every messenger with chatbots",
   "scripts": {
-    "start": "lerna run start --stream --parallel",
+    "start": "lerna run start --stream --parallel --scope @urban-bot/*",
     "lint": "lerna run lint  --stream --parallel",
     "test": "lerna run test  --stream --parallel",
     "build": "lerna run build --stream",
