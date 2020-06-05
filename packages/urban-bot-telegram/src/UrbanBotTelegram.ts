@@ -43,6 +43,10 @@ import {
 } from './types';
 import express from 'express';
 
+// For disabling console deprecated messages
+process.env.NTBA_FIX_319 = 'true';
+process.env.NTBA_FIX_350 = 'true';
+
 export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
     payload?: Payload;
@@ -453,6 +457,8 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             }
             case 'urban-img': {
                 const params = formatParamsForNewMessage(message);
+
+                console.log(message.data.title);
 
                 return this.client.sendPhoto(message.chat.id, message.data.file, {
                     ...params,
