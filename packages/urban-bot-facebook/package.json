@@ -53,7 +53,7 @@
     "typescript": "3.8.3"
   },
   "peerDependencies": {
-    "@urban-bot/core": "^0.0.7"
+    "@urban-bot/core": "^0.0.8"
   },
   "dependencies": {
     "array-flatten": "3.0.0",
