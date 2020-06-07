@@ -6,51 +6,62 @@ dotenv.config();
 
 const webhookHost = process.env.WEBHOOK_HOST;
 
-if (process.argv[2] === 'set-webhook') {
-    if (!webhookHost) {
-        throw new Error('Provide WEBHOOK_HOST to .env');
-    }
+const command = process.argv[2];
 
-    switch (process.argv[3]) {
-        case 'telegram': {
-            const telegramAPI = 'https://api.telegram.org';
-            const telegramToken = process.env.TELEGRAM_TOKEN;
+switch (command) {
+    case 'set-webhook': {
+        if (!webhookHost) {
+            throw new Error('Provide WEBHOOK_HOST to .env');
+        }
 
-            if (!telegramToken) {
-                throw new Error('Provide TELEGRAM_TOKEN to .env');
-            }
+        const messengerType = process.argv[3];
 
-            (async function setTelegramWebhook(webhookHost: string, token: string) {
-                const webhookURL = `${webhookHost}/telegram/bot${token}`;
-                const setWebhookURL = `${telegramAPI}/bot${token}/setWebhook?url=${webhookURL}`;
+        switch (messengerType) {
+            case 'telegram': {
+                const telegramAPI = 'https://api.telegram.org';
+                const telegramToken = process.env.TELEGRAM_TOKEN;
 
-                try {
-                    const rawResponse = await fetch(setWebhookURL);
-                    const response = await rawResponse.json();
+                if (!telegramToken) {
+                    throw new Error('Provide TELEGRAM_TOKEN to .env');
+                }
 
-                    if (!response.ok) {
-                        console.log('Webhook is not set');
+                (async function setTelegramWebhook(webhookHost: string, token: string) {
+                    const webhookURL = `${webhookHost}/telegram/bot${token}`;
+                    const setWebhookURL = `${telegramAPI}/bot${token}/setWebhook?url=${webhookURL}`;
 
-                        if (response.error_code === 404) {
-                            console.log(`telegram token '${telegramToken}' is not found`);
-                        } else {
-                            console.log(response.error_code, response.description);
+                    try {
+                        const rawResponse = await fetch(setWebhookURL);
+                        const response = await rawResponse.json();
+
+                        if (!response.ok) {
+                            console.log('Webhook is not set');
+
+                            if (response.error_code === 404) {
+                                console.log(`telegram token '${telegramToken}' is not found`);
+                            } else {
+                                console.log(response.error_code, response.description);
+                            }
+
+                            return;
                         }
 
-                        return;
+                        console.log('You have set a webhook to telegram!', webhookURL);
+                    } catch (e) {
+                        console.log('Webhook is not set');
+                        console.error(e);
                     }
+                })(webhookHost, telegramToken);
 
-                    console.log('You have set a webhook to telegram!', webhookURL);
-                } catch (e) {
-                    console.log('Webhook is not set');
-                    console.error(e);
-                }
-            })(webhookHost, telegramToken);
+                break;
+            }
+            default: {
+                throw new Error("Provide a correct messenger type. Supported types: 'telegram'");
+            }
+        }
 
-            break;
-        }
-        default: {
-            throw new Error("Provide a correct messenger type. Supports type: 'telegram'");
-        }
+        break;
+    }
+    default: {
+        throw new Error("Provide a correct command. Supported types: 'set-webhook'");
     }
 }
