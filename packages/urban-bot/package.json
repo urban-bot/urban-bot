@@ -18,6 +18,9 @@
         "precommit": "lint-staged",
         "prepare": "npm run build"
     },
+    "bin": {
+        "urban-bot": "./dist/bin/index.js"
+    },
     "keywords": [
         "bot",
         "chatbot",
@@ -36,6 +39,7 @@
         "@types/express": "4.17.6",
         "@types/jest": "25.2.1",
         "@types/lodash.debounce": "4.0.6",
+        "@types/node-fetch": "2.5.7",
         "@types/react": "16.9.34",
         "@types/react-reconciler": "0.18.0",
         "@typescript-eslint/eslint-plugin": "2.29.0",
@@ -58,7 +62,9 @@
     "dependencies": {
         "array-flatten": "3.0.0",
         "debounce-promise": "3.1.2",
+        "dotenv": "8.2.0",
         "express": "4.17.1",
+        "node-fetch": "2.6.0",
         "react-reconciler": "0.25.1"
     },
     "peerDependencies": {
