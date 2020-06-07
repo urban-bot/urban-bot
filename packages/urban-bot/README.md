@@ -46,7 +46,6 @@ import { UrbanBotTelegram } from '@urban-bot/telegram';
 
 const bot = new UrbanBotTelegram({
     token: 'telegramToken',
-    isPolling: true,
 });
 
 render(
@@ -108,7 +107,6 @@ function App() {
 
 const urbanBotTelegram = new UrbanBotTelegram({
     token: 'telegramToken',
-    isPolling: true,
 });
 
 const urbanBotSlack = new UrbanBotSlack({
