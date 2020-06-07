@@ -18,7 +18,6 @@ import { UrbanBotTelegram } from '@urban-bot/telegram';
 
 const urbanBotTelegram = new UrbanBotTelegram({
     token: 'telegramToken',
-    isPolling: true,
 });
 
 render(
