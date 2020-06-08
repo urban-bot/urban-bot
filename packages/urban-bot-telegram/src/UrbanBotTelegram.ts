@@ -458,8 +458,6 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-img': {
                 const params = formatParamsForNewMessage(message);
 
-                console.log(message.data.title);
-
                 return this.client.sendPhoto(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
