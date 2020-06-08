@@ -45,4 +45,4 @@ from <a href="https://t.me/botfather" target="_blank">@BotFather</a>. Write to B
 ![telegram-token-env](assets/telegram-render.png)
 </details>
 
-4. Your bot is ready to launch! Run `npm run dev` and write something to your bot. It should work as default app with two commands `/echo` and `/logo`.
+4. Your bot is ready to launch! Run `npm run dev` in your terminal and write something to your bot. It should work as default app with two commands `/echo` and `/logo`.
