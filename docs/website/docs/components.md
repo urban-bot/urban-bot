@@ -5,7 +5,7 @@ sidebar_label: Components
 ---
 **Components are used to send messages to users.**  
 
-<a class="button" href="https://github.com/urban-bot/urban-bot/tree/master/examples/base/src" target="_blank">Examples</a>
+<a href="https://github.com/urban-bot/urban-bot/tree/master/examples/base/src" target="_blank">**Examples**</a>
 
 All variables you can import from `@urban-bot/core`. Don't forget to import `React` everywhere you use `JSX` syntax.
 ```javascript
