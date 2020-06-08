@@ -1,5 +1,8 @@
 {
     "docs": {
+        "Getting Started": [
+            "getting-started"
+        ],
         "API": [
             "components",
             "hooks",
