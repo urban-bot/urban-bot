@@ -33,7 +33,7 @@ from <a href="https://t.me/botfather" target="_blank">@BotFather</a>. Write to B
 
 ![alt-text](assets/telegram-token.gif)
 
-2. Then open your app which you have install via [`create-urban-bot`](#installation) and paste the telegram token to `.env`.
+2. Then open the starter which you have install via [`create-urban-bot`](#installation) and paste the telegram token to `.env`.
 <details>
 <summary>telegram token in .env</summary>
 ![telegram-token-env](assets/telegram-token-env.png)
