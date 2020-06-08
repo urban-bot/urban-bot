@@ -3,7 +3,11 @@ id: getting-started
 title: Getting Started
 sidebar_label: Getting Started
 ---
-Urban Bot is a library that allows easily to develop complex chatbots on any platform. It uses <a href="https://github.com/facebook/react" target="_blanck">**React**</a> so you can use all advantages like a declarative programming, rich ecosystem, and easy reusing different parts of applications. Urban Bot uses **[components](components.md)** to send messages to users and **[hooks](hooks.md)** to subscribe to messages from users.
+Urban Bot is a library that allows easily to develop complex chatbots on any platform. 
+
+It uses <a href="https://github.com/facebook/react" target="_blanck">**React**</a> so you can use all advantages like a declarative programming, "client-side rendering", rich ecosystem, and easy reusing different parts of applications. 
+
+Urban Bot uses **[components](components.md)** to send messages to users and **[hooks](hooks.md)** to subscribe to messages from users.
 
 ## Installation
 The easiest way to start using Urban Bot is our starter.
