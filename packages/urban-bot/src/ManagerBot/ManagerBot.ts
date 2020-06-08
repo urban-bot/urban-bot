@@ -109,16 +109,16 @@ export class ManagerBot<BotType extends UrbanBotType = UrbanBotType> {
             throw new Error('Specify chatId via managerBot.addChat(chatId) to sendMessage for specific chat');
         }
 
-        return chatById.promiseQueue.next<BotType['MessageMeta']>(() => {
+        return chatById.promiseQueue.next<BotType['MessageMeta']>(async () => {
             try {
-                return this.bot.sendMessage(message);
+                return await this.bot.sendMessage(message);
             } catch (e) {
                 console.error(e);
             }
         });
     }
 
-    updateMessage(message: UrbanExistingMessage<BotType>) {
+    async updateMessage(message: UrbanExistingMessage<BotType>) {
         if (this.bot.updateMessage === undefined) {
             console.error(
                 `'${this.bot.type}' doesn't support updating message. Provide isNewMessageEveryRender prop to Root component`,
@@ -128,13 +128,13 @@ export class ManagerBot<BotType extends UrbanBotType = UrbanBotType> {
         }
 
         try {
-            return this.bot.updateMessage(message);
+            return await this.bot.updateMessage(message);
         } catch (e) {
             console.error(e);
         }
     }
 
-    deleteMessage(message: UrbanExistingMessage<BotType>) {
+    async deleteMessage(message: UrbanExistingMessage<BotType>) {
         if (this.bot.deleteMessage === undefined) {
             console.error(
                 `'${this.bot.type}' doesn't support deleting message. Provide isNewMessageEveryRender prop to Root component`,
@@ -144,7 +144,7 @@ export class ManagerBot<BotType extends UrbanBotType = UrbanBotType> {
         }
 
         try {
-            return this.bot.deleteMessage(message);
+            return await this.bot.deleteMessage(message);
         } catch (e) {
             console.error(e);
         }
