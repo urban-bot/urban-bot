@@ -23,11 +23,17 @@ npx create-urban-bot my-app --template js
 ```
 _(to use `npx` you need npm 5.2+ and higher, see <a href="https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f" target="_blank">instructions for older npm versions</a>)_
 
-After downloading your new app is inside `my-app` directory where you ran the command.
+After downloading your new app will be inside `my-app` directory where you ran the command.
 
 Now we need to set up specific messengers to start work with them.
 ## Telegram
-#### Local development
+### Local development
+#### Video instruction
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WqyOCZMDSpg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#### Steps
+
 1. To start work with <a href="https://telegram.org/" target="_blank">telegram</a> you have to get <a href="https://core.telegram.org/bots#6-botfather" target="_blank">telegram token</a>
 from <a href="https://t.me/botfather" target="_blank">@BotFather</a>. Write to BotFather `/newbot`, write display name of your new bot, then username and you should get telegram token.
 
