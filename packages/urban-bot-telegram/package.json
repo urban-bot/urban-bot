@@ -57,7 +57,7 @@
     "express": "4.17.1"
   },
   "peerDependencies": {
-    "@urban-bot/core": "^0.0.8"
+    "@urban-bot/core": "^0.0.9"
   },
   "repository": {
     "type": "git",
