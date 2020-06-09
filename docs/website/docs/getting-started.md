@@ -23,7 +23,7 @@ npx create-urban-bot my-app --template js
 ```
 _(to use `npx` you need npm 5.2+ and higher, see <a href="https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f" target="_blank">instructions for older npm versions</a>)_
 
-After downloading your new app will be inside `my-app` directory.
+After downloading your new app is inside `my-app` directory where you ran the command.
 
 Now we need to set up specific messengers to start work with them.
 ## Telegram
@@ -33,16 +33,16 @@ from <a href="https://t.me/botfather" target="_blank">@BotFather</a>. Write to B
 
 ![alt-text](assets/telegram-token.gif)
 
-2. Then open the starter which you have install via [`create-urban-bot`](#installation) and paste the telegram token to `.env`.
+2. Then open `my-app` directory which you have install via [`create-urban-bot`](#installation) and paste the telegram token to `.env` file.
 <details>
-<summary>telqegram token in .env</summary>
+<summary>telegram token in .env</summary>
 ![telegram-token-env](assets/telegram-token-env.png)
 </details>
 
-3. After this go to `src/index.ts` or `src/index.js` and uncomment `// import './render/telegram';`
+3. After this open `src/index.ts` or `src/index.js` and uncomment `// import './render/telegram';`
 <details>
 <summary>src/index</summary>
 ![telegram-token-env](assets/telegram-render.png)
 </details>
 
-4. Your bot is ready to launch! Run `npm run dev` in your terminal and write something to your bot. It should work as default app with two commands `/echo` and `/logo`.
+4. Your bot is ready to launch! Run `npm run dev` in `my-app` directory and write something to your bot. It should work as default app with two commands `/echo` and `/logo`.
