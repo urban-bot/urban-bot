@@ -43,10 +43,6 @@ import {
 } from './types';
 import express from 'express';
 
-// For disabling console deprecated messages
-process.env.NTBA_FIX_319 = 'true';
-process.env.NTBA_FIX_350 = 'true';
-
 export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
     payload?: Payload;
