@@ -40,24 +40,6 @@ npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
 
 ## Example
-### Hello, World!
-```javascript
-import React from 'react';
-import { render, Root, Text } from '@urban-bot/core';
-import { UrbanBotTelegram } from '@urban-bot/telegram';
-
-const bot = new UrbanBotTelegram({
-    token: 'telegramToken',
-});
-
-render(
-    <Root bot={bot}>
-        <Text>Hello, world!</Text>
-    </Root>
-);
-```
-
-### With Router
 ![](files/telegram-gif.gif)
 ![](files/slack-gif.gif)
 ```javascript
