@@ -38,24 +38,6 @@ Or install manually:
 npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
 ## Example
-### Hello, World!
-```javascript
-import React from 'react';
-import { render, Root, Text } from '@urban-bot/core';
-import { UrbanBotTelegram } from '@urban-bot/telegram';
-
-const bot = new UrbanBotTelegram({
-    token: 'telegramToken',
-});
-
-render(
-    <Root bot={bot}>
-        <Text>Hello, world!</Text>
-    </Root>
-);
-```
-
-### With Router
 ![](https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/telegram-gif.gif)
 ![](https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/slack-gif.gif)
 ```javascript
