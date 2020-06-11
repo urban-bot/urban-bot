@@ -1,0 +1,5 @@
+{
+    "watch": ["src", "../../packages"],
+    "ext": "ts,tsx,js,jsx",
+    "exec": "tsc && node --inspect ./dist/index.js"
+}
