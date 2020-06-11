@@ -3,7 +3,7 @@ import { getRandomId } from './getRandomId';
 import { Button, ButtonProps } from '../components/ButtonGroup';
 import { OtherProps } from '../types/common';
 
-type FormattedButton = OtherProps & {
+export type FormattedButton = OtherProps & {
     id: string;
     text: string;
     // FIXME describe type for onClick?
