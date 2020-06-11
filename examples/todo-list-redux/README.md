@@ -3,7 +3,7 @@
 An example of how to create a simple todo list with Urban Bot and Redux.
 
 ![](../../files/todo-list.gif)
-```jsx
+```javascript
 import React from 'react';
 import { useText, Button, ButtonGroup, Text } from '@urban-bot/core';
 import { Provider, useDispatch, useSelector } from 'react-redux';
