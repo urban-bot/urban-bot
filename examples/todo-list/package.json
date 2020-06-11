@@ -1,8 +1,8 @@
 {
-    "name": "urban-bot-example-base",
+    "name": "urban-bot-example-todo-list",
     "version": "0.0.9",
     "private": true,
-    "description": "urban bot base example",
+    "description": "urban bot todo-list example",
     "files": [
         "dist/**/*"
     ],
@@ -52,6 +52,6 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/urban-bot/urban-bot.git",
-        "directory": "examples/base"
+        "directory": "examples/todo-list"
     }
 }
