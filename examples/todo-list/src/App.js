@@ -49,16 +49,16 @@ function TodoList() {
         addTodo(text);
     });
 
+    if (todos.length === 0) {
+        return <Text>Todo list is empty</Text>;
+    }
+
     const title = todos.map((todo) => (
         <>
             {todo.isCompleted ? <s>{todo.text}</s> : todo.text}
             <br />
         </>
     ));
-
-    if (todos.length === 0) {
-        return <Text>Todo list is empty</Text>;
-    }
 
     const todosButtons = todos.map(({ text, id }) => (
         <Button key={id} onClick={() => clickTodo(id)}>
