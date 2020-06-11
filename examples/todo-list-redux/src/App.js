@@ -1,6 +1,6 @@
 import React from 'react';
 import { useText, Button, ButtonGroup, Text } from '@urban-bot/core';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux/lib/alternate-renderers';
 import { store } from './redux/store';
 import { addTodo, deleteTodo, toggleMode, toggleTodo } from './redux/actions';
 import { DELETE_TODOS_MODE } from './redux/constants';
