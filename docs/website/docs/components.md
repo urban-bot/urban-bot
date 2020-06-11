@@ -498,7 +498,24 @@ Required wrapper for buttons.
     ]}  
 </ButtonGroup>  
 ```  
-  
+#### maxColumns
+> Maximum buttons in one line.
+###### optional
+`number`
+
+```jsx
+<ButtonGroup title="Buttons" maxColumns={2}>  
+    <Button>1</Button>  
+    <Button>2</Button>
+    <Button>3</Button>  
+    <Button>4</Button>  
+</ButtonGroup>
+```  
+Will be shown as:
+```jsx
+<Button>1</Button><Button>2</Button>
+<Button>3</Button><Button>4</Button>  
+```
 #### isReplyButtons  
 > Send button name as text after every click.
 ###### optional
