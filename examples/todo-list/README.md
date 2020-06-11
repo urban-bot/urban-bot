@@ -3,7 +3,7 @@
 An example of how to create a simple todo list with Urban Bot.
 
 ![](../../files/todo-list.gif)
-```jsx
+```javascript
 import React, { useState } from 'react';
 import { useText, Button, ButtonGroup, Text } from '@urban-bot/core';
 
