@@ -12,3 +12,7 @@ export const deleteTodo = (id) => ({
     type: 'DELETE_TODO',
     id,
 });
+
+export const toggleMode = () => ({
+    type: 'TOGGLE_MODE',
+});

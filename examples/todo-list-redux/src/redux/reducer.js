@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { COMPLETE_TODOS_MODE, DELETE_TODOS_MODE } from './constants';
 
 export const todos = (state = [], action) => {
     switch (action.type) {
@@ -20,6 +21,18 @@ export const todos = (state = [], action) => {
     }
 };
 
+export const mode = (state = COMPLETE_TODOS_MODE, action) => {
+    switch (action.type) {
+        case 'TOGGLE_MODE': {
+            return state === DELETE_TODOS_MODE ? COMPLETE_TODOS_MODE : DELETE_TODOS_MODE;
+        }
+
+        default:
+            return state;
+    }
+};
+
 export const rootReducer = combineReducers({
     todos,
+    mode,
 });

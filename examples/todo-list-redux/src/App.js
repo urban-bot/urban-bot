@@ -2,15 +2,13 @@ import React from 'react';
 import { useText, Button, ButtonGroup, Text } from '@urban-bot/core';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from './redux/store';
-import { addTodo, deleteTodo, toggleTodo } from './redux/actions';
-
-const DELETE_TODOS_MODE = 'DELETE_TODOS_MODE';
-const COMPLETE_TODOS_MODE = 'COMPLETE_TODOS_MODE';
+import { addTodo, deleteTodo, toggleMode, toggleTodo } from './redux/actions';
+import { DELETE_TODOS_MODE } from './redux/constants';
 
 function TodoList() {
     const dispatch = useDispatch();
     const todos = useSelector((state) => state.todos);
-    const [mode, setMode] = React.useState(COMPLETE_TODOS_MODE);
+    const mode = useSelector((state) => state.mode);
 
     function clickTodo(id) {
         if (mode === DELETE_TODOS_MODE) {
@@ -18,10 +16,6 @@ function TodoList() {
         } else {
             dispatch(toggleTodo(id));
         }
-    }
-
-    function toggleMode() {
-        setMode(mode === DELETE_TODOS_MODE ? COMPLETE_TODOS_MODE : DELETE_TODOS_MODE);
     }
 
     useText(({ text }) => {
@@ -40,7 +34,7 @@ function TodoList() {
     ));
 
     const modeButton = (
-        <Button key={mode} onClick={toggleMode}>
+        <Button key={mode} onClick={() => dispatch(toggleMode())}>
             {mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
         </Button>
     );
