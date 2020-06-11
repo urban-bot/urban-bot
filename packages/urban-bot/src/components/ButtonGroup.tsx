@@ -12,7 +12,7 @@ export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
     isReplyButtons?: boolean;
     isNewMessageEveryRender?: boolean;
-    columns?: number;
+    maxColumns?: number;
     children: React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[] | React.ReactElement<ButtonProps>[][];
 };
 
@@ -24,7 +24,7 @@ export function ButtonGroup({
     disableNotification,
     replyToMessageId,
     forceReply,
-    columns,
+    maxColumns,
     isReplyButtons = false,
     ...otherProps
 }: ButtonGroupProps) {
@@ -38,8 +38,8 @@ export function ButtonGroup({
 
     let buttons = formatButtonElement(children);
 
-    if (typeof columns === 'number' && !Array.isArray(buttons[0])) {
-        buttons = groupFlatArray(buttons as FormattedButton[], columns);
+    if (typeof maxColumns === 'number' && !Array.isArray(buttons[0])) {
+        buttons = groupFlatArray(buttons as FormattedButton[], maxColumns);
     }
 
     const finalParseMode = getParseMode(title, parseMode, parseModeContext, bot.defaultParseMode);

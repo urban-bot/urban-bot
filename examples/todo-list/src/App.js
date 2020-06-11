@@ -67,7 +67,7 @@ function TodoList() {
     ));
 
     return (
-        <ButtonGroup title={title} columns={3}>
+        <ButtonGroup title={title} maxColumns={3}>
             <Button key={mode} onClick={toggleMode}>
                 {mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
             </Button>
