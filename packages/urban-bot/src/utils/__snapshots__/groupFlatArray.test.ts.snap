@@ -3,5 +3,3 @@
 exports[`groupFlatArray can't pass less than zero 1`] = `"groupLength should be more than zero"`;
 
 exports[`groupFlatArray can't pass zero 1`] = `"groupLength should be more than zero"`;
-
-exports[`groupFlatArray cant pass zero 1`] = `"groupLength should be more than zero"`;
