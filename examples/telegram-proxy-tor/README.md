@@ -3,7 +3,7 @@
 An example of how to bypass a blocking of an internet provider for Telegram.
 
 1. Download [Tor browser](https://www.torproject.org/download/).
-2. Enable Tor browser.
+2. Turn on Tor browser.
 3. Install [socks5-https-client](https://www.npmjs.com/package/socks5-https-client). 
   `npm i socks5-https-client --save`
 4. Add to code:
