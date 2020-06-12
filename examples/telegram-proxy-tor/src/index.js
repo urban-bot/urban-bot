@@ -18,7 +18,7 @@ if (!TELEGRAM_TOKEN) {
 const urbanBotTelegram = new UrbanBotTelegram({
     token: TELEGRAM_TOKEN,
     isPolling: isDevelopment,
-    // You should enable Tor browser to use this
+    // You should turn on Tor browser to use this
     request: {
         agentClass: Agent,
         agentOptions: {
