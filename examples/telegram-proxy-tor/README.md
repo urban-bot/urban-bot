@@ -1,6 +1,6 @@
 # Telegram Proxy Tor
 
-An example of how to bypass a blocking of an internet provider for Telegram.
+An example of how to bypass a blocking of an internet provider for local developing Telegram bot.
 
 1. Download [Tor browser](https://www.torproject.org/download/).
 2. Turn on Tor browser.
