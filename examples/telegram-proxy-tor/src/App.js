@@ -18,7 +18,7 @@ function Echo() {
 export function App() {
     return (
         <>
-            <Text>Welcome to Urban Bot! Type /echo or /logo.</Text>
+            <Text>Welcome to Urban Bot! Type /echo</Text>
             <Router>
                 <Route path="/echo">
                     <Echo />
