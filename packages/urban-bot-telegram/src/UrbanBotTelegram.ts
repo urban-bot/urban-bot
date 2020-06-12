@@ -55,6 +55,7 @@ export type UrbanBotTelegramType<Payload = TelegramPayload> = {
 export type TelegramOptions = {
     token: string;
     isPolling?: boolean;
+    [key: string]: any;
 };
 
 export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
@@ -65,8 +66,8 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     client: TelegramBot;
 
     constructor(public options: TelegramOptions) {
-        const { isPolling, token } = options;
-        this.client = new TelegramBot(token, isPolling ? { polling: true } : undefined);
+        const { isPolling, token, ...otherOptions } = options;
+        this.client = new TelegramBot(token, isPolling ? { polling: true, ...otherOptions } : undefined);
 
         this.client.on('text', (ctx) => this.handleMessage('text', ctx));
         this.client.on('callback_query', this.handleCallbackQuery);
