@@ -13,7 +13,6 @@
         "typecheck": "tsc --noEmit",
         "lint": "eslint \"./src/**\"",
         "lint:fix": "npm run lint -- --fix",
-        "precommit": "lint-staged",
         "prepare": "npm run build"
     },
     "authors": [
@@ -33,7 +32,6 @@
         "eslint-plugin-prettier": "3.1.3",
         "eslint-plugin-react": "7.19.0",
         "eslint-plugin-react-hooks": "3.0.0",
-        "lint-staged": "10.1.7",
         "nodemon": "2.0.3",
         "prettier": "2.0.5",
         "rimraf": "3.0.2",
