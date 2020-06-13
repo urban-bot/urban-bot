@@ -1,11 +1,11 @@
 {
-    "name": "telegram-proxy-tor",
+    "name": "urban-bot-example-todo-list-mobx",
     "version": "0.0.9",
-    "description": "way to bypass internet provider blocking using tor browser",
+    "description": "urban bot todo-list-mobx example",
     "repository": {
         "type": "git",
         "url": "https://github.com/urban-bot/urban-bot.git",
-        "directory": "examples/telegram-proxy-tor"
+        "directory": "examples/todo-list-mobx"
     },
     "license": "MIT",
     "main": "dist/index.js",
@@ -23,19 +23,24 @@
     "dependencies": {
         "@babel/core": "^7.10.2",
         "@babel/preset-env": "^7.10.2",
+        "babel-preset-mobx": "^2.0.0",
         "@babel/preset-react": "^7.10.1",
         "@urban-bot/core": "0.0.9",
+        "@urban-bot/facebook": "0.0.9",
+        "@urban-bot/slack": "0.0.9",
         "@urban-bot/telegram": "0.0.9",
         "babel-loader": "^8.1.0",
         "dotenv": "^8.2.0",
         "file-loader": "^6.0.0",
+        "mobx": "^5.15.4",
+        "mobx-react-lite": "^2.0.7",
         "react": "^16.13.1",
-        "socks5-https-client": "1.2.1",
         "webpack": "^4.43.0",
         "webpack-cli": "^3.3.11",
         "webpack-node-externals": "^1.7.2"
     },
     "devDependencies": {
+        "babel-eslint": "^10.1.0",
         "eslint": "^6.8.0",
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-import": "^2.20.2",
@@ -59,7 +64,8 @@
                     }
                 }
             ],
-            "@babel/react"
+            "@babel/react",
+            "mobx"
         ]
     },
     "prettier": {
