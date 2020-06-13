@@ -1,59 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useText, Button, ButtonGroup, Text } from '@urban-bot/core';
+import { observer } from 'mobx-react-lite';
+import { Provider, useStore } from './mobx/connect';
+import { store } from './mobx/store';
+import { DELETE_TODOS_MODE } from './mobx/Mode';
 
-const DELETE_TODOS_MODE = 'DELETE_TODOS_MODE';
-const COMPLETE_TODOS_MODE = 'COMPLETE_TODOS_MODE';
+const TodoListView = observer(function TodoListView() {
+    const { todoList, mode } = useStore();
 
-function TodoList() {
-    const [mode, setMode] = React.useState(COMPLETE_TODOS_MODE);
-    const [todos, setTodos] = useState([]);
-
-    function addTodo(text) {
-        setTodos([...todos, { text, id: Math.random(), isCompleted: false }]);
-    }
-
-    function deleteTodo(deletedId) {
-        const newTodos = todos.filter(({ id }) => id !== deletedId);
-
-        setTodos(newTodos);
-    }
-
-    function toggleTodo(toggledId) {
-        const newTodos = todos.map((todo) => {
-            if (todo.id === toggledId) {
-                return {
-                    ...todo,
-                    isCompleted: !todo.isCompleted,
-                };
-            }
-
-            return todo;
-        });
-
-        setTodos(newTodos);
-    }
-
-    function toggleMode() {
-        setMode(mode === DELETE_TODOS_MODE ? COMPLETE_TODOS_MODE : DELETE_TODOS_MODE);
-    }
-
-    function clickTodo(id) {
-        if (mode === DELETE_TODOS_MODE) {
-            deleteTodo(id);
+    function clickTodo(todo) {
+        if (mode.mode === DELETE_TODOS_MODE) {
+            todoList.deleteTodo(todo);
         } else {
-            toggleTodo(id);
+            todo.toggle();
         }
     }
 
     useText(({ text }) => {
-        addTodo(text);
+        todoList.addTodo(text);
     });
 
-    if (todos.length === 0) {
+    if (todoList.todos.length === 0) {
         return <Text>Todo list is empty</Text>;
     }
 
-    const title = todos.map((todo) => (
+    const title = todoList.todos.map((todo) => (
         <>
             {todo.isCompleted ? <s>{todo.text}</s> : todo.text}
             <br />
@@ -61,14 +32,14 @@ function TodoList() {
     ));
 
     const modeButton = (
-        <Button key={mode} onClick={toggleMode}>
-            {mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
+        <Button key={mode.mode} onClick={() => mode.toggle()}>
+            {mode.mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
         </Button>
     );
 
-    const todosButtons = todos.map(({ text, id }) => (
-        <Button key={id} onClick={() => clickTodo(id)}>
-            {text}
+    const todosButtons = todoList.todos.map((todo) => (
+        <Button key={todo.id} onClick={() => clickTodo(todo)}>
+            {todo.text}
         </Button>
     ));
 
@@ -77,13 +48,13 @@ function TodoList() {
             {[modeButton, ...todosButtons]}
         </ButtonGroup>
     );
-}
+});
 
 export function App() {
     return (
-        <>
+        <Provider value={store}>
             <Text>Welcome to todo list. Type your new todo.</Text>
-            <TodoList />
-        </>
+            <TodoListView />
+        </Provider>
     );
 }

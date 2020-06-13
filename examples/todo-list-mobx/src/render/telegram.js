@@ -20,7 +20,7 @@ const urbanBotTelegram = new UrbanBotTelegram({
 });
 
 render(
-    <Root bot={urbanBotTelegram} port={PORT ? Number(PORT) : undefined}>
+    <Root bot={urbanBotTelegram} port={PORT ? Number(PORT) : undefined} isNewMessageEveryRender={false}>
         <App />
     </Root>,
     () => console.log('telegram bot has started'),
