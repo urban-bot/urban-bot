@@ -57,7 +57,7 @@ from <a href="https://t.me/botfather" target="_blank">@BotFather</a>. Write to B
 
 7. Run `git init` in your local urban-bot app folder if you did not.
 8. Add git remote by run `heroku git:remote -a <YOUR_APP_NAME>`.
-9. Deploy
+9. Deploy.
 ```shell
 git add .
 git commit -am "make it better"
