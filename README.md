@@ -24,7 +24,7 @@ The universal chatbot library based on [React](https://github.com/facebook/react
  [![](files/vk-logo.svg)](https://www.vk.com/)
  [![](files/viber-logo.svg)](https://www.viber.com/)
 
-## [Get Started](https://urban-bot.now.sh/docs/getting-started.html)
+## [Get Started](https://urban-bot.now.sh/docs/intro.html)
 ## [API](https://urban-bot.now.sh/docs/components.html)
 
 ## Installation

@@ -1,7 +1,8 @@
 {
     "docs": {
         "Getting Started": [
-            "getting-started"
+            "intro",
+            "get-started-telegram"
         ],
         "API": [
             "components",
