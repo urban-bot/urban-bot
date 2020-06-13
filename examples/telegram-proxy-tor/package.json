@@ -1,6 +1,7 @@
 {
     "name": "telegram-proxy-tor",
     "version": "0.0.9",
+    "private": true,
     "description": "way to bypass internet provider blocking using tor browser",
     "repository": {
         "type": "git",

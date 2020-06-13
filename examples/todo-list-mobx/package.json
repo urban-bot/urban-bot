@@ -1,6 +1,7 @@
 {
     "name": "urban-bot-example-todo-list-mobx",
     "version": "0.0.9",
+    "private": true,
     "description": "urban bot todo-list-mobx example",
     "repository": {
         "type": "git",
