@@ -7,7 +7,7 @@ export class Mode {
     @observable mode = COMPLETE_TODOS_MODE;
 
     @action
-    toggle = () => {
+    toggle() {
         this.mode = this.mode === DELETE_TODOS_MODE ? COMPLETE_TODOS_MODE : DELETE_TODOS_MODE;
-    };
+    }
 }

@@ -1,4 +1,4 @@
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 import Todo from './Todo';
 
 export class TodoList {
@@ -9,17 +9,12 @@ export class TodoList {
     }
 
     @action
-    addTodo = (text) => {
+    addTodo(text) {
         this.todos.push(new Todo(text));
-    };
+    }
 
     @action
-    deleteTodo = (deletedTodo) => {
+    deleteTodo(deletedTodo) {
         this.todos.splice(this.todos.indexOf(deletedTodo), 1);
-    };
-
-    @computed
-    get completedTodos() {
-        return this.todos.filter((todo) => todo.isDone);
     }
 }

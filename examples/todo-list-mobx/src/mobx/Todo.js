@@ -11,7 +11,7 @@ export default class Todo {
     }
 
     @action
-    toggle = () => {
+    toggle() {
         this.isCompleted = !this.isCompleted;
-    };
+    }
 }
