@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
+import { URL } from 'url';
 
 dotenv.config();
 
@@ -13,6 +14,8 @@ switch (command) {
         if (!webhookHost) {
             throw new Error('Provide WEBHOOK_HOST to .env');
         }
+
+        const webhookHostURL = new URL(webhookHost);
 
         const messengerType = process.argv[3];
 
@@ -50,7 +53,7 @@ switch (command) {
                         console.log('Webhook is not set');
                         console.error(e);
                     }
-                })(webhookHost, telegramToken);
+                })(webhookHostURL.origin, telegramToken);
 
                 break;
             }
