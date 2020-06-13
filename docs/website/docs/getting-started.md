@@ -52,3 +52,7 @@ from <a href="https://t.me/botfather" target="_blank">@BotFather</a>. Write to B
 </details>
 
 4. Your bot is ready to launch! Run `npm run dev` in `my-app` directory and write something to your bot. It should work as default app with two commands `/echo` and `/logo`.
+
+> If you see error looks like 
+> `error: [polling_error] {"code":"EFATAL","message":"EFATAL: Error: connect ECONNREFUSED 127.0.0.1:9150"}`
+> probably an internet provider blocks Telegram connection. You need to use a VPN, or you could use the Tor browser, see the [example](https://github.com/urban-bot/urban-bot/tree/master/examples/telegram-proxy-tor).
