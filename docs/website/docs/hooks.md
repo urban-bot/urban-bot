@@ -165,6 +165,20 @@ function SomeComponent() {
     // ...
 }
 ```
+If you use `typescript` to get the right type pass `UrbanBot*` as generic. 
+```typescript
+// ...
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+
+function SomeComponent() {
+    const { bot: telegramBot } = useBotContext<UrbanBotTelegram>();
+ 
+    // client will be with all methods types
+    telegramBot.client.kickChatMember(/* ... */);
+
+    // ...
+}
+```
 If you develop some messengers you can divide behavior by comparing type.
 ```jsx
 import { UrbanBotTelegram } from '@urban-bot/telegram';
@@ -183,20 +197,6 @@ function SomeComponent() {
         bot.client.conversations.kick(/* ... */);
     }
 
-
-    // ...
-}
-```
-If you use `typescript` to get the right type pass `UrbanBot*` as generic. 
-```typescript
-// ...
-import { UrbanBotTelegram } from '@urban-bot/telegram';
-
-function SomeComponent() {
-    const { bot: telegramBot } = useBotContext<UrbanBotTelegram>();
- 
-    // client will be with all methods types
-    telegramBot.client.kickChatMember(/* ... */);
 
     // ...
 }
