@@ -7,7 +7,7 @@ sidebar_label: Telegram
 Instruction on how to start developing Telegram bot.
 
 ## Local development
-### Video instruction
+### Video
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WqyOCZMDSpg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -38,6 +38,11 @@ from <a href="https://t.me/botfather" target="_blank">@BotFather</a>. Write to B
 
 ## Deploy
 ### Heroku
+#### Video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LttrosWEBPE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#### Steps
 1. Register on <a href="https://www.heroku.com" target="_blank">heroku</a> and install <a href="https://devcenter.heroku.com/articles/heroku-cli" target="_blank">heroku cli</a> and run `heroku login` in a terminal.
 2. Go to a <a href="https://dashboard.heroku.com/new-app" target="_blank">new app</a> and create a new.
 3. Go to your local urban-bot app folder if you have already one. For a new app do [the first three steps](#steps).
