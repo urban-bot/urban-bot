@@ -65,10 +65,10 @@ function SomeComponent() {
 `'TELEGRAM'` 
 
 #### client 
-> A client which you can use for call any Telegram <a href="https://core.telegram.org/bots/api#available-methods" target="_blank">API</a>.
+> A client which you can use for call any <a href="https://core.telegram.org/bots/api#available-methods" target="_blank">Telegram API</a>.
 
 ###### required
-<a href="https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md" target="_blank">`NodeTelegramBotApi`</a>
+<a href="https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md" target="_blank">`node-telegram-bot-api`</a>
 ```jsx
 function SomeComponent() {
     const { bot } = useBotContext();

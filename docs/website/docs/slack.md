@@ -49,3 +49,39 @@ const urbanBotSlack = new UrbanBotSlack({
     token: 'xoxb-1034561432512-1264285621449-nadENxhBj2BfrMkxJ90cqbuz',
 });
 ```
+## Bot Instance
+You could get bot instance by `useBotContext`.
+```jsx
+function SomeComponent() {
+    const { bot } = useBotContext();
+
+    // ...
+}
+```
+#### type  
+> Bot type.
+
+###### required
+`'SLACK'` 
+
+#### client 
+> A client which you can use for call any <a href="https://api.slack.com/methods" target="_blank">Slack API</a>.
+
+###### required
+<a href="https://github.com/slackapi/node-slack-sdk/tree/master/packages/web-api" target="_blank">`slack/web-api`</a>
+```jsx
+function SomeComponent() {
+    const { bot } = useBotContext();
+    
+   useText(({ text, chat, from }) => {
+       if (text.includes('Fu**')) {
+           bot.client.conversations.kick({
+               channel: chat.id,
+               user: from.id,
+           });
+       }
+   });
+
+    // ...
+}
+```
