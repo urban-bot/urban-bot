@@ -8,10 +8,14 @@ import {
     UrbanListenerByNativeEventWithSpreadPayload,
     UrbanEventListener,
     UrbanBotType,
+    UrbanBot,
 } from '../types';
 
-export function useBotContext<BotType extends UrbanBotType>(): BotContextType<BotType> {
-    const BotContext = getBotContext<BotType>();
+export function useBotContext<
+    Bot extends UrbanBot = UrbanBot,
+    BotType extends UrbanBotType = UrbanBotType
+>(): BotContextType<Bot, BotType> {
+    const BotContext = getBotContext<Bot, BotType>();
     const botContext = React.useContext(BotContext);
 
     if (botContext === undefined) {
@@ -35,7 +39,7 @@ function useSubscribe<
     BotType extends UrbanBotType,
     Event extends UrbanSyntheticEvent<BotType> = UrbanSyntheticEvent<BotType>
 >(listener: UrbanListener<Event>, event: Event['type']) {
-    const { chat, $$managerBot } = useBotContext<BotType>();
+    const { chat, $$managerBot } = useBotContext<UrbanBot, BotType>();
 
     React.useEffect(() => {
         $$managerBot.on(event, listener, chat.id);
