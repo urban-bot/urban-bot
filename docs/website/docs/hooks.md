@@ -101,6 +101,21 @@ function SomeComponent() {
     // ...
 }
 ```
+If you use `typescript` to get the right type pass `UrbanBot*Type` as generic. 
+```jsx
+// ...
+import { UrbanBotFacebookType } from '@urban-bot/facebook';
+
+function SomeComponent() {
+    useImage<UrbanBotFacebookType>(({ nativeEvent }) => {
+        const senderId = nativeEvent?.payload?.entry[0].messaging[0].sender.id;
+       
+        console.log(`Some data from native facebook event ${senderId}`);
+    });
+
+    // ...
+}
+```
 If you develop some messengers you can divide behavior by comparing type.
 ```jsx
 import { UrbanBotTelegram } from '@urban-bot/telegram';
@@ -160,7 +175,21 @@ function DisplayChatId() {
 function SomeComponent() {
     const { bot: telegramBot } = useBotContext();
 
-    telegramBot.bot.kickChatMember(/* ... */);
+    telegramBot.client.kickChatMember(/* ... */);
+
+    // ...
+}
+```
+If you use `typescript` to get the right type pass `UrbanBot*` as generic. 
+```typescript
+// ...
+import { UrbanBotTelegram } from '@urban-bot/telegram';
+
+function SomeComponent() {
+    const { bot: telegramBot } = useBotContext<UrbanBotTelegram>();
+ 
+    // client will be with all methods types
+    telegramBot.client.kickChatMember(/* ... */);
 
     // ...
 }

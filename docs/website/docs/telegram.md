@@ -49,3 +49,36 @@ const urbanBotTelegram = new UrbanBotTelegram({
     isPolling: true,
 });
 ```
+## Bot Instance
+You could get bot instance by `useBotContext`.
+```jsx
+function SomeComponent() {
+    const { bot } = useBotContext();
+
+    // ...
+}
+```
+#### type  
+> Bot type.
+
+###### required
+`'TELEGRAM'` 
+
+#### client 
+> A client which you can use for call any <a href="https://core.telegram.org/bots/api#available-methods" target="_blank">Telegram API</a>.
+
+###### required
+<a href="https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md" target="_blank">`node-telegram-bot-api`</a>
+```jsx
+function SomeComponent() {
+    const { bot } = useBotContext();
+    
+    useText(({ text, chat, from }) => {
+        if (text.includes('Fu**')) {
+            bot.client.kickChatMember(chat.id, from.id);
+        }
+    });
+
+    // ...
+}
+```
