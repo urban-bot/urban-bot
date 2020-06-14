@@ -7,8 +7,8 @@ import { UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
 import { getExpressApp, listen } from '../expressApp';
 
-export type ChatProps<BotType extends UrbanBotType> = {
-    bot: UrbanBot<BotType>;
+export type ChatProps<Bot extends UrbanBot, BotType extends UrbanBotType> = {
+    bot: Bot;
     chat: UrbanChat;
     isNewMessageEveryRender: boolean;
     parseMode?: UrbanParseMode;
@@ -17,15 +17,15 @@ export type ChatProps<BotType extends UrbanBotType> = {
     key: string;
 };
 
-function Chat<BotType extends UrbanBotType>({
+function Chat<Bot extends UrbanBot, BotType extends UrbanBotType>({
     bot,
     children,
     isNewMessageEveryRender,
     chat,
     parseMode,
     $$managerBot,
-}: ChatProps<BotType>) {
-    const BotContext = getBotContext<BotType>();
+}: ChatProps<Bot, BotType>) {
+    const BotContext = getBotContext<Bot, BotType>();
 
     return (
         <BotContext.Provider
@@ -39,8 +39,8 @@ function Chat<BotType extends UrbanBotType>({
     );
 }
 
-export type RootProps<BotType extends UrbanBotType> = {
-    bot: UrbanBot<BotType>;
+export type RootProps<Bot extends UrbanBot> = {
+    bot: Bot;
     children: React.ReactNode;
     sessionTimeSeconds?: number;
     isNewMessageEveryRender?: boolean;
@@ -48,14 +48,14 @@ export type RootProps<BotType extends UrbanBotType> = {
     port?: number;
 };
 
-export function Root<BotType extends UrbanBotType>({
+export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotType = UrbanBotType>({
     children,
     bot,
     sessionTimeSeconds = 60 * 60 * 24 * 7,
     isNewMessageEveryRender = true,
     parseMode,
     port = 8080,
-}: RootProps<BotType>) {
+}: RootProps<Bot>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map());
     const chatsRef = React.useRef(chats);
