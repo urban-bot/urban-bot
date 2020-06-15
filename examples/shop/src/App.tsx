@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, Route, Router } from '@urban-bot/core';
 import { Bucket } from './pages/Bucket';
 import { Provider, store } from './store/connect';
-import { Catalog } from './pages/Products';
+import { Catalog } from './pages/Catalog';
 
 export function App() {
     return (
