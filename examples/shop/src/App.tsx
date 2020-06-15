@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button, ButtonGroup, Route, Router } from '@urban-bot/core';
 import { Bucket } from './pages/Bucket';
-import { Provider, store } from './store/connect';
 import { Catalog } from './pages/Catalog';
+import { ProductsProvider } from './store/ProductsProvider';
 
 export function App() {
     return (
-        <Provider value={store}>
+        <ProductsProvider>
             <ButtonGroup title={"Welcome to Shop! Type 'bucket' or 'catalog'."} isReplyButtons>
                 <Button>bucket</Button>
                 <Button>catalog</Button>
@@ -19,6 +19,6 @@ export function App() {
                     <Catalog />
                 </Route>
             </Router>
-        </Provider>
+        </ProductsProvider>
     );
 }
