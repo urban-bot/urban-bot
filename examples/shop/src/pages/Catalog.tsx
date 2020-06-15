@@ -41,9 +41,17 @@ export function Catalog() {
     const addedProduct = addedProducts.get(activeProduct.id);
     const bucketCount = addedProduct ? addedProduct.count : 0;
 
+    const title = (
+        <>
+            <i>{activeProduct.name}</i>
+            <br />
+            Price: <b>💲{activeProduct.price}</b>
+        </>
+    );
+
     return (
         <Image
-            title={activeProduct.name}
+            title={title}
             file={activeProduct.images[imageIndex]}
             buttons={
                 <ButtonGroup maxColumns={2}>

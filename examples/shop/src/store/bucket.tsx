@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import { Product } from '../types';
 
-type AddedProduct = Product & { count: number };
+export type AddedProduct = Product & { count: number };
 
 export type AddedProducts = Map<number, AddedProduct>;
 
