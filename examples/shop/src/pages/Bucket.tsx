@@ -22,6 +22,8 @@ export function Bucket() {
                     </React.Fragment>
                 );
             })}
+            -----------------------------------
+            <br />
             Total count: <b>💲{totalCount}</b>
         </Text>
     );
