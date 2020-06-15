@@ -10,7 +10,12 @@ module.exports = (env, argv) => ({
     },
     devtool: argv.mode === 'development' ? 'eval-cheap-module-source-map' : undefined,
     plugins: [],
-    externals: [nodeExternals()],
+    externals: [
+        nodeExternals(),
+        nodeExternals({
+            modulesDir: path.resolve(__dirname, '../../node_modules'),
+        }),
+    ],
     module: {
         rules: [
             {
@@ -22,7 +27,7 @@ module.exports = (env, argv) => ({
             },
             {
                 test: /.+/,
-                exclude: /node_modules|(\.(jsx?|tsx?)$)/,
+                exclude: /node_modules|(\.(jsx?|tsx?|json)$)/,
                 use: [
                     {
                         loader: 'file-loader',
