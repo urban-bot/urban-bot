@@ -44,6 +44,8 @@ function formatReplyMarkupForNewMessage(message: UrbanMessage) {
         if (message.data.isReplyButtons === true) {
             return {
                 keyboard: buttons,
+                resize_keyboard:
+                    typeof message.data.isResizedKeyboard === 'boolean' ? message.data.isResizedKeyboard : undefined,
             };
         }
 

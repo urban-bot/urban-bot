@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, RouteProps } from './Route';
+import { RouteProps } from './Route';
 
 export const matchPattern = (path: string, pattern: string | RegExp) => {
     if (!pattern) {
@@ -14,8 +14,5 @@ export const matchPattern = (path: string, pattern: string | RegExp) => {
 };
 
 export const matchChild = (path: string) => (child: React.ReactElement<RouteProps>) => {
-    if (child.type !== Route) {
-        throw new Error('Pass only Route component to Router');
-    }
     return matchPattern(path, child.props.path);
 };

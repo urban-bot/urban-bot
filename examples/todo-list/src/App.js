@@ -60,12 +60,6 @@ function TodoList() {
         </>
     ));
 
-    const modeButton = (
-        <Button key={mode} onClick={toggleMode}>
-            {mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
-        </Button>
-    );
-
     const todosButtons = todos.map(({ text, id }) => (
         <Button key={id} onClick={() => clickTodo(id)}>
             {text}
@@ -74,7 +68,10 @@ function TodoList() {
 
     return (
         <ButtonGroup title={title} maxColumns={3}>
-            {[modeButton, ...todosButtons]}
+            <Button key={mode} onClick={toggleMode}>
+                {mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Complete mode'}
+            </Button>
+            {todosButtons}
         </ButtonGroup>
     );
 }
