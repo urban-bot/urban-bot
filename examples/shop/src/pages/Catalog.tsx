@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, ButtonGroup, Button } from '@urban-bot/core';
 import { useStore } from '../store/connect';
 import { calculateCircularIndex } from '../utils';
 
 export function Catalog() {
-    const [productIndex, setProductIndex] = React.useState(0);
-    const [imageIndex, setImageIndex] = React.useState(0);
-
+    const [productIndex, setProductIndex] = useState(0);
+    const [imageIndex, setImageIndex] = useState(0);
     const { products } = useStore();
     const { images } = products[productIndex];
 
@@ -32,7 +31,7 @@ export function Catalog() {
                 <ButtonGroup maxColumns={2}>
                     <Button onClick={previousProduct}>⬅️ prev</Button>
                     <Button onClick={nextProduct}>next ➡️</Button>
-                    <Button onClick={nextImage}>🖼️</Button>
+                    {images.length > 1 ? <Button onClick={nextImage}>🖼️</Button> : null}
                 </ButtonGroup>
             }
         />
