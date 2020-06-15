@@ -47,7 +47,7 @@ const TodoListView = observer(function TodoListView() {
     return (
         <ButtonGroup title={title} maxColumns={3}>
             <Button key={mode.mode} onClick={() => mode.toggle()}>
-                {mode.mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
+                {mode.mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Complete mode'}
             </Button>
             {todosButtons}
         </ButtonGroup>

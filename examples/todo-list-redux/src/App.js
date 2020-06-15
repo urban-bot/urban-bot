@@ -42,7 +42,7 @@ function TodoList() {
     return (
         <ButtonGroup title={title} maxColumns={3}>
             <Button key={mode} onClick={() => dispatch(toggleMode())}>
-                {mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
+                {mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Complete mode'}
             </Button>
             {todosButtons}
         </ButtonGroup>
