@@ -4,6 +4,25 @@ import { Text } from '@urban-bot/core';
 
 export function Bucket() {
     const { addedProducts } = useBucket();
+    const addedProductsArray = Array.from(addedProducts.values());
 
-    return <Text>{addedProducts.size}</Text>;
+    const totalCount = addedProductsArray.reduce((totalCount, { count, price }) => totalCount + count * price, 0);
+
+    if (addedProductsArray.length === 0) {
+        return <Text>Bucket is empty</Text>;
+    }
+
+    return (
+        <Text>
+            {addedProductsArray.map((product) => {
+                return (
+                    <React.Fragment key={product.id}>
+                        <i>{product.name}</i> - <b>{product.count}</b>
+                        <br />
+                    </React.Fragment>
+                );
+            })}
+            Total count: <b>💲{totalCount}</b>
+        </Text>
+    );
 }
