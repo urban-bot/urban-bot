@@ -2,7 +2,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = (env, argv) => ({
-    entry: './src/index.js',
+    entry: './src/index.ts',
     mode: 'production',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -19,11 +19,9 @@ module.exports = (env, argv) => ({
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
+                test: /\.(jsx?|tsx?)$/,
+                use: 'ts-loader',
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                },
             },
             {
                 test: /.+/,
@@ -41,6 +39,6 @@ module.exports = (env, argv) => ({
     },
     target: 'node',
     resolve: {
-        extensions: ['.js', '.jsx', '.json'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     },
 });

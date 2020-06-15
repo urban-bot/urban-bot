@@ -10,7 +10,7 @@ import { UrbanCommand } from '../../types';
 let isCommandsInitialized = false;
 
 type RouterProps = {
-    children: React.ReactElement<RouteProps> | React.ReactElement<RouteProps>[];
+    children: React.ReactNode;
     withInitializeCommands?: boolean;
 };
 

@@ -11,9 +11,10 @@ import { groupFlatArray } from '../utils/groupFlatArray';
 export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
     isReplyButtons?: boolean;
+    isResizedKeyboard?: boolean;
     isNewMessageEveryRender?: boolean;
     maxColumns?: number;
-    children: React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[] | React.ReactElement<ButtonProps>[][];
+    children: React.ReactNode;
 };
 
 export function ButtonGroup({
@@ -36,7 +37,12 @@ export function ButtonGroup({
         bot,
     } = useBotContext();
 
-    let buttons = formatButtonElement(children);
+    const buttonElements = React.Children.toArray(children).filter(React.isValidElement) as
+        | React.ReactElement<ButtonProps>
+        | React.ReactElement<ButtonProps>[]
+        | React.ReactElement<ButtonProps>[][];
+
+    let buttons = formatButtonElement(buttonElements);
 
     if (typeof maxColumns === 'number' && !Array.isArray(buttons[0])) {
         buttons = groupFlatArray(buttons as FormattedButton[], maxColumns);
