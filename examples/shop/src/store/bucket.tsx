@@ -36,15 +36,17 @@ export function BucketProvider({ children }: BucketProviderProps) {
 
     function removeProduct(deletedProduct: Product) {
         if (addedProducts.has(deletedProduct.id)) {
-            const addedProduct = addedProducts.get(deletedProduct.id) as AddedProduct;
+            setAddedProducts((addedProducts) => {
+                const addedProduct = addedProducts.get(deletedProduct.id) as AddedProduct;
 
-            addedProduct.count -= 1;
+                addedProduct.count -= 1;
 
-            if (addedProduct.count === 0) {
-                addedProducts.delete(deletedProduct.id);
-            }
+                if (addedProduct.count === 0) {
+                    addedProducts.delete(deletedProduct.id);
+                }
 
-            return new Map(addedProducts);
+                return new Map(addedProducts);
+            });
         }
     }
 
