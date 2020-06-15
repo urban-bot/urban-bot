@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Batmobile",
+        "images": [
+            "https://www.lego.com/cdn/cs/set/assets/blt87fbfa1c763e4b82/76139_alt2.jpg?",
+            "https://www.lego.com/cdn/cs/set/assets/blt7feb13ac57833dfb/76139_alt3.jpg"
+        ]
+    },
+    {
+        "name": "Шлем штурмовика",
+        "images": [
+            "https://www.lego.com/cdn/cs/set/assets/bltaa2aa9896d86e9d6/75276_alt2.png",
+            "https://www.lego.com/cdn/cs/set/assets/blt9f4d3df1bb57563d/75276_alt3.png"
+        ]
+    },
+    {
+        "name": "Крипер и Оцелот",
+        "images": ["https://www.lego.com/cdn/cs/set/assets/blt4e593c2013aba83c/21156_alt2.jpg"]
+    }
+]
