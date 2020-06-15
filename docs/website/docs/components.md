@@ -516,6 +516,16 @@ Will be shown as:
 <Button>1</Button><Button>2</Button>
 <Button>3</Button><Button>4</Button>  
 ```
+#### isResizedKeyboard  
+> Not stretch buttons for all keyboard size.
+###### optional
+`boolean`
+
+```jsx
+<ButtonGroup isResizedKeyboard>
+    <Button>Resized</Button>
+</ButtonGroup>  
+```  
 #### isReplyButtons  
 > Send button name as text after every click.
 ###### optional
