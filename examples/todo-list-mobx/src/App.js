@@ -31,12 +31,6 @@ const TodoListView = observer(function TodoListView() {
         </>
     ));
 
-    const modeButton = (
-        <Button key={mode.mode} onClick={() => mode.toggle()}>
-            {mode.mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
-        </Button>
-    );
-
     const todosButtons = todoList.todos.map((todo) => (
         <Button key={todo.id} onClick={() => clickTodo(todo)}>
             {todo.text}
@@ -45,7 +39,10 @@ const TodoListView = observer(function TodoListView() {
 
     return (
         <ButtonGroup title={title} maxColumns={3}>
-            {[modeButton, ...todosButtons]}
+            <Button key={mode.mode} onClick={() => mode.toggle()}>
+                {mode.mode === DELETE_TODOS_MODE ? 'Delete mode' : 'Toggle mode'}
+            </Button>
+            {todosButtons}
         </ButtonGroup>
     );
 });
