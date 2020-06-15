@@ -53,6 +53,7 @@ export type UrbanMessageButtonsData = UrbanMessageCommonData & {
     title: string;
     buttons: UrbanButton[] | UrbanButton[][];
     isReplyButtons: boolean;
+    isResizedKeyboard?: boolean;
 };
 
 export type UrbanMessageButtons = UrbanMessageCommon & {

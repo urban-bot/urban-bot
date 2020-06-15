@@ -11,6 +11,7 @@ import { groupFlatArray } from '../utils/groupFlatArray';
 export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
     isReplyButtons?: boolean;
+    isResizedKeyboard?: boolean;
     isNewMessageEveryRender?: boolean;
     maxColumns?: number;
     children: React.ReactNode;

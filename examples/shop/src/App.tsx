@@ -9,7 +9,7 @@ export function App() {
     return (
         <ProductsProvider>
             <BucketProvider>
-                <ButtonGroup title={"Welcome to Shop! Type 'bucket' or 'catalog'."} isReplyButtons>
+                <ButtonGroup title={"Welcome to Shop! Type 'bucket' or 'catalog'."} isReplyButtons isResizedKeyboard>
                     <Button>bucket</Button>
                     <Button>catalog</Button>
                 </ButtonGroup>
