@@ -1,10 +1,10 @@
-<h1 align="center">Urban Bot</h2>
-
 <p align="center"><img src="files/logo.svg" alt=""></p>
 
 <p align="center"><a href="https://www.npmjs.com/package/@urban-bot/core"><img src="https://img.shields.io/npm/v/@urban-bot/core?logo=npm&amp;style=flat-square" alt="npm package"></a>
 <img src="https://github.com/urban-bot/urban-bot/workflows/Node.js%20CI/badge.svg" alt="Build">
 <a href="https://t.me/urbanbotjs"><img src="https://img.shields.io/badge/Community-Chat-blueChat?style=flat-square&amp;logo=telegram" alt="Community Chat"></a></p>
+
+<h2 align="center">Urban Bot</h2>
 
 The universal chatbot library based on [React](https://github.com/facebook/react).
 
