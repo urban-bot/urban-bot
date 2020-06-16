@@ -1,4 +1,4 @@
-[![npm package](https://img.shields.io/npm/v/@urban-bot/core?logo=npm&style=flat-square)](https://www.npmjs.com/package/@urban-bot/core)
+[![npm](https://badge.fury.io/js/%40urban-bot%2Fcore.svg)](https://badge.fury.io/js/%40urban-bot%2Fcore)
 ![Build](https://github.com/urban-bot/urban-bot/workflows/Node.js%20CI/badge.svg)
 [![Community Chat](https://img.shields.io/badge/Community-Chat-blueChat?style=flat-square&logo=telegram)](https://t.me/urbanbotjs)
 
