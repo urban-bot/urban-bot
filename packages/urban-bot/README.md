@@ -1,5 +1,7 @@
 [![npm package](https://img.shields.io/npm/v/@urban-bot/core?logo=npm&style=flat-square)](https://www.npmjs.com/package/@urban-bot/core)
 ![Build](https://github.com/urban-bot/urban-bot/workflows/Node.js%20CI/badge.svg)
+[![Community Chat](https://img.shields.io/badge/Community-Chat-blueChat?style=flat-square&logo=telegram)](https://t.me/urbanbotjs)
+
 # Urban Bot
 
 The universal chatbot library based on [React](https://github.com/facebook/react).
@@ -24,7 +26,8 @@ The universal chatbot library based on [React](https://github.com/facebook/react
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/vk-logo.svg)](https://www.vk.com/)
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/viber-logo.svg)](https://www.viber.com/)
 
-## [Documentation](https://github.com/urban-bot/urban-bot/blob/master/docs/DOCS.md)
+## [Get Started](https://urban-bot.now.sh/docs/intro.html)
+## [API](https://urban-bot.now.sh/docs/components.html)
 
 ## Installation
 Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter-typescript).
@@ -34,9 +37,10 @@ Please use our zero configuration [starter](https://github.com/urban-bot/urban-b
 `npx create-urban-bot my-app --template js`
 
 Or install manually:
-```shell
+```bash
 npm i react @urban-bot/core @urban-bot/telegram @urban-bot/facebook ...
 ```
+
 ## Example
 ![](https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/telegram-gif.gif)
 ![](https://raw.githubusercontent.com/urban-bot/urban-bot/master/files/slack-gif.gif)
