@@ -22,32 +22,38 @@ export function BucketProvider({ children }: BucketProviderProps) {
 
     function addProduct(newProduct: Product) {
         setAddedProducts((addedProducts) => {
-            if (addedProducts.has(newProduct.id)) {
-                const addedProduct = addedProducts.get(newProduct.id) as AddedProduct;
+            const newAddedProducts = new Map(addedProducts);
+
+            if (newAddedProducts.has(newProduct.id)) {
+                const addedProduct = newAddedProducts.get(newProduct.id) as AddedProduct;
 
                 addedProduct.count += 1;
             } else {
-                addedProducts.set(newProduct.id, { ...newProduct, count: 1 });
+                newAddedProducts.set(newProduct.id, { ...newProduct, count: 1 });
             }
 
-            return new Map(addedProducts);
+            return newAddedProducts;
         });
     }
 
     function removeProduct(deletedProduct: Product) {
-        if (addedProducts.has(deletedProduct.id)) {
-            setAddedProducts((addedProducts) => {
-                const addedProduct = addedProducts.get(deletedProduct.id) as AddedProduct;
+        setAddedProducts((addedProducts) => {
+            const addedProduct = addedProducts.get(deletedProduct.id);
 
-                addedProduct.count -= 1;
+            if (addedProduct === undefined) {
+                return addedProducts;
+            }
 
-                if (addedProduct.count === 0) {
-                    addedProducts.delete(deletedProduct.id);
-                }
+            const newAddedProducts = new Map(addedProducts);
 
-                return new Map(addedProducts);
-            });
-        }
+            addedProduct.count -= 1;
+
+            if (addedProduct.count === 0) {
+                newAddedProducts.delete(deletedProduct.id);
+            }
+
+            return new Map(newAddedProducts);
+        });
     }
 
     return (

@@ -20,21 +20,21 @@ export function Catalog() {
 
     const activeProduct = products[productIndex];
 
-    function previousProduct() {
+    function clickPreviousProduct() {
         setProductIndex(calculateCircularIndex(productIndex - 1, products.length));
         setImageIndex(0);
     }
 
-    function nextProduct() {
+    function clickNextProduct() {
         setProductIndex(calculateCircularIndex(productIndex + 1, products.length));
         setImageIndex(0);
     }
 
-    function nextImage() {
+    function clickNextImage() {
         setImageIndex(calculateCircularIndex(imageIndex + 1, activeProduct.images.length));
     }
 
-    function addProductToBucket() {
+    function clickAddProductToBucket() {
         addProduct(activeProduct);
     }
 
@@ -55,10 +55,10 @@ export function Catalog() {
             file={activeProduct.images[imageIndex]}
             buttons={
                 <ButtonGroup maxColumns={2}>
-                    <Button onClick={previousProduct}>⬅️ prev</Button>
-                    <Button onClick={nextProduct}>next ➡️</Button>
-                    {activeProduct.images.length > 1 ? <Button onClick={nextImage}>🖼️</Button> : null}
-                    <Button onClick={addProductToBucket}>{`Add to bucket (${bucketCount})`}</Button>
+                    <Button onClick={clickPreviousProduct}>⬅️ prev</Button>
+                    <Button onClick={clickNextProduct}>next ➡️</Button>
+                    {activeProduct.images.length > 1 ? <Button onClick={clickNextImage}>🖼️</Button> : null}
+                    <Button onClick={clickAddProductToBucket}>{`Add to bucket (${bucketCount})`}</Button>
                 </ButtonGroup>
             }
         />
