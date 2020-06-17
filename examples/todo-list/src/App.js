@@ -9,7 +9,9 @@ function TodoList() {
     const [todos, setTodos] = useState([]);
 
     function addTodo(text) {
-        setTodos([...todos, { text, id: Math.random(), isCompleted: false }]);
+        const newTodo = { text, id: Math.random(), isCompleted: false };
+
+        setTodos([...todos, newTodo]);
     }
 
     function deleteTodo(deletedId) {
