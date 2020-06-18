@@ -545,7 +545,7 @@ If a user clicks on the button, he automatically sends 'Hello' message.
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
 ## Button  
-Button, just button.  
+Button, just button. Should be wrapped by [ButtonGroup](#buttongroup).
 ```jsx
 <Button>Text</Button>  
 ```  
