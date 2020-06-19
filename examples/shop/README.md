@@ -1,4 +1,4 @@
-# Todo List
+# Shop
 
 An example of how to create a shop inside a messenger with Urban Bot.
 
