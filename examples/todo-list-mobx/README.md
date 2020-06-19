@@ -1,4 +1,4 @@
-# Todo List
+# Todo List MobX
 
 An example of how to create a simple todo list with Urban Bot and MobX.
 
