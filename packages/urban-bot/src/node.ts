@@ -118,7 +118,7 @@ export function updateNode<BotType extends UrbanBotType>(
     const { data: newPropsData, ...newPropsWithoutData } = newProps;
 
     if (
-        !node.isNewMessageEveryRender &&
+        !newProps.isNewMessageEveryRender &&
         shallowEqual(oldPropsWithoutData, newPropsWithoutData) &&
         shallowEqual(oldPropsData, newPropsData)
     ) {
@@ -133,7 +133,7 @@ export function updateNode<BotType extends UrbanBotType>(
         data: newNode.data,
     } as UrbanMessage;
 
-    if (node.isNewMessageEveryRender) {
+    if (newNode.isNewMessageEveryRender) {
         node.meta = newNode.sendMessage(message);
     } else {
         if (node.meta === undefined) {
