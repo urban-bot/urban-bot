@@ -15,13 +15,14 @@ import { MediaExample } from './Media';
 import { LocationExample } from './Location';
 import { ButtonsExample, ReplyButtonsExample, MatrixButtonsExample } from './ButtonGroup';
 import { RouterExample } from './Router';
+import { GetAnswersExample } from './GetAnswers';
 
 dotenv.config();
 
 export function App() {
     return (
         <Router>
-            <Route path="/start" description="start">
+            <Route path="/start" description="image">
                 <ImageExample />
             </Route>
             <Route path="/text" description="text">
@@ -36,11 +37,14 @@ export function App() {
             <Route path="/matrix_buttons" description="matrix_buttons">
                 <MatrixButtonsExample />
             </Route>
-            <Route path="/queue" description="queue">
-                <Queue />
-            </Route>
             <Route path="/hooks" description="hooks">
                 <Hooks />
+            </Route>
+            <Route path="/answers">
+                <GetAnswersExample />
+            </Route>
+            <Route path="/queue" description="queue">
+                <Queue />
             </Route>
             <Route path="/audio" description="audio">
                 <AudioExample />
