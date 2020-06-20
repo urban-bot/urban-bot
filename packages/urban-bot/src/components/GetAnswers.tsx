@@ -28,7 +28,7 @@ export function GetAnswers({
     defaultErrorText = 'Not valid answer. Please repeat.',
     onEveryAnswer,
 }: GetAnswersProps) {
-    const [isAnswerValid, setIsAnswerValid] = useState(true);
+    const [isAnswerValid, setIsAnswerValid] = useState({ value: true });
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<GetAnswersMap>({});
 
@@ -50,14 +50,14 @@ export function GetAnswers({
 
             setAnswers(newAnswers);
             setActiveQuestionIndex((index) => index + 1);
-            setIsAnswerValid(true);
+            setIsAnswerValid({ value: true });
         } else {
-            setIsAnswerValid(false);
+            setIsAnswerValid({ value: false });
         }
     });
 
     const errorText = activeQuestion.errorText ?? defaultErrorText;
-    const content = isAnswerValid ? activeQuestion.question : errorText;
+    const content = isAnswerValid.value ? activeQuestion.question : errorText;
 
     return (
         <Text isNewMessageEveryRender {...textProps}>

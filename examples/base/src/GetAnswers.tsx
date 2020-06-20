@@ -14,7 +14,7 @@ const questions: GetAnswersQuestion[] = [
 
             return !Number.isNaN(number);
         },
-        errorText: 'Please enter a number',
+        errorText: 'Please enter a number.',
     },
 ];
 
