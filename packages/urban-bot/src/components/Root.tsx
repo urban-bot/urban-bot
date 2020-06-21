@@ -28,12 +28,7 @@ function Chat<Bot extends UrbanBot, BotType extends UrbanBotType>({
     const BotContext = getBotContext<Bot, BotType>();
 
     return (
-        <BotContext.Provider
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore key exists
-            key={chat.id}
-            value={{ bot, isNewMessageEveryRender, chat, parseMode, $$managerBot }}
-        >
+        <BotContext.Provider value={{ bot, isNewMessageEveryRender, chat, parseMode, $$managerBot }}>
             <ErrorBoundary>{children}</ErrorBoundary>
         </BotContext.Provider>
     );
@@ -57,7 +52,7 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
     port = 8080,
 }: RootProps<Bot>) {
     // TODO get chats from $$managerBot?
-    const [chats, setChats] = React.useState(new Map());
+    const [chats, setChats] = React.useState(new Map<string, React.ReactElement>());
     const chatsRef = React.useRef(chats);
     chatsRef.current = chats;
 
@@ -124,8 +119,8 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
 
     return (
         <>
-            {Array.from(chats).map(([, children]) => {
-                return children;
+            {Array.from(chats).map(([id, children]) => {
+                return <chat key={id}>{children}</chat>;
             })}
         </>
     );

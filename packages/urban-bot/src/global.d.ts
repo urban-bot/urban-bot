@@ -17,6 +17,7 @@ import { UrbanChat } from './types';
 import { UrbanNativeEvent } from './types/Events';
 
 export type Markup = { children: React.ReactNode };
+export type ChatElement = { children: React.ReactNode; key?: string };
 export type Link = Markup & { href: string };
 export type UrbanElement<NativeEvent extends UrbanNativeEvent = any, MessageMeta = any> = {
     $$managerBot: ManagerBot<NativeEvent, MessageMeta>;
@@ -50,6 +51,7 @@ declare global {
             'urban-contact': UrbanElementContact;
             'urban-media': UrbanElementMedia;
             'urban-location': UrbanElementLocation;
+            chat: ChatElement;
             b: Markup;
             strong: Markup;
             i: Markup;
