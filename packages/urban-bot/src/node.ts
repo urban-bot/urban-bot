@@ -15,24 +15,30 @@ export type UrbanNode<BotType extends UrbanBotType = UrbanBotType> = Omit<UrbanE
     childNodes: Array<UrbanNode<BotType>>;
 };
 
+export type UrbanNodeChat = {
+    nodeName: 'chat';
+    childNodes: Array<UrbanNode>;
+};
+
 export type UrbanNodeRoot = {
     nodeName: 'root';
-    childNodes: Array<UrbanNode>;
+    childNodes: Array<UrbanNodeChat>;
 };
 
 type Props<BotType extends UrbanBotType> = Omit<UrbanNode<BotType>, 'nodeName'>;
 
 export function createNode<BotType extends UrbanBotType>(
-    nodeName: UrbanMessageNodeName | 'root',
+    nodeName: UrbanMessageNodeName | 'root' | 'chat',
     props?: Props<BotType>,
-): UrbanNode<BotType> | UrbanNodeRoot {
-    if (props === undefined) {
-        if (nodeName !== 'root') {
-            throw new Error('props are necessary for every node');
-        }
-
+): UrbanNode<BotType> | UrbanNodeRoot | UrbanNodeChat {
+    if (nodeName === 'root' || nodeName === 'chat') {
         return { nodeName, childNodes: [] };
     }
+
+    if (props === undefined) {
+        throw new Error('props are necessary for every node');
+    }
+
     const { $$managerBot, chat, isNewMessageEveryRender, data, debounceDelay = 50 } = props;
     const node = {
         nodeName,
@@ -52,13 +58,17 @@ export function createNode<BotType extends UrbanBotType>(
 }
 
 export function appendChildNode<BotType extends UrbanBotType>(
-    parentNode: UrbanNode<BotType> | UrbanNodeRoot,
-    childNode: UrbanNode<BotType>,
+    parentNode: UrbanNode<BotType> | UrbanNodeRoot | UrbanNodeChat,
+    childNode: UrbanNode<BotType> | UrbanNodeChat,
 ) {
     // FIXME: fix types.
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     parentNode.childNodes.push(childNode);
+
+    if (childNode.nodeName === 'chat') {
+        return;
+    }
 
     const message = {
         nodeName: childNode.nodeName,
@@ -70,10 +80,16 @@ export function appendChildNode<BotType extends UrbanBotType>(
 }
 
 export function removeChildNode<BotType extends UrbanBotType>(
-    parentNode: UrbanNode<BotType>,
-    removedNode: UrbanNode<BotType>,
+    parentNode: UrbanNode<BotType> | UrbanNodeRoot | UrbanNodeChat,
+    removedNode: UrbanNode<BotType> | UrbanNodeChat,
 ) {
-    parentNode.childNodes = parentNode.childNodes.filter((node) => node !== removedNode);
+    parentNode.childNodes = (parentNode.childNodes as any).filter(
+        (node: UrbanNode<BotType> | UrbanNodeChat) => node !== removedNode,
+    );
+
+    if (removedNode.nodeName === 'chat') {
+        return;
+    }
 
     if (removedNode.isNewMessageEveryRender) {
         return;
@@ -95,7 +111,17 @@ export function removeChildNode<BotType extends UrbanBotType>(
     });
 }
 
-export function insertBeforeNode(node: UrbanNode, newChildNode: UrbanNode, beforeChildNode: UrbanNode) {
+export function insertBeforeNode(
+    node: UrbanNode | UrbanNodeRoot | UrbanNodeChat,
+    newChildNode: UrbanNode | UrbanNodeChat,
+    beforeChildNode: UrbanNode | UrbanNodeChat,
+) {
+    if (node.nodeName === 'root') {
+        appendChildNode(node, newChildNode);
+
+        return;
+    }
+
     const beforeChildNodeIndex = node.childNodes.findIndex((childNode) => childNode === beforeChildNode);
     const nodesAfterInserted = node.childNodes.filter((_childNode, index) => index >= beforeChildNodeIndex);
     nodesAfterInserted.forEach((nodeAfterInserted) => {
@@ -108,12 +134,16 @@ export function insertBeforeNode(node: UrbanNode, newChildNode: UrbanNode, befor
 }
 
 export function updateNode<BotType extends UrbanBotType>(
-    node: UrbanNode<BotType>,
+    node: UrbanNode<BotType> | UrbanNodeChat,
     _updatePayload: unknown,
     _type: unknown,
     oldProps: Props<BotType>,
     newProps: Props<BotType>,
 ) {
+    if (node.nodeName === 'chat') {
+        return;
+    }
+
     const { data: oldPropsData, ...oldPropsWithoutData } = oldProps;
     const { data: newPropsData, ...newPropsWithoutData } = newProps;
 
