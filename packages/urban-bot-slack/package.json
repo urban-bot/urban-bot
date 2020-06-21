@@ -60,7 +60,7 @@
     "body-parser": "1.19.0"
   },
   "peerDependencies": {
-    "@urban-bot/core": "^0.0.11"
+    "@urban-bot/core": "^0.0.12"
   },
   "repository": {
     "type": "git",
