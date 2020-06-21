@@ -26,7 +26,7 @@ const hostConfig = {
     getPublicInstance: (instance: unknown) => instance,
     appendInitialChild: appendChildNode,
     appendChild: appendChildNode,
-    insertBefore: appendChildNode,
+    insertBefore: insertBeforeNode,
     finalizeInitialChildren: () => false,
     supportsMutation: true,
     appendChildToContainer: appendChildNode,
