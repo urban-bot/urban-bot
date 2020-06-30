@@ -87,13 +87,6 @@ class HomeSplash extends React.Component {
             </div>
         );
 
-        const ProjectTitle = (props) => (
-            <h2 className="projectTitle">
-                <span className="main-title">{'<UrbanBot />'}</span>
-                <small>{props.tagline}</small>
-            </h2>
-        );
-
         const PromoSection = (props) => (
             <div className="section promoSection">
                 <div className="promoRow">
@@ -114,7 +107,12 @@ class HomeSplash extends React.Component {
             <div>
                 <img src={`${baseUrl}img/banner.jpg`} alt="banner" />
                 <SplashContainer>
-                    <img src={`${baseUrl}img/logo_text_bel.jpg`} alt="logo" className="title-logo"  />
+                    <hr className="line" />
+                    <img src={`${baseUrl}img/logo_text_bel.jpg`} alt="logo" className="title-logo" />
+                    <h2 className="projectTitle">
+                        <small>{siteConfig.tagline}</small>
+                    </h2>
+                    <hr className="line" />
 
                     <div className="inner main-buttons">
                         <PromoSection>
