@@ -13,6 +13,14 @@
     font-size: 80px;
 }
 
+.title-logo {
+    width: 50%;
+}
+
+.projectTitle {
+    color: black;
+}
+
 .example {
     display: flex;
     justify-content: center;
