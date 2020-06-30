@@ -4,6 +4,9 @@
             "intro",
             "get-started-telegram"
         ],
+        "Tutorial": [
+            "todo-list"
+        ],
         "API": [
             "components",
             "hooks",
