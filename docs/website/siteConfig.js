@@ -37,14 +37,18 @@ const siteConfig = {
     // users,
 
     /* path to images for header/footer */
-    // headerIcon: 'img/favicon.ico',
+    headerIcon: 'img/logo1_bel.png',
     // footerIcon: 'img/favicon.ico',
     favicon: 'img/favicon/favicon.ico',
 
     /* Colors for website */
     colors: {
-        primaryColor: '#422085',
-        secondaryColor: '#442f6c',
+        // primaryColor: '#0da2c2',
+        // primaryColor: '#00aad3',
+        primaryColor: '#3d5f9c',
+        // primaryColor: '#2290ab',
+        // primaryColor: '#0096ad',
+        secondaryColor: '#0da2c2',
     },
 
     /* Custom fonts for website */
@@ -66,6 +70,7 @@ const siteConfig = {
 
     highlight: {
         // Highlight.js theme to use for syntax highlighting in code blocks.
+        // theme: 'github',
         theme: 'atom-one-dark',
     },
     usePrism: ['jsx'],
