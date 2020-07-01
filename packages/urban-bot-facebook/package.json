@@ -19,6 +19,7 @@
     "prepare": "npm run build"
   },
   "keywords": [
+    "facebook-messenger-bot",
     "urban-bot",
     "bot",
     "chatbot",

@@ -19,6 +19,7 @@
     "prepare": "npm run build"
   },
   "keywords": [
+    "telegram-bot",
     "urban-bot",
     "bot",
     "chatbot",

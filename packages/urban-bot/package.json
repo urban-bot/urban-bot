@@ -24,10 +24,13 @@
     "keywords": [
         "bot",
         "chatbot",
+        "react",
         "telegram",
         "slack",
         "messenger",
-        "react"
+        "reactjs",
+        "redux",
+        "mobx"
     ],
     "authors": [
         "ledamint",
