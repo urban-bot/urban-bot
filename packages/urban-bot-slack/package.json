@@ -19,6 +19,7 @@
     "prepare": "npm run build"
   },
   "keywords": [
+    "slack-bot",
     "urban-bot",
     "bot",
     "chatbot",
