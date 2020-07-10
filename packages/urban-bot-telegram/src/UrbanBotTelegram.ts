@@ -446,7 +446,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     };
 
     async sendMessage(message: UrbanMessage) {
-        await this.simulateTyping(message.chat.id, message.data.typing);
+        await this.simulateTyping(message.chat.id, message.data.simulateTyping);
 
         switch (message.nodeName) {
             case 'urban-text': {
@@ -751,16 +751,16 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         return this.client._request('editMessageMedia', { qs, formData });
     }
 
-    simulateTyping(chatId: string, typing?: number) {
+    simulateTyping(chatId: string, simulateTyping?: number) {
         return new Promise((resolve) => {
-            if (typeof typing === 'number') {
+            if (typeof simulateTyping === 'number') {
                 this.client.sendChatAction(chatId, 'typing').catch((e) => {
                     console.error('Error with simulate typing');
                     console.error(e);
                     resolve();
                 });
 
-                setTimeout(resolve, typing);
+                setTimeout(resolve, simulateTyping);
             } else {
                 resolve();
             }

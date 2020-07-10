@@ -95,7 +95,7 @@ export function Hooks() {
     });
 
     return (
-        <Text isNewMessageEveryRender typing={1000}>
+        <Text isNewMessageEveryRender simulateTyping={1000}>
             {answer}
         </Text>
     );

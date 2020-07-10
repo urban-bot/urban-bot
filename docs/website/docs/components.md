@@ -121,14 +121,14 @@ function Example() {
     }  
 />  
 ```
-#### typing
+#### simulateTyping
 >  Simulate typing before sending a message, pass as milliseconds.
 
 ###### optional  
 `number`
 
 ```jsx
-<Text typing={1000}>
+<Text simulateTyping={1000}>
     This message will be sent after 1 second and a user see a bot types before sending.
 </Text> 
 ```
@@ -472,7 +472,7 @@ Send a text message to a chat.
 <Text>  
 ```  
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -551,7 +551,7 @@ If a user clicks on the button, he automatically sends 'Hello' message.
 ```  
 #### [title](#title)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -633,7 +633,7 @@ Send an image to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -695,7 +695,7 @@ Send a video to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -746,7 +746,7 @@ Send an audio to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -802,7 +802,7 @@ Send an animation to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -840,7 +840,7 @@ Send a file to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -871,7 +871,7 @@ Send a group of media files.
 ###### required
 [`Media File`](#media-file)[]
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -937,7 +937,7 @@ Send a location.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -1005,7 +1005,7 @@ Send a poll.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -1064,7 +1064,7 @@ Send a contact.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
-#### [typing](#typing)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
