@@ -57,9 +57,6 @@
     "express": "4.17.1",
     "node-telegram-bot-api": "0.50.0"
   },
-  "peerDependencies": {
-    "@urban-bot/core": "^0.0.12"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/urban-bot/urban-bot.git",

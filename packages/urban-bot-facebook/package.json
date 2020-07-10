@@ -53,9 +53,6 @@
     "ts-jest": "25.4.0",
     "typescript": "3.8.3"
   },
-  "peerDependencies": {
-    "@urban-bot/core": "^0.0.12"
-  },
   "dependencies": {
     "array-flatten": "3.0.0",
     "body-parser": "1.19.0",

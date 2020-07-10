@@ -60,9 +60,6 @@
     "@slack/web-api": "5.8.0",
     "body-parser": "1.19.0"
   },
-  "peerDependencies": {
-    "@urban-bot/core": "^0.0.12"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/urban-bot/urban-bot.git",
