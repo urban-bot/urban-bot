@@ -445,7 +445,9 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         }
     };
 
-    sendMessage(message: UrbanMessage) {
+    async sendMessage(message: UrbanMessage) {
+        await this.simulateTyping(message.chat.id, message.data.simulateTyping);
+
         switch (message.nodeName) {
             case 'urban-text': {
                 const params = formatParamsForNewMessage(message);
@@ -747,5 +749,21 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return this.client._request('editMessageMedia', { qs, formData });
+    }
+
+    simulateTyping(chatId: string, simulateTyping?: number) {
+        return new Promise((resolve) => {
+            if (typeof simulateTyping === 'number') {
+                this.client.sendChatAction(chatId, 'typing').catch((e) => {
+                    console.error('Error with simulate typing');
+                    console.error(e);
+                    resolve();
+                });
+
+                setTimeout(resolve, simulateTyping);
+            } else {
+                resolve();
+            }
+        });
     }
 }
