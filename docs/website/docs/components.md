@@ -120,7 +120,18 @@ function Example() {
         </ButtonGroup>  
     }  
 />  
-```  
+```
+#### simulateTyping
+>  Simulate typing before sending a message, pass as milliseconds.
+
+###### optional  
+`number`
+
+```jsx
+<Text simulateTyping={1000}>
+    This message will be sent after 1 second and a user see a bot types before sending.
+</Text> 
+```
 #### parseMode
 >  The markup language which is used for parsing text. Calculated automatically for every messenger, but you can specify directly.
 ###### optional  
@@ -457,10 +468,11 @@ Send a text message to a chat.
 `boolean`  
 ```jsx
 <Text disableWebPagePreview>  
-    <a href="https://github.com/urban-bot/urban-bot">link</a>  
+    <a href="https://github.com/urban-bot/urban-bot">link</a>
 <Text>  
 ```  
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -539,6 +551,7 @@ If a user clicks on the button, he automatically sends 'Hello' message.
 ```  
 #### [title](#title)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -620,6 +633,7 @@ Send an image to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -681,6 +695,7 @@ Send a video to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -731,6 +746,7 @@ Send an audio to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -786,6 +802,7 @@ Send an animation to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -823,6 +840,7 @@ Send a file to a chat.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -853,6 +871,7 @@ Send a group of media files.
 ###### required
 [`Media File`](#media-file)[]
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -918,6 +937,7 @@ Send a location.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -985,6 +1005,7 @@ Send a poll.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
@@ -1043,6 +1064,7 @@ Send a contact.
 #### [title](#title)
 #### [buttons](#buttons)
 #### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
 #### [parseMode](#parsemode)
 #### [disableNotification](#disablenotification)
 #### [replyToMessageId](#replytomessageid)
