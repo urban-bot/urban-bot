@@ -94,5 +94,9 @@ export function Hooks() {
         setAnswer("You've sent a dice " + value);
     });
 
-    return <Text isNewMessageEveryRender>{answer}</Text>;
+    return (
+        <Text isNewMessageEveryRender typing={1000}>
+            {answer}
+        </Text>
+    );
 }

@@ -23,6 +23,7 @@ export type UrbanMessageCommonData = OtherProps & {
     replyToMessageId?: string | number;
     forceReply?: boolean;
     personaId?: string | number;
+    typing?: number;
 };
 
 export type UrbanMessageTextData = UrbanMessageCommonData & {
