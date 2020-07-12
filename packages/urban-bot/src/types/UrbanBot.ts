@@ -14,6 +14,7 @@ export interface UrbanBotType<NativeEvent extends UrbanNativeEvent = UrbanNative
 export interface UrbanBot<BotType extends UrbanBotType = UrbanBotType> {
     type: BotType['NativeEvent']['type'];
     defaultParseMode?: UrbanParseMode;
+    commandPrefix: string;
     processUpdate: ProcessUpdate<BotType>;
     sendMessage: (message: UrbanMessage) => Promise<BotType['MessageMeta']>;
     updateMessage?: (message: UrbanExistingMessage<BotType>) => any;
