@@ -7,6 +7,7 @@ const testBot = {
     updateMessage: jest.fn(),
     deleteMessage: jest.fn(),
     type: 'TEST-BOT',
+    commandPrefix: '/',
 };
 
 const meta = { messageId: 345 };

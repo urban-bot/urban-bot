@@ -45,6 +45,7 @@ export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
     static TYPE: FACEBOOK = 'FACEBOOK';
     type: FACEBOOK = UrbanBotFacebook.TYPE;
     defaultParseMode: UrbanParseMode = 'markdown';
+    commandPrefix = '/';
     client: GraphAPI;
     options: FacebookOptions;
 
@@ -169,7 +170,7 @@ export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
                 }
             } else {
                 if (text !== undefined) {
-                    if (text[0] === '/') {
+                    if (text[0] === this.commandPrefix) {
                         const [command, ...args] = text.split(' ');
                         this.processUpdate({
                             ...common,
