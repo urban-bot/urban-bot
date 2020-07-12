@@ -50,6 +50,7 @@ export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
     client: WebClient;
     events: ReturnType<typeof createEventAdapter>;
     interactions: ReturnType<typeof createMessageAdapter>;
+    commandPrefix = '/';
 
     constructor({ signingSecret, token }: SlackOptions) {
         this.client = new WebClient(token);

@@ -62,6 +62,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     static TYPE = 'TELEGRAM' as const;
     type = UrbanBotTelegram.TYPE;
     defaultParseMode: UrbanParseMode = 'HTML';
+    commandPrefix = '/';
 
     client: TelegramBot;
 
@@ -141,7 +142,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     break;
                 }
 
-                if (ctx.text[0] === '/') {
+                if (ctx.text[0] === this.commandPrefix) {
                     const [command, ...args] = ctx.text.split(' ');
                     const adaptedContext: UrbanSyntheticEventCommand<UrbanBotTelegramType> = {
                         ...common,
