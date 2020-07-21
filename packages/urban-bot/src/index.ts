@@ -78,3 +78,4 @@ export {
 };
 
 export * from './types';
+export * from './components/Dialog';

@@ -15,12 +15,19 @@ import { MediaExample } from './Media';
 import { LocationExample } from './Location';
 import { ButtonsExample, ReplyButtonsExample, MatrixButtonsExample } from './ButtonGroup';
 import { RouterExample } from './Router';
+import { FlatDialogExample, TreeDialogExample } from './Dialog';
 
 dotenv.config();
 
 export function App() {
     return (
         <Router>
+            <Route path="/tree_dialog" description="start">
+                <TreeDialogExample />
+            </Route>
+            <Route path="/flat_dialog" description="start">
+                <FlatDialogExample />
+            </Route>
             <Route path="/start" description="start">
                 <ImageExample />
             </Route>
