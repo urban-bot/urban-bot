@@ -20,7 +20,7 @@ export function FlatDialogExample() {
 
 export function TreeDialogExample() {
     return (
-        <Dialog onFinish={(answers) => console.log(answers)} finishedContent={<Text>Thanks!</Text>}>
+        <Dialog onFinish={(answers) => console.log(answers)}>
             <DialogStep content={<Text>Hi! Whats your name?</Text>}>
                 <DialogStep match="German" content={<Text>Hi, German</Text>} />
                 <DialogStep match="Kamola" content={<Text>Hi, Kamola</Text>} />

@@ -74,16 +74,16 @@ export function DialogStep({ children, content, id, onNext }: DialogStepProps) {
             (child) => child.props.match === undefined || matchPattern(text, child.props.match),
         );
 
-        if (typeof id === 'string') {
-            addAnswer(id, text);
+        if (childrenArray.length === 0 || matchedChild !== undefined) {
+            if (typeof id === 'string') {
+                addAnswer(id, text);
+            }
+
+            setIsAnswered(true);
+            onNext?.(text);
         }
 
-        if (childrenArray.length === 0) {
-            setIsAnswered(true);
-            onNext?.(text);
-        } else if (matchedChild !== undefined) {
-            setIsAnswered(true);
-            onNext?.(text);
+        if (matchedChild !== undefined) {
             setDisplayedContent(matchedChild);
         }
     }
