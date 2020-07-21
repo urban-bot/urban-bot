@@ -49,9 +49,10 @@ export type DialogStepProps = {
     match?: string | RegExp;
     content: React.ReactNode;
     id?: string;
+    onNext?: (answer: string) => void;
 };
 
-export function DialogStep({ children, content, id }: DialogStepProps) {
+export function DialogStep({ children, content, id, onNext }: DialogStepProps) {
     const [isAnswered, setIsAnswered] = useState(false);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<DialogStepProps>[];
     const [displayedContent, setDisplayedContent] = useState(content);
@@ -79,8 +80,10 @@ export function DialogStep({ children, content, id }: DialogStepProps) {
 
         if (childrenArray.length === 0) {
             setIsAnswered(true);
+            onNext?.(text);
         } else if (matchedChild !== undefined) {
             setIsAnswered(true);
+            onNext?.(text);
             setDisplayedContent(matchedChild);
         }
     }

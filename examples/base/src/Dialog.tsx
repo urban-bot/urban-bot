@@ -9,7 +9,7 @@ export function FlatDialogExample() {
             onFinish={(answers) => setAnswers(answers)}
             finishedContent={<Text isNewMessageEveryRender>Your answers: {JSON.stringify(answers)}</Text>}
         >
-            <DialogStep id="name" content={<Text>{"Hi, what's your name?"}</Text>}>
+            <DialogStep onNext={(name) => console.log(name)} id="name" content={<Text>{"Hi, what's your name?"}</Text>}>
                 <DialogStep id="age" content={<Text>{"What's your age?"}</Text>}>
                     <DialogStep id="city" content={<Text>{"What's your city?"}</Text>} />
                 </DialogStep>
