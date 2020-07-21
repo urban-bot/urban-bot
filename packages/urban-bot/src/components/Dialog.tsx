@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useText } from '../hooks/useText';
 import { useAction } from '../hooks/hooks';
+import { matchPattern } from '../utils/matchPattern';
 
 export type DialogProps = {
     children?: React.ReactNode;
@@ -45,7 +46,7 @@ export function Dialog({ children, onFinish, finishedContent }: DialogProps) {
 
 export type DialogStepProps = {
     children?: React.ReactNode;
-    match?: string;
+    match?: string | RegExp;
     content: React.ReactNode;
     id?: string;
 };
@@ -69,7 +70,7 @@ export function DialogStep({ children, content, id }: DialogStepProps) {
         }
 
         const matchedChild = childrenArray.find(
-            (child) => child.props.match === text || child.props.match === undefined,
+            (child) => child.props.match === undefined || matchPattern(text, child.props.match),
         );
 
         if (typeof id === 'string') {
