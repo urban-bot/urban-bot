@@ -78,3 +78,5 @@ export {
 };
 
 export * from './types';
+export * from './components/Dialog/Dialog';
+export * from './components/Dialog/DialogStep';
