@@ -2,11 +2,13 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useText } from '../hooks/useText';
 import { useAction } from '../hooks/hooks';
 import { matchPattern } from '../utils/matchPattern';
+import { Text } from './Text';
 
 export type DialogProps = {
     children?: React.ReactNode;
     onFinish?: (answers: DialogAnswers) => void;
     finishedContent?: React.ReactNode;
+    defaultErrorText?: string;
 };
 
 export type DialogAnswers = {
@@ -19,6 +21,7 @@ export type DialogContextType = {
     onFinish: () => void;
     finishedContent?: React.ReactNode;
     addAnswer: DialogAddAnswer;
+    defaultErrorText: string;
 };
 
 const DialogContext = React.createContext<DialogContextType>({} as DialogContextType);
@@ -27,7 +30,7 @@ export function useDialog() {
     return useContext(DialogContext);
 }
 
-export function Dialog({ children, onFinish, finishedContent }: DialogProps) {
+export function Dialog({ children, onFinish, finishedContent, defaultErrorText = 'Not valid answer.' }: DialogProps) {
     const [answers, setAnswers] = useState<DialogAnswers>({});
     const onFinishCallback = useCallback(() => {
         onFinish?.(answers);
@@ -38,11 +41,16 @@ export function Dialog({ children, onFinish, finishedContent }: DialogProps) {
     };
 
     return (
-        <DialogContext.Provider value={{ onFinish: onFinishCallback, finishedContent, addAnswer }}>
+        <DialogContext.Provider value={{ onFinish: onFinishCallback, finishedContent, addAnswer, defaultErrorText }}>
             {children}
         </DialogContext.Provider>
     );
 }
+
+export type DialogValidation = {
+    isValid: (answer: string) => boolean;
+    errorText?: string;
+};
 
 export type DialogStepProps = {
     children?: ((answer: string) => React.ReactNode) | React.ReactNode;
@@ -50,13 +58,14 @@ export type DialogStepProps = {
     content: React.ReactNode;
     id?: string;
     onNext?: (answer: string) => void;
+    validation?: DialogValidation;
 };
 
-export function DialogStep({ children, content, id, onNext }: DialogStepProps) {
+export function DialogStep({ children, content, id, onNext, validation }: DialogStepProps) {
     const [isAnswered, setIsAnswered] = useState(false);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<DialogStepProps>[];
     const [displayedContent, setDisplayedContent] = useState(content);
-    const { onFinish, finishedContent, addAnswer } = useDialog();
+    const { onFinish, finishedContent, addAnswer, defaultErrorText } = useDialog();
 
     useEffect(() => {
         if (childrenArray.length === 0 && isAnswered && typeof children !== 'function') {
@@ -74,8 +83,18 @@ export function DialogStep({ children, content, id, onNext }: DialogStepProps) {
             (child) => child.props.match === undefined || matchPattern(text, child.props.match),
         );
 
+        if (validation !== undefined) {
+            const isValid = validation.isValid(text);
+
+            if (!isValid) {
+                setDisplayedContent(<Text isNewMessageEveryRender>{validation.errorText ?? defaultErrorText}</Text>);
+
+                return;
+            }
+        }
+
         if (childrenArray.length === 0 || matchedChild !== undefined || typeof children === 'function') {
-            if (typeof id === 'string') {
+            if (id !== undefined) {
                 addAnswer(id, text);
             }
 

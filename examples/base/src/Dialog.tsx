@@ -42,7 +42,10 @@ function DialogButtons({ product }: DialogButtonsProps) {
 export function TreeDialogExample() {
     return (
         <Dialog>
-            <DialogStep content={<Text>{"What's your name?"}</Text>}>
+            <DialogStep
+                validation={{ isValid: (answer) => answer !== 'Samuel', errorText: 'Samuel is blocked.' }}
+                content={<Text>{"What's your name?"}</Text>}
+            >
                 {(name) => {
                     return (
                         <DialogStep
