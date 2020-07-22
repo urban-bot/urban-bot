@@ -20,10 +20,10 @@ export function FlatDialogExample() {
 
 type DialogButtonsProps = {
     match: string;
-    name: string;
+    product: string;
 };
 
-function DialogButtons({ name }: DialogButtonsProps) {
+function DialogButtons({ product }: DialogButtonsProps) {
     return (
         <DialogStep
             content={
@@ -33,8 +33,8 @@ function DialogButtons({ name }: DialogButtonsProps) {
                 </ButtonGroup>
             }
         >
-            <DialogStep match="blue" content={<Text>You have chosen Blue {name}.</Text>} />
-            <DialogStep match="red" content={<Text>You have chosen Red {name}.</Text>} />
+            <DialogStep match="blue" content={<Text>You have chosen Blue {product}.</Text>} />
+            <DialogStep match="red" content={<Text>You have chosen Red {product}.</Text>} />
         </DialogStep>
     );
 }
@@ -42,7 +42,7 @@ function DialogButtons({ name }: DialogButtonsProps) {
 export function TreeDialogExample() {
     return (
         <Dialog>
-            <DialogStep id="name" content={<Text>{"What's your name?"}</Text>}>
+            <DialogStep content={<Text>{"What's your name?"}</Text>}>
                 {(name) => {
                     return (
                         <DialogStep
@@ -53,8 +53,8 @@ export function TreeDialogExample() {
                                 </ButtonGroup>
                             }
                         >
-                            <DialogButtons match="hat" name="Hat" />
-                            <DialogButtons match="glasses" name="Glasses" />
+                            <DialogButtons match="hat" product="Hat" />
+                            <DialogButtons match="glasses" product="Glasses" />
                         </DialogStep>
                     );
                 }}
