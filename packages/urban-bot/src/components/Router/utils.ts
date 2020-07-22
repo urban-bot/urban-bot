@@ -1,6 +1,7 @@
 import React from 'react';
 import { RouteProps } from './Route';
 
+// TODO get from common utils
 export const matchPattern = (path: string, pattern: string | RegExp) => {
     if (!pattern) {
         return true;
