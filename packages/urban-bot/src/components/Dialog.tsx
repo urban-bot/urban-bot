@@ -45,7 +45,7 @@ export function Dialog({ children, onFinish, finishedContent }: DialogProps) {
 }
 
 export type DialogStepProps = {
-    children?: React.ReactNode;
+    children?: ((answer: string) => React.ReactNode) | React.ReactNode;
     match?: string | RegExp;
     content: React.ReactNode;
     id?: string;
@@ -59,11 +59,11 @@ export function DialogStep({ children, content, id, onNext }: DialogStepProps) {
     const { onFinish, finishedContent, addAnswer } = useDialog();
 
     useEffect(() => {
-        if (childrenArray.length === 0 && isAnswered) {
+        if (childrenArray.length === 0 && isAnswered && typeof children !== 'function') {
             onFinish();
             setDisplayedContent(finishedContent);
         }
-    }, [childrenArray.length, isAnswered, finishedContent, onFinish]);
+    }, [childrenArray.length, isAnswered, finishedContent, onFinish, children]);
 
     function handler(text: string) {
         if (isAnswered) {
@@ -74,13 +74,19 @@ export function DialogStep({ children, content, id, onNext }: DialogStepProps) {
             (child) => child.props.match === undefined || matchPattern(text, child.props.match),
         );
 
-        if (childrenArray.length === 0 || matchedChild !== undefined) {
+        if (childrenArray.length === 0 || matchedChild !== undefined || typeof children === 'function') {
             if (typeof id === 'string') {
                 addAnswer(id, text);
             }
 
             setIsAnswered(true);
             onNext?.(text);
+        }
+
+        if (typeof children === 'function') {
+            setDisplayedContent(children(text));
+
+            return;
         }
 
         if (matchedChild !== undefined) {

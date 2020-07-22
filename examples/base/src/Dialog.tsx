@@ -9,7 +9,7 @@ export function FlatDialogExample() {
             onFinish={(answers) => setAnswers(answers)}
             finishedContent={<Text isNewMessageEveryRender>Your answers: {JSON.stringify(answers)}</Text>}
         >
-            <DialogStep onNext={(name) => console.log(name)} id="name" content={<Text>{"Hi, what's your name?"}</Text>}>
+            <DialogStep id="name" content={<Text>{"Hi, what's your name?"}</Text>} onNext={(name) => console.log(name)}>
                 <DialogStep id="age" content={<Text>{"What's your age?"}</Text>}>
                     <DialogStep id="city" content={<Text>{"What's your city?"}</Text>} />
                 </DialogStep>
@@ -18,24 +18,46 @@ export function FlatDialogExample() {
     );
 }
 
+type DialogButtonsProps = {
+    match: string;
+    name: string;
+};
+
+function DialogButtons({ name }: DialogButtonsProps) {
+    return (
+        <DialogStep
+            content={
+                <ButtonGroup title="Please choose color">
+                    <Button id="blue">Blue</Button>
+                    <Button id="red">Red</Button>
+                </ButtonGroup>
+            }
+        >
+            <DialogStep match="blue" content={<Text>You have chosen Blue {name}.</Text>} />
+            <DialogStep match="red" content={<Text>You have chosen Red {name}.</Text>} />
+        </DialogStep>
+    );
+}
+
 export function TreeDialogExample() {
     return (
-        <Dialog onFinish={(answers) => console.log(answers)}>
-            <DialogStep content={<Text>Hi! Whats your name?</Text>}>
-                <DialogStep match="German" content={<Text>Hi, German</Text>} />
-                <DialogStep match="Kamola" content={<Text>Hi, Kamola</Text>} />
-                <DialogStep
-                    match="Color"
-                    content={
-                        <ButtonGroup title="Which your favorite color?">
-                            <Button id="red">Red</Button>
-                            <Button id="green">Green</Button>
-                        </ButtonGroup>
-                    }
-                >
-                    <DialogStep match="red" content={<Text>You like red!</Text>} />
-                    <DialogStep match="green" content={<Text>You like green!</Text>} />
-                </DialogStep>
+        <Dialog>
+            <DialogStep id="name" content={<Text>{"What's your name?"}</Text>}>
+                {(name) => {
+                    return (
+                        <DialogStep
+                            content={
+                                <ButtonGroup title={`Hi, ${name}. What do you want to buy?`}>
+                                    <Button id="hat">Hat</Button>
+                                    <Button id="glasses">Glasses</Button>
+                                </ButtonGroup>
+                            }
+                        >
+                            <DialogButtons match="hat" name="Hat" />
+                            <DialogButtons match="glasses" name="Glasses" />
+                        </DialogStep>
+                    );
+                }}
             </DialogStep>
         </Dialog>
     );
