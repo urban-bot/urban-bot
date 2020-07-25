@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBotContext, useAction } from '../hooks/hooks';
-import { formatButtonElement, FormattedButton } from '../utils/formatButtonElement';
+import { ButtonsElement, formatButtonElement, FormattedButton } from '../utils/formatButtonElement';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { OtherProps } from '../types/common';
 import { flatten } from 'array-flatten';
@@ -14,7 +14,7 @@ export type ButtonGroupProps = UrbanMessageCommonData & {
     isResizedKeyboard?: boolean;
     isNewMessageEveryRender?: boolean;
     maxColumns?: number;
-    children: React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[] | React.ReactElement<ButtonProps>[][];
+    children: ButtonsElement | ButtonsElement[] | ButtonsElement[][];
 };
 
 export function ButtonGroup({
