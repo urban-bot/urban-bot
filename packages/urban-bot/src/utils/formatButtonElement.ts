@@ -10,24 +10,34 @@ export type FormattedButton = OtherProps & {
     onClick?: (...args: unknown[]) => unknown;
 };
 
-export function formatButtonElement(
-    element: React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[] | React.ReactElement<ButtonProps>[][],
-): FormattedButton[] | FormattedButton[][] {
-    if (Array.isArray(element) && Array.isArray(element[0])) {
-        const elementGuard = element as React.ReactElement<ButtonProps>[][];
+type ButtonsElement = React.ReactElement<ButtonProps>;
 
-        return elementGuard.map((elem) => formatButtonElement(elem)) as FormattedButton[][];
+function isButtonMatrix(
+    buttons: ButtonsElement | ButtonsElement[] | ButtonsElement[][],
+): buttons is React.ReactElement<ButtonProps>[][] {
+    return Array.isArray(buttons) && Array.isArray(buttons[0]);
+}
+
+export function formatButtonElement(
+    element: ButtonsElement | ButtonsElement[] | ButtonsElement[][],
+): FormattedButton[] | FormattedButton[][] {
+    if (isButtonMatrix(element)) {
+        return element.map(formatButtonFlatArray);
     }
 
-    const elementGuard = element as React.ReactElement<ButtonProps> | React.ReactElement<ButtonProps>[];
+    return formatButtonFlatArray(element);
+}
 
-    return React.Children.map(elementGuard, (child) => {
-        if (child.type !== Button) {
-            throw new Error('Please use only Button components inside ButtonGroup.');
-        }
+function formatButtonFlatArray(element: ButtonsElement | ButtonsElement[]): FormattedButton[] {
+    return React.Children.toArray(element)
+        .filter<ButtonsElement>(React.isValidElement)
+        .map((child) => {
+            if (child.type !== Button) {
+                throw new Error('Please use only Button components inside ButtonGroup.');
+            }
 
-        const { children: text, onClick, id = getRandomId(), ...other } = child.props;
+            const { children: text, onClick, id = getRandomId(), ...other } = child.props;
 
-        return { text, onClick, id, ...other };
-    });
+            return { text, onClick, id, ...other };
+        });
 }
