@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBotContext, useAction } from '../hooks/hooks';
-import { formatButtonElement, FormattedButton } from '../utils/formatButtonElement';
+import { ButtonElement, formatButtonElement, FormattedButton } from '../utils/formatButtonElement';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { OtherProps } from '../types/common';
 import { flatten } from 'array-flatten';
@@ -14,7 +14,7 @@ export type ButtonGroupProps = UrbanMessageCommonData & {
     isResizedKeyboard?: boolean;
     isNewMessageEveryRender?: boolean;
     maxColumns?: number;
-    children: React.ReactNode;
+    children: ButtonElement | ButtonElement[] | ButtonElement[][];
 };
 
 export function ButtonGroup({
@@ -36,13 +36,7 @@ export function ButtonGroup({
         parseMode: parseModeContext,
         bot,
     } = useBotContext();
-
-    const buttonElements = React.Children.toArray(children).filter(React.isValidElement) as
-        | React.ReactElement<ButtonProps>
-        | React.ReactElement<ButtonProps>[]
-        | React.ReactElement<ButtonProps>[][];
-
-    let buttons = formatButtonElement(buttonElements);
+    let buttons = formatButtonElement(children);
 
     if (typeof maxColumns === 'number' && !Array.isArray(buttons[0])) {
         buttons = groupFlatArray(buttons as FormattedButton[], maxColumns);
