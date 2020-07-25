@@ -5,7 +5,7 @@ import { Animation } from '@urban-bot/core';
 
 function readFile(fileName: string) {
     try {
-        return fs.readFileSync(path.join(__dirname, fileName));
+        return fs.createReadStream(path.join(__dirname, fileName));
     } catch (error) {
         return undefined;
     }
