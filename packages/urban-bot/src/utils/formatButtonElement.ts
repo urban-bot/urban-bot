@@ -10,25 +10,23 @@ export type FormattedButton = OtherProps & {
     onClick?: (...args: unknown[]) => unknown;
 };
 
-export type ButtonsElement = React.ReactElement<ButtonProps> | boolean | null | undefined;
+export type ButtonElement = React.ReactElement<ButtonProps> | boolean | null | undefined;
 
-function isButtonMatrix(
-    buttons: ButtonsElement | ButtonsElement[] | ButtonsElement[][],
-): buttons is ButtonsElement[][] {
+function isButtonsMatrix(buttons: ButtonElement | ButtonElement[] | ButtonElement[][]): buttons is ButtonElement[][] {
     return Array.isArray(buttons) && Array.isArray(buttons[0]);
 }
 
 export function formatButtonElement(
-    element: ButtonsElement | ButtonsElement[] | ButtonsElement[][],
+    element: ButtonElement | ButtonElement[] | ButtonElement[][],
 ): FormattedButton[] | FormattedButton[][] {
-    if (isButtonMatrix(element)) {
+    if (isButtonsMatrix(element)) {
         return element.map(formatButtonFlatArray);
     }
 
     return formatButtonFlatArray(element);
 }
 
-function formatButtonFlatArray(element: ButtonsElement | ButtonsElement[]): FormattedButton[] {
+function formatButtonFlatArray(element: ButtonElement | ButtonElement[]): FormattedButton[] {
     return React.Children.toArray(element)
         .filter<React.ReactElement<ButtonProps>>(React.isValidElement)
         .map((child) => {
