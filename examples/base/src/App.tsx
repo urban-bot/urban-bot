@@ -27,13 +27,36 @@ dotenv.config();
 export function App() {
     return (
         <Router>
+            <Route path="/start" description="start">
+                <Text>
+                    {'/tree_dialog \n'}
+                    {'/flat_dialog \n'}
+                    {'/image \n'}
+                    {'/text \n'}
+                    {'/buttons \n'}
+                    {'/matrix_buttons \n'}
+                    {'/matrix_buttons_max_columns \n'}
+                    {'/queue \n'}
+                    {'/hooks \n'}
+                    {'/audio \n'}
+                    {'/video \n'}
+                    {'/file \n'}
+                    {'/poll\n'}
+                    {'/contact \n'}
+                    {'/animation \n'}
+                    {'/media \n'}
+                    {'/location \n'}
+                    {'/router \n'}
+                    {'/notification \n'}
+                </Text>
+            </Route>
             <Route path="/tree_dialog" description="start">
                 <TreeDialogExample />
             </Route>
             <Route path="/flat_dialog" description="start">
                 <FlatDialogExample />
             </Route>
-            <Route path="/start" description="start">
+            <Route path="/image" description="start">
                 <ImageExample />
             </Route>
             <Route path="/text" description="text">
