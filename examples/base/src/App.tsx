@@ -13,7 +13,12 @@ import { AnimationExample } from './Animation';
 import { ContactExample } from './Contact';
 import { MediaExample } from './Media';
 import { LocationExample } from './Location';
-import { ButtonsExample, ReplyButtonsExample, MatrixButtonsExample } from './ButtonGroup';
+import {
+    ButtonsExample,
+    ReplyButtonsExample,
+    MatrixButtonsExample,
+    MatrixButtonsMaxColumnsExample,
+} from './ButtonGroup';
 import { RouterExample } from './Router';
 import { FlatDialogExample, TreeDialogExample } from './Dialog';
 
@@ -42,6 +47,9 @@ export function App() {
             </Route>
             <Route path="/matrix_buttons" description="matrix_buttons">
                 <MatrixButtonsExample />
+            </Route>
+            <Route path="/matrix_buttons_max_columns" description="matrix_buttons">
+                <MatrixButtonsMaxColumnsExample />
             </Route>
             <Route path="/queue" description="queue">
                 <Queue />

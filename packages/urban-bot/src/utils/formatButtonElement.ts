@@ -12,7 +12,9 @@ export type FormattedButton = OtherProps & {
 
 export type ButtonElement = React.ReactElement<ButtonProps> | boolean | null | undefined;
 
-function isButtonsMatrix(buttons: ButtonElement | ButtonElement[] | ButtonElement[][]): buttons is ButtonElement[][] {
+export function isButtonsMatrix(
+    buttons: ButtonElement | ButtonElement[] | ButtonElement[][],
+): buttons is ButtonElement[][] {
     return Array.isArray(buttons) && Array.isArray(buttons[0]);
 }
 
