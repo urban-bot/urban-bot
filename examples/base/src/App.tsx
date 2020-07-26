@@ -21,6 +21,7 @@ import {
 } from './ButtonGroup';
 import { RouterExample } from './Router';
 import { FlatDialogExample, TreeDialogExample } from './Dialog';
+import { Start } from './Start';
 
 dotenv.config();
 
@@ -28,27 +29,7 @@ export function App() {
     return (
         <Router>
             <Route path="/start" description="start">
-                <Text>
-                    {'/tree_dialog \n'}
-                    {'/flat_dialog \n'}
-                    {'/image \n'}
-                    {'/text \n'}
-                    {'/buttons \n'}
-                    {'/matrix_buttons \n'}
-                    {'/matrix_buttons_max_columns \n'}
-                    {'/queue \n'}
-                    {'/hooks \n'}
-                    {'/audio \n'}
-                    {'/video \n'}
-                    {'/file \n'}
-                    {'/poll\n'}
-                    {'/contact \n'}
-                    {'/animation \n'}
-                    {'/media \n'}
-                    {'/location \n'}
-                    {'/router \n'}
-                    {'/notification \n'}
-                </Text>
+                <Start />
             </Route>
             <Route path="/tree_dialog" description="start">
                 <TreeDialogExample />
