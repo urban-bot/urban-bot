@@ -1,12 +1,13 @@
 import React from 'react';
 import { useBotContext, useAction } from '../hooks/hooks';
-import { ButtonElement, formatButtonElement, FormattedButton, isButtonsMatrix } from '../utils/formatButtonElement';
+import { ButtonElement, formatButtonElement } from '../utils/formatButtonElement';
 import { UrbanMessageCommonData } from '../types/Messages';
 import { OtherProps } from '../types/common';
 import { flatten } from 'array-flatten';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 import { getParseMode } from '../utils/getParseMode';
 import { groupFlatArray } from '../utils/groupFlatArray';
+import { isArrayMatrix } from '../utils/isArrayMatrix';
 
 export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
@@ -39,8 +40,8 @@ export function ButtonGroup({
     let buttons = formatButtonElement(children);
 
     if (typeof maxColumns === 'number') {
-        if (Array.isArray(children) === true && !isButtonsMatrix(children)) {
-            buttons = groupFlatArray(buttons as FormattedButton[], maxColumns);
+        if (!isArrayMatrix(buttons)) {
+            buttons = groupFlatArray(buttons, maxColumns);
         } else {
             console.error('When you use "maxColumns" the buttons children must be flatten array');
         }

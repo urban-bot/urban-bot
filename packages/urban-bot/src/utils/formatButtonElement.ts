@@ -2,6 +2,7 @@ import React from 'react';
 import { getRandomId } from './getRandomId';
 import { Button, ButtonProps } from '../components/ButtonGroup';
 import { OtherProps } from '../types/common';
+import { isArrayMatrix } from './isArrayMatrix';
 
 export type FormattedButton = OtherProps & {
     id: string;
@@ -12,16 +13,10 @@ export type FormattedButton = OtherProps & {
 
 export type ButtonElement = React.ReactElement<ButtonProps> | boolean | null | undefined;
 
-export function isButtonsMatrix(
-    buttons: ButtonElement | ButtonElement[] | ButtonElement[][],
-): buttons is ButtonElement[][] {
-    return Array.isArray(buttons) && Array.isArray(buttons[0]);
-}
-
 export function formatButtonElement(
     element: ButtonElement | ButtonElement[] | ButtonElement[][],
 ): FormattedButton[] | FormattedButton[][] {
-    if (isButtonsMatrix(element)) {
+    if (isArrayMatrix(element)) {
         return element.map(formatButtonFlatArray);
     }
 
