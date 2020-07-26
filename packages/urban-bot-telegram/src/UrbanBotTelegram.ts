@@ -112,6 +112,14 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     }
 
     handleMessage = (type: UrbanSyntheticEventType<UrbanBotTelegramType>, ctx: TelegramBotMessage) => {
+        if (!ctx.chat) {
+            console.error("Chat information didn't come from Telegram event");
+            console.error('Message type', type);
+            console.error('Message context', ctx);
+
+            return;
+        }
+
         const common: UrbanSyntheticEventCommon<UrbanBotTelegramType> = {
             chat: {
                 id: String(ctx.chat.id),
