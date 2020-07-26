@@ -37,7 +37,7 @@ export function App() {
             <Route path="/flat_dialog" description="start">
                 <FlatDialogExample />
             </Route>
-            <Route path="/image" description="start">
+            <Route path="/image" description="image">
                 <ImageExample />
             </Route>
             <Route path="/text" description="text">
