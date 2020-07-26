@@ -36,3 +36,19 @@ export function MatrixButtonsExample() {
         </ButtonGroup>
     );
 }
+
+export function MatrixButtonsMaxColumnsExample() {
+    return (
+        <ButtonGroup title="Max Columns" maxColumns={2}>
+            <Button>First button</Button>
+            <Button>Second button</Button>
+            <Button>Third button</Button>
+            <Button>Fourth button</Button>
+            <Button>Fifth button</Button>
+            <Button>Sixth button</Button>
+            <Button>Seventh button</Button>
+            <Button>Eighth button</Button>
+            <Button>Ninth button</Button>
+        </ButtonGroup>
+    );
+}

@@ -1,21 +1,26 @@
 import dotenv from 'dotenv';
 import React from 'react';
 import { Route, Router, Notification, Text } from '@urban-bot/core';
-import { TextExample } from './Text';
-import { Hooks } from './Hooks';
-import { ImageExample } from './Image';
-import { Queue } from './Queue';
-import { AudioExample } from './Audio';
-import { VideoExample } from './Video';
-import { FileExample } from './File';
-import { PollExample } from './Poll';
-import { AnimationExample } from './Animation';
-import { ContactExample } from './Contact';
-import { MediaExample } from './Media';
-import { LocationExample } from './Location';
-import { ButtonsExample, ReplyButtonsExample, MatrixButtonsExample } from './ButtonGroup';
-import { RouterExample } from './Router';
-import { FlatDialogExample, TreeDialogExample } from './Dialog';
+import { TextExample } from './components/Text';
+import { Hooks } from './components/Hooks';
+import { ImageExample } from './components/Image';
+import { Queue } from './components/Queue';
+import { AudioExample } from './components/Audio';
+import { VideoExample } from './components/Video';
+import { FileExample } from './components/File';
+import { PollExample } from './components/Poll';
+import { AnimationExample } from './components/Animation';
+import { ContactExample } from './components/Contact';
+import { MediaExample } from './components/Media';
+import { LocationExample } from './components/Location';
+import {
+    ButtonsExample,
+    ReplyButtonsExample,
+    MatrixButtonsExample,
+    MatrixButtonsMaxColumnsExample,
+} from './components/ButtonGroup';
+import { RouterExample } from './components/Router';
+import { FlatDialogExample, TreeDialogExample } from './components/Dialog';
 
 dotenv.config();
 
@@ -28,7 +33,7 @@ export function App() {
             <Route path="/flat_dialog" description="start">
                 <FlatDialogExample />
             </Route>
-            <Route path="/start" description="start">
+            <Route path="/image" description="image">
                 <ImageExample />
             </Route>
             <Route path="/text" description="text">
@@ -42,6 +47,9 @@ export function App() {
             </Route>
             <Route path="/matrix_buttons" description="matrix_buttons">
                 <MatrixButtonsExample />
+            </Route>
+            <Route path="/matrix_buttons_max_columns" description="matrix_buttons_max_columns">
+                <MatrixButtonsMaxColumnsExample />
             </Route>
             <Route path="/queue" description="queue">
                 <Queue />
@@ -80,6 +88,49 @@ export function App() {
                 <Notification intervalSeconds={2}>
                     <Text>Ping every two second</Text>
                 </Notification>
+            </Route>
+            <Route path="/start" description="start">
+                <Text isNewMessageEveryRender>
+                    /text
+                    <br />
+                    /image
+                    <br />
+                    /buttons
+                    <br />
+                    /reply_buttons
+                    <br />
+                    /matrix_buttons
+                    <br />
+                    /matrix_buttons_max_columns
+                    <br />
+                    /hooks
+                    <br />
+                    /tree_dialog
+                    <br />
+                    /flat_dialog
+                    <br />
+                    /queue
+                    <br />
+                    /audio
+                    <br />
+                    /video
+                    <br />
+                    /file
+                    <br />
+                    /poll
+                    <br />
+                    /contact
+                    <br />
+                    /animation
+                    <br />
+                    /media
+                    <br />
+                    /location
+                    <br />
+                    /router
+                    <br />
+                    /notification
+                </Text>
             </Route>
         </Router>
     );
