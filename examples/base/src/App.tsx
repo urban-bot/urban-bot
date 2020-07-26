@@ -27,11 +27,11 @@ dotenv.config();
 export function App() {
     return (
         <Router>
-            <Route path="/tree_dialog" description="start">
-                <TreeDialogExample />
-            </Route>
-            <Route path="/flat_dialog" description="start">
+            <Route path="/flat_dialog" description="flat_dialog">
                 <FlatDialogExample />
+            </Route>
+            <Route path="/tree_dialog" description="tree_dialog">
+                <TreeDialogExample />
             </Route>
             <Route path="/image" description="image">
                 <ImageExample />
