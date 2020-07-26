@@ -1,3 +1,3 @@
-export function isArrayMatrix<T>(buttons: T | T[] | T[][]): buttons is T[][] {
-    return Array.isArray(buttons) && Array.isArray(buttons[0]);
+export function isArrayMatrix<T>(elementOrArray: T | T[] | T[][]): elementOrArray is T[][] {
+    return Array.isArray(elementOrArray) && Array.isArray(elementOrArray[0]);
 }
