@@ -1,27 +1,27 @@
 import dotenv from 'dotenv';
 import React from 'react';
 import { Route, Router, Notification, Text } from '@urban-bot/core';
-import { TextExample } from './Text';
-import { Hooks } from './Hooks';
-import { ImageExample } from './Image';
-import { Queue } from './Queue';
-import { AudioExample } from './Audio';
-import { VideoExample } from './Video';
-import { FileExample } from './File';
-import { PollExample } from './Poll';
-import { AnimationExample } from './Animation';
-import { ContactExample } from './Contact';
-import { MediaExample } from './Media';
-import { LocationExample } from './Location';
+import { TextExample } from './components/Text';
+import { Hooks } from './components/Hooks';
+import { ImageExample } from './components/Image';
+import { Queue } from './components/Queue';
+import { AudioExample } from './components/Audio';
+import { VideoExample } from './components/Video';
+import { FileExample } from './components/File';
+import { PollExample } from './components/Poll';
+import { AnimationExample } from './components/Animation';
+import { ContactExample } from './components/Contact';
+import { MediaExample } from './components/Media';
+import { LocationExample } from './components/Location';
 import {
     ButtonsExample,
     ReplyButtonsExample,
     MatrixButtonsExample,
     MatrixButtonsMaxColumnsExample,
-} from './ButtonGroup';
-import { RouterExample } from './Router';
-import { FlatDialogExample, TreeDialogExample } from './Dialog';
-import { Start } from './Start';
+} from './components/ButtonGroup';
+import { RouterExample } from './components/Router';
+import { FlatDialogExample, TreeDialogExample } from './components/Dialog';
+import { Start } from './components/Start';
 
 dotenv.config();
 
