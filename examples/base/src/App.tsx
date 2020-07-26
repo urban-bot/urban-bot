@@ -52,7 +52,7 @@ export function App() {
             <Route path="/matrix_buttons" description="matrix_buttons">
                 <MatrixButtonsExample />
             </Route>
-            <Route path="/matrix_buttons_max_columns" description="matrix_buttons">
+            <Route path="/matrix_buttons_max_columns" description="matrix_buttons_max_columns">
                 <MatrixButtonsMaxColumnsExample />
             </Route>
             <Route path="/queue" description="queue">
