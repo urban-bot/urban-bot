@@ -19,6 +19,11 @@ function ReplyButtons() {
     );
 }
 
+function Params() {
+    const { params } = useRouter<{ id: string }>();
+    return <Text>{`Id is ${params?.id}`}</Text>;
+}
+
 export function RouterExample() {
     return (
         <Router>
@@ -30,6 +35,9 @@ export function RouterExample() {
             </Route>
             <Route path="/route_2" description="path by command">
                 <ReplyButtons />
+            </Route>
+            <Route path="/params/:id" description="params">
+                <Params />
             </Route>
             <Route path={/.+/} description="path by regex">
                 <Text>Not found</Text>
