@@ -25,14 +25,14 @@ export function useBotContext<
     return botContext;
 }
 
-export function useRouter() {
+export function useRouter<Params extends object = {}>() {
     const routerContext = React.useContext(RouterContext);
 
     if (routerContext === undefined) {
         throw new Error('You should use useBotContext only under Router component');
     }
 
-    return routerContext;
+    return routerContext as RouterContext<Params>;
 }
 
 function useSubscribe<
