@@ -5,7 +5,7 @@ sidebar_label: Hooks
 ---
 **Available <a href="https://reactjs.org/docs/hooks-intro.html" target="_blank">react hooks</a>. Use it to subscribe to user actions or get application data.**
 
-<a href="https://github.com/urban-bot/urban-bot/tree/master/examples/base/src/Hooks.tsx" target="_blank">**Examples**</a>
+<a href="https://github.com/urban-bot/base-example/blob/master/src/components/Hooks.tsx" target="_blank">**Examples**</a>
 
 All variables you can import from `@urban-bot/core`.  
 ```javascript
