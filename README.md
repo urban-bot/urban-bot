@@ -30,6 +30,9 @@ The universal chatbot library based on [React](https://github.com/facebook/react
 
 ## [Get Started](https://urban-bot.now.sh/docs/intro.html)
 ## [API](https://urban-bot.now.sh/docs/components.html)
+## Tutorials
+* [How to create Todo List in Telegram](https://medium.com/@heresliker/how-to-create-todo-list-telegram-bot-with-react-js-f9f77d22cc49)
+* [Как создать Todo List в Telegram](https://medium.com/@heresliker/%D0%BA%D0%B0%D0%BA-%D1%81%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C-todo-list-%D1%87%D0%B0%D1%82-%D0%B1%D0%BE%D1%82%D0%B0-%D0%B2-telegram-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-react-js-d8a3c238ca91)
 
 ## Installation
 Please use our zero configuration [starter](https://github.com/urban-bot/urban-bot-starter-typescript).
