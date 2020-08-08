@@ -275,6 +275,26 @@ function ProfileButtons() {
      return <Text>You are here {activePath}</Text>;
  }
  ```
+#### params
+> If a component is under a dynamic path like '/some-path/:id' you can get a variable using params.
+###### optional  
+`{ key: string }`
+```jsx
+function ComponentWithParams() {
+    const { params } = useRouter();
+
+    return <Text>Route id is {params.id}</Text>;
+}
+ ```
+If you use `typescript` you can pass a type .
+```jsx
+function ComponentWithParams() {
+    const { params } = useRouter<{ id: string }>();
+
+    return <Text>Route id is {params.id}</Text>;
+}
+ ```
+
 ## useAnyEvent
 Call after any user action.
 ```jsx
