@@ -12,6 +12,11 @@ export const matchPattern = (path: string, pattern: string | RegExp) => {
         return pattern.test(path);
     }
 
+    // Path doesn't work with spaces
+    if (pattern.includes(' ')) {
+        return pattern === path;
+    }
+
     const pathInstance = new Path(pattern);
 
     return pathInstance.test(path) !== null;
@@ -23,6 +28,11 @@ export const matchChild = (path: string) => (child: React.ReactElement<RouteProp
 
 export function getParams(path: string, pattern?: string | RegExp) {
     if (typeof pattern !== 'string') {
+        return undefined;
+    }
+
+    // Path doesn't work with spaces
+    if (pattern.includes(' ')) {
         return undefined;
     }
 
