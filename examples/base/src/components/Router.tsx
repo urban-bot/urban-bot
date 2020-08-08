@@ -22,7 +22,8 @@ function ReplyButtons() {
 
 function Params() {
     const { params } = useRouter<{ id: string }>();
-    return <Text>{`Route id is ${params?.id}`}</Text>;
+
+    return <Text>Route id is {params?.id}</Text>;
 }
 
 export function RouterExample() {

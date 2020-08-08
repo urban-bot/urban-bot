@@ -373,7 +373,7 @@ function App() {
 ```  
 Now if a user type 'profile' or 'catalog' urban-bot renders a corresponding component.
 
-Also, you can navigate inside your app without messaging by using a router context.
+Also, you can navigate inside your app without messaging by using a router context [**useRouter**](hooks.md#userouter).
 ```jsx
 function ProfileButtons() {
     const { navigate } = useRouter();
@@ -403,7 +403,7 @@ function ProfileButtons() {
 Piece of [Router](#router).
 ```jsx
 <Route path="profile">  
-    <Profile />  
+    <Profile />
 </Route>
 ```
 
@@ -412,7 +412,7 @@ Piece of [Router](#router).
 ###### required  
 `ReactNode` 
 ####  path  
-> String or regexp which is connected with Route children.
+> String or regexp which is connected with Route children. To get router params use [useRouter](hooks.md#userouter).
 ###### required  
 `string` | `RexExp` 
 ```jsx
@@ -426,12 +426,17 @@ Piece of [Router](#router).
 </Route>
 ```
 ```jsx
+<Route path="/profile/:id">
+    ...
+</Route>
+```
+```jsx
 <Route path={/.+/}>
     <Text>Not found</Text>
 </Route>
 ```
 ####  description  
-> Describe your Route. Usually is needed for [withInitializeCommands](#withinitializecommands).
+> Describe your Route. It is usually needed for [withInitializeCommands](#withinitializecommands).
 ###### optional  
 `string`
 ```jsx
