@@ -412,7 +412,7 @@ Piece of [Router](#router).
 ###### required  
 `ReactNode` 
 ####  path  
-> String or regexp which is connected with Route children. To get router params use [**useRouter**](hooks.md#userouter).
+> String or regexp which is connected with Route children. To get router params use [useRouter](hooks.md#userouter).
 ###### required  
 `string` | `RexExp` 
 ```jsx
