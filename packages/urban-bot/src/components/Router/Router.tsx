@@ -4,7 +4,7 @@ import { useText } from '../../hooks/useText';
 import { useCommand } from '../../hooks/useCommand';
 import { RouterContext } from '../../context';
 import { RouteProps } from './Route';
-import { matchChild } from './utils';
+import { getParams, matchChild } from './utils';
 import { UrbanCommand } from '../../types';
 
 let isCommandsInitialized = false;
@@ -58,9 +58,7 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
         }
     });
 
-    return (
-        <RouterContext.Provider value={{ activePath, navigate }}>
-            {childrenArray.find(matchChild(activePath))}
-        </RouterContext.Provider>
-    );
+    const component = childrenArray.find(matchChild(activePath));
+    const params = getParams(activePath, component?.props.path);
+    return <RouterContext.Provider value={{ activePath, navigate, params }}>{component}</RouterContext.Provider>;
 }
