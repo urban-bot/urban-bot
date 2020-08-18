@@ -24,6 +24,7 @@ export type UrbanMessageCommonData = OtherProps & {
     forceReply?: boolean;
     personaId?: string | number;
     simulateTyping?: number;
+    isRemoveKeyboard?: boolean;
 };
 
 export type UrbanMessageTextData = UrbanMessageCommonData & {

@@ -53,6 +53,12 @@ function formatReplyMarkupForNewMessage(message: UrbanMessage) {
             inline_keyboard: buttons,
         };
     }
+
+    if ('isRemoveKeyboard' in message.data && message.data.isRemoveKeyboard) {
+        return {
+            remove_keyboard: true,
+        };
+    }
 }
 
 function formatReplyMarkupForExistingMessage(message: UrbanMessage) {
