@@ -26,12 +26,6 @@ function formatKeyboard(message: UrbanMessage): InlineKeyboardButton[][] {
 }
 
 function formatReplyMarkupForNewMessage(message: UrbanMessage) {
-    if ('isRemoveKeyboard' in message.data && message.data.isRemoveKeyboard) {
-        return {
-            remove_keyboard: true,
-        };
-    }
-
     if (message.data.forceReply !== undefined) {
         const replyMarkup: TelegramBot.ForceReply = {
             force_reply: message.data.forceReply,
@@ -57,6 +51,12 @@ function formatReplyMarkupForNewMessage(message: UrbanMessage) {
 
         return {
             inline_keyboard: buttons,
+        };
+    }
+
+    if ('isRemoveKeyboard' in message.data && message.data.isRemoveKeyboard) {
+        return {
+            remove_keyboard: true,
         };
     }
 }
