@@ -4,7 +4,7 @@ import { Text } from '../Text';
 import { useAction, useDialog, useText } from '../..';
 
 export type DialogValidation = {
-    isValid: (answer: string) => boolean;
+    isValid: (answer: string) => boolean | Promise<boolean>;
     errorText?: string;
 };
 
@@ -30,7 +30,7 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
         }
     }, [childrenArray.length, isAnswered, finishedContent, onFinish, children]);
 
-    function handler(text: string) {
+    async function handler(text: string) {
         if (isAnswered) {
             return;
         }
@@ -40,7 +40,7 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
         );
 
         if (validation !== undefined) {
-            const isValid = validation.isValid(text);
+            const isValid = await validation.isValid(text);
 
             if (!isValid) {
                 setDisplayedContent(<Text isNewMessageEveryRender>{validation.errorText ?? defaultErrorText}</Text>);
