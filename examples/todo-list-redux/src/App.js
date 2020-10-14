@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useText, Button, ButtonGroup, Text } from '@urban-bot/core';
 import { Provider, useDispatch, useSelector } from 'react-redux/lib/alternate-renderers';
-import { store } from './redux/store';
+import { createStore } from 'redux';
+import { rootReducer } from './redux/reducer';
 import { addTodo, deleteTodo, toggleMode, toggleTodo } from './redux/actions';
 import { DELETE_TODOS_MODE } from './redux/constants';
 
@@ -50,6 +51,7 @@ function TodoList() {
 }
 
 export function App() {
+    const store = useMemo(() => createStore(rootReducer), []);
     return (
         <Provider store={store}>
             <Text>Welcome to todo list. Type your new todo.</Text>
