@@ -59,7 +59,7 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
         }
 
         if (typeof children === 'function') {
-            setDisplayedContent(children(text));
+            setDisplayedContent(await children(text));
 
             return;
         }
