@@ -9,7 +9,8 @@
     "build": "lerna run build --stream",
     "lint:fix": "lerna run lint:fix  --stream --parallel",
     "typecheck": "lerna run typecheck  --stream --parallel",
-    "prepare": "lerna run prepare  --stream"
+    "prepare": "lerna run prepare  --stream",
+    "my-publish": "lerna publish '--force-publish=*'"
   },
   "authors": [
     "ledamint",
