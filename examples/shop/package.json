@@ -1,6 +1,6 @@
 {
     "name": "urban-bot-example-shop",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "private": true,
     "description": "urban bot shop example",
     "repository": {
@@ -25,10 +25,10 @@
         "@types/jest": "^25.2.1",
         "@types/node": "^14.0.11",
         "@types/react": "^16.9.34",
-        "@urban-bot/core": "^0.1.6",
-        "@urban-bot/facebook": "^0.1.6",
-        "@urban-bot/slack": "^0.1.6",
-        "@urban-bot/telegram": "^0.1.6",
+        "@urban-bot/core": "^0.1.7",
+        "@urban-bot/facebook": "^0.1.7",
+        "@urban-bot/slack": "^0.1.7",
+        "@urban-bot/telegram": "^0.1.7",
         "dotenv": "^8.2.0",
         "file-loader": "^6.0.0",
         "react": "^16.13.1",
