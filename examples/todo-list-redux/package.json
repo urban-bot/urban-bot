@@ -1,6 +1,6 @@
 {
     "name": "urban-bot-example-todo-list-redux",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "private": true,
     "description": "urban bot todo-list-redux example",
     "files": [
@@ -38,10 +38,10 @@
         "typescript": "3.8.3"
     },
     "dependencies": {
-        "@urban-bot/core": "^0.1.8",
-        "@urban-bot/facebook": "^0.1.8",
-        "@urban-bot/slack": "^0.1.8",
-        "@urban-bot/telegram": "^0.1.8",
+        "@urban-bot/core": "^0.1.9",
+        "@urban-bot/facebook": "^0.1.9",
+        "@urban-bot/slack": "^0.1.9",
+        "@urban-bot/telegram": "^0.1.9",
         "react": "16.13.1",
         "react-redux": "7.2.0",
         "redux": "4.0.5"
