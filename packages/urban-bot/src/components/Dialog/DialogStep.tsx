@@ -25,6 +25,7 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
 
     useEffect(() => {
         if (childrenArray.length === 0 && isAnswered && typeof children !== 'function') {
+            // TODO call onFinish not inside useEffects
             onFinish();
             setDisplayedContent(finishedContent);
         }

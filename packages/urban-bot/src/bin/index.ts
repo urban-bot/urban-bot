@@ -28,8 +28,11 @@ switch (command) {
                     throw new Error('Provide TELEGRAM_TOKEN to .env');
                 }
 
-                (async function setTelegramWebhook(webhookHost: string, token: string) {
-                    const webhookURL = `${webhookHost}/telegram/bot${token}`;
+                let webhookBase = webhookHostURL.origin + webhookHostURL.pathname;
+                webhookBase = webhookBase[webhookBase.length - 1] === '/' ? webhookBase.slice(0, -1) : webhookBase;
+
+                (async function setTelegramWebhook(webhookBase: string, token: string) {
+                    const webhookURL = `${webhookBase}/telegram/bot${token}`;
                     const setWebhookURL = `${telegramAPI}/bot${token}/setWebhook?url=${webhookURL}`;
 
                     try {
@@ -53,7 +56,7 @@ switch (command) {
                         console.log('Webhook is not set');
                         console.error(e);
                     }
-                })(webhookHostURL.origin, telegramToken);
+                })(webhookBase, telegramToken);
 
                 break;
             }
