@@ -34,6 +34,7 @@ export type FacebookOptions = {
     webhookUrl?: string;
     apiUrl?: string;
     apiUrlVersion?: string;
+    pathnamePrefix?: string;
 };
 
 const defaultOptions: Partial<FacebookOptions> = {
@@ -62,16 +63,18 @@ export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
         this.client = new GraphAPI(this.options);
     }
     initializeServer(expressApp: express.Express) {
+        const pathnamePrefix = this.options.pathnamePrefix ?? '';
+
         expressApp.use(
-            '/facebook/*',
+            `${pathnamePrefix}/facebook/*`,
             urlencoded({
                 extended: true,
             }),
         );
 
-        expressApp.use('/facebook/*', json({ verify: this.verifyRequestSignature }));
+        expressApp.use(`${pathnamePrefix}/facebook/*`, json({ verify: this.verifyRequestSignature }));
 
-        expressApp.get('/facebook/webhook', (req, res) => {
+        expressApp.get(`${pathnamePrefix}/facebook/webhook`, (req, res) => {
             const mode = req.query?.['hub.mode'];
             const token = req.query?.['hub.verify_token'];
             const challenge = req.query?.['hub.challenge'];
