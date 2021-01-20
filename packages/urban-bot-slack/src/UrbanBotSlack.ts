@@ -31,6 +31,7 @@ import { getTypeByMimeType } from './utils';
 export type SlackOptions = {
     signingSecret: string;
     token: string;
+    pathnamePrefix?: string;
 };
 
 export type UrbanNativeEventSlack<Payload extends SlackPayload = SlackPayload> = {
@@ -52,10 +53,10 @@ export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
     interactions: ReturnType<typeof createMessageAdapter>;
     commandPrefix = '/';
 
-    constructor({ signingSecret, token }: SlackOptions) {
-        this.client = new WebClient(token);
-        this.events = createEventAdapter(signingSecret);
-        this.interactions = createMessageAdapter(signingSecret);
+    constructor(public options: SlackOptions) {
+        this.client = new WebClient(options.token);
+        this.events = createEventAdapter(options.signingSecret);
+        this.interactions = createMessageAdapter(options.signingSecret);
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore this.events extends EventEmitter
         this.events.on('error', console.error);
@@ -66,9 +67,15 @@ export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
     }
 
     initializeServer(expressApp: express.Express) {
-        expressApp.use('/slack/events', this.events.expressMiddleware());
-        expressApp.use('/slack/actions', this.interactions.expressMiddleware());
-        expressApp.post('/slack/commands', bodyParser.urlencoded({ extended: false }), this.handleCommand);
+        const pathnamePrefix = this.options.pathnamePrefix ?? '';
+
+        expressApp.use(`${pathnamePrefix}/slack/events`, this.events.expressMiddleware());
+        expressApp.use(`${pathnamePrefix}/slack/actions`, this.interactions.expressMiddleware());
+        expressApp.post(
+            `${pathnamePrefix}/slack/commands`,
+            bodyParser.urlencoded({ extended: false }),
+            this.handleCommand,
+        );
     }
 
     processUpdate(_event: UrbanSyntheticEvent<UrbanBotSlackType>) {

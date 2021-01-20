@@ -55,6 +55,7 @@ export type UrbanBotTelegramType<Payload = TelegramPayload> = {
 export type TelegramOptions = {
     token: string;
     isPolling?: boolean;
+    pathnamePrefix?: string;
     [key: string]: any;
 };
 
@@ -100,8 +101,10 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             return;
         }
 
-        expressApp.use('/telegram/*', express.json());
-        expressApp.post(`/telegram/bot${this.options.token}`, (req, res) => {
+        const pathnamePrefix = this.options.pathnamePrefix ?? '';
+
+        expressApp.use(`${pathnamePrefix}/telegram/*`, express.json());
+        expressApp.post(`${pathnamePrefix}/telegram/bot${this.options.token}`, (req, res) => {
             this.client.processUpdate(req.body);
             res.sendStatus(200);
         });
