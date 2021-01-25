@@ -31,7 +31,10 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
                     description: routes.props.description,
                 };
             })
-            .filter(({ command }) => typeof command === 'string' && command[0] === bot.commandPrefix) as UrbanCommand[];
+            .filter(
+                ({ command, description }) =>
+                    typeof command === 'string' && command[0] === bot.commandPrefix && Boolean(description),
+            ) as UrbanCommand[];
 
         bot.initializeCommands?.(commands).then(() => {
             isCommandsInitialized = true;
