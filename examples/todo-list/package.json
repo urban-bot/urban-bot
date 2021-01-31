@@ -1,6 +1,6 @@
 {
     "name": "urban-bot-example-todo-list",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "private": true,
     "description": "urban bot todo-list example",
     "files": [
@@ -38,10 +38,10 @@
         "typescript": "3.8.3"
     },
     "dependencies": {
-        "@urban-bot/core": "^0.1.11",
-        "@urban-bot/facebook": "^0.1.11",
-        "@urban-bot/slack": "^0.1.11",
-        "@urban-bot/telegram": "^0.1.11",
+        "@urban-bot/core": "^0.1.12",
+        "@urban-bot/facebook": "^0.1.12",
+        "@urban-bot/slack": "^0.1.12",
+        "@urban-bot/telegram": "^0.1.12",
         "react": "16.13.1"
     },
     "engines": {
