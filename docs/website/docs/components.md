@@ -390,6 +390,16 @@ function ProfileButtons() {
 > One or many Route components.
 ###### required  
 [`Route`](#route)
+#### historyLength
+> Maximum of saved navigated router paths. You can get history using [useRouter](hooks.md#history) hook. 
+###### optional
+###### default `5`
+`number`
+```jsx
+<Router historyLength={30}>
+    ...
+</Router>
+```
 #### withInitializeCommands
 > If you pass commands to path prop every specific bot can initialize them. For example auto-suggesting command if a user starts to type it.
 ###### optional  
