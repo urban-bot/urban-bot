@@ -3,7 +3,7 @@ import { matchPattern } from '../../utils/matchPattern';
 import { Text } from '../Text';
 import { useAction, useDialog, useText } from '../..';
 
-export type DialogValidationResult = string | undefined | Promise<string | undefined>;
+export type DialogValidationResult = string | void | Promise<string | void>;
 
 export type DialogValidation = (answer: string) => DialogValidationResult;
 
