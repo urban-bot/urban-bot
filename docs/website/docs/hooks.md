@@ -267,7 +267,7 @@ function ProfileButtons() {
 > Current route path.
 
 ###### required  
-`string` | `RexExp` 
+`string`
 ```jsx
  function WhereAmI() {
      const { activePath } = useRouter();
@@ -279,7 +279,7 @@ function ProfileButtons() {
 > History of navigated paths. Maximum of saved paths you can change by [historyLength](components.md#historylength).
 
 ###### required
-`(string | RexExp)[]`
+`string[]`
 ```jsx
  function WhereIHaveBeen() {
      const { history } = useRouter(); // ['/profile', '/bucket', '/order']
