@@ -2,12 +2,13 @@ import React from 'react';
 import { Router, Route, Text, useRouter, ButtonGroup, Button } from '@urban-bot/core';
 
 function Buttons() {
-    const { navigate } = useRouter();
+    const { navigate, history } = useRouter();
 
     return (
         <ButtonGroup title="Route 1">
             <Button onClick={() => navigate('/route_2')}>Go to Route 2</Button>
             <Button onClick={() => navigate('/params/123')}>Go to Route wih params </Button>
+            <Button onClick={() => navigate(history[history.length - 2])}>Go back</Button>
         </ButtonGroup>
     );
 }

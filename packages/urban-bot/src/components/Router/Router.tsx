@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import { useBotContext } from '../../hooks/hooks';
 import { useText } from '../../hooks/useText';
 import { useCommand } from '../../hooks/useCommand';
@@ -12,12 +12,25 @@ let isCommandsInitialized = false;
 type RouterProps = {
     children: React.ReactNode;
     withInitializeCommands?: boolean;
+    historyLength?: number;
 };
 
-export function Router({ children, withInitializeCommands = false }: RouterProps) {
+export function Router({ children, withInitializeCommands = false, historyLength = 5 }: RouterProps) {
     const { bot } = useBotContext();
-    const [activePath, navigate] = React.useState('');
+    const history = useRef<string[]>([]);
+    const [activePath, setActivePath] = React.useState('');
     const childrenArray = React.Children.toArray(children) as React.ReactElement<RouteProps>[];
+
+    const navigate = useCallback(
+        (path: string) => {
+            const newHistory = [...history.current, path];
+
+            history.current = newHistory.length <= historyLength ? newHistory : newHistory.slice(1);
+
+            setActivePath(path);
+        },
+        [historyLength],
+    );
 
     React.useEffect(() => {
         if (!withInitializeCommands || isCommandsInitialized) {
@@ -63,5 +76,10 @@ export function Router({ children, withInitializeCommands = false }: RouterProps
 
     const component = childrenArray.find(matchChild(activePath));
     const params = getParams(activePath, component?.props.path);
-    return <RouterContext.Provider value={{ activePath, navigate, params }}>{component}</RouterContext.Provider>;
+
+    return (
+        <RouterContext.Provider value={{ activePath, navigate, params, history: history.current }}>
+            {component}
+        </RouterContext.Provider>
+    );
 }

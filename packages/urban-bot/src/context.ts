@@ -21,6 +21,7 @@ export type RouterContext<Params extends object = {}> = {
     navigate: (path: string) => void;
     activePath: string;
     params?: Params;
+    history: string[];
 };
 
 export const RouterContext = React.createContext<RouterContext | undefined>(undefined);
