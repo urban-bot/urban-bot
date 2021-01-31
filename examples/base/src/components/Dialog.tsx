@@ -44,8 +44,8 @@ export function TreeDialogExample() {
         <Dialog>
             <DialogStep
                 validation={(answer) => {
-                    if (answer !== 'Samuel') {
-                        return 'Is not Samuel';
+                    if (answer === 'Samuel') {
+                        return 'Samuel is blocked';
                     }
                 }}
                 content={<Text>{"What's your name?"}</Text>}
