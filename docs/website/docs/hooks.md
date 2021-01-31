@@ -275,6 +275,18 @@ function ProfileButtons() {
      return <Text>You are here {activePath}</Text>;
  }
  ```
+#### history
+> History of navigated paths. Maximum of saved paths you can change by [historyLength](components.md#historylength).
+
+###### required
+`(string | RexExp)[]`
+```jsx
+ function WhereIHaveBeen() {
+     const { history } = useRouter(); // ['/profile', '/bucket', '/order']
+ 
+     return <Text>You have been in {history.join(' ')}</Text>;
+ }
+ ```
 #### params
 > If a component is under a dynamic path like '/some-path/:id' you can get a variable using params.
 ###### optional  
