@@ -3,13 +3,14 @@
         "examples": "docusaurus-examples",
         "start": "docusaurus-start",
         "build": "docusaurus-build",
-        "publish-now": "now --prod",
+        "publish-now": "vercel --prod",
         "publish-gh-pages": "docusaurus-publish",
         "write-translations": "docusaurus-write-translations",
         "version": "docusaurus-version",
         "rename-version": "docusaurus-rename-version"
     },
     "devDependencies": {
-        "docusaurus": "^1.14.4"
+        "docusaurus": "^1.14.4",
+        "vercel": "^21.2.2"
     }
 }
