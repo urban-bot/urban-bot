@@ -4,7 +4,6 @@ export type DialogProps = {
     children?: React.ReactNode;
     onFinish?: (answers: DialogAnswers) => void;
     finishedContent?: React.ReactNode;
-    defaultErrorText?: string;
 };
 
 export type DialogAnswers = {
@@ -17,7 +16,6 @@ export type DialogContextType = {
     onFinish: () => void;
     finishedContent?: React.ReactNode;
     addAnswer: DialogAddAnswer;
-    defaultErrorText: string;
 };
 
 const DialogContext = React.createContext<DialogContextType>({} as DialogContextType);
@@ -26,7 +24,7 @@ export function useDialog() {
     return useContext(DialogContext);
 }
 
-export function Dialog({ children, onFinish, finishedContent, defaultErrorText = 'Not valid answer.' }: DialogProps) {
+export function Dialog({ children, onFinish, finishedContent }: DialogProps) {
     const [answers, setAnswers] = useState<DialogAnswers>({});
     const onFinishCallback = useCallback(() => {
         onFinish?.(answers);
@@ -37,7 +35,7 @@ export function Dialog({ children, onFinish, finishedContent, defaultErrorText =
     };
 
     return (
-        <DialogContext.Provider value={{ onFinish: onFinishCallback, finishedContent, addAnswer, defaultErrorText }}>
+        <DialogContext.Provider value={{ onFinish: onFinishCallback, finishedContent, addAnswer }}>
             {children}
         </DialogContext.Provider>
     );

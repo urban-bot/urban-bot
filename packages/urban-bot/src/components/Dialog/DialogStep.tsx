@@ -3,10 +3,9 @@ import { matchPattern } from '../../utils/matchPattern';
 import { Text } from '../Text';
 import { useAction, useDialog, useText } from '../..';
 
-export type DialogValidation = {
-    isValid: (answer: string) => boolean | Promise<boolean>;
-    errorText?: string;
-};
+export type DialogValidationResult = string | void | Promise<string | void>;
+
+export type DialogValidation = (answer: string) => DialogValidationResult;
 
 export type DialogStepProps = {
     children?: ((answer: string) => React.ReactNode) | React.ReactNode;
@@ -21,7 +20,7 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
     const [isAnswered, setIsAnswered] = useState(false);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<DialogStepProps>[];
     const [displayedContent, setDisplayedContent] = useState(content);
-    const { onFinish, finishedContent, addAnswer, defaultErrorText } = useDialog();
+    const { onFinish, finishedContent, addAnswer } = useDialog();
 
     useEffect(() => {
         if (childrenArray.length === 0 && isAnswered && typeof children !== 'function') {
@@ -41,10 +40,10 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
         );
 
         if (validation !== undefined) {
-            const isValid = await validation.isValid(text);
+            const validationError = await validation(text);
 
-            if (!isValid) {
-                setDisplayedContent(<Text isNewMessageEveryRender>{validation.errorText ?? defaultErrorText}</Text>);
+            if (validationError) {
+                setDisplayedContent(<Text isNewMessageEveryRender>{validationError}</Text>);
 
                 return;
             }
