@@ -3,10 +3,9 @@ import { matchPattern } from '../../utils/matchPattern';
 import { Text } from '../Text';
 import { useAction, useDialog, useText } from '../..';
 
-export type DialogValidation = {
-    isValid: (answer: string) => boolean | Promise<boolean>;
-    errorText?: string;
-};
+export type DialogValidationResult = string | undefined | Promise<string | undefined>;
+
+export type DialogValidation = (answer: string) => DialogValidationResult;
 
 export type DialogStepProps = {
     children?: ((answer: string) => React.ReactNode) | React.ReactNode;
@@ -41,10 +40,10 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
         );
 
         if (validation !== undefined) {
-            const isValid = await validation.isValid(text);
+            const isInvalid = await validation(text);
 
-            if (!isValid) {
-                setDisplayedContent(<Text isNewMessageEveryRender>{validation.errorText ?? defaultErrorText}</Text>);
+            if (isInvalid) {
+                setDisplayedContent(<Text isNewMessageEveryRender>{isInvalid ?? defaultErrorText}</Text>);
 
                 return;
             }
