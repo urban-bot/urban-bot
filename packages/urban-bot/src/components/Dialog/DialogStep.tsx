@@ -20,7 +20,7 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
     const [isAnswered, setIsAnswered] = useState(false);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<DialogStepProps>[];
     const [displayedContent, setDisplayedContent] = useState(content);
-    const { onFinish, finishedContent, addAnswer, defaultErrorText } = useDialog();
+    const { onFinish, finishedContent, addAnswer } = useDialog();
 
     useEffect(() => {
         if (childrenArray.length === 0 && isAnswered && typeof children !== 'function') {
@@ -40,10 +40,10 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
         );
 
         if (validation !== undefined) {
-            const isInvalid = await validation(text);
+            const validationError = await validation(text);
 
-            if (isInvalid) {
-                setDisplayedContent(<Text isNewMessageEveryRender>{isInvalid ?? defaultErrorText}</Text>);
+            if (validationError) {
+                setDisplayedContent(<Text isNewMessageEveryRender>{validationError}</Text>);
 
                 return;
             }
