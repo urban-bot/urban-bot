@@ -2095,10 +2095,10 @@
   dependencies:
     "@types/node" ">=8.9.0"
 
-"@slack/types@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@slack/types/-/types-1.5.0.tgz#5c2cb0f718689266ff295aad33301d489272c842"
-  integrity sha512-oCYgatJYxHf9wE3tKXzOLeeTsF0ghX1TIcguNfVmO2V6NDe+cHAzZRglEOmJLdRINDS5gscAgSkeZpDhpKBeUA==
+"@slack/types@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@slack/types/-/types-2.0.0.tgz#7b938ab576cd1d6c9ff9ad67a96f8058d101af10"
+  integrity sha512-Nu4jWC39mDY5egAX4oElwOypdu8Cx9tmR7bo3ghaHYaC7mkKM1+b+soanW5s2ssu4yOLxMdFExMh6wlR34B6CA==
 
 "@slack/types@^1.2.1":
   version "1.9.0"
