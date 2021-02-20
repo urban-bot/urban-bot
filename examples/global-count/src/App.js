@@ -13,15 +13,15 @@ export function App() {
 
     const title = (
         <>
-            Total local count: <b>{globalCount.count}</b>
+            Total global count: <b>{globalCount.count}</b>
             <br />
-            Total global count: <b>{localCount.count}</b>
+            Total local count: <b>{localCount.count}</b>
         </>
     );
 
     return (
         <ButtonGroup title={title}>
-            <Button onClick={globalCount.raiseCount}>Raise total count</Button>
+            <Button onClick={globalCount.raiseCount}>Raise global count</Button>
             <Button onClick={localCount.raiseCount}>Raise local count</Button>
         </ButtonGroup>
     );
