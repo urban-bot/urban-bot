@@ -6,6 +6,7 @@ import { UrbanBotType, UrbanChat, UrbanParseMode } from '../types';
 import { UrbanBot } from '../types/UrbanBot';
 import { UrbanSyntheticEvent } from '../types/Events';
 import { getExpressApp, listen } from '../expressApp';
+import { Express } from 'express';
 
 export type ChatProps<Bot extends UrbanBot, BotType extends UrbanBotType> = {
     bot: Bot;
@@ -36,6 +37,7 @@ function Chat<Bot extends UrbanBot, BotType extends UrbanBotType>({
 
 export type RootProps<Bot extends UrbanBot> = {
     bot: Bot;
+    expressApp?: Express;
     children: React.ReactNode;
     sessionTimeSeconds?: number;
     isNewMessageEveryRender?: boolean;
@@ -50,6 +52,7 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
     isNewMessageEveryRender = true,
     parseMode,
     port = 8080,
+    expressApp,
 }: RootProps<Bot>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map<string, React.ReactElement>());
@@ -62,11 +65,11 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
 
     React.useEffect(() => {
         if (bot.initializeServer !== undefined) {
-            const { app } = getExpressApp(port);
+            const { app } = getExpressApp(port, expressApp);
             bot.initializeServer(app);
             listen(port);
         }
-    }, [port, bot]);
+    }, [port, bot, expressApp]);
     const $$managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
     React.useEffect(() => {
