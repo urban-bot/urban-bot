@@ -7,9 +7,9 @@ export type ExpressAppType = {
 
 const expressAppMap = new Map<number, ExpressAppType>();
 
-export function getExpressApp(port: number) {
+export function getExpressApp(port: number, expressApp = express()) {
     if (!expressAppMap.has(port)) {
-        expressAppMap.set(port, { app: express(), isStarted: false });
+        expressAppMap.set(port, { app: expressApp, isStarted: false });
     }
 
     return expressAppMap.get(port) as ExpressAppType;
