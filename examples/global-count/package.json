@@ -1,6 +1,6 @@
 {
     "name": "urban-bot-example-global-count",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "private": true,
     "description": "Example how to keep a global state for every chatbots users",
     "repository": {
@@ -24,10 +24,10 @@
         "@babel/core": "^7.12.16",
         "@babel/preset-env": "^7.12.16",
         "@babel/preset-react": "^7.12.13",
-        "@urban-bot/core": "^0.2.2",
-        "@urban-bot/facebook": "^0.2.2",
-        "@urban-bot/slack": "^0.2.2",
-        "@urban-bot/telegram": "^0.2.2",
+        "@urban-bot/core": "^0.2.3",
+        "@urban-bot/facebook": "^0.2.3",
+        "@urban-bot/slack": "^0.2.3",
+        "@urban-bot/telegram": "^0.2.3",
         "babel-loader": "^8.2.2",
         "dotenv": "^8.2.0",
         "file-loader": "^6.2.0",
