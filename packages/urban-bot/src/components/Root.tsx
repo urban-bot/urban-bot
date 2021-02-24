@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { getBotContext } from '../context';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ManagerBot } from '../ManagerBot/ManagerBot';
@@ -43,6 +43,8 @@ export type RootProps<Bot extends UrbanBot> = {
     isNewMessageEveryRender?: boolean;
     parseMode?: UrbanParseMode;
     port?: number;
+    // TODO add to docs
+    initialChats?: UrbanChat[];
 };
 
 export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotType = UrbanBotType>({
@@ -53,6 +55,7 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
     parseMode,
     port = 8080,
     expressApp,
+    initialChats = [],
 }: RootProps<Bot>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map<string, React.ReactElement>());
@@ -72,36 +75,53 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
     }, [port, bot, expressApp]);
     const $$managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
 
+    const registerChat = useCallback(
+        (chat: UrbanChat) => {
+            chatsRef.current.set(
+                chat.id,
+                <Chat
+                    bot={bot}
+                    $$managerBot={$$managerBot}
+                    key={chat.id}
+                    isNewMessageEveryRender={isNewMessageEveryRender}
+                    chat={chat}
+                    parseMode={parseMode}
+                >
+                    {children}
+                </Chat>,
+            );
+            $$managerBot.addChat(chat.id);
+            setChats(new Map(chatsRef.current));
+        },
+        [$$managerBot, bot, children, isNewMessageEveryRender, parseMode],
+    );
+
+    useEffect(() => {
+        initialChats.forEach((chat) => {
+            if (!chatsRef.current.has(chat.id)) {
+                registerChat(chat);
+            }
+        });
+    }, [initialChats, registerChat]);
+
     React.useEffect(() => {
         function handler(message: UrbanSyntheticEvent<BotType>) {
             const { chat } = message;
             const { id: chatId } = chat;
 
             if (!chatsRef.current.has(chatId)) {
-                chatsRef.current.set(
-                    chat.id,
-                    <Chat
-                        bot={bot}
-                        $$managerBot={$$managerBot}
-                        key={chatId}
-                        isNewMessageEveryRender={isNewMessageEveryRender}
-                        chat={chat}
-                        parseMode={parseMode}
-                    >
-                        {children}
-                    </Chat>,
-                );
-                $$managerBot.addChat(chatId);
-                setChats(new Map(chatsRef.current));
+                registerChat(chat);
                 setFirstMessage(message);
             }
 
-            clearTimeout(timeoutIdsRef.current[chatId]);
-            timeoutIdsRef.current[chatId] = setTimeout(() => {
-                chatsRef.current.delete(chatId);
-                $$managerBot.deleteChat(chatId);
-                setChats(new Map(chatsRef.current));
-            }, sessionTimeSeconds * 1000);
+            if (sessionTimeSeconds && sessionTimeSeconds !== Infinity) {
+                clearTimeout(timeoutIdsRef.current[chatId]);
+                timeoutIdsRef.current[chatId] = setTimeout(() => {
+                    chatsRef.current.delete(chatId);
+                    $$managerBot.deleteChat(chatId);
+                    setChats(new Map(chatsRef.current));
+                }, sessionTimeSeconds * 1000);
+            }
         }
 
         $$managerBot.on('any', handler);
@@ -109,7 +129,7 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
         return () => {
             $$managerBot.removeListener('any', handler);
         };
-    }, [$$managerBot, sessionTimeSeconds, children, isNewMessageEveryRender, bot, parseMode]);
+    }, [$$managerBot, registerChat, sessionTimeSeconds]);
 
     React.useEffect(() => {
         if (firstMessage !== undefined) {

@@ -1,0 +1,82 @@
+{
+    "name": "urban-bot-example-restore-sessions-after-reload-server",
+    "version": "0.2.2",
+    "private": true,
+    "description": "Example how to restore sessions after reload server",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/urban-bot/urban-bot.git",
+        "directory": "examples/restore-sessions-after-reload-server"
+    },
+    "license": "MIT",
+    "main": "dist/index.js",
+    "files": [
+        "dist/**/*"
+    ],
+    "scripts": {
+        "build": "webpack",
+        "dev": "nodemon",
+        "lint": "eslint \"./src\" --ext \".js,.jsx\"",
+        "lint:fix": "npm run lint -- --fix",
+        "start": "node dist/index.js"
+    },
+    "dependencies": {
+        "@babel/core": "^7.12.16",
+        "@babel/preset-env": "^7.12.16",
+        "@babel/preset-react": "^7.12.13",
+        "@urban-bot/core": "^0.2.2",
+        "@urban-bot/facebook": "^0.2.2",
+        "@urban-bot/slack": "^0.2.2",
+        "@urban-bot/telegram": "^0.2.2",
+        "babel-loader": "^8.2.2",
+        "dotenv": "^8.2.0",
+        "file-loader": "^6.2.0",
+        "react": "^16.14.0",
+        "webpack": "^5.21.2",
+        "webpack-cli": "^4.5.0",
+        "webpack-node-externals": "^2.5.2",
+        "node-localstorage": "^2.1.6"
+    },
+    "devDependencies": {
+        "eslint": "^7.20.0",
+        "eslint-config-prettier": "^7.2.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-prettier": "^3.3.1",
+        "eslint-plugin-react": "^7.22.0",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "nodemon": "^2.0.7",
+        "prettier": "^2.2.1"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "babel": {
+        "presets": [
+            [
+                "@babel/preset-env",
+                {
+                    "targets": {
+                        "node": "12"
+                    }
+                }
+            ],
+            "@babel/react"
+        ]
+    },
+    "prettier": {
+        "semi": true,
+        "trailingComma": "all",
+        "singleQuote": true,
+        "printWidth": 120,
+        "tabWidth": 4,
+        "arrowParens": "always",
+        "endOfLine": "lf"
+    },
+    "nodemonConfig": {
+        "watch": [
+            "src"
+        ],
+        "ext": "js,jsx,json",
+        "exec": "webpack --mode=development && node ./dist/index.js"
+    }
+}
