@@ -53,7 +53,7 @@
     "typescript": "3.8.3"
   },
   "dependencies": {
-    "@types/node-telegram-bot-api": "0.40.3",
+    "@types/node-telegram-bot-api": "0.51.1",
     "express": "4.17.1",
     "node-telegram-bot-api": "0.50.0"
   },
