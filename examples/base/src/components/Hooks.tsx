@@ -15,6 +15,7 @@ import {
     useAnimation,
     useDice,
     useCommand,
+    useVideoNote,
 } from '@urban-bot/core';
 
 export function Hooks() {
@@ -84,6 +85,10 @@ export function Hooks() {
 
     useVoice(() => {
         setAnswer("You've sent a voice");
+    });
+
+    useVideoNote(() => {
+        setAnswer("You've sent a video note");
     });
 
     useAnimation(() => {

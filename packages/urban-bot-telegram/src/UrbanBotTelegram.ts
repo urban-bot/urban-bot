@@ -25,6 +25,7 @@ import {
     UrbanCommand,
     UrbanParseMode,
     UrbanExistingMessageByType,
+    UrbanSyntheticEventVideoNote,
 } from '@urban-bot/core';
 import {
     EditMessageOptions,
@@ -85,6 +86,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         this.client.on('poll' as any, (ctx) => this.handleMessage('poll', (ctx as unknown) as TelegramBotMessage));
         this.client.on('video', (ctx) => this.handleMessage('video', ctx));
         this.client.on('voice', (ctx) => this.handleMessage('voice', ctx));
+        this.client.on('video_note', (ctx) => this.handleMessage('video_note', ctx));
         this.client.on('message', (ctx) => {
             const ctxWithDice: TelegramBotMessage = ctx;
 
@@ -414,6 +416,24 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     payload: {
                         duration: ctx.voice.duration,
                         mimeType: ctx.voice.mime_type,
+                    },
+                };
+
+                this.processUpdate(adaptedContext);
+
+                break;
+            }
+            case 'video_note': {
+                if (ctx.video_note === undefined) {
+                    break;
+                }
+
+                const adaptedContext: UrbanSyntheticEventVideoNote<UrbanBotTelegramType> = {
+                    ...common,
+                    type: 'video_note',
+                    payload: {
+                        duration: ctx.video_note.duration,
+                        length: ctx.video_note.length,
                     },
                 };
 
