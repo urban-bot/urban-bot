@@ -31,6 +31,7 @@ import {
     useVoice,
     useDice,
     useAction,
+    useVideoNote,
 } from './hooks/hooks';
 
 import { useText } from './hooks/useText';
@@ -75,6 +76,7 @@ export {
     getBotContext,
     RouterContext,
     useAction,
+    useVideoNote,
 };
 
 export * from './types';
