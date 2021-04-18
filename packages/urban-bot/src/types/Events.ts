@@ -139,6 +139,15 @@ export interface UrbanSyntheticEventVoice<BotType extends UrbanBotType> extends 
     };
 }
 
+export interface UrbanSyntheticEventVideoNote<BotType extends UrbanBotType> extends UrbanSyntheticEventCommon<BotType> {
+    type: 'video_note';
+    payload: {
+        id?: string;
+        duration?: number;
+        length?: number;
+    };
+}
+
 export interface UrbanSyntheticEventAny<BotType extends UrbanBotType> extends UrbanSyntheticEventCommon<BotType> {
     type: 'any';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -161,7 +170,8 @@ export type UrbanSyntheticEvent<BotType extends UrbanBotType> =
     | UrbanSyntheticEventSticker<BotType>
     | UrbanSyntheticEventLocation<BotType>
     | UrbanSyntheticEventDice<BotType>
-    | UrbanSyntheticEventAny<BotType>;
+    | UrbanSyntheticEventAny<BotType>
+    | UrbanSyntheticEventVideoNote<BotType>;
 
 export type UrbanSyntheticEventByType<
     BotType extends UrbanBotType,
@@ -196,6 +206,8 @@ export type UrbanSyntheticEventByType<
     ? UrbanSyntheticEventAction<BotType>
     : T extends 'video'
     ? UrbanSyntheticEventVideo<BotType>
+    : T extends 'video_note'
+    ? UrbanSyntheticEventVideoNote<BotType>
     : T extends 'any'
     ? UrbanSyntheticEventAny<BotType>
     : UrbanSyntheticEvent<BotType>;
