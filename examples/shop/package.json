@@ -34,7 +34,7 @@
         "react": "^16.13.1",
         "ts-loader": "^8.0.17",
         "typescript": "^3.8.3",
-        "webpack": "^4.43.0",
+        "webpack": "^5.33.2",
         "webpack-cli": "^4.5.0",
         "webpack-node-externals": "^1.7.2"
     },
