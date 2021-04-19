@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/facebook",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Create Facebook chatbot with urban-bot",
   "files": [
     "dist/**/*"
@@ -38,7 +38,7 @@
     "@types/request-promise": "4.1.46",
     "@typescript-eslint/eslint-plugin": "2.29.0",
     "@typescript-eslint/parser": "2.29.0",
-    "@urban-bot/core": "^0.2.4",
+    "@urban-bot/core": "^0.2.5",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-plugin-import": "2.20.2",
