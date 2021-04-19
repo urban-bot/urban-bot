@@ -42,7 +42,7 @@
         "@urban-bot/facebook": "^0.2.5",
         "@urban-bot/slack": "^0.2.5",
         "@urban-bot/telegram": "^0.2.5",
-        "react": "16.13.1",
+        "react": "16.14.0",
         "react-redux": "7.2.0",
         "redux": "4.0.5"
     },
