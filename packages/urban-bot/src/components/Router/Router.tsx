@@ -18,7 +18,7 @@ type RouterProps = {
 export function Router({ children, withInitializeCommands = false, historyLength = 5 }: RouterProps) {
     const { bot } = useBotContext();
     const history = useRef<string[]>([]);
-    const [activePath, setActivePath] = React.useState('');
+    const [activePath, setActivePath] = React.useState(() => ({ value: '', key: Math.random() }));
     const childrenArray = React.Children.toArray(children) as React.ReactElement<RouteProps>[];
 
     const navigate = useCallback(
@@ -27,7 +27,7 @@ export function Router({ children, withInitializeCommands = false, historyLength
 
             history.current = newHistory.length <= historyLength ? newHistory : newHistory.slice(1);
 
-            setActivePath(path);
+            setActivePath({ value: path, key: Math.random() });
         },
         [historyLength],
     );
@@ -74,12 +74,12 @@ export function Router({ children, withInitializeCommands = false, historyLength
         }
     });
 
-    const component = childrenArray.find(matchChild(activePath));
-    const params = getParams(activePath, component?.props.path);
+    const component = childrenArray.find(matchChild(activePath.value));
+    const params = getParams(activePath.value, component?.props.path);
 
     return (
-        <RouterContext.Provider value={{ activePath, navigate, params, history: history.current }}>
-            {component}
+        <RouterContext.Provider value={{ activePath: activePath.value, navigate, params, history: history.current }}>
+            {component ? <component.type {...component.props} key={activePath.key} /> : null}
         </RouterContext.Provider>
     );
 }
