@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { UrbanBotType, UrbanButton, UrbanExistingMessageByType, UrbanMessage, UrbanParseMode } from '@urban-bot/core';
+import {
+    UrbanBotType,
+    UrbanButton,
+    UrbanExistingMessageByType,
+    UrbanMessage,
+    UrbanParseMode,
+} from '@urban-bot/core';
 import TelegramBot, { InlineKeyboardButton } from 'node-telegram-bot-api';
 
 export type EditMessageOptions =

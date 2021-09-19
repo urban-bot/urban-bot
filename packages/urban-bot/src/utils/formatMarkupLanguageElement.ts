@@ -66,31 +66,31 @@ function formatMarkdownElement(element: React.ReactElement, text: string): strin
             return text;
         }
         case 'b': {
-            return `*${text}*`;
+            return `**${text}**`;
         }
         case 'strong': {
-            return `*${text}*`;
+            return `**${text}**`;
         }
         case 'i': {
-            return `_${text}_`;
+            return `*${text}*`;
         }
         case 'em': {
-            return `_${text}_`;
+            return `*${text}*`;
         }
         case 'u': {
-            return text;
+            return `__${text}__`;
         }
         case 'ins': {
-            return text;
+            return `__${text}__`;
         }
         case 's': {
-            return `~${text}~`;
+            return `~~${text}~~`;
         }
         case 'strike': {
-            return `~${text}~`;
+            return `~~${text}~~`;
         }
         case 'del': {
-            return `~${text}~`;
+            return `~~${text}~~`;
         }
         case 'q': {
             return `> ${text}`;

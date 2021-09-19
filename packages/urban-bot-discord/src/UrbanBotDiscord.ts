@@ -10,7 +10,7 @@ import {
     // UrbanSyntheticEventType,
     // UrbanSyntheticEventCommon,
 } from '@urban-bot/core';
-import { BitFieldResolvable, Channel, Client, Intents, IntentsString, Message, TextChannel } from 'discord.js';
+import { BitFieldResolvable, Client, Intents, IntentsString, Message, TextChannel } from 'discord.js';
 
 export type DISCORD = 'DISCORD';
 
@@ -180,7 +180,6 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
     }
 
     handleMessage = (message: Message) => {
-        console.log(message.content)
         if (message.author.bot) {
             return;
         }
@@ -243,7 +242,6 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
     async sendMessage(message: UrbanMessage): Promise<DiscordMessageMeta> {
         switch (message.nodeName) {
             case 'urban-text': {
-                // console.log(8888, message.data.text);
                 const channel = this.client.channels.cache.get(message.chat.id);
 
                 if (!channel) {
