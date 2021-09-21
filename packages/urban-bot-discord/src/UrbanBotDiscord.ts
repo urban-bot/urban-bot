@@ -7,10 +7,24 @@ import {
     UrbanSyntheticEventCommon,
     UrbanSyntheticEventCommand,
     UrbanSyntheticEventText,
+    UrbanSyntheticEventImage,
+    UrbanSyntheticEventVideo,
+    UrbanSyntheticEventAudio,
+    UrbanSyntheticEventAnimation,
+    UrbanSyntheticEventFile,
     // UrbanSyntheticEventType,
     // UrbanSyntheticEventCommon,
 } from '@urban-bot/core';
-import { BitFieldResolvable, Client, Intents, IntentsString, Message, TextChannel } from 'discord.js';
+import {
+    BitFieldResolvable,
+    Client,
+    Intents,
+    IntentsString,
+    Message,
+    MessageAttachment,
+    TextChannel,
+} from 'discord.js';
+import groupBy from 'lodash.groupby';
 
 export type DISCORD = 'DISCORD';
 
@@ -34,7 +48,7 @@ export type DiscordOptions = {
     commandPrefix?: string;
 };
 
-const defaultOptions: Partial<DiscordOptions> = {
+const defaultOptions = {
     intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,
@@ -155,10 +169,6 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
             partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
         });
 
-        this.client.on('ready', () => {
-            console.log(`Logged in!`);
-        });
-
         this.client.on('messageCreate', this.handleMessage);
 
         // this.client.on('interactionCreate', async (interaction) => {
@@ -180,6 +190,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
     }
 
     handleMessage = (message: Message) => {
+        // console.log(message);
         if (message.author.bot) {
             return;
         }
@@ -210,15 +221,102 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
         switch (message.type) {
             case 'DEFAULT': {
-                const adaptedContext: UrbanSyntheticEventText<UrbanBotDiscordType> = {
-                    ...common,
-                    type: 'text',
-                    payload: {
-                        text: message.content,
-                    },
-                };
+                if (message.attachments.size === 0) {
+                    const adaptedContext: UrbanSyntheticEventText<UrbanBotDiscordType> = {
+                        ...common,
+                        type: 'text',
+                        payload: {
+                            text: message.content,
+                        },
+                    };
 
-                this.processUpdate(adaptedContext);
+                    this.processUpdate(adaptedContext);
+
+                    break;
+                }
+
+                const formattedAttachments = Array.from(message.attachments.values()).map(
+                    ({ id, url, name, size, width, height, contentType, ...rest }) => {
+                        return {
+                            id,
+                            url,
+                            name: name ?? undefined,
+                            size,
+                            width: width ?? undefined,
+                            height: height ?? undefined,
+                            mimeType: contentType ?? undefined,
+                            ...rest,
+                        };
+                    },
+                );
+
+                const groupedAttachments = groupBy(formattedAttachments, ({ mimeType }) => {
+                    if (mimeType?.startsWith('image')) {
+                        return 'images';
+                    }
+                    if (mimeType?.startsWith('video')) {
+                        return 'videos';
+                    }
+                    if (mimeType?.startsWith('audio')) {
+                        return 'audios';
+                    }
+
+                    return 'files';
+                });
+
+                const { images, videos, audios, files } = groupedAttachments;
+
+                if (images && images.length > 0) {
+                    const adaptedContext: UrbanSyntheticEventImage<UrbanBotDiscordType> = {
+                        ...common,
+                        type: 'image',
+                        payload: {
+                            text: message.content,
+                            files: images,
+                        },
+                    };
+
+                    this.processUpdate(adaptedContext);
+                }
+
+                if (videos && videos.length > 0) {
+                    const adaptedContext: UrbanSyntheticEventVideo<UrbanBotDiscordType> = {
+                        ...common,
+                        type: 'video',
+                        payload: {
+                            text: message.content,
+                            files: videos,
+                        },
+                    };
+
+                    this.processUpdate(adaptedContext);
+                }
+
+                if (audios && audios.length > 0) {
+                    const adaptedContext: UrbanSyntheticEventAudio<UrbanBotDiscordType> = {
+                        ...common,
+                        type: 'audio',
+                        payload: {
+                            text: message.content,
+                            files: audios,
+                        },
+                    };
+
+                    this.processUpdate(adaptedContext);
+                }
+
+                if (files && files.length > 0) {
+                    const adaptedContext: UrbanSyntheticEventFile<UrbanBotDiscordType> = {
+                        ...common,
+                        type: 'file',
+                        payload: {
+                            text: message.content,
+                            files,
+                        },
+                    };
+
+                    this.processUpdate(adaptedContext);
+                }
 
                 break;
             }
@@ -228,7 +326,6 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                     type: 'command',
                     payload: {
                         command: message.content,
-                        // argument: args.join(' '),
                     },
                 };
 

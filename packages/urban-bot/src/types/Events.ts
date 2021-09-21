@@ -58,6 +58,7 @@ export interface UrbanSyntheticEventAnimation<BotType extends UrbanBotType> exte
         duration: number;
         name?: string;
         mimeType?: string;
+        text?: string;
     };
 }
 
@@ -65,6 +66,7 @@ export interface UrbanSyntheticEventAudio<BotType extends UrbanBotType> extends 
     type: 'audio';
     payload: {
         files: UrbanFile[];
+        text?: string;
     };
 }
 

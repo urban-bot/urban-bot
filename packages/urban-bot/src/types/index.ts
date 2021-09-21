@@ -1,3 +1,5 @@
+import { OtherProps } from './common';
+
 export type UrbanChat = {
     id: string;
     type?: string;
@@ -18,7 +20,7 @@ export type UrbanFrom = {
 };
 
 // TODO describe image,video,... separately and extends them from UrbanFile
-export type UrbanFile = {
+export type UrbanFile = OtherProps & {
     id?: string;
     url?: string;
     name?: string;
