@@ -10,20 +10,9 @@ import {
     UrbanSyntheticEventImage,
     UrbanSyntheticEventVideo,
     UrbanSyntheticEventAudio,
-    UrbanSyntheticEventAnimation,
     UrbanSyntheticEventFile,
-    // UrbanSyntheticEventType,
-    // UrbanSyntheticEventCommon,
 } from '@urban-bot/core';
-import {
-    BitFieldResolvable,
-    Client,
-    Intents,
-    IntentsString,
-    Message,
-    MessageAttachment,
-    TextChannel,
-} from 'discord.js';
+import { BitFieldResolvable, Client, Intents, IntentsString, Message, TextChannel } from 'discord.js';
 import groupBy from 'lodash.groupby';
 
 export type DISCORD = 'DISCORD';
