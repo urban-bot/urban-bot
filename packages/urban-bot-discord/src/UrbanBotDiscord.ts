@@ -191,10 +191,6 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
     handleMessage = (message: Message) => {
         // console.log(message);
-        if (message.author.bot) {
-            return;
-        }
-
         const common: UrbanSyntheticEventCommon<UrbanBotDiscordType> = {
             chat: {
                 id: String(message.channelId),
@@ -221,6 +217,10 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
         switch (message.type) {
             case 'DEFAULT': {
+                if (message.author.bot) {
+                    return;
+                }
+
                 if (message.attachments.size === 0) {
                     const adaptedContext: UrbanSyntheticEventText<UrbanBotDiscordType> = {
                         ...common,
@@ -337,20 +337,28 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
     };
 
     async sendMessage(message: UrbanMessage): Promise<DiscordMessageMeta> {
+        const channel = this.client.channels.cache.get(message.chat.id);
+
+        if (!channel) {
+            throw new Error('Channel is not found @urban-bot/discord');
+        }
+
         switch (message.nodeName) {
             case 'urban-text': {
-                const channel = this.client.channels.cache.get(message.chat.id);
-
-                if (!channel) {
-                    throw new Error('Channel is not found @urban-bot/discord');
-                }
-
                 return (channel as TextChannel).send({ content: message.data.text });
             }
             // case 'urban-buttons': {
             // }
-            // case 'urban-img': {
-            // }
+            case 'urban-img': {
+                if (typeof message.data.file !== 'string') {
+                    throw new Error('@urban-bot/discord support image file only as string');
+                }
+
+                return (channel as TextChannel).send({
+                    content: message.data.title,
+                    files: [message.data.file],
+                });
+            }
             // case 'urban-audio': {
             // }
             // case 'urban-video': {
