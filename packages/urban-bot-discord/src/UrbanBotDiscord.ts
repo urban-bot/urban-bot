@@ -355,16 +355,52 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                 }
 
                 return (channel as TextChannel).send({
-                    content: message.data.title,
+                    ...(message.data.title ? { content: message.data.title } : undefined),
                     files: [message.data.file],
                 });
             }
-            // case 'urban-audio': {
-            // }
-            // case 'urban-video': {
-            // }
-            // case 'urban-file': {
-            // }
+            case 'urban-audio': {
+                if (typeof message.data.file !== 'string') {
+                    throw new Error('@urban-bot/discord support image file only as string');
+                }
+
+                return (channel as TextChannel).send({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    files: [message.data.file],
+                });
+            }
+            case 'urban-video': {
+                if (typeof message.data.file !== 'string') {
+                    throw new Error('@urban-bot/discord support image file only as string');
+                }
+
+                return (channel as TextChannel).send({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    files: [message.data.file],
+                });
+            }
+            case 'urban-file': {
+                if (typeof message.data.file !== 'string') {
+                    throw new Error('@urban-bot/discord support image file only as string');
+                }
+
+                return (channel as TextChannel).send({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    files: [message.data.file],
+                });
+            }
+            case 'urban-media': {
+                return (channel as TextChannel).send({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    files: message.data.files.map(({ file }) => {
+                        if (typeof file !== 'string') {
+                            throw new Error('@urban-bot/discord support image file only as string');
+                        }
+
+                        return file;
+                    }),
+                });
+            }
             default: {
                 throw new Error(
                     `Tag '${

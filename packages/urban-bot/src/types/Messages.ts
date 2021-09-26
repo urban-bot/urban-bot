@@ -159,7 +159,13 @@ export type UrbanMessageContact = UrbanMessageCommon & {
 };
 
 export type UrbanMessageMediaData = UrbanMessageCommonData & {
-    files: Array<(UrbanMessageImageData & { type: 'image' }) | (UrbanMessageVideoData & { type: 'video' })>;
+    title?: string;
+    files: Array<
+        | (UrbanMessageImageData & { type: 'image' })
+        | (UrbanMessageVideoData & { type: 'video' })
+        | (UrbanMessageAudioData & { type: 'audio' })
+        | (UrbanMessageFileData & { type: 'file' })
+    >;
 };
 
 export type UrbanMessageMedia = UrbanMessageCommon & {
