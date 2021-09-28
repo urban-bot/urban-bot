@@ -11,13 +11,24 @@ import {
     UrbanSyntheticEventVideo,
     UrbanSyntheticEventAudio,
     UrbanSyntheticEventFile,
+    UrbanSyntheticEventAction,
 } from '@urban-bot/core';
-import { BitFieldResolvable, Client, Intents, IntentsString, Message, TextChannel } from 'discord.js';
+import {
+    BitFieldResolvable,
+    Client,
+    Intents,
+    IntentsString,
+    Message,
+    TextChannel,
+    MessageActionRow,
+    Interaction,
+} from 'discord.js';
 import groupBy from 'lodash.groupby';
+import { formatButtons } from './format';
 
 export type DISCORD = 'DISCORD';
 
-export type DiscordPayload = Message;
+export type DiscordPayload = Message | Interaction;
 
 export type DiscordMessageMeta = {};
 
@@ -160,6 +171,8 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
         this.client.on('messageCreate', this.handleMessage);
 
+        this.client.on('interactionCreate', this.handleInteraction);
+
         // this.client.on('interactionCreate', async (interaction) => {
         //     if (!interaction.isCommand()) return;
         //
@@ -178,14 +191,52 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
         throw new Error('this method must be overridden');
     }
 
+    handleInteraction = (interaction: Interaction) => {
+        const isPrivateChat = !interaction.guildId;
+
+        if (interaction.isButton()) {
+            const adaptedContext: UrbanSyntheticEventAction<UrbanBotDiscordType> = {
+                type: 'action',
+                chat: {
+                    id: String(interaction.channelId),
+                    // type: ctx.message.chat.type,
+                    // title: ctx.message.chat.title,
+                    ...(isPrivateChat ? { username: interaction.user.username } : undefined),
+                    // firstName: ctx.message.chat.first_name,
+                    // lastName: ctx.message.chat.last_name,
+                    // description: ctx.message.chat.description,
+                    // inviteLink: ctx.message.chat.invite_link,
+                },
+                from: {
+                    id: String(interaction.user.id),
+                    username: interaction.user.username,
+                    // firstName: interaction.user.,
+                    // lastName: ctx.from?.last_name,
+                    ...(interaction.user.avatar ? { avatars: [interaction.user.avatar] } : undefined),
+                },
+                payload: {
+                    actionId: interaction.customId,
+                },
+                nativeEvent: {
+                    type: UrbanBotDiscord.TYPE,
+                    payload: interaction,
+                },
+            };
+
+            this.processUpdate(adaptedContext);
+
+            return interaction.deferUpdate();
+        }
+    };
+
     handleMessage = (message: Message) => {
-        // console.log(message);
+        const isPrivateChat = !message.guildId;
         const common: UrbanSyntheticEventCommon<UrbanBotDiscordType> = {
             chat: {
                 id: String(message.channelId),
                 // type: ctx.chat.type,
                 // title: ctx.chat.title,
-                // username: message,
+                ...(isPrivateChat ? { username: message.author.username } : undefined),
                 // firstName: ctx.chat.first_name,
                 // lastName: ctx.chat.last_name,
                 // description: ctx.chat.description,
@@ -336,8 +387,14 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
             case 'urban-text': {
                 return (channel as TextChannel).send({ content: message.data.text });
             }
-            // case 'urban-buttons': {
-            // }
+            case 'urban-buttons': {
+                const components: MessageActionRow[] = formatButtons(message.data.buttons);
+
+                return (channel as TextChannel).send({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    components,
+                });
+            }
             case 'urban-img': {
                 if (typeof message.data.file !== 'string') {
                     throw new Error('@urban-bot/discord support image file only as string');

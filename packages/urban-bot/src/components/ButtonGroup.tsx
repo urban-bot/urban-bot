@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBotContext, useAction } from '../hooks/hooks';
 import { ButtonElement, formatButtonElement } from '../utils/formatButtonElement';
-import { UrbanMessageCommonData } from '../types/Messages';
+import { UrbanButtonStyle, UrbanMessageCommonData } from '../types/Messages';
 import { OtherProps } from '../types/common';
 import { flatten } from 'array-flatten';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
@@ -86,6 +86,8 @@ export type ButtonProps = OtherProps & {
     id?: string;
     url?: string;
     phoneNumber?: string | number;
+    style?: UrbanButtonStyle;
+    isDisabled?: boolean;
 };
 
 export function Button(_props: ButtonProps) {
