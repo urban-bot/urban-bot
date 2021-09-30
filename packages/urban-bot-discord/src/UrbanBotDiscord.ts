@@ -13,16 +13,7 @@ import {
     UrbanSyntheticEventFile,
     UrbanSyntheticEventAction,
 } from '@urban-bot/core';
-import {
-    BitFieldResolvable,
-    Client,
-    Intents,
-    IntentsString,
-    Message,
-    TextChannel,
-    MessageActionRow,
-    Interaction,
-} from 'discord.js';
+import { BitFieldResolvable, Client, Intents, IntentsString, Message, TextChannel, Interaction } from 'discord.js';
 import groupBy from 'lodash.groupby';
 import { formatButtons } from './format';
 
@@ -388,11 +379,9 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                 return (channel as TextChannel).send({ content: message.data.text });
             }
             case 'urban-buttons': {
-                const components: MessageActionRow[] = formatButtons(message.data.buttons);
-
                 return (channel as TextChannel).send({
                     ...(message.data.title ? { content: message.data.title } : undefined),
-                    components,
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
                 });
             }
             case 'urban-img': {
@@ -402,45 +391,50 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
                 return (channel as TextChannel).send({
                     ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
                     files: [message.data.file],
                 });
             }
             case 'urban-audio': {
                 if (typeof message.data.file !== 'string') {
-                    throw new Error('@urban-bot/discord support image file only as string');
+                    throw new Error('@urban-bot/discord support audio file only as string');
                 }
 
                 return (channel as TextChannel).send({
                     ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
                     files: [message.data.file],
                 });
             }
             case 'urban-video': {
                 if (typeof message.data.file !== 'string') {
-                    throw new Error('@urban-bot/discord support image file only as string');
+                    throw new Error('@urban-bot/discord support video file only as string');
                 }
 
                 return (channel as TextChannel).send({
                     ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
                     files: [message.data.file],
                 });
             }
             case 'urban-file': {
                 if (typeof message.data.file !== 'string') {
-                    throw new Error('@urban-bot/discord support image file only as string');
+                    throw new Error('@urban-bot/discord support file file only as string');
                 }
 
                 return (channel as TextChannel).send({
                     ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
                     files: [message.data.file],
                 });
             }
             case 'urban-media': {
                 return (channel as TextChannel).send({
                     ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
                     files: message.data.files.map(({ file }) => {
                         if (typeof file !== 'string') {
-                            throw new Error('@urban-bot/discord support image file only as string');
+                            throw new Error('@urban-bot/discord support media file only as string');
                         }
 
                         return file;
