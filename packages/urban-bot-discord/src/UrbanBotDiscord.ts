@@ -12,6 +12,7 @@ import {
     UrbanSyntheticEventAudio,
     UrbanSyntheticEventFile,
     UrbanSyntheticEventAction,
+    UrbanExistingMessage,
 } from '@urban-bot/core';
 import { BitFieldResolvable, Client, Intents, IntentsString, Message, TextChannel, Interaction } from 'discord.js';
 import groupBy from 'lodash.groupby';
@@ -21,7 +22,7 @@ export type DISCORD = 'DISCORD';
 
 export type DiscordPayload = Message | Interaction;
 
-export type DiscordMessageMeta = {};
+export type DiscordMessageMeta = Message;
 
 export type UrbanNativeEventDiscord<Payload = DiscordPayload> = {
     type: DISCORD;
@@ -448,6 +449,61 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                         (message as any).nodeName
                     }' is not supported. Please don't use it with discord bot or add this logic to @urban-bot/discord.`,
                 );
+            }
+        }
+    }
+
+    updateMessage(message: UrbanExistingMessage<UrbanBotDiscordType>) {
+        switch (message.nodeName) {
+            case 'urban-text': {
+                return message.meta.edit(message.data.text);
+            }
+            case 'urban-buttons': {
+                return message.meta.edit({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
+                });
+            }
+            case 'urban-img': {
+                return message.meta.edit({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
+                    files: [message.data.file],
+                });
+            }
+            case 'urban-video': {
+                return message.meta.edit({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
+                    files: [message.data.file],
+                });
+            }
+            case 'urban-audio': {
+                return message.meta.edit({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
+                    files: [message.data.file],
+                });
+            }
+            case 'urban-file': {
+                return message.meta.edit({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
+                    files: [message.data.file],
+                });
+            }
+            case 'urban-media': {
+                return message.meta.edit({
+                    ...(message.data.title ? { content: message.data.title } : undefined),
+                    ...(message.data.buttons ? { components: formatButtons(message.data.buttons) } : undefined),
+                    files: message.data.files.map(({ file }) => {
+                        if (typeof file !== 'string') {
+                            throw new Error('@urban-bot/discord support media file only as string');
+                        }
+
+                        return file;
+                    }),
+                });
             }
         }
     }

@@ -170,6 +170,7 @@ export type UrbanMessageMediaData = UrbanMessageCommonData & {
         | (UrbanMessageAudioData & { type: 'audio' })
         | (UrbanMessageFileData & { type: 'file' })
     >;
+    buttons?: UrbanButton[] | UrbanButton[][];
 };
 
 export type UrbanMessageMedia = UrbanMessageCommon & {
