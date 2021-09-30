@@ -507,4 +507,8 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
             }
         }
     }
+
+    deleteMessage(message: UrbanExistingMessage<UrbanBotDiscordType>) {
+        return message.meta.delete();
+    }
 }
