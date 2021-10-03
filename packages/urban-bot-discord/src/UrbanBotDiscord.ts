@@ -254,6 +254,22 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                 }
 
                 if (message.attachments.size === 0) {
+                    if (message.content[0] === this.commandPrefix) {
+                        const [command, ...args] = message.content.split(' ');
+                        const adaptedContext: UrbanSyntheticEventCommand<UrbanBotDiscordType> = {
+                            ...common,
+                            type: 'command',
+                            payload: {
+                                command,
+                                argument: args.join(' '),
+                            },
+                        };
+
+                        this.processUpdate(adaptedContext);
+
+                        return;
+                    }
+
                     const adaptedContext: UrbanSyntheticEventText<UrbanBotDiscordType> = {
                         ...common,
                         type: 'text',
@@ -264,7 +280,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
                     this.processUpdate(adaptedContext);
 
-                    break;
+                    return;
                 }
 
                 const formattedAttachments = Array.from(message.attachments.values()).map(
@@ -350,7 +366,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                     this.processUpdate(adaptedContext);
                 }
 
-                break;
+                return;
             }
             case 'APPLICATION_COMMAND': {
                 const adaptedContext: UrbanSyntheticEventCommand<UrbanBotDiscordType> = {
@@ -363,7 +379,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
                 this.processUpdate(adaptedContext);
 
-                break;
+                return;
             }
         }
     };
