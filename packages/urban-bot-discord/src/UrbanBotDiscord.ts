@@ -62,7 +62,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
         };
 
         if (!token) {
-            throw new Error(`Provide pageAccessToken to @urban-bot/discord options`);
+            throw new Error(`Provide token to @urban-bot/discord options`);
         }
 
         this.client = new Client(discordOptions);
@@ -85,22 +85,13 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
         const common: UrbanSyntheticEventCommon<UrbanBotDiscordType> = {
             chat: {
                 id: String(interaction.channelId),
-                // type: ctx.message.chat.type,
-                // title: ctx.message.chat.title,
                 ...(isPrivateChat ? { username: interaction.user.username } : undefined),
-                // firstName: ctx.message.chat.first_name,
-                // lastName: ctx.message.chat.last_name,
-                // description: ctx.message.chat.description,
-                // inviteLink: ctx.message.chat.invite_link,
             },
             from: {
                 id: String(interaction.user.id),
                 username: interaction.user.username,
-                // firstName: interaction.user.,
-                // lastName: ctx.from?.last_name,
                 ...(interaction.user.avatar ? { avatars: [interaction.user.avatar] } : undefined),
             },
-
             nativeEvent: {
                 type: UrbanBotDiscord.TYPE,
                 payload: interaction,
@@ -144,19 +135,11 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
         const common: UrbanSyntheticEventCommon<UrbanBotDiscordType> = {
             chat: {
                 id: String(message.channelId),
-                // type: ctx.chat.type,
-                // title: ctx.chat.title,
                 ...(isPrivateChat ? { username: message.author.username } : undefined),
-                // firstName: ctx.chat.first_name,
-                // lastName: ctx.chat.last_name,
-                // description: ctx.chat.description,
-                // inviteLink: ctx.chat.invite_link,
             },
             from: {
                 id: String(message.author.id),
                 username: message.author.username,
-                // firstName: message.author.na,
-                // lastName: ctx.from?.last_name,
                 isBot: message.author.bot,
             },
             nativeEvent: {
