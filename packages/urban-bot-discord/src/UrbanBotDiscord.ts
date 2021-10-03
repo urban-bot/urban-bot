@@ -375,6 +375,8 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
             throw new Error('Channel is not found @urban-bot/discord');
         }
 
+        await this.simulateTyping(channel as TextChannel, message.data.simulateTyping);
+
         switch (message.nodeName) {
             case 'urban-text': {
                 return (channel as TextChannel).send({ content: message.data.text });
@@ -510,5 +512,29 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
     deleteMessage(message: UrbanExistingMessage<UrbanBotDiscordType>) {
         return message.meta.delete();
+    }
+
+    async simulateTyping(channel: TextChannel, simulateTyping?: number) {
+        if (typeof simulateTyping !== 'number') {
+            return;
+        }
+
+        if (!channel.sendTyping) {
+            console.error('sendTyping does not exist');
+            return;
+        }
+
+        return new Promise((resolve) => {
+            channel
+                .sendTyping()
+                .then(() => {
+                    setTimeout(resolve, simulateTyping);
+                })
+                .catch((e) => {
+                    console.error('Error with simulate typing');
+                    console.error(e);
+                    resolve();
+                });
+        });
     }
 }
