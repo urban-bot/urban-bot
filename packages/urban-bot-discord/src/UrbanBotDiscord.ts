@@ -14,7 +14,7 @@ import {
     UrbanSyntheticEventAction,
     UrbanExistingMessage,
 } from '@urban-bot/core';
-import { BitFieldResolvable, Client, Intents, IntentsString, Message, TextChannel, Interaction } from 'discord.js';
+import { Client, Message, TextChannel, Interaction, ClientOptions } from 'discord.js';
 import groupBy from 'lodash.groupby';
 import { formatButtons } from './format';
 
@@ -34,146 +34,39 @@ export type UrbanBotDiscordType<Payload = DiscordPayload> = {
     MessageMeta: DiscordMessageMeta;
 };
 
-export type DiscordOptions = {
+export type DiscordOptions = ClientOptions & {
     token: string;
-    intents?: BitFieldResolvable<IntentsString, number>;
     commandPrefix?: string;
+    withDeletionInteractionCommand?: boolean;
 };
-
-const defaultOptions = {
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-    ],
-    commandPrefix: '/',
-};
-
-// Message {
-//     channelId: '888019692558622762',
-//         guildId: '888019691560394773',
-//         deleted: false,
-//         id: '888750778653769788',
-//         type: 'DEFAULT',
-//         system: false,
-//         content: 'ttt',
-//         author: User {
-//             id: '712376851695140906',
-//             bot: false,
-//             system: false,
-//             flags: UserFlags { bitfield: 0 },
-//             username: 'ledamint',
-//             discriminator: '9720',
-//             avatar: '18fda80644e03181c48df63893b8dfb8'
-//     },
-//     pinned: false,
-//         tts: false,
-//         nonce: '888750778330644480',
-//         embeds: [],
-//         components: [],
-//         attachments: Collection(0) [Map] {},
-//     stickers: Collection(0) [Map] {},
-//     createdTimestamp: 1631965097822,
-//         editedTimestamp: null,
-//         reactions: ReactionManager { message: [Circular *1] },
-//     mentions: MessageMentions {
-//         everyone: false,
-//             users: Collection(0) [Map] {},
-//         roles: Collection(0) [Map] {},
-//         _members: null,
-//             _channels: null,
-//             crosspostedChannels: Collection(0) [Map] {},
-//         repliedUser: null
-//     },
-//     webhookId: null,
-//         groupActivityApplication: null,
-//         applicationId: null,
-//         activity: null,
-//         flags: MessageFlags { bitfield: 0 },
-//     reference: null,
-//         interaction: null
-// }
-
-// <ref *1> Message {
-//     channelId: '888019836519723018',
-//         guildId: null,
-//         deleted: false,
-//         id: '888796834389196834',
-//         type: 'DEFAULT',
-//         system: false,
-//         content: '123',
-//         author: ClientUser {
-//         id: '888013835057913858',
-//             bot: true,
-//             system: false,
-//             flags: UserFlags { bitfield: 0 },
-//         username: 'Urban Bot',
-//             discriminator: '2530',
-//             avatar: '565a23737ac52af81dc5e4e313084abd',
-//             verified: true,
-//             mfaEnabled: false
-//     },
-//     pinned: false,
-//         tts: false,
-//         nonce: null,
-//         embeds: [],
-//         components: [],
-//         attachments: Collection(0) [Map] {},
-//     stickers: Collection(0) [Map] {},
-//     createdTimestamp: 1631976078365,
-//         editedTimestamp: null,
-//         reactions: ReactionManager { message: [Circular *1] },
-//     mentions: MessageMentions {
-//         everyone: false,
-//             users: Collection(0) [Map] {},
-//         roles: Collection(0) [Map] {},
-//         _members: null,
-//             _channels: null,
-//             crosspostedChannels: Collection(0) [Map] {},
-//         repliedUser: null
-//     },
-//     webhookId: null,
-//         groupActivityApplication: null,
-//         applicationId: null,
-//         activity: null,
-//         flags: MessageFlags { bitfield: 0 },
-//     reference: null,
-//         interaction: null
-// }
 
 export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
     static TYPE: DISCORD = 'DISCORD';
     type: DISCORD = UrbanBotDiscord.TYPE;
     defaultParseMode: UrbanParseMode = 'markdown';
-    commandPrefix: string;
     client: Client;
+    options: DiscordOptions;
+    commandPrefix: string;
 
-    constructor(public options: DiscordOptions) {
-        if (!('token' in options)) {
+    constructor(options: DiscordOptions) {
+        const { token, commandPrefix = '/', withDeletionInteractionCommand = true, ...discordOptions } = options;
+        this.commandPrefix = commandPrefix;
+        this.options = {
+            token,
+            withDeletionInteractionCommand,
+            ...discordOptions,
+        };
+
+        if (!token) {
             throw new Error(`Provide pageAccessToken to @urban-bot/discord options`);
         }
 
-        this.commandPrefix = options.commandPrefix ?? defaultOptions.commandPrefix;
-
-        this.client = new Client({
-            intents: options.intents ?? defaultOptions.intents,
-            partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
-        });
+        this.client = new Client(discordOptions);
 
         this.client.on('messageCreate', this.handleMessage);
-
         this.client.on('interactionCreate', this.handleInteraction);
 
-        // this.client.on('interactionCreate', async (interaction) => {
-        //     if (!interaction.isCommand()) return;
-        //
-        //     if (interaction.commandName === 'ping') {
-        //         await interaction.reply('Pong!');
-        //     }
-        // });
-
-        this.client.login(options.token);
+        this.client.login(token);
     }
 
     // initializeServer(expressApp: express.Express) {
@@ -183,41 +76,62 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
         throw new Error('this method must be overridden');
     }
 
-    handleInteraction = (interaction: Interaction) => {
+    handleInteraction = async (interaction: Interaction) => {
         const isPrivateChat = !interaction.guildId;
+        const common: UrbanSyntheticEventCommon<UrbanBotDiscordType> = {
+            chat: {
+                id: String(interaction.channelId),
+                // type: ctx.message.chat.type,
+                // title: ctx.message.chat.title,
+                ...(isPrivateChat ? { username: interaction.user.username } : undefined),
+                // firstName: ctx.message.chat.first_name,
+                // lastName: ctx.message.chat.last_name,
+                // description: ctx.message.chat.description,
+                // inviteLink: ctx.message.chat.invite_link,
+            },
+            from: {
+                id: String(interaction.user.id),
+                username: interaction.user.username,
+                // firstName: interaction.user.,
+                // lastName: ctx.from?.last_name,
+                ...(interaction.user.avatar ? { avatars: [interaction.user.avatar] } : undefined),
+            },
+
+            nativeEvent: {
+                type: UrbanBotDiscord.TYPE,
+                payload: interaction,
+            },
+        };
 
         if (interaction.isButton()) {
             const adaptedContext: UrbanSyntheticEventAction<UrbanBotDiscordType> = {
+                ...common,
                 type: 'action',
-                chat: {
-                    id: String(interaction.channelId),
-                    // type: ctx.message.chat.type,
-                    // title: ctx.message.chat.title,
-                    ...(isPrivateChat ? { username: interaction.user.username } : undefined),
-                    // firstName: ctx.message.chat.first_name,
-                    // lastName: ctx.message.chat.last_name,
-                    // description: ctx.message.chat.description,
-                    // inviteLink: ctx.message.chat.invite_link,
-                },
-                from: {
-                    id: String(interaction.user.id),
-                    username: interaction.user.username,
-                    // firstName: interaction.user.,
-                    // lastName: ctx.from?.last_name,
-                    ...(interaction.user.avatar ? { avatars: [interaction.user.avatar] } : undefined),
-                },
                 payload: {
                     actionId: interaction.customId,
-                },
-                nativeEvent: {
-                    type: UrbanBotDiscord.TYPE,
-                    payload: interaction,
                 },
             };
 
             this.processUpdate(adaptedContext);
 
             return interaction.deferUpdate();
+        }
+
+        if (interaction.isCommand()) {
+            const adaptedContext: UrbanSyntheticEventCommand<UrbanBotDiscordType> = {
+                ...common,
+                type: 'command',
+                payload: {
+                    command: `${this.commandPrefix}${interaction.commandName}`,
+                },
+            };
+
+            this.processUpdate(adaptedContext);
+
+            if (this.options.withDeletionInteractionCommand) {
+                await interaction.deferReply();
+                return interaction.deleteReply();
+            }
         }
     };
 
@@ -365,19 +279,6 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
 
                     this.processUpdate(adaptedContext);
                 }
-
-                return;
-            }
-            case 'APPLICATION_COMMAND': {
-                const adaptedContext: UrbanSyntheticEventCommand<UrbanBotDiscordType> = {
-                    ...common,
-                    type: 'command',
-                    payload: {
-                        command: message.content,
-                    },
-                };
-
-                this.processUpdate(adaptedContext);
 
                 return;
             }
