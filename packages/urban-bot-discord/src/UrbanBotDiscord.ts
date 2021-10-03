@@ -428,7 +428,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
             return;
         }
 
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             channel
                 .sendTyping()
                 .then(() => {
