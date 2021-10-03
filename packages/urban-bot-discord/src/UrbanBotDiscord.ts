@@ -13,10 +13,13 @@ import {
     UrbanSyntheticEventFile,
     UrbanSyntheticEventAction,
     UrbanExistingMessage,
+    UrbanCommand,
 } from '@urban-bot/core';
 import { Client, Message, TextChannel, Interaction, ClientOptions } from 'discord.js';
 import groupBy from 'lodash.groupby';
 import { formatButtons } from './format';
+import { Routes } from 'discord-api-types/v9';
+import { REST } from '@discordjs/rest';
 
 export type DISCORD = 'DISCORD';
 
@@ -38,6 +41,7 @@ export type DiscordOptions = ClientOptions & {
     token: string;
     commandPrefix?: string;
     withDeletionInteractionCommand?: boolean;
+    clientId?: string;
 };
 
 export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
@@ -453,5 +457,27 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                     resolve();
                 });
         });
+    }
+
+    async initializeCommands(commands: UrbanCommand[]) {
+        const { clientId, token } = this.options;
+
+        if (!clientId) {
+            throw new Error('Provide clientId to UrbanBotDiscord to initialize commands');
+        }
+
+        const rest = new REST({ version: '9' }).setToken(token);
+
+        try {
+            const body = commands.map(({ command, description }) => ({ name: command.slice(1), description }));
+
+            await rest.put(Routes.applicationCommands(clientId), {
+                body,
+            });
+            console.log('Successfully initialized commands. They can start showing after an hour');
+        } catch (error) {
+            console.error('Error with initialize commands');
+            console.error(error);
+        }
     }
 }
