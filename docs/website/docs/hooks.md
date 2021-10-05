@@ -168,7 +168,7 @@ function DisplayChatId() {
 #### [bot](components.md#bot)
 > An instance of specific UrbanBot.
 
-[`UrbanBotTelegram`](telegram.md) | [`UrbanBotFacebook`](facebook.md) | [`UrbanBotSlack`](slack.md)
+[`UrbanBotTelegram`](telegram.md) | [`UrbanBotDiscord`](discord.md) | [`UrbanBotFacebook`](facebook.md) | [`UrbanBotSlack`](slack.md)
 
 ###### required
 ```jsx

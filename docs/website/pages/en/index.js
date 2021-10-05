@@ -180,6 +180,12 @@ class Index extends React.Component {
                                 alt="telegram"
                             />
                         </a>
+                        <a href="https://www.discord.com/" className="logo" target="_blank">
+                            <img
+                                src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/discord-logo.svg"
+                                alt="discord"
+                            />
+                        </a>
                         <a href="https://slack.com/" className="logo" target="_blank">
                             <img
                                 src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/slack-logo.svg"
@@ -195,12 +201,6 @@ class Index extends React.Component {
                     </div>
                     <h3 className="title">Soon</h3>
                     <div className="logos">
-                        <a href="https://www.discord.com/" className="logo" target="_blank">
-                            <img
-                                src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/discord-logo.svg"
-                                alt="discord"
-                            />
-                        </a>
                         <a href="https://www.whatsapp.com/" className="logo" target="_blank">
                             <img
                                 src="https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/whatsapp-logo.svg"
