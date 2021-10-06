@@ -23,7 +23,7 @@ The universal chatbot library based on [React](https://github.com/facebook/react
  
 **Soon**
 
- [![](files/whatsapp-logo.svg)](https://www.whatsapp.com/)
+[![](files/whatsapp-logo.svg)](https://www.whatsapp.com/)
  [![](files/vk-logo.svg)](https://www.vk.com/)
  [![](files/viber-logo.svg)](https://www.viber.com/)
 
