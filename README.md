@@ -16,7 +16,7 @@ The universal chatbot library based on [React](https://github.com/facebook/react
 **Platforms we are supporting**
 
 [![](files/telegram-logo.svg)](https://telegram.org/)
- [![](files/discord-logo.svg)](https://www.discord.com/)
+ [![](files/discord-logo.svg)](https://www.discord.com/)
  [![](files/slack-logo.svg)](https://slack.com/)
  [![](files/facebook-logo.svg)](https://www.messenger.com/)
  
