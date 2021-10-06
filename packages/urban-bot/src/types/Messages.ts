@@ -1,11 +1,15 @@
 import { UrbanBotType, UrbanChat, UrbanFileFormat, UrbanParseMode } from './index';
 import { OtherProps } from './common';
 
+export type UrbanButtonStyle = 'PRIMARY' | 'SECONDARY' | 'SUCCESS' | 'DANGER' | 'LINK';
+
 export type UrbanButton = OtherProps & {
     text: string;
     id?: string;
     url?: string;
     phoneNumber?: string | number;
+    style?: UrbanButtonStyle;
+    isDisabled?: boolean;
 };
 
 export type UrbanOption = {
@@ -159,7 +163,14 @@ export type UrbanMessageContact = UrbanMessageCommon & {
 };
 
 export type UrbanMessageMediaData = UrbanMessageCommonData & {
-    files: Array<(UrbanMessageImageData & { type: 'image' }) | (UrbanMessageVideoData & { type: 'video' })>;
+    title?: string;
+    files: Array<
+        | (UrbanMessageImageData & { type: 'image' })
+        | (UrbanMessageVideoData & { type: 'video' })
+        | (UrbanMessageAudioData & { type: 'audio' })
+        | (UrbanMessageFileData & { type: 'file' })
+    >;
+    buttons?: UrbanButton[] | UrbanButton[][];
 };
 
 export type UrbanMessageMedia = UrbanMessageCommon & {

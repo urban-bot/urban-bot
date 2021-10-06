@@ -176,24 +176,24 @@ describe('formatMarkupLanguageElement', () => {
         });
 
         test('bold', () => {
-            expect(formatMarkupLanguageElement(<b>text</b>, MARKDOWN_MODE)).toBe('*text*');
-            expect(formatMarkupLanguageElement(<strong>text</strong>, MARKDOWN_MODE)).toBe('*text*');
+            expect(formatMarkupLanguageElement(<b>text</b>, MARKDOWN_MODE)).toBe('**text**');
+            expect(formatMarkupLanguageElement(<strong>text</strong>, MARKDOWN_MODE)).toBe('**text**');
         });
 
         test('italic', () => {
-            expect(formatMarkupLanguageElement(<i>text</i>, MARKDOWN_MODE)).toBe('_text_');
-            expect(formatMarkupLanguageElement(<em>text</em>, MARKDOWN_MODE)).toBe('_text_');
+            expect(formatMarkupLanguageElement(<i>text</i>, MARKDOWN_MODE)).toBe('*text*');
+            expect(formatMarkupLanguageElement(<em>text</em>, MARKDOWN_MODE)).toBe('*text*');
         });
 
         test('underscore', () => {
-            expect(formatMarkupLanguageElement(<u>text</u>, MARKDOWN_MODE)).toBe('text');
-            expect(formatMarkupLanguageElement(<ins>text</ins>, MARKDOWN_MODE)).toBe('text');
+            expect(formatMarkupLanguageElement(<u>text</u>, MARKDOWN_MODE)).toBe('__text__');
+            expect(formatMarkupLanguageElement(<ins>text</ins>, MARKDOWN_MODE)).toBe('__text__');
         });
 
         test('strikethrough', () => {
-            expect(formatMarkupLanguageElement(<s>text</s>, MARKDOWN_MODE)).toBe('~text~');
-            expect(formatMarkupLanguageElement(<strike>text</strike>, MARKDOWN_MODE)).toBe('~text~');
-            expect(formatMarkupLanguageElement(<del>text</del>, MARKDOWN_MODE)).toBe('~text~');
+            expect(formatMarkupLanguageElement(<s>text</s>, MARKDOWN_MODE)).toBe('~~text~~');
+            expect(formatMarkupLanguageElement(<strike>text</strike>, MARKDOWN_MODE)).toBe('~~text~~');
+            expect(formatMarkupLanguageElement(<del>text</del>, MARKDOWN_MODE)).toBe('~~text~~');
         });
 
         test('code', () => {

@@ -17,14 +17,14 @@ The universal chatbot library based on [React](https://github.com/facebook/react
 **Platforms we are supporting**
 
 [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/telegram-logo.svg)](https://telegram.org/)
+ [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/discord-logo.svg)](https://www.discord.com/)
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/slack-logo.svg)](https://slack.com/)
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/facebook-logo.svg)](https://www.messenger.com/)
 
 
 **Soon**
 
-[![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/discord-logo.svg)](https://www.discord.com/)
- [![](https://raw.githubusercontent.com/urban-bot/urban-bot/97a13c34a623ac076190eb39a2d55e033dc705d2/files/whatsapp-logo.svg)](https://www.whatsapp.com/)
+[![](https://raw.githubusercontent.com/urban-bot/urban-bot/97a13c34a623ac076190eb39a2d55e033dc705d2/files/whatsapp-logo.svg)](https://www.whatsapp.com/)
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/vk-logo.svg)](https://www.vk.com/)
  [![](https://raw.githubusercontent.com/urban-bot/urban-bot/1a53c6f3107bd4a40d00f17adadcab2838d6b2e2/files/viber-logo.svg)](https://www.viber.com/)
 

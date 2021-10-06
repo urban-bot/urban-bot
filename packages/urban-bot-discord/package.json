@@ -1,7 +1,7 @@
 {
-  "name": "@urban-bot/facebook",
+  "name": "@urban-bot/discord",
   "version": "0.2.5",
-  "description": "Create Facebook chatbot with urban-bot",
+  "description": "Create Discord chatbot with urban-bot",
   "files": [
     "dist/**/*"
   ],
@@ -14,28 +14,27 @@
     "lint": "eslint \"./src/**\"",
     "lint:fix": "npm run lint -- --fix",
     "my-publish": "npm run build && npm publish --access public",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc -node_modules/discord-api-types/rest/v9/index.d.ts-noEmit",
     "precommit": "lint-staged",
     "prepare": "npm run build"
   },
   "keywords": [
-    "facebook-messenger-bot",
+    "discord",
+    "discord-bot",
     "urban-bot",
     "bot",
     "chatbot",
-    "facebook",
     "messenger",
     "react"
   ],
   "authors": [
-    "ledamint",
-    "oTkPoBeHuE"
+    "ledamint"
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/lodash.groupby": "^4.6.6",
     "@types/express": "4.17.6",
     "@types/jest": "25.2.1",
-    "@types/request-promise": "4.1.46",
     "@typescript-eslint/eslint-plugin": "2.29.0",
     "@typescript-eslint/parser": "2.29.0",
     "@urban-bot/core": "^0.2.5",
@@ -48,22 +47,22 @@
     "eslint-plugin-react-hooks": "3.0.0",
     "jest": "25.4.0",
     "lint-staged": "10.1.7",
+    "nodemon": "2.0.3",
     "prettier": "2.0.5",
     "rimraf": "3.0.2",
     "ts-jest": "25.4.0",
     "typescript": "4.4.3"
   },
   "dependencies": {
-    "array-flatten": "3.0.0",
-    "body-parser": "1.19.0",
-    "camelcase": "6.0.0",
-    "crypto": "1.0.1",
-    "request-promise": "4.2.5"
+    "discord.js": "^13.1.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.23.1",
+    "lodash.groupby":  "^4.6.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/urban-bot/urban-bot.git",
-    "directory": "packages/urban-bot-facebook"
+    "directory": "packages/urban-bot-discord"
   },
   "homepage": "https://urban-bot.now.sh",
   "engines": {

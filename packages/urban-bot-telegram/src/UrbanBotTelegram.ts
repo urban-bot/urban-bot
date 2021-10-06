@@ -784,7 +784,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     }
 
     simulateTyping(chatId: string, simulateTyping?: number) {
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             if (typeof simulateTyping === 'number') {
                 this.client.sendChatAction(chatId, 'typing').catch((e) => {
                     console.error('Error with simulate typing');
