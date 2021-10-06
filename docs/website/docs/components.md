@@ -272,7 +272,7 @@ render(
 ####  bot  
 >  An instance of specific UrbanBot. 
 ###### required  
-[`UrbanBotTelegram`](telegram.md) | [`UrbanBotFacebook`](facebook.md) | [`UrbanBotSlack`](slack.md)
+[`UrbanBotTelegram`](telegram.md) | [`UrbanBotDiscord`](discord.md) | [`UrbanBotFacebook`](facebook.md) | [`UrbanBotSlack`](slack.md)
 ```jsx
 import { UrbanBotTelegram } from '@urban-bot/telegram';
   
