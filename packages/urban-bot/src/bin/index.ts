@@ -36,16 +36,15 @@ switch (command) {
                     const setWebhookURL = `${telegramAPI}/bot${token}/setWebhook?url=${webhookURL}`;
 
                     try {
-                        const rawResponse = await fetch(setWebhookURL);
-                        const response = await rawResponse.json();
+                        const response = await fetch(setWebhookURL);
 
                         if (!response.ok) {
                             console.log('Webhook is not set');
 
-                            if (response.error_code === 404) {
+                            if (response.status === 404) {
                                 console.log(`telegram token '${telegramToken}' is not found`);
                             } else {
-                                console.log(response.error_code, response.description);
+                                console.log(response.status, response.statusText);
                             }
 
                             return;

@@ -53,9 +53,9 @@
     "typescript": "4.4.3"
   },
   "dependencies": {
-    "@types/node-telegram-bot-api": "0.40.3",
+    "@types/node-telegram-bot-api": "0.53.6",
     "express": "4.17.1",
-    "node-telegram-bot-api": "0.50.0"
+    "node-telegram-bot-api": "0.56.0"
   },
   "repository": {
     "type": "git",
@@ -64,7 +64,6 @@
   },
   "homepage": "https://urban-bot.now.sh",
   "engines": {
-    "node": ">=12.0.0"
-  },
-  "gitHead": "3b110826725ea6f64d36c1f1e42333b29064b53b"
+    "node": ">=14.0.0"
+  }
 }
