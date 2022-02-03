@@ -68,6 +68,5 @@
   "homepage": "https://urban-bot.now.sh",
   "engines": {
     "node": ">=12.0.0"
-  },
-  "gitHead": "3b110826725ea6f64d36c1f1e42333b29064b53b"
+  }
 }
