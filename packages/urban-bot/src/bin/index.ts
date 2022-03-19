@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import dotenv from 'dotenv';
-import fetch from 'node-fetch';
+const fetchPromise = import('node-fetch');
 import { URL } from 'url';
 
 dotenv.config();
@@ -36,6 +36,7 @@ switch (command) {
                     const setWebhookURL = `${telegramAPI}/bot${token}/setWebhook?url=${webhookURL}`;
 
                     try {
+                        const fetch = (await fetchPromise).default;
                         const response = await fetch(setWebhookURL);
 
                         if (!response.ok) {
