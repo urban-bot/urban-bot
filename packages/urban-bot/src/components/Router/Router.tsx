@@ -56,26 +56,26 @@ export function Router({ children, withInitializeCommands = false, historyLength
     }, []);
 
     React.useEffect(() => {
-        if (childrenArray.some(matchChild('/'))) {
-            navigate('/');
+        if (childrenArray.some(matchChild(bot.commandPrefix, bot.commandPrefix))) {
+            navigate(bot.commandPrefix);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // TODO check router children rerendering
 
     useCommand(({ command }) => {
-        if (childrenArray.some(matchChild(command))) {
+        if (childrenArray.some(matchChild(command, bot.commandPrefix))) {
             navigate(command);
         }
     });
 
     useText(({ text }) => {
-        if (childrenArray.some(matchChild(text))) {
+        if (childrenArray.some(matchChild(text, bot.commandPrefix))) {
             navigate(text);
         }
     });
 
-    const component = childrenArray.find(matchChild(activePath.value));
-    const params = getParams(activePath.value, component?.props.path);
+    const component = childrenArray.find(matchChild(activePath.value, bot.commandPrefix));
+    const params = getParams(activePath.value, bot.commandPrefix, component?.props.path);
 
     return (
         <RouterContext.Provider value={{ activePath: activePath.value, navigate, params, history: history.current }}>

@@ -3,7 +3,7 @@ import { RouteProps } from './Route';
 import { Path } from 'path-parser';
 
 // TODO get from common utils
-export const matchPattern = (path: string, pattern: string | RegExp) => {
+export const matchPattern = (path: string, pattern: string | RegExp, commandPrefix: string) => {
     if (!pattern) {
         return true;
     }
@@ -12,8 +12,7 @@ export const matchPattern = (path: string, pattern: string | RegExp) => {
         return pattern.test(path);
     }
 
-    // Path doesn't work with spaces
-    if (pattern.includes(' ')) {
+    if (pattern.includes(' ') || !pattern.startsWith(commandPrefix)) {
         return pattern === path;
     }
 
@@ -22,17 +21,16 @@ export const matchPattern = (path: string, pattern: string | RegExp) => {
     return pathInstance.test(path) !== null;
 };
 
-export const matchChild = (path: string) => (child: React.ReactElement<RouteProps>) => {
-    return matchPattern(path, child.props.path);
+export const matchChild = (path: string, commandPrefix: string) => (child: React.ReactElement<RouteProps>) => {
+    return matchPattern(path, child.props.path, commandPrefix);
 };
 
-export function getParams(path: string, pattern?: string | RegExp) {
+export function getParams(path: string, commandPrefix: string, pattern?: string | RegExp) {
     if (typeof pattern !== 'string') {
         return undefined;
     }
 
-    // Path doesn't work with spaces
-    if (pattern.includes(' ')) {
+    if (pattern.includes(' ') || !pattern.startsWith(commandPrefix)) {
         return undefined;
     }
 
