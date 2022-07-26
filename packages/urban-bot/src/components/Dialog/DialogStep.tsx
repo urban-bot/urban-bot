@@ -14,9 +14,11 @@ export type DialogStepProps = {
     id?: string;
     onNext?: (answer: string) => void;
     validation?: DialogValidation;
+    type?: 'checkbox';
 };
 
-export function DialogStep({ children, content, id, onNext, validation }: DialogStepProps) {
+export function DialogStep({ children, content, id, onNext, validation, type }: DialogStepProps) {
+    const [checkboxes, setCheckboxes] = useState(new Set<string>());
     const [isAnswered, setIsAnswered] = useState(false);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<DialogStepProps>[];
     const [displayedContent, setDisplayedContent] = useState(content);
@@ -70,7 +72,28 @@ export function DialogStep({ children, content, id, onNext, validation }: Dialog
     }
 
     useText(({ text }) => handler(text));
-    useAction(({ actionId }) => handler(actionId));
+    useAction(({ actionId }) => {
+        if (type !== 'checkbox') {
+            handler(actionId);
+            return;
+        }
+
+        if (actionId === 'checkbox-next') {
+            handler(String(Array.from(checkboxes)));
+        } else {
+            setCheckboxes((prevCheckboxes) => {
+                const newCheckboxes = new Set(prevCheckboxes);
+
+                if (newCheckboxes.has(actionId)) {
+                    newCheckboxes.delete(actionId);
+                } else {
+                    newCheckboxes.add(actionId);
+                }
+
+                return newCheckboxes;
+            });
+        }
+    });
 
     return <>{displayedContent}</>;
 }
