@@ -21,18 +21,13 @@ import {
 } from './components/ButtonGroup';
 import { RouterExample } from './components/Router';
 import { FlatDialogExample, TreeDialogExample } from './components/Dialog';
+import { CheckboxDialogExample } from './components/CheckboxDialog';
 
 dotenv.config();
 
 export function App() {
     return (
         <Router>
-            <Route path="/flat_dialog" description="flat_dialog">
-                <FlatDialogExample />
-            </Route>
-            <Route path="/tree_dialog" description="tree_dialog">
-                <TreeDialogExample />
-            </Route>
             <Route path="/image" description="image">
                 <ImageExample />
             </Route>
@@ -84,6 +79,15 @@ export function App() {
             <Route path="/router" description="router">
                 <RouterExample />
             </Route>
+            <Route path="/flat_dialog" description="flat_dialog">
+                <FlatDialogExample />
+            </Route>
+            <Route path="/tree_dialog" description="tree_dialog">
+                <TreeDialogExample />
+            </Route>
+            <Route path="/checkbox_dialog" description="checkbox_dialog">
+                <CheckboxDialogExample />
+            </Route>
             <Route path="/notification" description="notification">
                 <Notification intervalSeconds={2}>
                     <Text>Ping every two second</Text>
@@ -108,6 +112,8 @@ export function App() {
                     /tree_dialog
                     <br />
                     /flat_dialog
+                    <br />
+                    /checkbox_dialog
                     <br />
                     /queue
                     <br />
