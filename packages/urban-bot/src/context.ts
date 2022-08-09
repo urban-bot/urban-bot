@@ -17,11 +17,15 @@ export function getBotContext<Bot extends UrbanBot = UrbanBot, BotType extends U
     return (BotContext as unknown) as React.Context<BotContextType<Bot, BotType>>;
 }
 
-export type RouterContext<Params extends object = {}> = {
-    navigate: (path: string) => void;
+export type RouterQuery = Record<string, any>;
+export type Navigate<Q = RouterQuery> = (name: string, query?: Q) => void;
+
+export type RouterContext<P extends object = {}, Q = RouterQuery> = {
+    navigate: Navigate<Q>;
     activePath: string;
-    params?: Params;
+    params?: P;
     history: string[];
+    query: Q;
 };
 
 export const RouterContext = React.createContext<RouterContext | undefined>(undefined);

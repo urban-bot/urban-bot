@@ -263,6 +263,18 @@ function ProfileButtons() {
     );
 }
 ```
+You can pass [query](#query) as a second argument
+```jsx
+function SomeComponent() {
+    const { navigate } = useRouter();
+
+    return (
+        <ButtonGroup>
+            <Button onClick={() => navigate('/user', { id: 123 })}>Go to User</Button>
+        </ButtonGroup>
+    );
+}
+```
 #### activePath
 > Current route path.
 
@@ -306,7 +318,25 @@ function ComponentWithParams() {
     return <Text>Route id is {params.id}</Text>;
 }
  ```
+#### query
+> You can navigate to another route with some additional information `navigate('/user', {id: 123})` and can get a variable using query.
+###### optional
+`{ key: any }`
+```jsx
+function ComponentWithQuery() {
+    const { query } = useRouter();
 
+    return <Text>Route id is {query.id}</Text>;
+}
+ ```
+If you use `typescript` you can pass a type .
+```jsx
+function ComponentWithQuery() {
+    const { query } = useRouter<{}, { id: number }>();
+
+    return <Text>Route id is {query.id}</Text>;
+}
+ ```
 ## useAnyEvent
 Call after any user action.
 ```jsx

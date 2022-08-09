@@ -7,6 +7,7 @@ const imageByUrl2 = 'https://cdn.airlines-inform.ru/upload/iblock/b97/Antonov-An
 
 export function ImageExample() {
     const { navigate } = useRouter();
+
     const [title, setTitle] = React.useState('✈️');
     const [image, setImage] = React.useState(imageByUrl);
 
