@@ -2,7 +2,7 @@ import React, { useRef, useCallback } from 'react';
 import { useBotContext } from '../../hooks/hooks';
 import { useText } from '../../hooks/useText';
 import { useCommand } from '../../hooks/useCommand';
-import { RouterContext } from '../../context';
+import { Navigate, RouterContext } from '../../context';
 import { RouteProps } from './Route';
 import { getParams, matchChild } from './utils';
 import { UrbanCommand } from '../../types';
@@ -18,16 +18,19 @@ type RouterProps = {
 export function Router({ children, withInitializeCommands = false, historyLength = 5 }: RouterProps) {
     const { bot } = useBotContext();
     const history = useRef<string[]>([]);
-    const [activePath, setActivePath] = React.useState(() => ({ value: '', key: Math.random() }));
+    const [activeOptions, setActiveOptions] = React.useState(() => ({
+        path: { value: '', key: Math.random() },
+        query: {},
+    }));
     const childrenArray = React.Children.toArray(children) as React.ReactElement<RouteProps>[];
 
-    const navigate = useCallback(
-        (path: string) => {
+    const navigate: Navigate = useCallback(
+        (path: string, query = {}) => {
             const newHistory = [...history.current, path];
 
             history.current = newHistory.length <= historyLength ? newHistory : newHistory.slice(1);
 
-            setActivePath({ value: path, key: Math.random() });
+            setActiveOptions({ path: { value: path, key: Math.random() }, query });
         },
         [historyLength],
     );
@@ -74,12 +77,20 @@ export function Router({ children, withInitializeCommands = false, historyLength
         }
     });
 
-    const component = childrenArray.find(matchChild(activePath.value, bot.commandPrefix));
-    const params = getParams(activePath.value, bot.commandPrefix, component?.props.path);
+    const component = childrenArray.find(matchChild(activeOptions.path.value, bot.commandPrefix));
+    const params = getParams(activeOptions.path.value, bot.commandPrefix, component?.props.path);
 
     return (
-        <RouterContext.Provider value={{ activePath: activePath.value, navigate, params, history: history.current }}>
-            {component ? <component.type {...component.props} key={activePath.key} /> : null}
+        <RouterContext.Provider
+            value={{
+                activePath: activeOptions.path.value,
+                navigate,
+                params,
+                history: history.current,
+                query: activeOptions.query,
+            }}
+        >
+            {component ? <component.type {...component.props} key={activeOptions.path.key} /> : null}
         </RouterContext.Provider>
     );
 }

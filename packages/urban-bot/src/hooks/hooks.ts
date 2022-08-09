@@ -1,5 +1,5 @@
 import React from 'react';
-import { BotContextType, getBotContext, RouterContext } from '../context';
+import { BotContextType, getBotContext, RouterContext, RouterQuery } from '../context';
 import {
     UrbanListener,
     UrbanSyntheticEvent,
@@ -25,14 +25,14 @@ export function useBotContext<
     return botContext;
 }
 
-export function useRouter<Params extends object = {}>() {
+export function useRouter<P extends object = {}, Q = RouterQuery>() {
     const routerContext = React.useContext(RouterContext);
 
     if (routerContext === undefined) {
         throw new Error('You should use useBotContext only under Router component');
     }
 
-    return routerContext as RouterContext<Params>;
+    return routerContext as RouterContext<P, Q>;
 }
 
 function useSubscribe<

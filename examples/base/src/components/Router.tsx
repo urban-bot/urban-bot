@@ -5,9 +5,10 @@ function Buttons() {
     const { navigate, history } = useRouter();
 
     return (
-        <ButtonGroup title="Route 1">
+        <ButtonGroup title="Route 1" maxColumns={1}>
             <Button onClick={() => navigate('/route_2')}>Go to Route 2</Button>
-            <Button onClick={() => navigate('/params/123')}>Go to Route wih params </Button>
+            <Button onClick={() => navigate('/params/123')}>Go to Route wih params</Button>
+            <Button onClick={() => navigate('/query', { userId: 123 })}>Go to Route wih query</Button>
             <Button onClick={() => navigate(history[history.length - 2])}>Go back</Button>
         </ButtonGroup>
     );
@@ -27,6 +28,12 @@ function Params() {
     return <Text>Route id is {params?.id}</Text>;
 }
 
+function Query() {
+    const { query } = useRouter<{}, { userId: number }>();
+
+    return <Text>Route id is {query.userId}</Text>;
+}
+
 export function RouterExample() {
     return (
         <Router>
@@ -41,6 +48,9 @@ export function RouterExample() {
             </Route>
             <Route path="/params/:id" description="params">
                 <Params />
+            </Route>
+            <Route path="/query" description="query">
+                <Query />
             </Route>
             <Route path={/.+/} description="path by regex">
                 <Text>Not found</Text>
