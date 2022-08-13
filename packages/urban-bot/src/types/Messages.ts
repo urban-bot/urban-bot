@@ -8,6 +8,9 @@ export type UrbanButton = OtherProps & {
     id?: string;
     url?: string;
     phoneNumber?: string | number;
+    webApp?: {
+        url: string;
+    };
     style?: UrbanButtonStyle;
     isDisabled?: boolean;
 };

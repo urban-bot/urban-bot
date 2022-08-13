@@ -11,18 +11,19 @@ export type EditMessageOptions =
 function formatKeyboard(message: UrbanMessage): InlineKeyboardButton[][] {
     const buttons = message.data.buttons as UrbanButton[] | UrbanButton[][];
 
+    const formatButtons = ({ id, webApp, ...other }: UrbanButton) => ({
+        ...(webApp ? { web_app: webApp } : { callback_data: id }),
+        ...other,
+    });
+
     if (Array.isArray(buttons[0])) {
         return (buttons as UrbanButton[][]).map((elem) => {
             const buttons = Array.isArray(elem) ? elem : [elem];
-            return buttons.map(({ text, id, url, ...other }) => ({ text, callback_data: id, url, ...other }));
+            return buttons.map(formatButtons);
         });
     }
 
-    return [
-        (buttons as UrbanButton[]).map(({ text, id, url, ...other }) => {
-            return { text, callback_data: id, url, ...other };
-        }),
-    ];
+    return [(buttons as UrbanButton[]).map(formatButtons)];
 }
 
 function formatReplyMarkupForNewMessage(message: UrbanMessage) {
