@@ -1,6 +1,6 @@
 {
     "name": "urban-bot-example-todo-list-mobx",
-    "version": "0.3.7",
+    "version": "0.3.8",
     "private": true,
     "description": "urban bot todo-list-mobx example",
     "repository": {
@@ -25,10 +25,10 @@
         "@babel/core": "^7.10.2",
         "@babel/preset-env": "^7.10.2",
         "@babel/preset-react": "^7.10.1",
-        "@urban-bot/core": "^0.3.7",
-        "@urban-bot/facebook": "^0.3.7",
-        "@urban-bot/slack": "^0.3.7",
-        "@urban-bot/telegram": "^0.3.7",
+        "@urban-bot/core": "^0.3.8",
+        "@urban-bot/facebook": "^0.3.8",
+        "@urban-bot/slack": "^0.3.8",
+        "@urban-bot/telegram": "^0.3.8",
         "babel-loader": "^8.1.0",
         "babel-preset-mobx": "^2.0.0",
         "dotenv": "^8.2.0",
