@@ -484,15 +484,23 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-text': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.client.sendMessage(message.chat.id, message.data.text, params);
+                const response = await this.client.sendMessage(message.chat.id, message.data.text, params);
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-img': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.client.sendPhoto(message.chat.id, message.data.file, {
+                const response = await this.client.sendPhoto(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                 });
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-buttons': {
                 const params = formatParamsForNewMessage(message);
@@ -501,58 +509,87 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     throw new Error('@urban-bot/telegram Specify title prop to ButtonGroup');
                 }
 
-                return this.client.sendMessage(message.chat.id, message.data.title, params);
+                const response = await this.client.sendMessage(message.chat.id, message.data.title, params);
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-audio': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.client.sendAudio(message.chat.id, message.data.file, {
+                const response = await this.client.sendAudio(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                     duration: message.data.duration,
                     performer: message.data.author,
                     title: message.data.name,
                 });
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-video': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.client.sendVideo(message.chat.id, message.data.file, {
+                const response = await this.client.sendVideo(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                     duration: message.data.duration,
                     width: message.data.width,
                     height: message.data.height,
                 });
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-animation': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.client.sendAnimation(message.chat.id, message.data.file, {
+                const response = await this.client.sendAnimation(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                     duration: message.data.duration,
                     width: message.data.width,
                     height: message.data.height,
                 });
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-file': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.client.sendDocument(message.chat.id, message.data.file, {
+                const response = await this.client.sendDocument(message.chat.id, message.data.file, {
                     ...params,
                     caption: message.data.title,
                 });
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-location': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.client.sendLocation(message.chat.id, message.data.latitude, message.data.longitude, {
-                    ...params,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore @types/node-telegram-bot-api bug. live_period is existed
-                    live_period: message.data.livePeriodSeconds,
-                });
+                const response = await this.client.sendLocation(
+                    message.chat.id,
+                    message.data.latitude,
+                    message.data.longitude,
+                    {
+                        ...params,
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore @types/node-telegram-bot-api bug. live_period is existed
+                        live_period: message.data.livePeriodSeconds,
+                    },
+                );
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-media': {
                 const params = formatParamsForNewMessage(message);
@@ -587,12 +624,16 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore @types/node-telegram-bot-api bug. File could be not only string
-                return this.client.sendMediaGroup(message.chat.id, media, params);
+                const response = await this.client.sendMediaGroup(message.chat.id, media, params);
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-contact': {
                 const params = formatParamsForNewMessage(message);
 
-                return this.client.sendContact(
+                const response = await this.client.sendContact(
                     message.chat.id,
                     String(message.data.phoneNumber),
                     message.data.firstName ?? '',
@@ -604,12 +645,16 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                         vcard: message.data.vCard,
                     },
                 );
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             case 'urban-poll': {
                 const params = formatParamsForNewMessage(message);
                 const options = message.data.options.map(({ text }) => text);
 
-                return this.client.sendPoll(message.chat.id, message.data.question, options, {
+                const response = await this.client.sendPoll(message.chat.id, message.data.question, options, {
                     ...params,
                     is_anonymous: message.data.isAnonymous,
                     type: message.data.type as PollType,
@@ -620,6 +665,10 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     open_period: message.data.livePeriodSeconds,
                     close_date: message.data.close_time as number,
                 });
+
+                message.data.onSent?.(response);
+
+                return response;
             }
             default: {
                 throw new Error(
