@@ -1,6 +1,6 @@
 {
     "name": "urban-bot-example-base",
-    "version": "0.3.9",
+    "version": "1.0.0-alpha.0",
     "private": true,
     "description": "urban bot base example",
     "files": [
@@ -38,11 +38,11 @@
         "typescript": "4.4.3"
     },
     "dependencies": {
-        "@urban-bot/core": "^0.3.9",
-        "@urban-bot/discord": "^0.3.9",
-        "@urban-bot/facebook": "^0.3.9",
-        "@urban-bot/slack": "^0.3.9",
-        "@urban-bot/telegram": "^0.3.9",
+        "@urban-bot/core": "^1.0.0-alpha.0",
+        "@urban-bot/discord": "^1.0.0-alpha.0",
+        "@urban-bot/facebook": "^1.0.0-alpha.0",
+        "@urban-bot/slack": "^1.0.0-alpha.0",
+        "@urban-bot/telegram": "^1.0.0-alpha.0",
         "react": "^18.2.0"
     },
     "engines": {
