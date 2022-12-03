@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text, useBotContext } from '@urban-bot/core';
 import { UrbanBotTelegram } from '@urban-bot/telegram';
 

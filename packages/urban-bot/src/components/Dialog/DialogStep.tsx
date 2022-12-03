@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { matchPattern } from '../../utils/matchPattern';
 import { Text } from '../Text';
 import { useAction, useDialog, useText } from '../..';
@@ -20,7 +20,7 @@ export type DialogStepProps = {
 export function DialogStep({ children, content, id, onNext, validation, type }: DialogStepProps) {
     const [checkboxes, setCheckboxes] = useState(new Set<string>());
     const [isAnswered, setIsAnswered] = useState(false);
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<DialogStepProps>[];
+    const childrenArray = React.Children.toArray(children as ReactNode) as React.ReactElement<DialogStepProps>[];
     const [displayedContent, setDisplayedContent] = useState(content);
     const { onFinish, finishedContent, addAnswer } = useDialog();
 
