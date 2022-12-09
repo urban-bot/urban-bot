@@ -7,7 +7,7 @@ export function render(reactElement: React.ReactElement, callback: () => void | 
 
     return reactReconciler.updateContainer(
         reactElement,
-        reactReconciler.createContainer(node, false, false),
+        reactReconciler.createContainer(node, 0, null, false, null, '', () => {}, null),
         null,
         callback,
     );

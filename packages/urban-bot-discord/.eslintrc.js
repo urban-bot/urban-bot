@@ -32,6 +32,7 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 0,
         '@typescript-eslint/no-empty-function': 0,
         '@typescript-eslint/camelcase': 0,
+        "react/react-in-jsx-scope": "off"
     },
     settings: {
         'import/resolver': {

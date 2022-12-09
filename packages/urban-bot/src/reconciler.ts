@@ -1,4 +1,5 @@
 import ReactReconciler from 'react-reconciler';
+import { DefaultEventPriority } from 'react-reconciler/constants';
 import { createNode, appendChildNode, removeChildNode, updateNode, insertBeforeNode } from './node';
 
 const rootHostContext = {};
@@ -11,7 +12,7 @@ const hostConfig = {
     getRootHostContext: () => {
         return rootHostContext;
     },
-    prepareForCommit: () => {},
+    prepareForCommit: () => ({}),
     resetAfterCommit: () => {},
     getChildHostContext: () => {
         return childHostContext;
@@ -45,6 +46,21 @@ const hostConfig = {
     isPrimaryRenderer: false,
     supportsPersistence: false,
     supportsHydration: false,
+    preparePortalMount: () => {},
+    scheduleTimeout: () => {},
+    cancelTimeout: () => {},
+    getCurrentEventPriority: () => {
+        return DefaultEventPriority;
+    },
+    getInstanceFromNode: () => {
+        return undefined;
+    },
+    beforeActiveInstanceBlur: () => {},
+    afterActiveInstanceBlur: () => {},
+    prepareScopeUpdate: () => {},
+    getInstanceFromScope: () => {},
+    detachDeletedInstance: () => {},
+    clearContainer: () => {},
 };
 
 export const reactReconciler = ReactReconciler(hostConfig);

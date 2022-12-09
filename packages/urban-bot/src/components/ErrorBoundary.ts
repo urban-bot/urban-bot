@@ -1,13 +1,11 @@
 import React from 'react';
 
-type Props = {};
-
-export class ErrorBoundary extends React.Component {
+export class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>> {
     state: {
         hasError: boolean;
     };
 
-    constructor(props: Props) {
+    constructor(props: React.PropsWithChildren<{}>) {
         super(props);
         this.state = { hasError: false };
     }
