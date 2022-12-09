@@ -35,7 +35,7 @@ function Chat<Bot extends UrbanBot, BotType extends UrbanBotType>({
     );
 }
 
-export type RootProps<Bot extends UrbanBot> = {
+export type RootProps<Bot extends UrbanBot, BotType extends UrbanBotType> = {
     bot: Bot;
     expressApp?: Express;
     children: React.ReactNode;
@@ -45,6 +45,7 @@ export type RootProps<Bot extends UrbanBot> = {
     port?: number;
     // TODO add to docs
     initialChats?: UrbanChat[];
+    onAnyEvent?: (event: UrbanSyntheticEvent<BotType>) => void;
 };
 
 export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotType = UrbanBotType>({
@@ -56,7 +57,8 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
     port = 8080,
     expressApp,
     initialChats = [],
-}: RootProps<Bot>) {
+    onAnyEvent,
+}: RootProps<Bot, BotType>) {
     // TODO get chats from $$managerBot?
     const [chats, setChats] = React.useState(new Map<string, React.ReactElement>());
     const chatsRef = React.useRef(chats);
@@ -122,6 +124,8 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
                     setChats(new Map(chatsRef.current));
                 }, sessionTimeSeconds * 1000);
             }
+
+            onAnyEvent?.(message);
         }
 
         $$managerBot.on('any', handler);
