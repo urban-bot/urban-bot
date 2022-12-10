@@ -1,6 +1,6 @@
 {
     "name": "urban-bot-example-restore-sessions-after-reload-server",
-    "version": "1.0.0-alpha.1",
+    "version": "1.0.0-alpha.2",
     "private": true,
     "description": "Example how to restore sessions after reload server",
     "repository": {
@@ -24,10 +24,10 @@
         "@babel/core": "^7.12.16",
         "@babel/preset-env": "^7.12.16",
         "@babel/preset-react": "^7.12.13",
-        "@urban-bot/core": "^1.0.0-alpha.1",
-        "@urban-bot/facebook": "^1.0.0-alpha.1",
-        "@urban-bot/slack": "^1.0.0-alpha.1",
-        "@urban-bot/telegram": "^1.0.0-alpha.1",
+        "@urban-bot/core": "^1.0.0-alpha.2",
+        "@urban-bot/facebook": "^1.0.0-alpha.2",
+        "@urban-bot/slack": "^1.0.0-alpha.2",
+        "@urban-bot/telegram": "^1.0.0-alpha.2",
         "babel-loader": "^8.2.2",
         "dotenv": "^8.2.0",
         "file-loader": "^6.2.0",

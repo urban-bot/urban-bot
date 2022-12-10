@@ -1,6 +1,6 @@
 {
   "name": "create-urban-bot",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "The easiest way to start write urban-bot",
   "files": [
     "dist/**/*"
