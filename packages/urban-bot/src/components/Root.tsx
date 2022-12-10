@@ -139,7 +139,6 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
         if (firstMessage !== undefined) {
             // First message is needed to register chat and initialize react children for it.
             // After initializing we repeat this message that react children can process it.
-            $$managerBot.emit('any', firstMessage);
             $$managerBot.emit(firstMessage.type, firstMessage);
         }
     }, [firstMessage, $$managerBot]);
