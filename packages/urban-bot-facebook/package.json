@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "array-flatten": "3.0.0",
-    "body-parser": "1.19.0",
+    "body-parser": "1.20.1",
     "camelcase": "6.0.0",
     "crypto": "1.0.1",
     "request-promise": "4.2.5"
