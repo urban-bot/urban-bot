@@ -81,11 +81,11 @@ function formatParseMode(parseMode: UrbanParseMode | undefined) {
 function formatParams(message: UrbanMessage) {
     const parse_mode = formatParseMode(message.data.parseMode);
 
-    if (message.nodeName === 'urban-text') {
+    if (message.nodeName === 'urban-text' || message.nodeName === 'urban-buttons') {
         if (message.data.disableWebPagePreview === true) {
             return {
                 parse_mode,
-                disable_web_page_preview: message.data.disableWebPagePreview,
+                disable_web_page_preview: true,
             } as const;
         }
     }

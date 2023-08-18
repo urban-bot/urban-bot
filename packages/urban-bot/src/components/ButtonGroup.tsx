@@ -13,6 +13,7 @@ export type ButtonGroupProps = UrbanMessageCommonData & {
     title?: React.ReactNode;
     isReplyButtons?: boolean;
     isResizedKeyboard?: boolean;
+    disableWebPagePreview?: boolean;
     isNewMessageEveryRender?: boolean;
     maxColumns?: number;
     children: ButtonElement | ButtonElement[] | ButtonElement[][];
