@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/discord",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create Discord chatbot with urban-bot",
   "files": [
     "dist/**/*"
@@ -37,7 +37,7 @@
     "@types/lodash.groupby": "^4.6.6",
     "@typescript-eslint/eslint-plugin": "2.29.0",
     "@typescript-eslint/parser": "2.29.0",
-    "@urban-bot/core": "^1.0.1",
+    "@urban-bot/core": "^1.0.2",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-plugin-import": "2.20.2",
