@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/discord",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Create Discord chatbot with urban-bot",
   "files": [
     "dist/**/*"

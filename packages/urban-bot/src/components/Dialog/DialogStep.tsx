@@ -3,7 +3,7 @@ import { matchPattern } from '../../utils/matchPattern';
 import { Text } from '../Text';
 import { useAction, useDialog, useText } from '../..';
 
-export type DialogValidationResult = string | void | Promise<string | void>;
+export type DialogValidationResult = ReactNode | Promise<ReactNode>;
 
 export type DialogValidation = (answer: string) => DialogValidationResult;
 
@@ -44,10 +44,14 @@ export function DialogStep({ children, content, id, onNext, validation, type }: 
         if (validation !== undefined) {
             const validationError = await validation(text);
 
-            if (validationError) {
+            if (typeof validationError === 'string') {
                 setDisplayedContent(<Text isNewMessageEveryRender>{validationError}</Text>);
 
                 return;
+            }
+
+            if (React.isValidElement(validationError)) {
+                return validationError;
             }
         }
 
