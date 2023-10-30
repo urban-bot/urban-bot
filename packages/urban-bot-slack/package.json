@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/slack",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "Create Slack chatbot with urban-bot",
   "files": [
     "dist/**/*"

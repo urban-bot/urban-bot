@@ -51,7 +51,7 @@ export function DialogStep({ children, content, id, onNext, validation, type }: 
             }
 
             if (React.isValidElement(validationError)) {
-                return validationError;
+                return setDisplayedContent(validationError);
             }
         }
 

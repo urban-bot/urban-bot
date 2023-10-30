@@ -1,6 +1,6 @@
 {
   "name": "@urban-bot/facebook",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "Create Facebook chatbot with urban-bot",
   "files": [
     "dist/**/*"
