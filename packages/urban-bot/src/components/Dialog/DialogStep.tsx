@@ -3,9 +3,7 @@ import { matchPattern } from '../../utils/matchPattern';
 import { Text } from '../Text';
 import { useAction, useDialog, useText } from '../..';
 
-export type DialogValidationResult = ReactNode | Promise<ReactNode>;
-
-export type DialogValidation = (answer: string) => DialogValidationResult;
+export type DialogValidation = (answer: string) => ReactNode;
 
 export type DialogStepProps = {
     children?: ((answer: string) => React.ReactNode) | React.ReactNode;
