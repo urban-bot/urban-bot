@@ -41,12 +41,10 @@ export function Router({ children, withInitializeCommands = false, historyLength
         }
 
         const commands = childrenArray
-            .map((routes) => {
-                return {
-                    command: routes.props.path,
-                    description: routes.props.description,
-                };
-            })
+            .map((routes) => ({
+                command: routes.props.path,
+                description: routes.props.description,
+            }))
             .filter(
                 ({ command, description }) =>
                     typeof command === 'string' && command[0] === bot.commandPrefix && Boolean(description),
