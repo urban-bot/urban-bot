@@ -1,7 +1,8 @@
 import React from 'react';
+import { RouterPath } from './types';
 
 export type RouteProps = {
-    path: string | RegExp;
+    path: RouterPath;
     description?: string;
     children: React.ReactNode;
 };

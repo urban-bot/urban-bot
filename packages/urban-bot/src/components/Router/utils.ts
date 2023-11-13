@@ -1,9 +1,16 @@
 import React from 'react';
-import { RouteProps } from './Route';
 import { Path } from 'path-parser';
+import type { RouteProps } from './Route';
+import type { RouterPath } from './types';
+
+const checkPath = (path: string) => (routePath: string) => {
+    const pathInstance = new Path(routePath);
+
+    return pathInstance.test(path) !== null;
+};
 
 // TODO get from common utils
-export const matchPattern = (path: string, pattern: string | RegExp, commandPrefix: string) => {
+export const matchPattern = (path: string, pattern: RouterPath, commandPrefix: string) => {
     if (!pattern) {
         return true;
     }
@@ -12,20 +19,22 @@ export const matchPattern = (path: string, pattern: string | RegExp, commandPref
         return pattern.test(path);
     }
 
+    if (Array.isArray(pattern)) {
+        return pattern.some(checkPath(path));
+    }
+
     if (pattern.includes(' ') || !pattern.startsWith(commandPrefix)) {
         return pattern === path;
     }
 
-    const pathInstance = new Path(pattern);
-
-    return pathInstance.test(path) !== null;
+    return checkPath(path)(pattern);
 };
 
 export const matchChild = (path: string, commandPrefix: string) => (child: React.ReactElement<RouteProps>) => {
     return matchPattern(path, child.props.path, commandPrefix);
 };
 
-export function getParams(path: string, commandPrefix: string, pattern?: string | RegExp) {
+export function getParams(path: string, commandPrefix: string, pattern?: RouterPath) {
     if (typeof pattern !== 'string') {
         return undefined;
     }
