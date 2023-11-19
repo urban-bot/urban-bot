@@ -1,24 +1,7 @@
-import React, { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useState, createContext } from 'react';
+import type { DialogAddAnswer, DialogAnswers, DialogContextType, DialogProps } from './types';
 
-export type DialogProps = {
-    children?: React.ReactNode;
-    onFinish?: (answers: DialogAnswers) => void;
-    finishedContent?: React.ReactNode;
-};
-
-export type DialogAnswers = {
-    [id: string]: string;
-};
-
-export type DialogAddAnswer = (id: string, answer: string) => void;
-
-export type DialogContextType = {
-    onFinish: () => void;
-    finishedContent?: React.ReactNode;
-    addAnswer: DialogAddAnswer;
-};
-
-const DialogContext = React.createContext<DialogContextType>({} as DialogContextType);
+const DialogContext = createContext<DialogContextType>({} as DialogContextType);
 
 export function useDialog() {
     return useContext(DialogContext);

@@ -1,6 +1,7 @@
 import React from 'react';
-import { ButtonGroup, ButtonGroupProps } from '../components/ButtonGroup';
-import { UrbanElementButtons } from '../global.d';
+import { ButtonGroup } from '../components';
+import type { ButtonGroupProps } from '../components';
+import type { UrbanElementButtons } from '../global.d';
 
 export function getButtonsByButtonGroup(
     buttonGroupElement: React.FunctionComponentElement<ButtonGroupProps> | undefined,

@@ -1,7 +1,6 @@
 import React from 'react';
-import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanBotType, UrbanChat, UrbanParseMode } from './types';
-import { UrbanBot } from './types/UrbanBot';
+import { ManagerBot } from './ManagerBot';
+import type { UrbanBotType, UrbanBot, UrbanChat, UrbanParseMode } from './types';
 
 export type BotContextType<Bot extends UrbanBot, BotType extends UrbanBotType = UrbanBotType> = {
     $$managerBot: ManagerBot<BotType>;

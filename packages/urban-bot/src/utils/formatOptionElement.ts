@@ -1,7 +1,8 @@
 import React from 'react';
-import { OtherProps } from '../types/common';
-import { Option, OptionProps } from '../components/Poll';
+import { Option } from '../components';
 import { getRandomId } from './getRandomId';
+import type { OptionProps } from '../components/Poll';
+import type { OtherProps } from '../types';
 
 type FormattedOption = OtherProps & {
     text: string;

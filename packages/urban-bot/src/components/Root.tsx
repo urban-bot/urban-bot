@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
-import { getBotContext } from '../context';
-import { ErrorBoundary } from './ErrorBoundary';
-import { ManagerBot } from '../ManagerBot/ManagerBot';
-import { UrbanBotType, UrbanChat, UrbanParseMode } from '../types';
-import { UrbanBot } from '../types/UrbanBot';
-import { UrbanSyntheticEvent } from '../types/Events';
+import { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import { getExpressApp, listen } from '../expressApp';
-import { Express } from 'express';
+import { getBotContext } from '../context';
+import { ManagerBot } from '../ManagerBot';
+import { ErrorBoundary } from './ErrorBoundary';
+import type { ReactNode } from 'react';
+import type { Express } from 'express';
+import type { UrbanBotType, UrbanBot, UrbanChat, UrbanParseMode, UrbanSyntheticEvent } from '../types';
 
 export type ChatProps<Bot extends UrbanBot, BotType extends UrbanBotType> = {
     bot: Bot;
@@ -14,7 +13,7 @@ export type ChatProps<Bot extends UrbanBot, BotType extends UrbanBotType> = {
     isNewMessageEveryRender: boolean;
     parseMode?: UrbanParseMode;
     $$managerBot: ManagerBot<BotType>;
-    children: React.ReactNode;
+    children: ReactNode;
     key: string;
 };
 
@@ -60,22 +59,22 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
     onAnyEvent,
 }: RootProps<Bot, BotType>) {
     // TODO get chats from $$managerBot?
-    const [chats, setChats] = React.useState(new Map<string, React.ReactElement>());
-    const chatsRef = React.useRef(chats);
+    const [chats, setChats] = useState(new Map<string, React.ReactElement>());
+    const chatsRef = useRef(chats);
     chatsRef.current = chats;
 
-    const timeoutIdsRef = React.useRef<{ [key: string]: NodeJS.Timer }>({});
+    const timeoutIdsRef = useRef<{ [key: string]: NodeJS.Timer }>({});
 
-    const [firstMessage, setFirstMessage] = React.useState<UrbanSyntheticEvent<BotType>>();
+    const [firstMessage, setFirstMessage] = useState<UrbanSyntheticEvent<BotType>>();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (bot.initializeServer !== undefined) {
             const { app } = getExpressApp(port, expressApp);
             bot.initializeServer(app);
             listen(port);
         }
     }, [port, bot, expressApp]);
-    const $$managerBot = React.useMemo(() => new ManagerBot(bot), [bot]);
+    const $$managerBot = useMemo(() => new ManagerBot(bot), [bot]);
 
     const registerChat = useCallback(
         (chat: UrbanChat) => {
@@ -106,7 +105,7 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
         });
     }, [initialChats, registerChat]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         function handler(message: UrbanSyntheticEvent<BotType>) {
             const { chat } = message;
             const { id: chatId } = chat;
@@ -135,7 +134,7 @@ export function Root<Bot extends UrbanBot = UrbanBot, BotType extends UrbanBotTy
         };
     }, [$$managerBot, registerChat, sessionTimeSeconds]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (firstMessage !== undefined) {
             // First message is needed to register chat and initialize react children for it.
             // After initializing we repeat this message that react children can process it.

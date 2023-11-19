@@ -1,65 +1,29 @@
-import { render } from './render';
-import { Router, Route } from './components/Router';
-import { Text } from './components/Text';
-import { Image } from './components/Image';
-import { Animation } from './components/Animation';
-import { Audio } from './components/Audio';
-import { Video } from './components/Video';
-import { File } from './components/File';
-import { Poll, Option } from './components/Poll';
-import { Contact } from './components/Contact';
-import { Media } from './components/Media';
-import { Location } from './components/Location';
-import { Notification } from './components/Notification';
-import { ButtonGroup, Button } from './components/ButtonGroup';
-import { Root } from './components/Root';
-import { getBotContext, RouterContext } from './context';
-import {
-    useBotContext,
-    useRouter,
-    useSticker,
-    useAnimation,
-    useAnyEvent,
-    useAudio,
-    useContact,
-    useFile,
-    useInvoice,
-    useLocation,
-    useImage,
-    usePoll,
-    useVideo,
-    useVoice,
-    useDice,
-    useAction,
-    useVideoNote,
-} from './hooks/hooks';
-
-import { useText } from './hooks/useText';
-import { useCommand } from './hooks/useCommand';
-
+export { render } from './render';
+export { getBotContext, RouterContext } from './context';
 export {
-    render,
     Router,
     Route,
+    Dialog,
+    DialogStep,
+    ButtonGroup,
     Button,
-    useText,
-    useCommand,
-    Animation,
     Text,
     Image,
+    Animation,
     Audio,
     Video,
     File,
-    Poll,
-    Option,
     Contact,
     Media,
     Location,
     Notification,
-    ButtonGroup,
+    Root,
+    Poll,
+    Option,
+} from './components';
+export {
     useBotContext,
     useRouter,
-    Root,
     useSticker,
     useAnimation,
     useAnyEvent,
@@ -73,12 +37,11 @@ export {
     useVideo,
     useVoice,
     useDice,
-    getBotContext,
-    RouterContext,
     useAction,
     useVideoNote,
-};
+    useText,
+    useCommand,
+} from './hooks';
 
 export * from './types';
-export * from './components/Dialog/Dialog';
-export * from './components/Dialog/DialogStep';
+export * from './components/Dialog/types';

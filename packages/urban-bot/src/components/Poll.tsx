@@ -1,23 +1,19 @@
-import React from 'react';
-import { useAction, useBotContext } from '../hooks/hooks';
-import { UrbanMessageCommonData } from '../types/Messages';
-import { ButtonGroupProps } from './ButtonGroup';
-import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
-import { OtherProps } from '../types/common';
-import { formatOptionElement } from '../utils/formatOptionElement';
-import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
-import { getParseMode } from '../utils/getParseMode';
+import { useAction, useBotContext } from '../hooks';
+import { getButtonsByButtonGroup, formatMarkupLanguageElement, getParseMode, formatOptionElement } from '../utils';
+import type { ReactElement, FunctionComponentElement, ReactChild } from 'react';
+import type { UrbanMessageCommonData, OtherProps } from '../types';
+import type { ButtonGroupProps } from './Button';
 
 export type PollProps = UrbanMessageCommonData & {
     question: string;
-    children: React.ReactElement<OptionProps> | React.ReactElement<OptionProps>[];
-    buttons?: React.FunctionComponentElement<ButtonGroupProps>;
+    children: ReactElement<OptionProps> | ReactElement<OptionProps>[];
+    buttons?: FunctionComponentElement<ButtonGroupProps>;
     isNewMessageEveryRender?: boolean;
     isAnonymous?: boolean;
     type?: string;
     withMultipleAnswers?: boolean;
     rightOption?: string | number;
-    explanation?: React.ReactChild;
+    explanation?: ReactChild;
     livePeriodSeconds?: number;
 };
 
@@ -92,10 +88,10 @@ export function Poll({
 }
 
 export type OptionProps = OtherProps & {
+    id?: string;
     children: string;
     // FIXME describe type for onClick?
     onClick?: (...args: unknown[]) => unknown;
-    id?: string;
 };
 
 export function Option(_props: OptionProps) {

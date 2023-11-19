@@ -1,6 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
+import type { PropsWithChildren } from 'react';
 
-export class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>> {
+export class ErrorBoundary extends Component<PropsWithChildren<{}>> {
     state: {
         hasError: boolean;
     };

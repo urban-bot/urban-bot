@@ -1,5 +1,5 @@
 import React from 'react';
-import { UrbanParseMode } from '../types';
+import type { UrbanParseMode } from '../types';
 
 export function getParseMode(
     element: React.ReactNode,

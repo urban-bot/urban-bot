@@ -1,8 +1,8 @@
-import React from 'react';
-import { useBotContext } from '../hooks/hooks';
-import { UrbanMessageCommonData } from '../types/Messages';
-import { ButtonGroupProps } from './ButtonGroup';
-import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
+import { useBotContext } from '../hooks';
+import { getButtonsByButtonGroup } from '../utils';
+import type { FunctionComponentElement } from 'react';
+import type { UrbanMessageCommonData } from '../types';
+import type { ButtonGroupProps } from './Button';
 
 export type ContactProps = UrbanMessageCommonData & {
     phoneNumber?: string | number;
@@ -11,7 +11,7 @@ export type ContactProps = UrbanMessageCommonData & {
     lastName?: string;
     vCard?: string;
     isNewMessageEveryRender?: boolean;
-    buttons?: React.FunctionComponentElement<ButtonGroupProps>;
+    buttons?: FunctionComponentElement<ButtonGroupProps>;
 };
 
 export function Contact({

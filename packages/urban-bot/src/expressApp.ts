@@ -1,7 +1,8 @@
 import express from 'express';
+import type { Express } from 'express';
 
 export type ExpressAppType = {
-    app: express.Express;
+    app: Express;
     isStarted: boolean;
 };
 
@@ -17,6 +18,7 @@ export function getExpressApp(port: number, expressApp = express()) {
 
 export function listen(port: number) {
     const app = getExpressApp(port);
+
     if (!app.isStarted) {
         app.app.listen(port);
         app.isStarted = true;

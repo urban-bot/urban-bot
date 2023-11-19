@@ -1,68 +1,5 @@
-import React from 'react';
-import { BotContextType, getBotContext, RouterContext, RouterQuery } from '../context';
-import {
-    UrbanListener,
-    UrbanSyntheticEvent,
-    UrbanListenerByType,
-    UrbanSyntheticEventType,
-    UrbanListenerByNativeEventWithSpreadPayload,
-    UrbanEventListener,
-    UrbanBotType,
-    UrbanBot,
-} from '../types';
-
-export function useBotContext<
-    Bot extends UrbanBot = UrbanBot,
-    BotType extends UrbanBotType = UrbanBotType
->(): BotContextType<Bot, BotType> {
-    const BotContext = getBotContext<Bot, BotType>();
-    const botContext = React.useContext(BotContext);
-
-    if (botContext === undefined) {
-        throw new Error('You should use useBotContext only under Root component');
-    }
-
-    return botContext;
-}
-
-export function useRouter<P extends object = {}, Q = RouterQuery>() {
-    const routerContext = React.useContext(RouterContext);
-
-    if (routerContext === undefined) {
-        throw new Error('You should use useBotContext only under Router component');
-    }
-
-    return routerContext as RouterContext<P, Q>;
-}
-
-function useSubscribe<
-    BotType extends UrbanBotType,
-    Event extends UrbanSyntheticEvent<BotType> = UrbanSyntheticEvent<BotType>
->(listener: UrbanListener<Event>, event: Event['type']) {
-    const { chat, $$managerBot } = useBotContext<UrbanBot, BotType>();
-
-    React.useEffect(() => {
-        $$managerBot.on(event, listener, chat.id);
-
-        return () => {
-            $$managerBot.removeListener(event, listener, chat.id);
-        };
-    }, [listener, $$managerBot, event, chat]);
-}
-
-export function useSubscribeWithSpreadPayload<
-    BotType extends UrbanBotType,
-    EventType extends UrbanSyntheticEventType<BotType>,
-    Event extends Parameters<UrbanListenerByType<BotType, EventType>>[0]
->(listener: UrbanListenerByNativeEventWithSpreadPayload<BotType, Event>, eventType: EventType) {
-    useSubscribe<BotType, Event>((event) => {
-        const { payload, ...other } = event;
-        listener({
-            ...other,
-            ...payload,
-        });
-    }, eventType);
-}
+import { useSubscribeWithSpreadPayload } from './useSubscribeWithSpreadPayload';
+import type { UrbanEventListener, UrbanBotType } from '../types';
 
 export function useAnyEvent<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'any'>) {
     useSubscribeWithSpreadPayload(listener, 'any');
@@ -122,3 +59,9 @@ export function useDice<BotType extends UrbanBotType>(listener: UrbanEventListen
 export function useAction<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'action'>) {
     useSubscribeWithSpreadPayload(listener, 'action');
 }
+
+export { useInterval } from './useInterval';
+export { useBotContext } from './useBotContext';
+export { useRouter } from './useRouter';
+export { useCommand } from './useCommand';
+export { useText } from './useText';

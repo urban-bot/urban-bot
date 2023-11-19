@@ -1,6 +1,5 @@
-import React from 'react';
-import { useBotContext } from '../hooks/hooks';
-import { UrbanMessageMediaData } from '../types/Messages';
+import { useBotContext } from '../hooks';
+import type { UrbanMessageMediaData } from '../types';
 
 export type MediaProps = UrbanMessageMediaData & {
     isNewMessageEveryRender?: boolean;

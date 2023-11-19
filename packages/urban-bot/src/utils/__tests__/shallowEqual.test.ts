@@ -1,4 +1,4 @@
-import { shallowEqual } from './shallowEqual';
+import { shallowEqual } from '../shallowEqual';
 
 describe('shallowEqual', () => {
     it('number compare', () => {

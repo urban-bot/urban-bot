@@ -1,7 +1,6 @@
-import React from 'react';
 import { Path } from 'path-parser';
-import type { RouteProps } from './Route';
-import type { RouterPath } from './types';
+import type { ReactElement } from 'react';
+import type { RouteProps, RouterPath } from './types';
 
 const checkPath = (path: string) => (routePath: string) => {
     const pathInstance = new Path(routePath);
@@ -30,7 +29,7 @@ export const matchPattern = (path: string, pattern: RouterPath, commandPrefix: s
     return checkPath(path)(pattern);
 };
 
-export const matchChild = (path: string, commandPrefix: string) => (child: React.ReactElement<RouteProps>) => {
+export const matchChild = (path: string, commandPrefix: string) => (child: ReactElement<RouteProps>) => {
     return matchPattern(path, child.props.path, commandPrefix);
 };
 

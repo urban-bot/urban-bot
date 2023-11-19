@@ -1,13 +1,14 @@
-import React from 'react';
-import { useInterval } from '../hooks/useInterval';
+import { useState, Children, cloneElement } from 'react';
+import { useInterval } from '../hooks';
+import type { ReactNode, ReactElement } from 'react';
 
 export type NotificationProps = {
-    children: React.ReactNode;
+    children: ReactNode;
     intervalSeconds: number;
 };
 
 export function Notification({ children, intervalSeconds }: NotificationProps) {
-    const [isActive, setIsActive] = React.useState(false);
+    const [isActive, setIsActive] = useState(false);
 
     useInterval(() => {
         setIsActive(true);
@@ -18,12 +19,12 @@ export function Notification({ children, intervalSeconds }: NotificationProps) {
         return null;
     }
 
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<{ [key: string]: unknown }>[];
+    const childrenArray = Children.toArray(children) as ReactElement<{ [key: string]: unknown }>[];
 
     return (
         <>
             {childrenArray.map((element) => {
-                return React.cloneElement(element, { ...element.props, isNewMessageEveryRender: true });
+                return cloneElement(element, { ...element.props, isNewMessageEveryRender: true });
             })}
         </>
     );
