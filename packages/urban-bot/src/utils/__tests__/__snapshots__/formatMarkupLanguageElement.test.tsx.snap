@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`formatMarkupLanguageElement HTML throw error if tag does not exist 1`] = `"Can't format tag 'not-exist-tag'. Please use only <b>, <i>, ..."`;
-
-exports[`formatMarkupLanguageElement HTML throw error if tag does not exist 2`] = `"Can't format tag 'Text'. Please use only <b>, <i>, ..."`;
-
-exports[`formatMarkupLanguageElement not right parseMode throw error if parseMode does npt exist 1`] = `"parseMode 'notRightParseMode' doesn't exist. Please provide 'HTML' or 'markdown' parseMode"`;
