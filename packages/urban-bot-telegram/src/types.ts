@@ -29,3 +29,19 @@ export type InputMediaAnimation = TelegramBot.InputMediaBase & {
     duration?: number;
     title?: string;
 };
+
+export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
+    type: TELEGRAM;
+    payload?: Payload;
+};
+export type UrbanBotTelegramType<Payload = TelegramPayload> = {
+    NativeEvent: UrbanNativeEventTelegram<Payload>;
+    MessageMeta: TelegramMessageMeta;
+};
+
+export type TelegramOptions = {
+    token: string;
+    isPolling?: boolean;
+    pathnamePrefix?: string;
+    [key: string]: any;
+};
