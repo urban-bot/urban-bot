@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import type { ButtonProps } from '../../components';
+import type { ButtonProps } from '../../components/Button/types';
 import type { OtherProps } from '../common';
 import type { UrbanMessageCommon, UrbanMessageCommonData } from './UrbanMessageCommon';
 

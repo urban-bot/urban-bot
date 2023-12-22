@@ -1,6 +1,7 @@
 import { useEffect, useState, isValidElement, Children } from 'react';
-import { useAction, useText } from '../../hooks';
-import { matchPattern } from '../../utils';
+import { useAction } from '../../hooks';
+import { useText } from '../../hooks/useText';
+import { matchPattern } from '../../utils/matchPattern';
 import { Text } from '../Text';
 import { useDialog } from './Dialog';
 import type { ReactNode, ReactElement } from 'react';

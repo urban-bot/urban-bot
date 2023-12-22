@@ -1,12 +1,12 @@
 import { flatten } from 'array-flatten';
-import { useBotContext, useAction } from '../../hooks';
-import {
-    formatMarkupLanguageElement,
-    formatButtonElement,
-    getParseMode,
-    groupFlatArray,
-    isArrayMatrix,
-} from '../../utils';
+import { useAction } from '../../hooks';
+import { useBotContext } from '../../hooks/useBotContext';
+import { formatMarkupLanguageElement } from '../../utils/formatMarkupLanguageElement';
+import { formatButtonElement } from '../../utils/formatButtonElement';
+import { getParseMode } from '../../utils/getParseMode';
+import { groupFlatArray } from '../../utils/groupFlatArray';
+import { isArrayMatrix } from '../../utils/isArrayMatrix';
+
 import type { ButtonGroupProps } from './types';
 
 export function ButtonGroup({

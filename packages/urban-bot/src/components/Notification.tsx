@@ -1,5 +1,5 @@
 import { useState, Children, cloneElement } from 'react';
-import { useInterval } from '../hooks';
+import { useInterval } from '../hooks/useInterval';
 import type { ReactNode, ReactElement } from 'react';
 
 export type NotificationProps = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Option } from '../components';
+import { Option } from '../components/Poll';
 import { getRandomId } from './getRandomId';
 import type { OptionProps } from '../components/Poll';
 import type { OtherProps } from '../types';

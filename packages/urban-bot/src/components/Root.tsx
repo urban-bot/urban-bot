@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import { getExpressApp, listen } from '../expressApp';
 import { getBotContext } from '../context';
-import { ManagerBot } from '../ManagerBot';
+import { ManagerBot } from '../ManagerBot/ManagerBot';
 import { ErrorBoundary } from './ErrorBoundary';
 import type { ReactNode } from 'react';
 import type { Express } from 'express';

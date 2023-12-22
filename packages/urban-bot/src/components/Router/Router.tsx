@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback, Children } from 'react';
-import { useBotContext, useCommand, useText } from '../../hooks';
+import { useBotContext } from '../../hooks/useBotContext';
+import { useCommand } from '../../hooks/useCommand';
+import { useText } from '../../hooks/useText';
 import { Navigate, RouterContext } from '../../context';
 import { getParams, matchChild } from './utils';
 import type { ReactElement } from 'react';

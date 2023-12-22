@@ -1,4 +1,4 @@
-import { matchPattern } from '../utils';
+import { matchPattern } from '../utils/matchPattern';
 import { useSubscribeWithSpreadPayload } from './useSubscribeWithSpreadPayload';
 import type { UrbanBotType, UrbanEventListener } from '../types';
 

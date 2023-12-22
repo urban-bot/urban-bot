@@ -1,8 +1,12 @@
-import { useAction, useBotContext } from '../hooks';
-import { getButtonsByButtonGroup, formatMarkupLanguageElement, getParseMode, formatOptionElement } from '../utils';
+import { useAction } from '../hooks';
+import { useBotContext } from '../hooks/useBotContext';
+import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { getParseMode } from '../utils/getParseMode';
+import { formatOptionElement } from '../utils/formatOptionElement';
 import type { ReactElement, FunctionComponentElement, ReactChild } from 'react';
 import type { UrbanMessageCommonData, OtherProps } from '../types';
-import type { ButtonGroupProps } from './Button';
+import type { ButtonGroupProps } from './Button/types';
 
 export type PollProps = UrbanMessageCommonData & {
     question: string;

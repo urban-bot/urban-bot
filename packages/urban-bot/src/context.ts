@@ -1,5 +1,5 @@
 import React from 'react';
-import { ManagerBot } from './ManagerBot';
+import { ManagerBot } from './ManagerBot/ManagerBot';
 import type { UrbanBotType, UrbanBot, UrbanChat, UrbanParseMode } from './types';
 
 export type BotContextType<Bot extends UrbanBot, BotType extends UrbanBotType = UrbanBotType> = {

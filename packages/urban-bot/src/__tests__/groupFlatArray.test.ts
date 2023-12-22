@@ -1,4 +1,4 @@
-import { groupFlatArray } from '../utils';
+import { groupFlatArray } from '../utils/groupFlatArray';
 
 describe('groupFlatArray', () => {
     it("can't pass zero", () => {

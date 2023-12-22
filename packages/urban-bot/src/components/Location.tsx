@@ -1,8 +1,10 @@
-import { useBotContext } from '../hooks';
-import { getButtonsByButtonGroup, formatMarkupLanguageElement, getParseMode } from '../utils';
+import { useBotContext } from '../hooks/useBotContext';
+import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { getParseMode } from '../utils/getParseMode';
 import type { ReactNode, FunctionComponentElement } from 'react';
 import type { UrbanMessageCommonData } from '../types';
-import type { ButtonGroupProps } from './Button';
+import type { ButtonGroupProps } from './Button/types';
 
 export type LocationProps = UrbanMessageCommonData & {
     latitude: number;

@@ -1,4 +1,4 @@
-import { useBotContext } from '../hooks';
+import { useBotContext } from '../hooks/useBotContext';
 import type { UrbanMessageMediaData } from '../types';
 
 export type MediaProps = UrbanMessageMediaData & {

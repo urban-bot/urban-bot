@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from '../components';
+import { Button } from '../components/Button/Button';
 import { isArrayMatrix } from './isArrayMatrix';
 import { getRandomId } from './getRandomId';
-import type { ButtonProps } from '../components';
+import type { ButtonProps } from '../components/Button/types';
 import type { OtherProps, ButtonElement } from '../types';
 
 export type FormattedButton = OtherProps & {

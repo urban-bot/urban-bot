@@ -1,5 +1,6 @@
-import { useBotContext } from '../hooks';
-import { formatMarkupLanguageElement, getParseMode } from '../utils';
+import { useBotContext } from '../hooks/useBotContext';
+import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
+import { getParseMode } from '../utils/getParseMode';
 import type { ReactNode } from 'react';
 import type { UrbanMessageCommonData } from '../types';
 
