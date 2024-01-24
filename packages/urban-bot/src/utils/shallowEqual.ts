@@ -1,4 +1,4 @@
-import { MapType } from '../types/common';
+import { MapType } from '../types';
 
 export function shallowEqual(obj1: MapType, obj2: MapType) {
     if (obj1 === obj2) {

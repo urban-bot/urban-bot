@@ -1,12 +1,12 @@
-import React from 'react';
-import { useBotContext } from '../hooks/hooks';
-import { UrbanMessageCommonData } from '../types/Messages';
+import { useBotContext } from '../hooks/useBotContext';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 import { getParseMode } from '../utils/getParseMode';
+import type { ReactNode } from 'react';
+import type { UrbanMessageCommonData } from '../types';
 
 export type TextProps = UrbanMessageCommonData & {
+    children: ReactNode;
     disableWebPagePreview?: boolean;
-    children: React.ReactNode;
     isNewMessageEveryRender?: boolean;
 };
 

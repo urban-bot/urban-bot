@@ -1,25 +1,17 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState, isValidElement, Children } from 'react';
+import { useAction } from '../../hooks';
+import { useText } from '../../hooks/useText';
 import { matchPattern } from '../../utils/matchPattern';
 import { Text } from '../Text';
-import { useAction, useDialog, useText } from '../..';
-
-export type DialogValidation = (answer: string) => ReactNode;
-
-export type DialogStepProps = {
-    children?: ((answer: string) => React.ReactNode) | React.ReactNode;
-    match?: string | RegExp;
-    content: React.ReactNode;
-    id?: string;
-    onNext?: (answer: string) => void;
-    validation?: DialogValidation;
-    type?: 'checkbox';
-};
+import { useDialog } from './Dialog';
+import type { ReactNode, ReactElement } from 'react';
+import type { DialogStepProps } from './types';
 
 export function DialogStep({ children, content, id, onNext, validation, type }: DialogStepProps) {
     const [checkboxes, setCheckboxes] = useState(new Set<string>());
     const [isAnswered, setIsAnswered] = useState(false);
-    const childrenArray = React.Children.toArray(children as ReactNode) as React.ReactElement<DialogStepProps>[];
     const [displayedContent, setDisplayedContent] = useState(content);
+    const childrenArray = Children.toArray(children as ReactNode) as ReactElement<DialogStepProps>[];
     const { onFinish, finishedContent, addAnswer } = useDialog();
 
     useEffect(() => {
@@ -48,7 +40,7 @@ export function DialogStep({ children, content, id, onNext, validation, type }: 
                 return;
             }
 
-            if (React.isValidElement(validationError)) {
+            if (isValidElement(validationError)) {
                 return setDisplayedContent(validationError);
             }
         }

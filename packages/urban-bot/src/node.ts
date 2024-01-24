@@ -1,8 +1,7 @@
-import { shallowEqual } from './utils/shallowEqual';
-import { UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types/Messages';
-import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanBotType } from './types/UrbanBot';
 import debouncePromise from 'debounce-promise';
+import { shallowEqual } from './utils/shallowEqual';
+import { ManagerBot } from './ManagerBot/ManagerBot';
+import type { UrbanBotType, UrbanExistingMessage, UrbanMessageNodeName, UrbanMessage } from './types';
 
 export type UrbanNode<BotType extends UrbanBotType = UrbanBotType> = Omit<UrbanExistingMessage<BotType>, 'meta'> & {
     $$managerBot: ManagerBot<BotType>;

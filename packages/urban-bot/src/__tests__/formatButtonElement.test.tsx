@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-key */
-import React from 'react';
-import { formatButtonElement } from './formatButtonElement';
-import { Button } from '../components/ButtonGroup';
+import { Button } from '../components/Button/Button';
+import { formatButtonElement } from '../utils/formatButtonElement';
 import { flatten } from 'array-flatten';
 
 describe('formatButtonElement', () => {

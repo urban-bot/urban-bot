@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`formatButtonElement throw error if passed not Button 1`] = `"Please use only Button components inside ButtonGroup."`;

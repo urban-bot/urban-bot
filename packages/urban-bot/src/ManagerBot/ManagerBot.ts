@@ -1,9 +1,14 @@
-import { PromiseQueue } from './PromiseQueue';
 import { EventEmitter } from 'events';
-import { ProcessUpdate, UrbanBot, UrbanBotType } from '../types/UrbanBot';
-import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
-import { UrbanListener } from '../types';
-import { UrbanSyntheticEvent } from '../types/Events';
+import { PromiseQueue } from './PromiseQueue';
+import type {
+    UrbanListener,
+    UrbanExistingMessage,
+    UrbanSyntheticEvent,
+    UrbanMessage,
+    ProcessUpdate,
+    UrbanBot,
+    UrbanBotType,
+} from '../types';
 
 type Chat = {
     eventEmitter: EventEmitter;

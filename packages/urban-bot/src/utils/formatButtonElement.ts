@@ -1,8 +1,9 @@
 import React from 'react';
-import { getRandomId } from './getRandomId';
-import { Button, ButtonProps } from '../components/ButtonGroup';
-import { OtherProps } from '../types/common';
+import { Button } from '../components/Button/Button';
 import { isArrayMatrix } from './isArrayMatrix';
+import { getRandomId } from './getRandomId';
+import type { ButtonProps } from '../components/Button/types';
+import type { OtherProps, ButtonElement } from '../types';
 
 export type FormattedButton = OtherProps & {
     id: string;
@@ -10,8 +11,6 @@ export type FormattedButton = OtherProps & {
     // FIXME describe type for onClick?
     onClick?: (...args: unknown[]) => unknown;
 };
-
-export type ButtonElement = React.ReactElement<ButtonProps> | boolean | null | undefined;
 
 export function formatButtonElement(
     element: ButtonElement | ButtonElement[] | ButtonElement[][],

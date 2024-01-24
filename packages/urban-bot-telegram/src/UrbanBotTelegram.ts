@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import express from 'express';
 import TelegramBot, { PollType } from 'node-telegram-bot-api';
 import {
+    EditMessageOptions,
+    formatParamsForExistingMessage,
+    formatParamsForNewMessage,
+    getTelegramMedia,
+} from './format';
+import type {
     UrbanSyntheticEvent,
     UrbanSyntheticEventVoice,
     UrbanSyntheticEventText,
@@ -27,38 +34,14 @@ import {
     UrbanExistingMessageByType,
     UrbanSyntheticEventVideoNote,
 } from '@urban-bot/core';
-import {
-    EditMessageOptions,
-    formatParamsForExistingMessage,
-    formatParamsForNewMessage,
-    getTelegramMedia,
-} from './format';
-import {
-    TelegramMessageMeta,
-    TelegramPayload,
+import type {
     TelegramBotMessage,
-    TELEGRAM,
     InputMediaAudio,
     InputMediaFile,
     InputMediaAnimation,
+    UrbanBotTelegramType,
+    TelegramOptions,
 } from './types';
-import express from 'express';
-
-export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
-    type: TELEGRAM;
-    payload?: Payload;
-};
-export type UrbanBotTelegramType<Payload = TelegramPayload> = {
-    NativeEvent: UrbanNativeEventTelegram<Payload>;
-    MessageMeta: TelegramMessageMeta;
-};
-
-export type TelegramOptions = {
-    token: string;
-    isPolling?: boolean;
-    pathnamePrefix?: string;
-    [key: string]: any;
-};
 
 export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     static TYPE = 'TELEGRAM' as const;

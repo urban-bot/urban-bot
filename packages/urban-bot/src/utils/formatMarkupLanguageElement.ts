@@ -121,11 +121,7 @@ export function formatMarkupLanguageElement(
     parseMode?: typeof HTML_MODE | typeof MARKDOWN_MODE,
 ): string {
     if (Array.isArray(element)) {
-        return element
-            .map((child) => {
-                return formatMarkupLanguageElement(child, parseMode);
-            })
-            .join('');
+        return element.map((child) => formatMarkupLanguageElement(child, parseMode)).join('');
     }
 
     if (typeof element === 'number') {

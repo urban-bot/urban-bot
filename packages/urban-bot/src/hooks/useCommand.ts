@@ -1,6 +1,6 @@
-import { UrbanBotType, UrbanEventListener } from '../types';
-import { useSubscribeWithSpreadPayload } from './hooks';
 import { matchPattern } from '../utils/matchPattern';
+import { useSubscribeWithSpreadPayload } from './useSubscribeWithSpreadPayload';
+import type { UrbanBotType, UrbanEventListener } from '../types';
 
 export type Pattern = string | RegExp;
 

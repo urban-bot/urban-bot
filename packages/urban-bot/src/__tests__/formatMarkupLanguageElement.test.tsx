@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React from 'react';
-import { formatMarkupLanguageElement, MARKDOWN_MODE, HTML_MODE } from './formatMarkupLanguageElement';
+import { formatMarkupLanguageElement, MARKDOWN_MODE, HTML_MODE } from '../utils/formatMarkupLanguageElement';
 
 describe('formatMarkupLanguageElement', () => {
     describe('HTML', () => {

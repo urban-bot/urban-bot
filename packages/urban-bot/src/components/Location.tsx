@@ -1,17 +1,17 @@
-import React from 'react';
-import { useBotContext } from '../hooks/hooks';
-import { UrbanMessageCommonData } from '../types/Messages';
-import { ButtonGroupProps } from './ButtonGroup';
+import { useBotContext } from '../hooks/useBotContext';
 import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 import { getParseMode } from '../utils/getParseMode';
+import type { ReactNode, FunctionComponentElement } from 'react';
+import type { UrbanMessageCommonData } from '../types';
+import type { ButtonGroupProps } from './Button/types';
 
 export type LocationProps = UrbanMessageCommonData & {
     latitude: number;
     longitude: number;
     livePeriodSeconds?: number;
-    title?: React.ReactNode;
-    buttons?: React.FunctionComponentElement<ButtonGroupProps>;
+    title?: ReactNode;
+    buttons?: FunctionComponentElement<ButtonGroupProps>;
     isNewMessageEveryRender?: boolean;
 };
 

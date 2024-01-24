@@ -1,5 +1,5 @@
-import { ManagerBot } from './ManagerBot';
-import { UrbanExistingMessage, UrbanMessage } from '../types/Messages';
+import { ManagerBot } from '../ManagerBot/ManagerBot';
+import type { UrbanExistingMessage, UrbanMessage } from '../types';
 
 const testBot = {
     processUpdate: jest.fn(),

@@ -1,5 +1,7 @@
 import React from 'react';
-import {
+import { ManagerBot } from './ManagerBot/ManagerBot';
+import type {
+    UrbanChat,
     UrbanMessageTextData,
     UrbanMessageImageData,
     UrbanMessageButtonsData,
@@ -11,10 +13,8 @@ import {
     UrbanMessageContactData,
     UrbanMessageMediaData,
     UrbanMessageLocationData,
-} from './types/Messages';
-import { ManagerBot } from './ManagerBot/ManagerBot';
-import { UrbanChat } from './types';
-import { UrbanNativeEvent } from './types/Events';
+    UrbanNativeEvent,
+} from './types';
 
 export type Markup = { children: React.ReactNode };
 export type ChatElement = { children: React.ReactNode; key?: string };

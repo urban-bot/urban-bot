@@ -1,6 +1,6 @@
-import { UrbanBotType, UrbanEventListener } from '../types';
-import { useSubscribeWithSpreadPayload } from './hooks';
 import { matchPattern } from '../utils/matchPattern';
+import { useSubscribeWithSpreadPayload } from './useSubscribeWithSpreadPayload';
+import type { UrbanBotType, UrbanEventListener } from '../types';
 
 export type Pattern = string | RegExp;
 
@@ -9,7 +9,7 @@ export function useText<BotType extends UrbanBotType>(
     pattern?: Pattern | Pattern[],
 ) {
     const listenerGuard: UrbanEventListener<BotType, 'text'> = (event) => {
-        if (pattern !== undefined) {
+        if (pattern) {
             const isTextMatchPattern = matchPattern(event.text, pattern);
 
             if (!isTextMatchPattern) {

@@ -1,13 +1,13 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 export function useInterval(callback: Function, interval = 0) {
-    const savedCallback = React.useRef<Function>();
+    const savedCallback = useRef<Function>();
 
-    React.useEffect(() => {
+    useEffect(() => {
         savedCallback.current = callback;
     }, [callback]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const id = setInterval(() => {
             savedCallback.current?.();
         }, interval);

@@ -1,28 +1,23 @@
-import React, { useRef, useCallback } from 'react';
-import { useBotContext } from '../../hooks/hooks';
-import { useText } from '../../hooks/useText';
+import { useState, useEffect, useRef, useCallback, Children } from 'react';
+import { useBotContext } from '../../hooks/useBotContext';
 import { useCommand } from '../../hooks/useCommand';
+import { useText } from '../../hooks/useText';
 import { Navigate, RouterContext } from '../../context';
-import { RouteProps } from './Route';
 import { getParams, matchChild } from './utils';
-import { UrbanCommand } from '../../types';
+import type { ReactElement } from 'react';
+import type { UrbanCommand } from '../../types';
+import type { RouterProps, RouteProps } from './types';
 
 let isCommandsInitialized = false;
-
-type RouterProps = {
-    children: React.ReactNode;
-    withInitializeCommands?: boolean;
-    historyLength?: number;
-};
 
 export function Router({ children, withInitializeCommands = false, historyLength = 5 }: RouterProps) {
     const { bot } = useBotContext();
     const history = useRef<string[]>([]);
-    const [activeOptions, setActiveOptions] = React.useState(() => ({
+    const [activeOptions, setActiveOptions] = useState(() => ({
         path: { value: '', key: Math.random() },
         query: {},
     }));
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<RouteProps>[];
+    const childrenArray = Children.toArray(children) as ReactElement<RouteProps>[];
 
     const navigate: Navigate = useCallback(
         (path: string, query = {}) => {
@@ -35,7 +30,7 @@ export function Router({ children, withInitializeCommands = false, historyLength
         [historyLength],
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!withInitializeCommands || isCommandsInitialized) {
             return;
         }
@@ -56,7 +51,7 @@ export function Router({ children, withInitializeCommands = false, historyLength
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (childrenArray.some(matchChild(bot.commandPrefix, bot.commandPrefix))) {
             navigate(bot.commandPrefix);
         }

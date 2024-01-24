@@ -1,19 +1,18 @@
-import React from 'react';
-import { useBotContext } from '../hooks/hooks';
-import { UrbanMessageCommonData } from '../types/Messages';
-import { ButtonGroupProps } from './ButtonGroup';
+import { useBotContext } from '../hooks/useBotContext';
 import { getButtonsByButtonGroup } from '../utils/getButtonsByButtonGroup';
-import { UrbanFileFormat } from '../types';
 import { formatMarkupLanguageElement } from '../utils/formatMarkupLanguageElement';
 import { getParseMode } from '../utils/getParseMode';
+import type { ReactNode, FunctionComponentElement } from 'react';
+import type { UrbanMessageCommonData, UrbanFileFormat } from '../types';
+import type { ButtonGroupProps } from './Button/types';
 
 export type ImageProps = UrbanMessageCommonData & {
     file: UrbanFileFormat;
     name?: string;
-    title?: React.ReactNode;
+    title?: ReactNode;
     alt?: string;
     isNewMessageEveryRender?: boolean;
-    buttons?: React.FunctionComponentElement<ButtonGroupProps>;
+    buttons?: FunctionComponentElement<ButtonGroupProps>;
 };
 
 export function Image({

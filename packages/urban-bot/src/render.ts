@@ -1,8 +1,8 @@
-import React from 'react';
 import { createNode } from './node';
 import { reactReconciler } from './reconciler';
+import type { ReactElement } from 'react';
 
-export function render(reactElement: React.ReactElement, callback: () => void | null | undefined = () => null) {
+export function render(reactElement: ReactElement, callback: () => void | null | undefined = () => null) {
     const node = createNode('root');
 
     return reactReconciler.updateContainer(
