@@ -52,6 +52,10 @@ export function useVideoNote<BotType extends UrbanBotType>(listener: UrbanEventL
     useSubscribeWithSpreadPayload(listener, 'video_note');
 }
 
+export function useMediaGroup<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'media_group'>) {
+    useSubscribeWithSpreadPayload(listener, 'media_group');
+}
+
 export function useDice<BotType extends UrbanBotType>(listener: UrbanEventListener<BotType, 'dice'>) {
     useSubscribeWithSpreadPayload(listener, 'dice');
 }

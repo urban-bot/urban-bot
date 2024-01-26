@@ -144,6 +144,7 @@ export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
             const fileEvent = {
                 ...common,
                 payload: {
+                    messageId: ctx.client_msg_id,
                     text: ctx.text,
                     files,
                 },
@@ -185,6 +186,7 @@ export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
             ...common,
             type: 'text',
             payload: {
+                messageId: ctx.client_msg_id,
                 text: ctx.text,
             },
         };
@@ -203,6 +205,8 @@ export class UrbanBotSlack implements UrbanBot<UrbanBotSlackType> {
             },
             payload: {
                 command,
+                // command has no message_id
+                messageId: command,
                 argument: text,
             },
             from: {

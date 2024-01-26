@@ -142,6 +142,7 @@ export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
                 const fileEvent = {
                     ...common,
                     payload: {
+                        messageId: message.mid,
                         text,
                         files,
                     },
@@ -178,13 +179,17 @@ export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
                         this.processUpdate({
                             ...common,
                             type: 'command',
-                            payload: { command, argument: args.join(' ') },
+                            payload: {
+                                command,
+                                messageId: message.mid,
+                                argument: args.join(' '),
+                            },
                         });
                     } else {
                         this.processUpdate({
                             ...common,
                             type: 'text',
-                            payload: { text },
+                            payload: { messageId: message.mid, text },
                         });
                     }
                 }
@@ -194,9 +199,7 @@ export class UrbanBotFacebook implements UrbanBot<UrbanBotFacebookType> {
 
     async sendMessage(message: UrbanMessage): Promise<FacebookMessageMeta> {
         const common = {
-            recipient: {
-                id: message.chat.id,
-            },
+            recipient: { id: message.chat.id },
             tag: message.data.tag,
             persona_id: message.data.personaId,
         } as const;

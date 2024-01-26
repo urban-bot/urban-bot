@@ -117,6 +117,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                 ...common,
                 type: 'command',
                 payload: {
+                    messageId: interaction.commandId,
                     command: `${this.commandPrefix}${interaction.commandName}`,
                 },
             };
@@ -161,6 +162,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                             ...common,
                             type: 'command',
                             payload: {
+                                messageId: message.id,
                                 command,
                                 argument: args.join(' '),
                             },
@@ -175,6 +177,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                         ...common,
                         type: 'text',
                         payload: {
+                            messageId: message.id,
                             text: message.content,
                         },
                     };
@@ -220,6 +223,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                         ...common,
                         type: 'image',
                         payload: {
+                            messageId: message.id,
                             text: message.content,
                             files: images,
                         },
@@ -233,6 +237,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                         ...common,
                         type: 'video',
                         payload: {
+                            messageId: message.id,
                             text: message.content,
                             files: videos,
                         },
@@ -246,6 +251,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                         ...common,
                         type: 'audio',
                         payload: {
+                            messageId: message.id,
                             text: message.content,
                             files: audios,
                         },
@@ -259,6 +265,7 @@ export class UrbanBotDiscord implements UrbanBot<UrbanBotDiscordType> {
                         ...common,
                         type: 'file',
                         payload: {
+                            messageId: message.id,
                             text: message.content,
                             files,
                         },
