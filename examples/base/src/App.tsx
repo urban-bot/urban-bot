@@ -6,7 +6,9 @@ import { Hooks } from './components/Hooks';
 import { ImageExample } from './components/Image';
 import { Queue } from './components/Queue';
 import { AudioExample } from './components/Audio';
+import { VoiceExample } from './components/Voice';
 import { VideoExample } from './components/Video';
+import { VideoNoteExample } from './components/VideoNote';
 import { FileExample } from './components/File';
 import { PollExample } from './components/Poll';
 import { AnimationExample } from './components/Animation';
@@ -56,8 +58,14 @@ export function App() {
             <Route path="/audio" description="audio">
                 <AudioExample />
             </Route>
+            <Route path="/voice" description="voice">
+                <VoiceExample />
+            </Route>
             <Route path="/video" description="video">
                 <VideoExample />
+            </Route>
+            <Route path="/video_note" description="video_note">
+                <VideoNoteExample />
             </Route>
             <Route path="/file" description="file">
                 <FileExample />
