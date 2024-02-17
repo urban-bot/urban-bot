@@ -17,6 +17,7 @@ export type UrbanSyntheticEvent<BotType extends UrbanBotType> =
     | T.UrbanSyntheticEventSticker<BotType>
     | T.UrbanSyntheticEventLocation<BotType>
     | T.UrbanSyntheticEventDice<BotType>
+    | T.UrbanSyntheticEventMediaGroup<BotType>
     | T.UrbanSyntheticEventAny<BotType>
     | T.UrbanSyntheticEventVideoNote<BotType>;
 
@@ -54,6 +55,8 @@ export type UrbanSyntheticEventByType<
     : T extends 'video'
     ? T.UrbanSyntheticEventVideo<BotType>
     : T extends 'video_note'
+    ? T.UrbanSyntheticEventMediaGroup<BotType>
+    : T extends 'media_group'
     ? T.UrbanSyntheticEventVideoNote<BotType>
     : T extends 'any'
     ? T.UrbanSyntheticEventAny<BotType>

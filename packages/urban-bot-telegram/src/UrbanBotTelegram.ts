@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import express from 'express';
 import TelegramBot, { PollType } from 'node-telegram-bot-api';
+import { getDefaultCollectorState } from './utils';
 import {
     EditMessageOptions,
     formatParamsForExistingMessage,
@@ -13,6 +14,7 @@ import type {
     UrbanSyntheticEventText,
     UrbanSyntheticEventDice,
     UrbanSyntheticEventVideo,
+    UrbanSyntheticEventVideoNote,
     UrbanSyntheticEventPoll,
     UrbanSyntheticEventImage,
     UrbanSyntheticEventLocation,
@@ -20,6 +22,7 @@ import type {
     UrbanSyntheticEventCommand,
     UrbanSyntheticEventSticker,
     UrbanSyntheticEventFile,
+    UrbanSyntheticEventMediaGroup,
     UrbanSyntheticEventContact,
     UrbanSyntheticEventAudio,
     UrbanSyntheticEventAnimation,
@@ -32,7 +35,6 @@ import type {
     UrbanCommand,
     UrbanParseMode,
     UrbanExistingMessageByType,
-    UrbanSyntheticEventVideoNote,
 } from '@urban-bot/core';
 import type {
     TelegramBotMessage,
@@ -41,6 +43,7 @@ import type {
     InputMediaAnimation,
     UrbanBotTelegramType,
     TelegramOptions,
+    MediaGroupCollector,
 } from './types';
 
 export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
@@ -48,8 +51,8 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     type = UrbanBotTelegram.TYPE;
     defaultParseMode: UrbanParseMode = 'HTML';
     commandPrefix = '/';
-
     client: TelegramBot;
+    mediaGroupCollector: MediaGroupCollector = getDefaultCollectorState();
 
     constructor(public options: TelegramOptions) {
         const { isPolling, token, ...otherOptions } = options;
@@ -79,6 +82,12 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 return;
             }
         });
+
+        this.client.on('animation', (ctx) => this.handleMessage('media_group', ctx));
+        this.client.on('audio', (ctx) => this.handleMessage('media_group', ctx));
+        this.client.on('photo', (ctx) => this.handleMessage('media_group', ctx));
+        this.client.on('video', (ctx) => this.handleMessage('media_group', ctx));
+        this.client.on('document', (ctx) => this.handleMessage('media_group', ctx));
     }
 
     initializeServer(expressApp: express.Express) {
@@ -134,7 +143,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
         switch (type) {
             case 'text': {
-                if (ctx.text === undefined) {
+                if (!ctx.text) {
                     break;
                 }
 
@@ -145,6 +154,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                         type: 'command',
                         payload: {
                             command,
+                            messageId: String(ctx.message_id),
                             argument: args.join(' '),
                         },
                     };
@@ -155,6 +165,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                         ...common,
                         type: 'text',
                         payload: {
+                            messageId: String(ctx.message_id),
                             text: ctx.text,
                         },
                     };
@@ -165,13 +176,14 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'dice': {
-                if (ctx.dice === undefined) {
+                if (!ctx.dice) {
                     break;
                 }
                 const adaptedContext: UrbanSyntheticEventDice<UrbanBotTelegramType> = {
                     ...common,
                     type: 'dice',
                     payload: {
+                        messageId: String(ctx.message_id),
                         value: ctx.dice.value,
                     },
                 };
@@ -190,6 +202,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     type: 'poll',
                     payload: {
                         id: ctx.poll.id,
+                        messageId: String(ctx.message_id),
                         question: ctx.poll.question,
                         options: ctx.poll.options.map((option) => {
                             return { text: option.text, count: option.voter_count };
@@ -202,7 +215,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'sticker': {
-                if (ctx.sticker === undefined) {
+                if (!ctx.sticker) {
                     break;
                 }
 
@@ -210,6 +223,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'sticker',
                     payload: {
+                        messageId: String(ctx.message_id),
                         emoji: ctx.sticker.emoji,
                         id: ctx.sticker.file_id,
                         width: ctx.sticker.width,
@@ -223,7 +237,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'animation': {
-                if (ctx.animation === undefined) {
+                if (!ctx.animation) {
                     break;
                 }
 
@@ -231,6 +245,8 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'animation',
                     payload: {
+                        messageId: String(ctx.message_id),
+                        fileId: ctx.animation.file_id,
                         duration: ctx.animation.duration,
                         name: ctx.animation.file_name,
                         mimeType: ctx.animation.mime_type,
@@ -241,7 +257,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'audio': {
-                if (ctx.audio === undefined) {
+                if (!ctx.audio) {
                     break;
                 }
 
@@ -250,6 +266,9 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'audio',
                     payload: {
+                        messageId: String(ctx.message_id),
+                        fileId: ctx.audio.file_id,
+                        text: ctx.caption,
                         files: [
                             {
                                 duration: ctx.audio.duration,
@@ -266,7 +285,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'contact': {
-                if (ctx.contact === undefined) {
+                if (!ctx.contact) {
                     break;
                 }
 
@@ -274,6 +293,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'contact',
                     payload: {
+                        messageId: String(ctx.message_id),
                         firstName: ctx.contact.first_name,
                         phoneNumber: ctx.contact.phone_number,
                         lastName: ctx.contact.last_name,
@@ -285,7 +305,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'file': {
-                if (ctx.document === undefined) {
+                if (!ctx.document) {
                     break;
                 }
 
@@ -293,6 +313,9 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'file',
                     payload: {
+                        messageId: String(ctx.message_id),
+                        fileId: ctx.document.file_id,
+                        text: ctx.caption,
                         files: [
                             {
                                 id: ctx.document.file_id,
@@ -308,7 +331,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'invoice': {
-                if (ctx.invoice === undefined) {
+                if (!ctx.invoice) {
                     break;
                 }
 
@@ -316,6 +339,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'invoice',
                     payload: {
+                        messageId: String(ctx.message_id),
                         currency: ctx.invoice.currency,
                         description: ctx.invoice.description,
                         title: ctx.invoice.title,
@@ -328,7 +352,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'location': {
-                if (ctx.location === undefined) {
+                if (!ctx.location) {
                     break;
                 }
 
@@ -336,6 +360,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'location',
                     payload: {
+                        messageId: String(ctx.message_id),
                         latitude: ctx.location.latitude,
                         longitude: ctx.location.longitude,
                     },
@@ -345,7 +370,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'image': {
-                if (ctx.photo === undefined) {
+                if (!ctx.photo) {
                     break;
                 }
 
@@ -353,6 +378,9 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'image',
                     payload: {
+                        messageId: String(ctx.message_id),
+                        fileId: ctx.photo?.[0].file_id,
+                        text: ctx.caption,
                         files: ctx.photo.map((photo) => ({
                             id: photo.file_id,
                             size: photo.file_size,
@@ -366,7 +394,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'video': {
-                if (ctx.video === undefined) {
+                if (!ctx.video) {
                     break;
                 }
 
@@ -374,6 +402,9 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'video',
                     payload: {
+                        messageId: String(ctx.message_id),
+                        fileId: ctx.video.file_id,
+                        text: ctx.caption,
                         files: [
                             {
                                 duration: ctx.video.duration,
@@ -389,7 +420,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'voice': {
-                if (ctx.voice === undefined) {
+                if (!ctx.voice) {
                     break;
                 }
 
@@ -397,6 +428,8 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'voice',
                     payload: {
+                        messageId: String(ctx.message_id),
+                        fileId: ctx.voice.file_id,
                         duration: ctx.voice.duration,
                         mimeType: ctx.voice.mime_type,
                     },
@@ -407,7 +440,7 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                 break;
             }
             case 'video_note': {
-                if (ctx.video_note === undefined) {
+                if (!ctx.video_note) {
                     break;
                 }
 
@@ -415,12 +448,126 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     ...common,
                     type: 'video_note',
                     payload: {
+                        messageId: String(ctx.message_id),
+                        fileId: ctx.video_note.file_id,
                         duration: ctx.video_note.duration,
                         length: ctx.video_note.length,
                     },
                 };
 
                 this.processUpdate(adaptedContext);
+
+                break;
+            }
+            case 'media_group': {
+                if (!ctx.media_group_id) {
+                    break;
+                }
+
+                if (!this.mediaGroupCollector.mediaGroupId) {
+                    this.mediaGroupCollector.mediaGroupId = ctx.media_group_id;
+                }
+
+                if (!this.mediaGroupCollector.text) {
+                    this.mediaGroupCollector.text = ctx.caption ?? '';
+                }
+
+                if (this.mediaGroupCollector.mediaGroupId === ctx.media_group_id) {
+                    if (ctx.photo) {
+                        // take the last one because of the best quality
+                        const photo = ctx.photo[ctx.photo.length - 1];
+
+                        const file = {
+                            id: photo.file_id,
+                            size: photo.file_size,
+                            width: photo.width,
+                            height: photo.height,
+                            type: 'image',
+                        };
+
+                        this.mediaGroupCollector.files.push(file);
+                    }
+
+                    if (ctx.video) {
+                        const { video } = ctx;
+
+                        const file = {
+                            id: video.file_id,
+                            duration: video.duration,
+                            size: video.file_size,
+                            mimeType: video.mime_type,
+                            type: 'video',
+                        };
+
+                        this.mediaGroupCollector.files.push(file);
+                    }
+
+                    if (ctx.audio) {
+                        const { audio } = ctx;
+                        const name = `${ctx.audio.performer ?? ''} ${ctx.audio.title ?? ''}`.trim();
+
+                        const file = {
+                            name,
+                            id: audio.file_id,
+                            duration: audio.duration,
+                            size: audio.file_size,
+                            mimeType: audio.mime_type,
+                            type: 'audio',
+                        };
+
+                        this.mediaGroupCollector.files.push(file);
+                    }
+
+                    if (ctx.animation) {
+                        const { animation } = ctx;
+
+                        const file = {
+                            id: animation.file_id,
+                            duration: animation.duration,
+                            name: animation.file_name,
+                            mimeType: animation.mime_type,
+                            type: 'animation',
+                        };
+
+                        this.mediaGroupCollector.files.push(file);
+                    }
+
+                    if (ctx.document) {
+                        const { document } = ctx;
+
+                        const file = {
+                            id: document.file_id,
+                            name: document.file_name,
+                            size: document.file_size,
+                            mimeType: document.mime_type,
+                            type: 'file',
+                        };
+
+                        this.mediaGroupCollector.files.push(file);
+                    }
+                }
+
+                if (this.mediaGroupCollector.timeoutId && this.mediaGroupCollector.mediaGroupId) {
+                    clearTimeout(this.mediaGroupCollector.timeoutId);
+                }
+
+                const adaptedContext: UrbanSyntheticEventMediaGroup<UrbanBotTelegramType> = {
+                    ...common,
+                    type: 'media_group',
+                    payload: {
+                        mediaGroupId: this.mediaGroupCollector.mediaGroupId,
+                        files: this.mediaGroupCollector.files,
+                        text: this.mediaGroupCollector.text,
+                    },
+                };
+
+                const mediaGroupCallback = () => {
+                    this.processUpdate(adaptedContext);
+
+                    this.mediaGroupCollector = getDefaultCollectorState();
+                };
+
+                this.mediaGroupCollector.timeoutId = setTimeout(mediaGroupCallback, 1000);
 
                 break;
             }

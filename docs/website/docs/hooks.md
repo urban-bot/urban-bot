@@ -20,13 +20,13 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useBotContext](#usebotcontext)
  * [useRouter](#userouter)
  * [useAnyEvent](#useanyevent)
- * [useText](#usetext)
  * [useCommand](#usecommand)
+ * [useFile](#usefile)
+ * [useText](#usetext)
  * [useImage](#useimage)
+ * [useAnimation](#useanimation)
  * [useVideo](#usevideo)
  * [useAudio](#useaudio)
- * [useFile](#usefile)
- * [useAnimation](#useanimation)
  * [useVoice](#usevoice)
  * [useSticker](#usesticker)
  * [useLocation](#uselocation)
@@ -35,6 +35,7 @@ const { useBotContext, useText } = require('@urban-bot/core');
  * [useInvoice](#useinvoice)
  * [useDice](#usedice)
  * [useAction](#useaction)
+ * [useMediaGroup](#usemediagroup)
  
 ## Common
 #### chat
@@ -42,14 +43,16 @@ const { useBotContext, useText } = require('@urban-bot/core');
 
 ###### required
 ```typescript
-id: string;
-type?: string;
-title?: string;
-username?: string;
-firstName?: string;
-lastName?: string;
-description?: string;
-inviteLink?: string;
+type UrbanChat = {
+    id: string;
+    type?: string;
+    title?: string;
+    username?: string;
+    firstName?: string;
+    lastName?: string;
+    description?: string;
+    inviteLink?: string;
+}
 ```
 ```jsx
 function SomeComponent() {
@@ -65,11 +68,13 @@ function SomeComponent() {
 
 ###### required
 ```typescript
-id?: string;
-isBot?: boolean;
-username?: string;
-firstName?: string;
-lastName?: string;
+type UrbanFrom = {
+    id?: string;
+    isBot?: boolean;
+    username?: string;
+    firstName?: string;
+    lastName?: string;
+}
 ```
 ```jsx
 function SomeComponent() {
@@ -86,8 +91,10 @@ function SomeComponent() {
 
 ###### required
 ```typescript
-type: string; // 'TELEGRAM' || 'FACEBOOK' || ...
-payload?: any;
+type UrbanNativeEvent = {
+    type: string; // 'TELEGRAM' | 'FACEBOOK' | ...
+    payload?: any;
+}
 ```
 ```jsx
 // facebook bot
@@ -138,15 +145,17 @@ function SomeComponent() {
 #### file
 > The file type of media content from user messages. It is used with useImage, useVideo, etc.
 ```typescript
-id?: string;
-url?: string;
-name?: string;
-size?: number;
-width?: number;
-height?: number;
-mimeType?: string;
-type?: string;
-duration?: number;
+type File = {
+    id?: string;
+    url?: string;
+    name?: string;
+    size?: number;
+    width?: number;
+    height?: number;
+    mimeType?: string;
+    type?: string;
+    duration?: number;
+}
 ```
 ## useBotContext
 The main urban bot context. Your component has to be under [`Root`](components.md#root).
@@ -294,7 +303,7 @@ function SomeComponent() {
 `string[]`
 ```jsx
  function WhereIHaveBeen() {
-     const { history } = useRouter(); // ['/profile', '/bucket', '/order']
+     const { history } = useRouter(); // => ['/profile', '/bucket', '/order']
  
      return <Text>You have been in {history.join(' ')}</Text>;
  }
@@ -536,10 +545,15 @@ function SomeComponent() {
 [`file`](#file)[]
 ```jsx
 function SomeComponent() {
-    useImage(({ files }) => {
+    useImage(({
+        messageId, // => string
+        fileId, // => string | undefined
+        text, // => string | undefined
+        files, // => UrbanFile[]
+    }) => {
         const { id } = files[0];
     
-        console.log('user sent a image with id', id);
+        console.log('user sent a image with id', fileId || id);
     });
 
     // ...
@@ -566,10 +580,15 @@ function SomeComponent() {
 [`file`](#file)[]
 ```jsx
 function SomeComponent() {
-    useVideo(({ files }) => {
+    useVideo(({
+        messageId, // => string
+        fileId, // => string | undefined
+        text, // => string | undefined
+        files, // => UrbanFile[]
+    }) => {
         const { id } = files[0];
     
-        console.log('user sent a video with id', id);
+        console.log('user sent a video with id', fileId || id);
     });
 
     // ...
@@ -596,10 +615,15 @@ function SomeComponent() {
 [`file`](#file)[]
 ```jsx
 function SomeComponent() {
-    useAudio(({ files }) => {
+    useAudio(({
+        messageId, // => string
+        fileId, // => string | undefined
+        text, // => string | undefined
+        files, // => UrbanFile[]
+    }) => {
         const { id } = files[0];
     
-        console.log('user sent an audio with id', id);
+        console.log('user sent an audio with id', fileId || id);
     });
 
     // ...
@@ -626,10 +650,15 @@ function SomeComponent() {
 [`file`](#file)[]
 ```jsx
 function SomeComponent() {
-    useFile(({ files }) => {
+    useFile(({
+        messageId, // => string
+        fileId, // => string | undefined
+        text, // => string | undefined
+        files, // => UrbanFile[]
+    }) => {
         const { id } = files[0];
-    
-        console.log('user sent a file with id', id);
+      
+        console.log('user sent a file with id', fileId || id);
     });
 
     // ...
@@ -982,6 +1011,84 @@ function SomeComponent() {
 function SomeComponent() {
     useAction(({ actionId }) => {
         console.log(`user made action ${actionId}`);
+    });
+
+    // ...
+}
+```
+#### [chat](#chat)
+#### [from](#from)
+#### [nativeEvent](#nativeevent)
+
+## useMediaGroup
+Call after a user sends a media group of files: images, videos, audios, animations, documents
+```jsx
+function SomeComponent() {
+  useMediaGroup((event) => {
+        console.log('user sent a media group');
+    });
+
+    // ...
+}
+```
+#### files
+> Images, videos, audios, animations, documents which a user sent.
+###### required
+[`file`](#file)[]
+```jsx
+function SomeComponent() {
+    useMediaGroup(({
+        mediaGroupId, // => string
+        text, // => string | undefined
+        files, // => UrbanFile[]
+    }) => {
+        // image file
+        const {
+            id, // => string
+            size, // => number | undefined
+            width, // => number
+            height, // => number
+            type, // => 'image'
+        } = files[number];
+        
+        // video file
+        const {
+            id, // => string
+            duration, // => number
+            size, // => number | undefined
+            mimeType, // => string | undefined
+            type, // => 'video'
+        } = files[number];
+
+        // audio file
+        const {
+            name, // => string
+            id, // => string
+            duration, // => number
+            size, // => number | undefined
+            mimeType, // => string | undefined
+            type, // => 'audio'
+        } = files[number];
+
+        // animation file
+        const {
+          id, // => string
+          duration, // => number
+          name, // => string | undefined
+          mimeType, // => string | undefined
+          type, // => 'animation'
+        } = files[number];
+
+        // document file
+        const {
+          id, // => string
+          name, // =>  string | undefined
+          size, // => number | undefined
+          mimeType, // => string | undefined
+          type, // => 'file',
+        } = files[number];
+        
+        console.log('user sent a media group with files');
     });
 
     // ...

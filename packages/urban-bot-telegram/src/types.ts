@@ -1,4 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api';
+import type { UrbanFile } from '@urban-bot/core';
 
 export type TELEGRAM = 'TELEGRAM';
 
@@ -44,4 +45,11 @@ export type TelegramOptions = {
     isPolling?: boolean;
     pathnamePrefix?: string;
     [key: string]: any;
+};
+
+export type MediaGroupCollector = {
+    timeoutId: NodeJS.Timeout | null;
+    mediaGroupId: string | null;
+    text: string;
+    files: UrbanFile[];
 };

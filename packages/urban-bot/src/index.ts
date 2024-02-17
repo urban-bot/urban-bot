@@ -40,6 +40,7 @@ export {
     useDice,
     useAction,
     useVideoNote,
+    useMediaGroup,
 } from './hooks';
 
 export * from './components/Router/types';
