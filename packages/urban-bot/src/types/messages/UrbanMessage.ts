@@ -1,6 +1,7 @@
 import type { UrbanBotType } from '../bot';
 import type { UrbanMessageAnimation, UrbanMessageAnimationData } from './UrbanMessageAnimation';
 import type { UrbanMessageAudio, UrbanMessageAudioData } from './UrbanMessageAudio';
+import type { UrbanMessageVoice, UrbanMessageVoiceData } from './UrbanMessageVoice';
 import type { UrbanMessageButtons, UrbanMessageButtonsData } from './UrbanMessageButtons';
 import type { UrbanMessageContact, UrbanMessageContactData } from './UrbanMessageContact';
 import type { UrbanMessageFile, UrbanMessageFileData } from './UrbanMessageFile';
@@ -10,6 +11,7 @@ import type { UrbanMessageMedia, UrbanMessageMediaData } from './UrbanMessageMed
 import type { UrbanMessagePoll, UrbanMessagePollData } from './UrbanMessagePoll';
 import type { UrbanMessageText, UrbanMessageTextData } from './UrbanMessageText';
 import type { UrbanMessageVideo, UrbanMessageVideoData } from './UrbanMessageVideo';
+import type { UrbanMessageVideoNote, UrbanMessageVideoNoteData } from './UrbanMessageVideoNote';
 
 type Meta<BotType extends UrbanBotType> = {
     meta: BotType['MessageMeta'];
@@ -20,7 +22,9 @@ export type UrbanMessage =
     | UrbanMessageImage
     | UrbanMessageButtons
     | UrbanMessageAudio
+    | UrbanMessageVoice
     | UrbanMessageVideo
+    | UrbanMessageVideoNote
     | UrbanMessageFile
     | UrbanMessagePoll
     | UrbanMessageAnimation
@@ -33,7 +37,9 @@ export type UrbanMessageData =
     | UrbanMessageImageData
     | UrbanMessageButtonsData
     | UrbanMessageAudioData
+    | UrbanMessageVoiceData
     | UrbanMessageVideoData
+    | UrbanMessageVideoNoteData
     | UrbanMessageAnimationData
     | UrbanMessageFileData
     | UrbanMessagePollData
@@ -54,8 +60,12 @@ export type UrbanExistingMessageByType<
     ? UrbanMessageImage & Meta<BotType>
     : T extends 'urban-audio'
     ? UrbanMessageAudio & Meta<BotType>
+    : T extends 'urban-voice'
+    ? UrbanMessageVoice & Meta<BotType>
     : T extends 'urban-video'
     ? UrbanMessageVideo & Meta<BotType>
+    : T extends 'urban-video-note'
+    ? UrbanMessageVideoNote & Meta<BotType>
     : T extends 'urban-animation'
     ? UrbanMessageAnimation & Meta<BotType>
     : T extends 'urban-file'
