@@ -719,6 +719,54 @@ Send a video to a chat.
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
 
+## VideoNote
+Send a video note (circle) to a chat.
+```jsx
+<VideoNote file="https://path-to-video.mp4" />
+```
+
+#### file
+> File id or URL or Stream or Buffer.
+###### required
+`string` | `Buffer` | `ReadableStream`
+```jsx
+<VideoNote file="id123" />
+```  
+```jsx
+<VideoNote file="https://path-to-video.mp4" />
+```  
+```jsx
+<VideoNote file={fs.createReadStream('/files/video.mp4')} />
+```  
+```jsx
+<VideoNote file={fs.readFileSync('/files/video.mp4')} />  
+```  
+#### name
+###### optional
+`string`
+```jsx
+<VideoNote name="I'm a cook" />
+``` 
+#### author
+###### optional
+`string`
+```jsx
+<VideoNote author="Leeroy Jenkins" />
+```
+#### duration
+###### optional
+`number`
+```jsx
+<VideoNote duration={10} />
+``` 
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
+#### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
 
 ## Audio
 Send an audio to a chat.
@@ -769,6 +817,58 @@ Send an audio to a chat.
 #### [replyToMessageId](#replytomessageid)
 #### [personaId](#personaid)
 #### [forceReply](#forcereply)
+
+
+## Voice
+Send an audio to a chat.
+```jsx
+<Voice file="https://path-to-audio.mp3" />
+```
+
+#### file
+> File id or URL or Stream or Buffer.
+###### required
+`string` | `Buffer` | `ReadableStream`
+```jsx
+<Voice file="id123" />
+```  
+```jsx
+<Voice file="https://path-to-audio.mp3" />
+```  
+```jsx
+<Voice file={fs.createReadStream('/files/audio.mp3')} />
+```  
+```jsx
+<Voice file={fs.readFileSync('/files/audio.mp3')} />  
+```  
+#### name
+###### optional
+`string`
+```jsx
+<Voice name="Morning Mood" />
+``` 
+#### author
+###### optional
+`string`
+```jsx
+<Voice author="Edvard Grieg" />
+``` 
+#### duration
+###### optional
+`number`
+```jsx
+<Voice duration={10} />
+``` 
+#### [title](#title)
+#### [buttons](#buttons)
+#### [isNewMessageEveryRender](#isnewmessageeveryrender)
+#### [simulateTyping](#simulatetyping)
+#### [parseMode](#parsemode)
+#### [disableNotification](#disablenotification)
+#### [replyToMessageId](#replytomessageid)
+#### [personaId](#personaid)
+#### [forceReply](#forcereply)
+
 
 ## Animation
 Send an animation to a chat.

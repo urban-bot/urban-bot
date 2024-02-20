@@ -55,9 +55,9 @@ export type UrbanSyntheticEventByType<
     : T extends 'video'
     ? T.UrbanSyntheticEventVideo<BotType>
     : T extends 'video_note'
-    ? T.UrbanSyntheticEventMediaGroup<BotType>
-    : T extends 'media_group'
     ? T.UrbanSyntheticEventVideoNote<BotType>
+    : T extends 'media_group'
+    ? T.UrbanSyntheticEventMediaGroup<BotType>
     : T extends 'any'
     ? T.UrbanSyntheticEventAny<BotType>
     : UrbanSyntheticEvent<BotType>;

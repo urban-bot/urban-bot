@@ -31,7 +31,11 @@ export function CommandsMessage() {
             <br />
             /audio
             <br />
+            /voice
+            <br />
             /video
+            <br />
+            /video_note
             <br />
             /file
             <br />

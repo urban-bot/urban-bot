@@ -13,6 +13,20 @@ export type TelegramPayload = TelegramBotMessage | TelegramBot.CallbackQuery;
 
 export type TelegramMessageMeta = TelegramBotMessage;
 
+export type InputMedia = TelegramBot.InputMedia;
+
+export type InputVideoNote = TelegramBot.InputMediaBase & {
+    type: 'video_note';
+    duration?: number;
+    media?: string;
+};
+
+export type InputVoice = TelegramBot.InputMediaBase & {
+    type: 'voice';
+    duration?: number;
+    title?: string;
+};
+
 export type InputMediaAudio = TelegramBot.InputMediaBase & {
     type: 'audio';
     duration?: number;

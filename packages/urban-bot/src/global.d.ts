@@ -6,9 +6,11 @@ import type {
     UrbanMessageImageData,
     UrbanMessageButtonsData,
     UrbanMessageAudioData,
+    UrbanMessageVoiceData,
     UrbanMessageFileData,
     UrbanMessagePollData,
     UrbanMessageVideoData,
+    UrbanMessageVideoNoteData,
     UrbanMessageAnimationData,
     UrbanMessageContactData,
     UrbanMessageMediaData,
@@ -28,7 +30,9 @@ export type UrbanElement<NativeEvent extends UrbanNativeEvent = any, MessageMeta
 export type UrbanElementText = UrbanElement & { data: UrbanMessageTextData };
 export type UrbanElementImage = UrbanElement & { data: UrbanMessageImageData };
 export type UrbanElementAudio = UrbanElement & { data: UrbanMessageAudioData };
+export type UrbanElementVoice = UrbanElement & { data: UrbanMessageVoiceData };
 export type UrbanElementVideo = UrbanElement & { data: UrbanMessageVideoData };
+export type UrbanElementVideoNote = UrbanElement & { data: UrbanMessageVideoNoteData };
 export type UrbanElementButtons = UrbanElement & { data: UrbanMessageButtonsData };
 export type UrbanElementFile = UrbanElement & { data: UrbanMessageFileData };
 export type UrbanElementPoll = UrbanElement & { data: UrbanMessagePollData };
@@ -43,8 +47,10 @@ declare global {
             'urban-text': UrbanElementText;
             'urban-img': UrbanElementImage;
             'urban-audio': UrbanElementAudio;
+            'urban-voice': UrbanElementVoice;
             'urban-buttons': UrbanElementButtons;
             'urban-video': UrbanElementVideo;
+            'urban-video-note': UrbanElementVideoNote;
             'urban-file': UrbanElementFile;
             'urban-poll': UrbanElementPoll;
             'urban-animation': UrbanElementAnimation;

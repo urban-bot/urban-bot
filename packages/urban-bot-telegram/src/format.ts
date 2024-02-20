@@ -118,7 +118,13 @@ export function formatParamsForExistingMessage(message: UrbanMessage): EditMessa
 export function getTelegramMedia(
     message: UrbanExistingMessageByType<
         UrbanBotType,
-        'urban-img' | 'urban-audio' | 'urban-video' | 'urban-file' | 'urban-animation'
+        | 'urban-img'
+        | 'urban-audio'
+        | 'urban-voice'
+        | 'urban-video'
+        | 'urban-video-note'
+        | 'urban-file'
+        | 'urban-animation'
     >,
     parseMode: TelegramBot.ParseMode | undefined,
 ) {
@@ -143,6 +149,15 @@ export function getTelegramMedia(
                 title: message.data.name,
             } as const;
         }
+        case 'urban-voice': {
+            return {
+                ...common,
+                type: 'voice',
+                duration: message.data.duration,
+                performer: message.data.author,
+                title: message.data.title,
+            } as const;
+        }
         case 'urban-video': {
             return {
                 ...common,
@@ -150,6 +165,13 @@ export function getTelegramMedia(
                 duration: message.data.duration,
                 height: message.data.height,
                 width: message.data.width,
+            } as const;
+        }
+        case 'urban-video-note': {
+            return {
+                ...common,
+                type: 'video_note',
+                duration: message.data.duration,
             } as const;
         }
         case 'urban-animation': {

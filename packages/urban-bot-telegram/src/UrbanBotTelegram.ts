@@ -38,8 +38,11 @@ import type {
 } from '@urban-bot/core';
 import type {
     TelegramBotMessage,
+    InputMedia,
     InputMediaAudio,
+    InputVoice,
     InputMediaFile,
+    InputVideoNote,
     InputMediaAnimation,
     UrbanBotTelegramType,
     TelegramOptions,
@@ -660,6 +663,19 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
                 return response;
             }
+            case 'urban-voice': {
+                const params = formatParamsForNewMessage(message);
+
+                const response = await this.client.sendVoice(message.chat.id, message.data.file, {
+                    ...params,
+                    caption: message.data.title,
+                    duration: message.data.duration,
+                });
+
+                message.data.onSent?.(response);
+
+                return response;
+            }
             case 'urban-video': {
                 const params = formatParamsForNewMessage(message);
 
@@ -669,6 +685,18 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
                     duration: message.data.duration,
                     width: message.data.width,
                     height: message.data.height,
+                });
+
+                message.data.onSent?.(response);
+
+                return response;
+            }
+            case 'urban-video-note': {
+                const params = formatParamsForNewMessage(message);
+
+                const response = await this.client.sendVideoNote(message.chat.id, message.data.file, {
+                    ...params,
+                    duration: message.data.duration,
                 });
 
                 message.data.onSent?.(response);
@@ -839,10 +867,16 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
 
                 break;
             }
+            case 'urban-voice': {
+                return this.editVoice(message);
+            }
             case 'urban-video': {
                 this.editMedia(message);
 
                 break;
+            }
+            case 'urban-video-note': {
+                return this.editVideoNote(message);
             }
             case 'urban-animation': {
                 this.editMedia(message);
@@ -896,6 +930,17 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
     }
 
+    initializeCommands(commands: UrbanCommand[]) {
+        // FIXME this methods should be fixed in node-telegram-bot-api
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return this.client._request('setMyCommands', {
+            form: {
+                commands: JSON.stringify(commands),
+            },
+        });
+    }
+
     editMedia(
         message: UrbanExistingMessageByType<
             UrbanBotTelegramType,
@@ -928,20 +973,56 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
         this.editMessageMedia({ ...media, media: message.data.file }, { ...params, ...metaToEdit });
     }
 
-    initializeCommands(commands: UrbanCommand[]) {
-        // FIXME this methods should be fixed in node-telegram-bot-api
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        return this.client._request('setMyCommands', {
-            form: {
-                commands: JSON.stringify(commands),
-            },
-        });
+    async editVoice(message: UrbanExistingMessageByType<UrbanBotTelegramType, 'urban-voice'>) {
+        const metaToEdit = {
+            chat_id: message.meta.chat.id,
+            message_id: message.meta.message_id,
+        } as const;
+        const params = formatParamsForExistingMessage(message);
+        const media = getTelegramMedia(message, 'parse_mode' in params ? params.parse_mode : undefined);
+
+        if (media.type !== 'voice') {
+            return;
+        }
+
+        const { chat_id, message_id } = metaToEdit;
+        const options = { ...params, caption: message.data.title };
+
+        try {
+            await this.client.deleteMessage(chat_id, String(message_id));
+            return await this.client.sendVoice(chat_id, message.data.file, options);
+        } catch (e) {
+            console.log('error', e);
+        }
+    }
+
+    async editVideoNote(message: UrbanExistingMessageByType<UrbanBotTelegramType, 'urban-video-note'>) {
+        const metaToEdit = {
+            chat_id: message.meta.chat.id,
+            message_id: message.meta.message_id,
+        } as const;
+        const params = formatParamsForExistingMessage(message);
+        const media = getTelegramMedia(message, 'parse_mode' in params ? params.parse_mode : undefined);
+
+        if (media.type !== 'video_note') {
+            return;
+        }
+
+        const { chat_id, message_id } = metaToEdit;
+
+        try {
+            await this.client.deleteMessage(chat_id, String(message_id));
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            return await this.client.sendVideoNote(chat_id, message.data.file, params);
+        } catch (e) {
+            console.log('error', e);
+        }
     }
 
     // FIXME this methods should be fixed in node-telegram-bot-api
     editMessageMedia(
-        media: TelegramBot.InputMedia | InputMediaAudio | InputMediaAnimation | InputMediaFile,
+        media: InputMedia | InputMediaAudio | InputMediaAnimation | InputMediaFile | InputVideoNote | InputVoice,
         options: EditMessageOptions,
         formData?: unknown,
     ) {
