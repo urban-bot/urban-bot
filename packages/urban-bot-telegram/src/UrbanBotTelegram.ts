@@ -752,12 +752,14 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
             case 'urban-media': {
                 const params = formatParamsForNewMessage(message);
 
-                const media = message.data.files.map((fileData) => {
-                    const { type, file, title, ...other } = fileData;
+                const media = message.data.files.map((fileData, index) => {
+                    const { type, file, ...other } = fileData;
+
                     const common = {
                         media: file,
                         parse_mode: message.data.parseMode,
-                        caption: title,
+                        // This trick allow to attach text to media group message
+                        caption: index === 0 ? message.data.title : '',
                         ...other,
                     } as const;
 
@@ -927,7 +929,13 @@ export class UrbanBotTelegram implements UrbanBot<UrbanBotTelegramType> {
     }
 
     deleteMessage(message: UrbanExistingMessage<UrbanBotTelegramType>) {
-        this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
+        if (Array.isArray(message.meta)) {
+            message.meta.forEach(({ chat, message_id }) => {
+                this.client.deleteMessage(chat.id, String(message_id));
+            });
+        } else {
+            this.client.deleteMessage(message.meta.chat.id, String(message.meta.message_id));
+        }
     }
 
     initializeCommands(commands: UrbanCommand[]) {

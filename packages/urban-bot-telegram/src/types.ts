@@ -49,6 +49,7 @@ export type UrbanNativeEventTelegram<Payload = TelegramPayload> = {
     type: TELEGRAM;
     payload?: Payload;
 };
+
 export type UrbanBotTelegramType<Payload = TelegramPayload> = {
     NativeEvent: UrbanNativeEventTelegram<Payload>;
     MessageMeta: TelegramMessageMeta;
