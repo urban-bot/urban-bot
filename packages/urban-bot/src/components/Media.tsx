@@ -6,6 +6,7 @@ export type MediaProps = UrbanMessageMediaData & {
 };
 
 export function Media({
+    title,
     files,
     isNewMessageEveryRender: isNewMessageEveryRenderProp,
     disableNotification,
@@ -23,6 +24,7 @@ export function Media({
             chat={chat}
             isNewMessageEveryRender={isNewMessageEveryRenderProp ?? isNewMessageEveryRenderContext}
             data={{
+                title,
                 files,
                 disableNotification,
                 replyToMessageId,
