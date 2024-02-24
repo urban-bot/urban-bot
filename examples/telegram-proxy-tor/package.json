@@ -1,6 +1,6 @@
 {
     "name": "telegram-proxy-tor",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "private": true,
     "description": "way to bypass internet provider blocking using tor browser",
     "repository": {
@@ -25,8 +25,8 @@
         "@babel/core": "^7.10.2",
         "@babel/preset-env": "^7.10.2",
         "@babel/preset-react": "^7.10.1",
-        "@urban-bot/core": "^1.0.5",
-        "@urban-bot/telegram": "^1.0.5",
+        "@urban-bot/core": "^1.0.6",
+        "@urban-bot/telegram": "^1.0.6",
         "babel-loader": "^8.1.0",
         "dotenv": "^8.2.0",
         "file-loader": "^6.0.0",
