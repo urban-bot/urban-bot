@@ -1,6 +1,6 @@
 {
   "name": "create-urban-bot",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "The easiest way to start write urban-bot",
   "files": [
     "dist/**/*"
@@ -64,5 +64,5 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "gitHead": "3b110826725ea6f64d36c1f1e42333b29064b53b"
+  "gitHead": "a8fbb7b953544253535fdbd721c519fc01fd3b10"
 }
