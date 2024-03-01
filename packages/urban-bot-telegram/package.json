@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@types/node-telegram-bot-api": "0.53.6",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "node-telegram-bot-api": "0.58.0"
   },
   "repository": {
