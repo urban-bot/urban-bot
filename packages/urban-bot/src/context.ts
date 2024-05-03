@@ -17,7 +17,7 @@ export function getBotContext<Bot extends UrbanBot = UrbanBot, BotType extends U
 }
 
 export type RouterQuery = Record<string, any>;
-export type Navigate<Q = RouterQuery> = (name: string, query?: Q) => void;
+export type Navigate<Q = RouterQuery> = (name: string, query?: Q, replace?: boolean) => void;
 
 export type RouterContext<P extends object = {}, Q = RouterQuery> = {
     navigate: Navigate<Q>;

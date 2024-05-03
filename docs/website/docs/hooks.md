@@ -284,6 +284,19 @@ function SomeComponent() {
     );
 }
 ```
+And you can pass `replace` value as a third argument. It will replace current path in history.
+
+```jsx
+function SomeComponent() {
+    const { navigate } = useRouter();
+
+    return (
+        <ButtonGroup>
+            <Button onClick={() => navigate('/user', { id: 123 }, true)}>Go to User</Button>
+        </ButtonGroup>
+    );
+}
+```
 #### activePath
 > Current route path.
 
