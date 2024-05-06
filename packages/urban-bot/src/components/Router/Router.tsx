@@ -20,8 +20,8 @@ export function Router({ children, withInitializeCommands = false, historyLength
     const childrenArray = Children.toArray(children) as ReactElement<RouteProps>[];
 
     const navigate: Navigate = useCallback(
-        (path: string, query = {}) => {
-            const newHistory = [...history.current, path];
+        (path: string, query = {}, replace = false) => {
+            const newHistory = [...(replace ? history.current.slice(0, -1) : history.current), path];
 
             history.current = newHistory.length <= historyLength ? newHistory : newHistory.slice(1);
 
