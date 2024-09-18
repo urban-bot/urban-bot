@@ -18,7 +18,7 @@ export type DialogContextType = {
     addAnswer: DialogAddAnswer;
 };
 
-export type DialogValidation = (answer: string) => ReactNode;
+export type DialogValidation = (answer: string) => Promise<ReactNode> | ReactNode;
 
 export type DialogStepProps = {
     id?: string;

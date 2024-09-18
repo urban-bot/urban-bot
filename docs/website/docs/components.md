@@ -1315,7 +1315,7 @@ import { Text } from "@urban-bot/core";
   <DialogStep
     id="name"
     content={<Text>Hello, what is your name?</Text>}
-    validation={(answer) => {
+    validation={async (answer) => {
       if (answer === 'Bubba') {
         return <Text>Bubba is baned</Text>
       }
