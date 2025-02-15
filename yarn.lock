@@ -2894,10 +2894,10 @@
   dependencies:
     type-detect "4.0.8"
 
-"@slack/events-api@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@slack/events-api/-/events-api-3.0.0.tgz#3e7626ceb5700cb1cce2fbfe6e1583c23a3626fd"
-  integrity sha512-4LdeVuyBCoESSMryACZNafSM4GlX9o881WShABcW+nonh97PnxUKI+hZwuYdTLQpyKu2HSp1zcWsi8QLaiXkrw==
+"@slack/events-api@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@slack/events-api/-/events-api-3.0.1.tgz#f7db24fa69ab79c97e4eb4355d428af7bf1b5cc6"
+  integrity sha512-ReJzZRpCgwGtKrAT0tRMppO3zm72jmxsOlTgR7PGajv2oq/tOJSeVRm7RcGiwn3EPIuovKkD/mr4TTN4n801fQ==
   dependencies:
     "@types/debug" "^4.1.4"
     "@types/express" "^4.17.0"
@@ -3244,12 +3244,7 @@
     "@types/node" "*"
     "@types/request" "*"
 
-"@types/node@*", "@types/node@>= 8", "@types/node@>=8.9.0", "@types/node@^14.0.11":
-  version "14.11.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.11.2.tgz#2de1ed6670439387da1c9f549a2ade2b0a799256"
-  integrity sha512-jiE3QIxJ8JLNcb1Ps6rDbysDhN4xa8DJJvuC9prr6w+1tIh+QAbYyNF3tyiZNLDBIuBCf4KEcV2UvQm/V60xfA==
-
-"@types/node@>=12.0.0":
+"@types/node@*", "@types/node@>= 8", "@types/node@>=12.0.0", "@types/node@>=8.9.0", "@types/node@^14.0.11":
   version "14.14.26"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.26.tgz#e40df24c957568f350cca04e63bfb1e1556d1cbf"
   integrity sha512-skWxepWOs+VArEBWd2S/VR3wUavioIIx9/HzW+UJiIjtwa6+kNXdsOeq7FfxDXf56hIcL0ieo2brwMgBJ1+lhw==
@@ -3371,14 +3366,7 @@
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz#cb3f9f741869e20cce330ffbeb9271590483882d"
   integrity sha512-FA/BWv8t8ZWJ+gEOnLLd8ygxH/2UFbAvgEonyfN6yWGLKc7zVjbpl2Y4CTjid9h2RfgPP6SEt6uHwEOply00yw==
 
-"@types/yargs@^15.0.0":
-  version "15.0.7"
-  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.7.tgz#dad50a7a234a35ef9460737a56024287a3de1d2b"
-  integrity sha512-Gf4u3EjaPNcC9cTu4/j2oN14nSVhr8PQ+BvBcBQHAhDZfl0bVIiLgvnRXv/dn58XhTm9UXvBpvJpDlwV65QxOA==
-  dependencies:
-    "@types/yargs-parser" "*"
-
-"@types/yargs@^15.0.4":
+"@types/yargs@^15.0.0", "@types/yargs@^15.0.4":
   version "15.0.13"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.13.tgz#34f7fec8b389d7f3c1fd08026a5763e072d3c6dc"
   integrity sha512-kQ5JNTrbDv3Rp5X2n/iUu37IJBDU2gsZ5R/g1/KHOOEc5IKfUFjXT6DENPGduh08I/pamwtEq4oul7gUqKTQDQ==

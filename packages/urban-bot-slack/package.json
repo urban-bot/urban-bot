@@ -54,7 +54,7 @@
     "typescript": "4.4.3"
   },
   "dependencies": {
-    "@slack/events-api": "3.0.0",
+    "@slack/events-api": "3.0.1",
     "@slack/interactive-messages": "2.0.0",
     "@slack/types": "2.0.0",
     "@slack/web-api": "6.0.0",
